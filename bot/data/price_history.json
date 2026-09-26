@@ -254,6 +254,11 @@
    "date": "2026-09-26",
    "min_effective": 2059,
    "min_price": 2080
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2232,
+   "min_price": 2255
   }
  ],
  "ゴミ袋": [
@@ -287,6 +292,11 @@
    "date": "2026-09-26",
    "min_effective": 2008,
    "min_price": 2028
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2213,
+   "min_price": 2235
   }
  ],
  "炭酸水": [
@@ -299,6 +309,11 @@
    "date": "2026-09-26",
    "min_effective": 2154,
    "min_price": 2176
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2284,
+   "min_price": 2307
   }
  ],
  "レトルトカレー": [
@@ -318,6 +333,11 @@
    "date": "2026-09-26",
    "min_effective": 2177,
    "min_price": 2199
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2350,
+   "min_price": 2374
   }
  ],
  "素焼きナッツ": [
@@ -325,6 +345,11 @@
    "date": "2026-09-25",
    "min_effective": 1386,
    "min_price": 1400
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2059,
+   "min_price": 2080
   }
  ],
  "ヘアオイル": [
@@ -332,6 +357,11 @@
    "date": "2026-09-25",
    "min_effective": 1089,
    "min_price": 1100
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 1836,
+   "min_price": 2040
   }
  ],
  "洗顔フォーム": [
@@ -339,6 +369,11 @@
    "date": "2026-09-25",
    "min_effective": 1525,
    "min_price": 1540
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2069,
+   "min_price": 2090
   }
  ],
  "ハンドクリーム": [
@@ -346,6 +381,11 @@
    "date": "2026-09-25",
    "min_effective": 916,
    "min_price": 935
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 2156,
+   "min_price": 2200
   }
  ],
  "フェイスタオル": [
@@ -360,6 +400,11 @@
    "date": "2026-09-25",
    "min_effective": 1242,
    "min_price": 1280
+  },
+  {
+   "date": "2026-09-27",
+   "min_effective": 3267,
+   "min_price": 3300
   }
  ],
  "靴下（メンズ）": [
