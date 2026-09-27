@@ -338,6 +338,11 @@
    "date": "2026-09-27",
    "min_effective": 2350,
    "min_price": 2374
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 1980,
+   "min_price": 2000
   }
  ],
  "素焼きナッツ": [
@@ -350,6 +355,11 @@
    "date": "2026-09-27",
    "min_effective": 2059,
    "min_price": 2080
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2109,
+   "min_price": 2130
   }
  ],
  "ヘアオイル": [
@@ -374,6 +384,11 @@
    "date": "2026-09-27",
    "min_effective": 2069,
    "min_price": 2090
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "ハンドクリーム": [
@@ -386,6 +401,11 @@
    "date": "2026-09-27",
    "min_effective": 2156,
    "min_price": 2200
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2000,
+   "min_price": 2020
   }
  ],
  "フェイスタオル": [
@@ -393,6 +413,11 @@
    "date": "2026-09-25",
    "min_effective": 1267,
    "min_price": 1280
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2156,
+   "min_price": 2180
   }
  ],
  "ワイン": [
@@ -405,6 +430,11 @@
    "date": "2026-09-27",
    "min_effective": 3267,
    "min_price": 3300
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 3465,
+   "min_price": 3500
   }
  ],
  "靴下（メンズ）": [
@@ -412,6 +442,11 @@
    "date": "2026-09-25",
    "min_effective": 441,
    "min_price": 445
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2069,
+   "min_price": 2090
   }
  ],
  "収納ボックス": [
@@ -419,6 +454,11 @@
    "date": "2026-09-25",
    "min_effective": 598,
    "min_price": 630
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2052,
+   "min_price": 2180
   }
  ],
  "充電ケーブル": [
@@ -426,6 +466,11 @@
    "date": "2026-09-25",
    "min_effective": 416,
    "min_price": 420
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2059,
+   "min_price": 2080
   }
  ],
  "デスクライト": [
