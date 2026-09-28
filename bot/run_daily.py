@@ -18,7 +18,7 @@ import zlib
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from rakuten import Rakuten, load_config
+from rakuten import SEARCH_URL, Rakuten, big_image, load_config
 from select_posts import build_queue
 
 BASE = Path(__file__).resolve().parent
@@ -534,6 +534,55 @@ def cards_section(title, items, kind, note=""):
             + "<div class=cards>" + "".join(cards) + "</div></section>")
 
 
+ART_CSS = """
+.price{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.price img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:8px;flex:none}
+.price .eff{display:block;font-size:22px;font-weight:800;color:var(--acc)} .price .calc{display:block;font-size:14px}
+.price .rv{display:block;font-size:12px;color:var(--mut)}
+body{font-family:Meiryo,"メイリオ","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+"""
+
+
+def update_articles(api, stamp):
+    """比較記事の各商品に、商品画像と「実質価格（価格−ポイント）」を入れて、毎朝最新にする（2026-09-28 ユーザー指定）。
+    楽天リンクの m=…/i/<番号>/ から商品を特定し、<!--price--> 〜 <!--/price--> の間を書き換える。"""
+    esc = html.escape
+    for f in sorted((SITE / "articles").glob("*.html")):
+        t = f.read_text(encoding="utf-8")
+        orig = t
+        if "ART_CSS" not in t:
+            t = t.replace("</style>", "/*ART_CSS*/" + ART_CSS + "</style>", 1)
+        t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです（毎朝更新）。", t)
+        parts = re.split(r"(?=<h2>)", t)
+        for i, blk in enumerate(parts):
+            m = re.search(r"item\.rakuten\.co\.jp%2F([^%]+)%2F[^%]+%2F&m=[^&]*%2Fi%2F(\d+)", blk)
+            if not m or not blk.startswith("<h2>"):
+                continue
+            try:
+                items = api._get(SEARCH_URL, {"itemCode": f"{m.group(1)}:{m.group(2)}", "hits": 1}).get("Items", [])
+            except Exception:
+                items = []
+            if not items:
+                continue
+            it = items[0]
+            price, rate = int(it["itemPrice"]), int(it.get("pointRate") or 1)
+            pts = price * rate // 100
+            img = big_image(it).replace("_ex=300x300", "_ex=400x400")
+            rv = f"楽天・レビュー{int(it.get('reviewCount') or 0):,}件 ★{it.get('reviewAverage')}" if it.get("reviewCount") else "楽天"
+            box = (f"<!--price--><div class=price>" + (f"<img src='{esc(img)}' alt='' loading=lazy>" if img else "")
+                   + f"<div><span class=eff>✅実質¥{price - pts:,}</span>"
+                   f"<span class=calc>価格¥{price:,} − {pts:,}pt（ポイント{rate}倍）</span>"
+                   f"<span class=rv>{esc(rv)}</span></div></div><!--/price-->")
+            if "<!--price-->" in blk:
+                blk = re.sub(r"<!--price-->.*?<!--/price-->", box, blk, flags=re.S)
+            else:
+                blk = re.sub(r"<p>¥[\d,]+（楽天[^<]*）</p>", box, blk, count=1)
+            parts[i] = blk
+        t = "".join(parts)
+        if t != orig:
+            f.write_text(t, encoding="utf-8")
+
+
 def articles_html():
     """site/articles/ の記事を新しい順に一覧にする。"""
     arts = sorted((SITE / "articles").glob("*.html"), key=lambda f: f.stat().st_mtime, reverse=True)
@@ -543,7 +592,7 @@ def articles_html():
     for f in arts:
         m = re.search(r"<title>(.*?)</title>", f.read_text(encoding="utf-8"))
         items.append(f"<li><a href='articles/{f.name}'>{m.group(1) if m else f.stem}</a></li>")
-    return f"<section><h2>比較記事</h2><ul>{''.join(items)}</ul></section>"
+    return f"<section><h2>比較記事（実際に使った商品）</h2><ul>{''.join(items)}</ul></section>"
 
 
 def picks_html(picks):
@@ -718,12 +767,14 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
     page = f"""<!doctype html><html lang=ja><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>{esc(cfg['site_title'])}</title>
+<meta name=description content="楽天で買う前に、価格−ポイントの「実質価格」をチェック。2,000〜5,000円の人気商品・ふるさと納税・ホテルを毎朝入れ替えて紹介。">
 <style>
 :root{{--bg:#fafaf9;--fg:#1c1917;--mut:#78716c;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#1c1917;--fg:#f5f5f4;--mut:#a8a29e;--line:#44403c;--acc:#f87171;--card:#292524}}}}
 body{{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 Meiryo,"メイリオ","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}}
 main{{max-width:860px;margin:auto;padding:16px}}
 .disc{{font-size:11px;color:var(--mut);margin:4px 0 12px}}
+.intro{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:14px}} .intro ul{{margin:4px 0;padding-left:1.2em}} .intro p{{margin:4px 0}}
 .pr{{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px;font-size:13px;color:var(--mut)}}
 section{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:16px 0}}
 h1{{font-size:22px}} h2{{font-size:17px;margin:4px 0}}
@@ -753,6 +804,12 @@ a{{color:inherit}}
 </style></head><body><main>
 <h1>{esc(cfg['site_title'])}</h1>
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイトを利用しています。価格・ポイントは{stamp}時点のものです。</p>
+<div class=intro><p><b>楽天で買う前に「実質いくら？」（価格−ポイント）が分かるページです。</b></p>
+<ul><li>毎朝、楽天の価格とポイント倍率を取り直して並べ直します</li>
+<li>紹介する商品は<b>2,000〜5,000円</b>で、レビュー30件以上のものだけ</li>
+<li>一度載せた商品は載せないので、毎朝ぜんぶ入れ替わります</li>
+<li>ポイント倍率が高い商品／日用品・食品・お酒などの実質最安／ふるさと納税（寄付額1万円未満）／ホテル・旅館（1人1万円未満）</li>
+<li>実際に使った商品は「比較記事」にまとめています</li></ul></div>
 {picks_html(picks)}
 {articles_html()}
 {''.join(sections)}
@@ -800,6 +857,8 @@ def main():
                             "控除の上限額は年収や家族構成で変わります。寄付の前に楽天ふるさと納税のシミュレーターで確認を。")
               + cards_section("ホテル・旅館（1人1万円未満・評価4.0以上）", hotels, "hotel",
                               "料金は時期・人数・プランで変わります。空室と最新の料金はリンク先で確認してください。"))
+    if not args.mock:
+        update_articles(api, stamp)
     render_site(cfg, results, stamp, picks, kobo_section(api, cfg, today), bottom)
     mark_shown(sh, shown_now + furusato + hotels, today)
     save_json(DATA / "shown_items.json", sh)
