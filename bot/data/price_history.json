@@ -148,6 +148,11 @@
    "date": "2026-09-25",
    "min_effective": 1152,
    "min_price": 1280
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2228,
+   "min_price": 2250
   }
  ],
  "LEDデスクライト": [
@@ -162,6 +167,11 @@
    "date": "2026-09-25",
    "min_effective": 2952,
    "min_price": 3180
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 3344,
+   "min_price": 3378
   }
  ],
  "ボックスティッシュ": [
@@ -416,8 +426,8 @@
   },
   {
    "date": "2026-09-28",
-   "min_effective": 2156,
-   "min_price": 2180
+   "min_effective": 2614,
+   "min_price": 2640
   }
  ],
  "ワイン": [
@@ -445,8 +455,8 @@
   },
   {
    "date": "2026-09-28",
-   "min_effective": 2069,
-   "min_price": 2090
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "収納ボックス": [
@@ -457,8 +467,8 @@
   },
   {
    "date": "2026-09-28",
-   "min_effective": 2052,
-   "min_price": 2180
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "充電ケーブル": [
@@ -469,8 +479,8 @@
   },
   {
    "date": "2026-09-28",
-   "min_effective": 2059,
-   "min_price": 2080
+   "min_effective": 2267,
+   "min_price": 2290
   }
  ],
  "デスクライト": [
@@ -478,6 +488,11 @@
    "date": "2026-09-25",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2276,
+   "min_price": 2299
   }
  ],
  "水筒 ステンレス": [
@@ -485,6 +500,11 @@
    "date": "2026-09-25",
    "min_effective": 970,
    "min_price": 980
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "モバイルバッテリー": [
@@ -492,6 +512,11 @@
    "date": "2026-09-25",
    "min_effective": 1510,
    "min_price": 1580
+  },
+  {
+   "date": "2026-09-28",
+   "min_effective": 2059,
+   "min_price": 2080
   }
  ],
  "ワイヤレスイヤホン": [
