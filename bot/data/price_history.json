@@ -101,6 +101,11 @@
    "date": "2026-09-28",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "加湿器": [
@@ -118,6 +123,11 @@
    "date": "2026-09-26",
    "min_effective": 2921,
    "min_price": 2980
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2356,
+   "min_price": 2380
   }
  ],
  "ワイヤレスマウス": [
@@ -206,6 +216,11 @@
    "date": "2026-09-28",
    "min_effective": 3398,
    "min_price": 3432
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 4338,
+   "min_price": 4382
   }
  ],
  "ミネラルウォーター": [
@@ -225,6 +240,11 @@
    "date": "2026-09-28",
    "min_effective": 3365,
    "min_price": 3399
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 3761,
+   "min_price": 3799
   }
  ],
  "プロテイン": [
@@ -259,6 +279,11 @@
    "date": "2026-09-28",
    "min_effective": 2069,
    "min_price": 2090
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2940,
+   "min_price": 2970
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -342,6 +367,11 @@
    "date": "2026-09-27",
    "min_effective": 2213,
    "min_price": 2235
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2462,
+   "min_price": 2592
   }
  ],
  "炭酸水": [
@@ -359,6 +389,11 @@
    "date": "2026-09-27",
    "min_effective": 2284,
    "min_price": 2307
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2582,
+   "min_price": 2608
   }
  ],
  "レトルトカレー": [
@@ -388,6 +423,11 @@
    "date": "2026-09-28",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 2356,
+   "min_price": 2380
   }
  ],
  "素焼きナッツ": [
@@ -583,6 +623,11 @@
    "date": "2026-09-28",
    "min_effective": 3247,
    "min_price": 3280
+  },
+  {
+   "date": "2026-09-29",
+   "min_effective": 3712,
+   "min_price": 3750
   }
  ]
 }
