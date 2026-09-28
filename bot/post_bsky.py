@@ -1,13 +1,15 @@
-"""GitHub Actions から呼ばれ、時刻が来た投稿を Bluesky に1件だけ出す（Macの電源に関係なく動く）。
+"""GitHub Actions から呼ばれ、X・Threads と同じ投稿を Bluesky にも出す（Macの電源に関係なく動く）。
 
+- キュー：OUT_DIR/threads_queue.json（Xに予約した投稿の写し。x_to_threads.py が追加する）。印は "bsky"
+  （2026-09-28 ユーザー指定「Bluesky も X・Threads に投稿内容を合わせて」。以前の日替わりキュー queue_*.json は使わない）
+- 1回に1件。時刻を6時間以上過ぎたものは出さずに skipped。
+- 商品は画像付き。ニュースは記事URLのリンクカード（画像つき）で出す。
 - 認証：環境変数 BSKY_HANDLE / BSKY_APP_PASSWORD（GitHub Secrets）
-- キュー：OUT_DIR/queue_YYYY-MM-DD.json（毎朝 daily.yml の run_daily.py が作る）
-- 取りこぼした古い枠はまとめて出さず skipped にする。失敗したら終了コード1（Actionsの失敗通知が届く）
 """
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import bsky
@@ -17,29 +19,33 @@ OUT = Path(os.environ.get("OUT_DIR") or Path(__file__).resolve().parent / "out")
 
 
 def main():
-    today = datetime.now().strftime("%Y-%m-%d")
-    qpath = OUT / f"queue_{today}.json"
+    qpath = OUT / "threads_queue.json"
     if not qpath.exists():
-        print("今日のキューがありません"); return 0
+        print("キューがありません"); return 0
     queue = json.loads(qpath.read_text(encoding="utf-8"))
-    now = datetime.now().strftime("%H:%M")
-    due = [q for q in queue if not q.get("bsky") and q["time"] <= now]
+    now = datetime.now()
+    due = [q for q in queue if not q.get("bsky") and datetime.strptime(q["at"], "%Y-%m-%d %H:%M") <= now]
     if not due:
         print("投稿する枠はありません"); return 0
     for old in due[:-1]:
         old["bsky"] = "skipped"
     q = due[-1]
-    code = 0
+    if datetime.strptime(q["at"], "%Y-%m-%d %H:%M") < now - timedelta(hours=6):
+        q["bsky"] = "skipped"
+        qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"時刻を6時間以上過ぎたので出さない {q['at']}"); return 0
     q["bsky"] = "posting"
     qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
-    if not claim(qpath, f"Bluesky 投稿中 {q['time']}"):
+    if not claim(qpath, f"Bluesky 投稿中 {q['at']}"):
         print("ほかの実行が先に投稿中なので、この実行は投稿しない"); return 0
+    code = 0
     try:
-        q["bsky"] = bsky.post(q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"], q.get("image"), q.get("alt", ""))
-        print(f"✅ Bluesky {q['time']} {q['bsky']}")
+        q["bsky"] = bsky.post(q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
+                              q.get("image"), q.get("alt", ""))
+        print(f"✅ Bluesky {q['at']} {q['bsky']}")
     except Exception as e:
         q["bsky"] = "failed"
-        print(f"❌ Bluesky投稿失敗 {q['time']}: {e}")
+        print(f"❌ Bluesky投稿失敗 {q['at']}: {e}")
         code = 1
     qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
     return code

@@ -82,8 +82,27 @@ def _upload_image(url, token):
         return json.load(r)["blob"]
 
 
+def _link_card(url, token):
+    """記事URLのリンクカード（タイトル・説明・画像）を作る。"""
+    import html as _html
+    with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=20) as r:
+        page = r.read().decode("utf-8", "ignore")
+    og = lambda k: _html.unescape((re.search(rf'<meta[^>]+property="og:{k}"[^>]+content="([^"]*)"', page) or
+                                  re.search(rf'<meta[^>]+content="([^"]*)"[^>]+property="og:{k}"', page) or [None, ""])[1])
+    ext = {"uri": url, "title": og("title")[:300], "description": og("description")[:300]}
+    if og("image"):
+        try:
+            b = _upload_image(og("image"), token)
+            if b:
+                ext["thumb"] = b
+        except Exception:
+            pass
+    return {"$type": "app.bsky.embed.external", "external": ext}
+
+
 def post(text, handle, app_password, image=None, alt=""):
     token, did = login(handle, app_password)
+    orig_text = text
     text, links = shorten_links(fit_raw(text))
     record = {"$type": "app.bsky.feed.post", "text": text, "langs": ["ja"],
               "createdAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")}
@@ -97,6 +116,13 @@ def post(text, handle, app_password, image=None, alt=""):
                 record["embed"] = {"$type": "app.bsky.embed.images", "images": [{"image": blob, "alt": alt[:300]}]}
         except Exception as e:   # 画像が取れなくても文章だけで出す
             print(f"   画像なしで投稿（{e}）")
+    if "embed" not in record:
+        m = URL_RE.search(orig_text)
+        if m and "nikkei.com" in m.group():
+            try:
+                record["embed"] = _link_card(m.group(), token)
+            except Exception as e:
+                print(f"   リンクカードなしで投稿（{e}）")
     r = _call("com.atproto.repo.createRecord", {"repo": did, "collection": "app.bsky.feed.post", "record": record}, token)
     rkey = r["uri"].rsplit("/", 1)[-1]
     return f"https://bsky.app/profile/{handle}/post/{rkey}"
