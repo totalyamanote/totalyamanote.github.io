@@ -1,0 +1,27 @@
+name: threads-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: "引用できるか確かめる Threads 投稿の code（/post/<code>）"
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Load Threads token
+        env:
+          THREADS_KEY: ${{ secrets.THREADS_KEY }}
+          THREADS_TOKEN_SECRET: ${{ secrets.THREADS_TOKEN }}
+        run: bash bot/threads_token.sh
+      - name: Check quote
+        env:
+          CODE: ${{ github.event.inputs.code }}
+        run: cd bot && python threads_check.py

@@ -18,7 +18,7 @@ def _post(path, params):
         return json.load(r)
 
 
-def post(text, token, image=None):
+def post(text, token, image=None, quote=None):
     """image（公開されている画像URL）があれば画像付きで投稿。画像で失敗したら文章だけで出す。"""
     text = text if len(text) <= 500 else text[:499] + "…"
     c = None
@@ -28,6 +28,14 @@ def post(text, token, image=None):
             time.sleep(15)   # 画像の取り込みを待つ
         except Exception as e:
             print(f"   画像なしで投稿（{e}）")
+            c = None
+    if not c and quote:   # 日経の Threads 投稿を引用（quote はその投稿URLの code）
+        try:
+            c = _post("me/threads", {"media_type": "TEXT", "text": text, "quote_post_id": shortcode_to_id(quote),
+                                     "access_token": token})
+            time.sleep(3)
+        except Exception as e:
+            print(f"   引用なしで投稿（{e}）")
             c = None
     if not c:
         c = _post("me/threads", {"media_type": "TEXT", "text": text, "access_token": token})
@@ -48,3 +56,21 @@ def whoami(token):
     q = urllib.parse.urlencode({"fields": "username", "access_token": token})
     with urllib.request.urlopen(f"{API}/me?{q}", timeout=30) as r:
         return json.load(r)["username"]
+
+
+ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+
+
+def shortcode_to_id(code):
+    """Threads の投稿URL（/post/<code>）の code を、API で使う数値IDに変える（Instagram と同じ方式）。"""
+    n = 0
+    for ch in code[:11]:
+        n = n * 64 + ALPHABET.index(ch)
+    return str(n)
+
+
+def check_quote(code, token):
+    """引用できるか確かめる（コンテナを作るだけで公開しない）。"""
+    c = _post("me/threads", {"media_type": "TEXT", "text": "引用テスト（公開しない）", "quote_post_id": shortcode_to_id(code),
+                             "access_token": token})
+    return c.get("id")
