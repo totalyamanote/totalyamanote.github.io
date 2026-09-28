@@ -29,6 +29,8 @@ HISTORY_DAYS = 90
 MIN_PRICE = 2000   # 安っぽい雑貨は出さない（ユーザー指定 2026-09-25：2,000〜5,000円の商品を載せる）
 MAX_PRICE = 5000   # 商品は5,000円まで（ふるさと納税・ホテルは FURUSATO_MAX / HOTEL_MAX）
 FURUSATO_MAX = 9999
+# 今どき使う人が少ない・紹介しても響かない商品は出さない（2026-09-28 ユーザー指定「プリンターのインクなど不要」）
+OLD_NG = re.compile(r"インク|トナー|プリンタ|カートリッジ|リボン|FAX|ファックス|感熱紙|フロッピー|CD-R|DVD-R|ブルーレイディスク|BD-R|(?<![A-Za-z])MD(?![A-Za-z])|カセットテープ|VHS|ビデオテープ|電話機|ワープロ|ラミネートフィルム|不織布|(?<!フェイス)(?<!シート)(?<!美容)(?<!ヘア)(?<!アイ)(?<!スリープ)マスク(?!パック)")   # マスクも不要（2026-09-28 ユーザー指定）
 HOTEL_MAX = 9999
 
 
@@ -86,7 +88,7 @@ def ranking_digest(api, cfg, today):
                 reasons.append(f"💰 ポイント{it['point_rate']}倍")
             if first_run and rank <= 3:
                 reasons.append(f"👑 {g['name']}ランキング{rank}位")
-            if reasons and MIN_PRICE <= it["price"] <= MAX_PRICE:
+            if reasons and MIN_PRICE <= it["price"] <= MAX_PRICE and not OLD_NG.search(short_name(it["name"], 80)):
                 posts.append({"genre": g["name"], "reasons": reasons, **it})
 
         save_json(snap_path, {"date": today, "items": items})
@@ -313,6 +315,7 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
                 k = dedupe_key(it)
                 w = (short_name(it["name"], 80).split() or [""])[0]
                 if (not MIN_PRICE <= it["price"] <= MAX_PRICE or it["review_count"] < 30 or it.get("point_rate", 1) < 2
+                        or OLD_NG.search(short_name(it["name"], 80))
                         or was_shown(sh, it) or k in keys or (len(w) >= 4 and w in heads)):
                     continue
                 keys.add(k); cands.append({"genre": g["name"], "_head": w, **it})
@@ -398,7 +401,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None):
                       if not any(n in it["name"] for n in ng)
                       and it["review_count"] >= max(w.get("min_reviews", 30), 30)
                       and MIN_PRICE <= it["price"] <= MAX_PRICE and not was_shown(sh, it)
-                      and relevant(it, w)]   # 項目名と関係ない商品は出さない
+                      and relevant(it, w) and not OLD_NG.search(short_name(it["name"], 80))]   # 項目名と関係ない商品は出さない
             if len(items) >= 8 or len(batch) < 30:
                 break
         # ポイントアップ中の商品も追加で探す（倍率が高いほど実質価格が下がるので、最安の候補になりうる）
