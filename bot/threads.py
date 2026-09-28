@@ -74,3 +74,17 @@ def check_quote(code, token):
     c = _post("me/threads", {"media_type": "TEXT", "text": "引用テスト（公開しない）", "quote_post_id": shortcode_to_id(code),
                              "access_token": token})
     return c.get("id")
+
+
+def nikkei_posts(token, username="nikkei", limit=25):
+    """公開アカウント（日経）の最新の投稿（id・本文・URL・時刻）。threads_profile_discovery 権限が必要。"""
+    q = urllib.parse.urlencode({"username": username, "fields": "id,text,permalink,timestamp", "limit": limit,
+                                "access_token": token})
+    with urllib.request.urlopen(f"{API}/profile_posts?{q}", timeout=30) as r:
+        return json.load(r).get("data", [])
+
+
+def check_quote_id(media_id, token):
+    c = _post("me/threads", {"media_type": "TEXT", "text": "引用テスト（公開しない）", "quote_post_id": media_id,
+                             "access_token": token})
+    return c.get("id")
