@@ -372,6 +372,11 @@
    "date": "2026-09-29",
    "min_effective": 2940,
    "min_price": 2970
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 1980,
+   "min_price": 2000
   }
  ],
  "炭酸水": [
@@ -394,6 +399,11 @@
    "date": "2026-09-29",
    "min_effective": 2314,
    "min_price": 2337
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 3633,
+   "min_price": 3670
   }
  ],
  "レトルトカレー": [
@@ -428,6 +438,11 @@
    "date": "2026-09-29",
    "min_effective": 2970,
    "min_price": 3000
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 3445,
+   "min_price": 3480
   }
  ],
  "素焼きナッツ": [
@@ -462,6 +477,11 @@
    "date": "2026-09-27",
    "min_effective": 1836,
    "min_price": 2040
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "洗顔フォーム": [
@@ -484,6 +504,11 @@
    "date": "2026-09-29",
    "min_effective": 2970,
    "min_price": 3300
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 1980,
+   "min_price": 2000
   }
  ],
  "ハンドクリーム": [
@@ -506,6 +531,11 @@
    "date": "2026-09-29",
    "min_effective": 2374,
    "min_price": 2398
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2070,
+   "min_price": 2200
   }
  ],
  "フェイスタオル": [
@@ -523,6 +553,11 @@
    "date": "2026-09-29",
    "min_effective": 2752,
    "min_price": 2780
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 3020,
+   "min_price": 3050
   }
  ],
  "ワイン": [
@@ -574,6 +609,11 @@
    "date": "2026-09-28",
    "min_effective": 2653,
    "min_price": 2680
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2208,
+   "min_price": 2230
   }
  ],
  "充電ケーブル": [
@@ -586,6 +626,11 @@
    "date": "2026-09-28",
    "min_effective": 2267,
    "min_price": 2290
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2276,
+   "min_price": 2299
   }
  ],
  "デスクライト": [
