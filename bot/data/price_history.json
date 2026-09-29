@@ -197,6 +197,11 @@
    "date": "2026-09-28",
    "min_effective": 3344,
    "min_price": 3378
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 3582,
+   "min_price": 3980
   }
  ],
  "ボックスティッシュ": [
@@ -507,8 +512,8 @@
   },
   {
    "date": "2026-09-30",
-   "min_effective": 1980,
-   "min_price": 2000
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "ハンドクリーム": [
@@ -534,8 +539,8 @@
   },
   {
    "date": "2026-09-30",
-   "min_effective": 2070,
-   "min_price": 2200
+   "min_effective": 2950,
+   "min_price": 2980
   }
  ],
  "フェイスタオル": [
@@ -556,8 +561,8 @@
   },
   {
    "date": "2026-09-30",
-   "min_effective": 3020,
-   "min_price": 3050
+   "min_effective": 3135,
+   "min_price": 3298
   }
  ],
  "ワイン": [
@@ -612,8 +617,8 @@
   },
   {
    "date": "2026-09-30",
-   "min_effective": 2208,
-   "min_price": 2230
+   "min_effective": 2841,
+   "min_price": 2870
   }
  ],
  "充電ケーブル": [
@@ -629,8 +634,8 @@
   },
   {
    "date": "2026-09-30",
-   "min_effective": 2276,
-   "min_price": 2299
+   "min_effective": 2257,
+   "min_price": 2280
   }
  ],
  "デスクライト": [
@@ -643,6 +648,11 @@
    "date": "2026-09-28",
    "min_effective": 2276,
    "min_price": 2299
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2257,
+   "min_price": 2280
   }
  ],
  "水筒 ステンレス": [
@@ -653,6 +663,11 @@
   },
   {
    "date": "2026-09-28",
+   "min_effective": 2158,
+   "min_price": 2180
+  },
+  {
+   "date": "2026-09-30",
    "min_effective": 2158,
    "min_price": 2180
   }
@@ -686,6 +701,11 @@
    "date": "2026-09-28",
    "min_effective": 2028,
    "min_price": 2048
+  },
+  {
+   "date": "2026-09-30",
+   "min_effective": 2752,
+   "min_price": 2780
   }
  ],
  "日本酒": [
