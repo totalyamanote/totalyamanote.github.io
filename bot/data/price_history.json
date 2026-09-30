@@ -121,6 +121,11 @@
    "date": "2026-09-29",
    "min_effective": 2455,
    "min_price": 2480
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "加湿器": [
@@ -143,6 +148,11 @@
    "date": "2026-09-29",
    "min_effective": 2356,
    "min_price": 2380
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "ワイヤレスマウス": [
@@ -160,6 +170,11 @@
    "date": "2026-09-26",
    "min_effective": 1971,
    "min_price": 2190
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2010,
+   "min_price": 2030
   }
  ],
  "洗濯洗剤 詰め替え": [
@@ -273,8 +288,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2697,
-   "min_price": 2780
+   "min_effective": 2376,
+   "min_price": 2400
   }
  ],
  "プロテイン": [
@@ -317,8 +332,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2992,
-   "min_price": 3022
+   "min_effective": 2027,
+   "min_price": 2047
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -412,6 +427,11 @@
    "date": "2026-09-30",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2079,
+   "min_price": 2100
   }
  ],
  "炭酸水": [
@@ -544,6 +564,11 @@
    "date": "2026-09-30",
    "min_effective": 2178,
    "min_price": 2200
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2240,
+   "min_price": 2618
   }
  ],
  "ハンドクリーム": [
@@ -571,6 +596,11 @@
    "date": "2026-09-30",
    "min_effective": 2950,
    "min_price": 2980
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2079,
+   "min_price": 2100
   }
  ],
  "フェイスタオル": [
@@ -766,8 +796,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 3940,
-   "min_price": 3980
+   "min_effective": 2156,
+   "min_price": 2178
   }
  ]
 }
