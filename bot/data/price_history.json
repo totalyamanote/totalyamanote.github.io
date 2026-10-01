@@ -124,8 +124,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2653,
-   "min_price": 2680
+   "min_effective": 2752,
+   "min_price": 2780
   }
  ],
  "加湿器": [
@@ -151,8 +151,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2653,
-   "min_price": 2680
+   "min_effective": 3920,
+   "min_price": 3960
   }
  ],
  "ワイヤレスマウス": [
@@ -362,6 +362,11 @@
    "date": "2026-09-25",
    "min_effective": 1067,
    "min_price": 1078
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2044,
+   "min_price": 2065
   }
  ],
  "不織布マスク": [
@@ -386,6 +391,11 @@
    "date": "2026-09-25",
    "min_effective": 563,
    "min_price": 569
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 2000,
+   "min_price": 2020
   }
  ],
  "入浴剤": [
@@ -400,6 +410,11 @@
    "date": "2026-09-25",
    "min_effective": 3315,
    "min_price": 3348
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 4704,
+   "min_price": 4752
   }
  ],
  "緑茶ティーバッグ": [
@@ -430,8 +445,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2079,
-   "min_price": 2100
+   "min_effective": 3168,
+   "min_price": 3200
   }
  ],
  "炭酸水": [
@@ -567,8 +582,8 @@
   },
   {
    "date": "2026-10-01",
-   "min_effective": 2240,
-   "min_price": 2618
+   "min_effective": 2548,
+   "min_price": 2574
   }
  ],
  "ハンドクリーム": [
@@ -645,6 +660,11 @@
    "date": "2026-09-29",
    "min_effective": 3594,
    "min_price": 3630
+  },
+  {
+   "date": "2026-10-01",
+   "min_effective": 3812,
+   "min_price": 3850
   }
  ],
  "靴下（メンズ）": [
@@ -798,6 +818,13 @@
    "date": "2026-10-01",
    "min_effective": 2156,
    "min_price": 2178
+  }
+ ],
+ "ハイボール缶": [
+  {
+   "date": "2026-10-01",
+   "min_effective": 4029,
+   "min_price": 4070
   }
  ]
 }
