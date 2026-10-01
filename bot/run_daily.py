@@ -393,7 +393,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None):
         ng = w.get("ng_words", [])
         items = []
         max_p = MAX_PRICE
-        min_p = MIN_PRICE   # 項目ごとの価格帯より、全体の 2,000〜5,000円を優先
+        min_p = MIN_PRICE   # 項目ごとの価格帯より、全体の 2,000〜8,000円を優先
         for page in range(1, 11):
             batch = api.search_cheapest(w["keyword"], min_p, max_p, page=page,
                                         sort=w.get("sort", "+itemPrice"), genre_id=w.get("genre_id"))
