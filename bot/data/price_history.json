@@ -85,8 +85,8 @@
   },
   {
    "date": "2026-10-04",
-   "min_effective": 2090,
-   "min_price": 2200
+   "min_effective": 2297,
+   "min_price": 2320
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -195,8 +195,8 @@
   },
   {
    "date": "2026-10-04",
-   "min_effective": 4116,
-   "min_price": 4158
+   "min_effective": 4891,
+   "min_price": 4940
   }
  ],
  "柔軟剤 詰め替え": [
@@ -204,6 +204,11 @@
    "date": "2026-09-25",
    "min_effective": 2156,
    "min_price": 2178
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 4701,
+   "min_price": 4748
   }
  ],
  "トイレ用洗剤": [
@@ -306,6 +311,11 @@
    "date": "2026-09-29",
    "min_effective": 4338,
    "min_price": 4382
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 4514,
+   "min_price": 4560
   }
  ],
  "ミネラルウォーター": [
@@ -313,6 +323,11 @@
    "date": "2026-09-25",
    "min_effective": 2887,
    "min_price": 2916
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 3429,
+   "min_price": 3464
   }
  ],
  "無洗米": [
@@ -335,6 +350,11 @@
    "date": "2026-10-01",
    "min_effective": 2376,
    "min_price": 2400
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 3643,
+   "min_price": 3680
   }
  ],
  "プロテイン": [
@@ -352,6 +372,11 @@
    "date": "2026-09-28",
    "min_effective": 3910,
    "min_price": 3950
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 4930,
+   "min_price": 4980
   }
  ],
  "シャンプー 詰め替え": [
@@ -379,6 +404,11 @@
    "date": "2026-10-01",
    "min_effective": 2027,
    "min_price": 2047
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 4186,
+   "min_price": 4228
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -953,6 +983,11 @@
    "date": "2026-10-01",
    "min_effective": 2156,
    "min_price": 2178
+  },
+  {
+   "date": "2026-10-04",
+   "min_effective": 4900,
+   "min_price": 4950
   }
  ],
  "ハイボール缶": [
