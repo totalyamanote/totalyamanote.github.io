@@ -235,17 +235,53 @@ GENRE_TAGS = {
 
 
 # ---------------- ③ 最安値ウォッチ ----------------
+def genre_weights():
+    """投稿の反応から学習したジャンルの倍率（performance.py が毎晩作る）。無ければ空。"""
+    return load_json(DATA / "genre_weights.json", {}).get("product", {})
+
+
+GENRE_PAT = {
+    "スキンケア・美容": r"化粧水|美容液|クレンジング|洗顔|日焼け止め|ヘア|シャンプー|まつげ|コスメ|ハンドクリーム|美容",
+    "掃除・洗濯・日用品": r"トイレ|洗剤|柔軟剤|掃除|カビ|ティッシュ|ゴミ袋|除菌|湿気|ソープ|キッチンペーパー|入浴剤|歯磨き",
+    "食品・おやつ": r"チョコ|カレー|ナッツ|オートミール|米|コーヒー|茶|水|炭酸",
+    "お酒": r"ビール|ハイボール|サワー|日本酒|ワイン",
+    "健康": r"プロテイン|サプリ|ビタミン|健康",
+    "キッチン": r"包丁|キッチン|水筒",
+    "インテリア・収納": r"収納|スタンド|タオル|靴下",
+    "家電・ガジェット": r"充電|イヤホン|バッテリー|ライト|加湿器|マウス|ケーブル|毛布|パソコン|家電",
+}
+
+
+def genre_of(text):
+    for g, pat in GENRE_PAT.items():
+        if re.search(pat, text):
+            return g
+    return None
+
+
 def todays_watchlist(cfg, today):
     """更新のたびにカテゴリを全部入れ替える（ユーザー指定「全入れ替え」）。
     watchlist と watchlist_pool を1つの輪にして、1日4回の更新ごとに次の9カテゴリへ進む。"""
     allc = cfg["watchlist"] + cfg.get("watchlist_pool", [])
     n = min(len(cfg["watchlist"]) + cfg.get("pool_per_day", 0), len(allc))
+    # 反応が良いジャンル（倍率1.2以上）のカテゴリは輪の中に2回入れて、出る回数を多くする（2026-10-05 ユーザー指定）
+    gw = genre_weights()
+    allc = [c for c in allc for _ in range(2 if gw.get(genre_of(c["name"] + " " + (c.get("keyword") or "")), 1.0) >= 1.2 else 1)]
     # 何回目の更新かを数えて、前回の続きのカテゴリから始める（定時実行が遅れても重ならない）
     rot = load_json(DATA / "rotation.json", {"next": 0})
     start = rot["next"] % len(allc)
     rot.update({"next": (start + n) % len(allc), "updated": today})
     save_json(DATA / "rotation.json", rot)
-    return [allc[(start + i) % len(allc)] for i in range(n)]
+    out, names = [], set()
+    for i in range(len(allc)):
+        c = allc[(start + i) % len(allc)]
+        if c["name"] not in names:
+            out.append(c); names.add(c["name"])
+        if len(out) == n:
+            break
+    # 反応が良いジャンルを上に並べる
+    out.sort(key=lambda c: -gw.get(genre_of(c["name"] + " " + (c.get("keyword") or "")), 1.0))
+    return out
 
 
 COLOR_WORDS = r"(ブラック|ホワイト|白|黒|ピンク|ブルー|グレー|レッド|グリーン|ベージュ|パープル|紫|ネイビー|シルバー|ゴールド|イエロー|オレンジ|ブラウン|クリーム|色|カラー)"
@@ -302,13 +338,20 @@ def mark_shown(sh, items, today):
         sh["keys"][dedupe_key(it)] = today
 
 
+RANK_TO_GENRE = {"美容・コスメ": "スキンケア・美容", "日用消耗品": "掃除・洗濯・日用品", "ダイエット・健康": "健康",
+                 "家電": "家電・ガジェット", "パソコン・周辺機器": "家電・ガジェット"}
+
+
 def fresh_picks(api, cfg, posts, sh, per_genre=2):
     """上の欄：まだ出していない1万円未満で、ポイント2倍以上の商品だけをジャンルごとに集める（1倍は出さない＝ユーザー指定）。
     ランキングを上から見て、足りなければポイントアップ中の商品検索（pointRateFlag=1）で補う。
     ランキングの倍率は古いことがあるので、選んだ商品は検索APIで倍率を取り直して確かめる。"""
     out, heads = [], set()   # heads：商品名の最初の語（同じ商品の別ショップ出品を、ジャンルをまたいで1つにする）
+    gw = genre_weights()
     for g in cfg["ranking_genres"]:
         cands, keys = [], set()
+        w = gw.get(RANK_TO_GENRE.get(g["name"]), 1.0)
+        per_genre = 3 if w >= 1.2 else (1 if w < 0.8 else 2)   # 反応が良いジャンルは多めに
 
         def take(pool):
             for it in pool:
