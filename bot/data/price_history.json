@@ -253,6 +253,11 @@
    "date": "2026-10-04",
    "min_effective": 2158,
    "min_price": 2180
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "LEDデスクライト": [
@@ -297,6 +302,11 @@
    "date": "2026-10-04",
    "min_effective": 4351,
    "min_price": 4580
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 4435,
+   "min_price": 4480
   }
  ],
  "ボックスティッシュ": [
@@ -560,8 +570,8 @@
   },
   {
    "date": "2026-10-05",
-   "min_effective": 2950,
-   "min_price": 2980
+   "min_effective": 4256,
+   "min_price": 4299
   }
  ],
  "炭酸水": [
@@ -712,8 +722,8 @@
   },
   {
    "date": "2026-10-05",
-   "min_effective": 2198,
-   "min_price": 2220
+   "min_effective": 3594,
+   "min_price": 3630
   }
  ],
  "ハンドクリーム": [
@@ -783,6 +793,11 @@
    "date": "2026-10-03",
    "min_effective": 2158,
    "min_price": 2180
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "ワイン": [
@@ -859,6 +874,11 @@
    "date": "2026-10-03",
    "min_effective": 2059,
    "min_price": 2080
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2960,
+   "min_price": 2990
   }
  ],
  "充電ケーブル": [
@@ -908,6 +928,11 @@
    "date": "2026-10-04",
    "min_effective": 3485,
    "min_price": 3520
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2059,
+   "min_price": 2080
   }
  ],
  "水筒 ステンレス": [
@@ -940,6 +965,11 @@
    "date": "2026-10-04",
    "min_effective": 2257,
    "min_price": 2280
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "モバイルバッテリー": [
@@ -979,6 +1009,11 @@
    "date": "2026-10-04",
    "min_effective": 2326,
    "min_price": 2350
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "スマホ・パソコン用の充電器": [
