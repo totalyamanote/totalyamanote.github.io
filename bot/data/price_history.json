@@ -136,6 +136,11 @@
    "date": "2026-10-01",
    "min_effective": 2752,
    "min_price": 2780
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 4116,
+   "min_price": 4158
   }
  ],
  "加湿器": [
@@ -163,6 +168,11 @@
    "date": "2026-10-01",
    "min_effective": 3920,
    "min_price": 3960
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 1965,
+   "min_price": 2090
   }
  ],
  "ワイヤレスマウス": [
@@ -355,6 +365,11 @@
    "date": "2026-10-04",
    "min_effective": 3643,
    "min_price": 3680
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 4144,
+   "min_price": 5180
   }
  ],
  "プロテイン": [
@@ -377,6 +392,11 @@
    "date": "2026-10-04",
    "min_effective": 4930,
    "min_price": 4980
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 5920,
+   "min_price": 5980
   }
  ],
  "シャンプー 詰め替え": [
@@ -409,6 +429,11 @@
    "date": "2026-10-04",
    "min_effective": 4186,
    "min_price": 4228
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 4033,
+   "min_price": 4074
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -490,6 +515,11 @@
    "date": "2026-10-01",
    "min_effective": 4704,
    "min_price": 4752
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 3741,
+   "min_price": 3779
   }
  ],
  "緑茶ティーバッグ": [
@@ -527,6 +557,11 @@
    "date": "2026-10-02",
    "min_effective": 2376,
    "min_price": 2400
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2950,
+   "min_price": 2980
   }
  ],
  "炭酸水": [
@@ -674,6 +709,11 @@
    "date": "2026-10-03",
    "min_effective": 2090,
    "min_price": 2200
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 2198,
+   "min_price": 2220
   }
  ],
  "ハンドクリーム": [
@@ -988,6 +1028,11 @@
    "date": "2026-10-04",
    "min_effective": 4900,
    "min_price": 4950
+  },
+  {
+   "date": "2026-10-05",
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "ハイボール缶": [
