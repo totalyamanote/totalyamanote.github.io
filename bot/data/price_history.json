@@ -97,6 +97,11 @@
    "date": "2026-10-06",
    "min_effective": 2780,
    "min_price": 2808
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 2822,
+   "min_price": 2880
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -278,6 +283,11 @@
    "date": "2026-10-06",
    "min_effective": 3132,
    "min_price": 3480
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 3247,
+   "min_price": 3280
   }
  ],
  "LEDデスクライト": [
@@ -332,6 +342,11 @@
    "date": "2026-10-06",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 4841,
+   "min_price": 4890
   }
  ],
  "ボックスティッシュ": [
@@ -366,6 +381,11 @@
    "date": "2026-10-06",
    "min_effective": 4514,
    "min_price": 4560
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 4891,
+   "min_price": 4940
   }
  ],
  "ミネラルウォーター": [
@@ -410,6 +430,11 @@
    "date": "2026-10-05",
    "min_effective": 4144,
    "min_price": 5180
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 5316,
+   "min_price": 5480
   }
  ],
  "プロテイン": [
@@ -437,6 +462,11 @@
    "date": "2026-10-05",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 4066,
+   "min_price": 4280
   }
  ],
  "シャンプー 詰め替え": [
@@ -474,6 +504,11 @@
    "date": "2026-10-05",
    "min_effective": 4033,
    "min_price": 4074
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 2505,
+   "min_price": 2530
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -1020,6 +1055,11 @@
    "date": "2026-10-06",
    "min_effective": 2892,
    "min_price": 2981
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "モバイルバッテリー": [
@@ -1123,6 +1163,11 @@
    "date": "2026-10-05",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-10-07",
+   "min_effective": 5267,
+   "min_price": 5320
   }
  ],
  "ハイボール缶": [
