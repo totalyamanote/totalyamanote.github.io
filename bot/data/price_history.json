@@ -63,8 +63,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 2992,
-   "min_price": 3520
+   "min_effective": 3024,
+   "min_price": 3055
   }
  ],
  "日焼け止め": [
@@ -95,8 +95,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 2455,
-   "min_price": 2480
+   "min_effective": 2780,
+   "min_price": 2808
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -229,6 +229,11 @@
    "date": "2026-10-04",
    "min_effective": 4701,
    "min_price": 4748
+  },
+  {
+   "date": "2026-10-06",
+   "min_effective": 5920,
+   "min_price": 5980
   }
  ],
  "トイレ用洗剤": [
@@ -271,8 +276,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 2257,
-   "min_price": 2280
+   "min_effective": 3132,
+   "min_price": 3480
   }
  ],
  "LEDデスクライト": [
@@ -325,8 +330,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 3851,
-   "min_price": 3890
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "ボックスティッシュ": [
@@ -354,6 +359,11 @@
   },
   {
    "date": "2026-10-04",
+   "min_effective": 4514,
+   "min_price": 4560
+  },
+  {
+   "date": "2026-10-06",
    "min_effective": 4514,
    "min_price": 4560
   }
@@ -752,8 +762,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 2257,
-   "min_price": 2280
+   "min_effective": 2940,
+   "min_price": 2970
   }
  ],
  "ハンドクリーム": [
@@ -831,8 +841,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 3366,
-   "min_price": 3400
+   "min_effective": 3430,
+   "min_price": 3465
   }
  ],
  "ワイン": [
@@ -1008,8 +1018,8 @@
   },
   {
    "date": "2026-10-06",
-   "min_effective": 2455,
-   "min_price": 2480
+   "min_effective": 2892,
+   "min_price": 2981
   }
  ],
  "モバイルバッテリー": [
