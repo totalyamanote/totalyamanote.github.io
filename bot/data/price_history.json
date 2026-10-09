@@ -218,6 +218,11 @@
    "date": "2026-10-08",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-10-09",
+   "min_effective": 2138,
+   "min_price": 2250
   }
  ],
  "ワイヤレスマウス": [
@@ -326,8 +331,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 2168,
-   "min_price": 2190
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "LEDデスクライト": [
@@ -488,8 +493,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 5326,
-   "min_price": 5380
+   "min_effective": 3643,
+   "min_price": 3680
   }
  ],
  "プロテイン": [
@@ -525,6 +530,11 @@
   },
   {
    "date": "2026-10-08",
+   "min_effective": 5534,
+   "min_price": 5590
+  },
+  {
+   "date": "2026-10-09",
    "min_effective": 5534,
    "min_price": 5590
   }
@@ -867,8 +877,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 3812,
-   "min_price": 3850
+   "min_effective": 2548,
+   "min_price": 2574
   }
  ],
  "ハンドクリーム": [
@@ -914,8 +924,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 2069,
-   "min_price": 2090
+   "min_effective": 3445,
+   "min_price": 3480
   }
  ],
  "フェイスタオル": [
@@ -966,8 +976,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 2178,
-   "min_price": 2200
+   "min_effective": 2326,
+   "min_price": 2350
   }
  ],
  "ワイン": [
@@ -1106,8 +1116,8 @@
   },
   {
    "date": "2026-10-09",
-   "min_effective": 2276,
-   "min_price": 2299
+   "min_effective": 3485,
+   "min_price": 3520
   }
  ],
  "水筒 ステンレス": [
@@ -1273,6 +1283,11 @@
    "date": "2026-10-08",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-10-09",
+   "min_effective": 6336,
+   "min_price": 6400
   }
  ],
  "ハイボール缶": [
