@@ -132,6 +132,11 @@
    "date": "2026-10-10",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -243,6 +248,11 @@
    "date": "2026-10-10",
    "min_effective": 2682,
    "min_price": 2980
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 2951,
+   "min_price": 2981
   }
  ],
  "ワイヤレスマウス": [
@@ -358,6 +368,11 @@
    "date": "2026-10-10",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 2276,
+   "min_price": 2299
   }
  ],
  "LEDデスクライト": [
@@ -530,6 +545,11 @@
    "date": "2026-10-10",
    "min_effective": 3396,
    "min_price": 3430
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 3464,
+   "min_price": 3499
   }
  ],
  "プロテイン": [
@@ -577,6 +597,11 @@
    "date": "2026-10-10",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 3445,
+   "min_price": 3480
   }
  ],
  "シャンプー 詰め替え": [
@@ -1033,6 +1058,11 @@
    "date": "2026-10-10",
    "min_effective": 2722,
    "min_price": 2750
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 1980,
+   "min_price": 2000
   }
  ],
  "ワイン": [
@@ -1353,6 +1383,11 @@
    "date": "2026-10-10",
    "min_effective": 3168,
    "min_price": 3200
+  },
+  {
+   "date": "2026-10-11",
+   "min_effective": 3712,
+   "min_price": 3750
   }
  ],
  "ハイボール缶": [
