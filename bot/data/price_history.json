@@ -85,6 +85,11 @@
    "date": "2026-10-11",
    "min_effective": 2475,
    "min_price": 2750
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 2495,
+   "min_price": 2772
   }
  ],
  "日焼け止め": [
@@ -142,6 +147,11 @@
    "date": "2026-10-11",
    "min_effective": 2930,
    "min_price": 2960
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 3452,
+   "min_price": 3487
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -378,6 +388,11 @@
    "date": "2026-10-11",
    "min_effective": 2950,
    "min_price": 2980
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 2059,
+   "min_price": 2080
   }
  ],
  "LEDデスクライト": [
@@ -555,6 +570,11 @@
    "date": "2026-10-11",
    "min_effective": 3464,
    "min_price": 3499
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 5920,
+   "min_price": 5980
   }
  ],
  "プロテイン": [
@@ -1068,6 +1088,11 @@
    "date": "2026-10-11",
    "min_effective": 2267,
    "min_price": 2290
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 2494,
+   "min_price": 2519
   }
  ],
  "ワイン": [
@@ -1393,6 +1418,11 @@
    "date": "2026-10-11",
    "min_effective": 4257,
    "min_price": 4300
+  },
+  {
+   "date": "2026-10-12",
+   "min_effective": 6435,
+   "min_price": 6500
   }
  ],
  "ハイボール缶": [
