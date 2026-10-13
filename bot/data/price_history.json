@@ -408,6 +408,11 @@
    "date": "2026-10-13",
    "min_effective": 2156,
    "min_price": 2178
+  },
+  {
+   "date": "2026-10-14",
+   "min_effective": 2356,
+   "min_price": 2380
   }
  ],
  "LEDデスクライト": [
@@ -605,6 +610,11 @@
    "date": "2026-10-13",
    "min_effective": 3841,
    "min_price": 3880
+  },
+  {
+   "date": "2026-10-14",
+   "min_effective": 4940,
+   "min_price": 5200
   }
  ],
  "プロテイン": [
@@ -1128,6 +1138,11 @@
    "date": "2026-10-13",
    "min_effective": 2455,
    "min_price": 2480
+  },
+  {
+   "date": "2026-10-14",
+   "min_effective": 3267,
+   "min_price": 3300
   }
  ],
  "ワイン": [
@@ -1468,6 +1483,11 @@
    "date": "2026-10-13",
    "min_effective": 6316,
    "min_price": 6380
+  },
+  {
+   "date": "2026-10-14",
+   "min_effective": 6623,
+   "min_price": 6690
   }
  ],
  "ハイボール缶": [
