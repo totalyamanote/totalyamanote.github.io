@@ -2,7 +2,7 @@
 
 - アプリケーションID：config.json の yahoo.app_id（クラウドでは環境変数 YAHOO_APP_ID）
 - バリューコマース：yahoo.vc_sid / yahoo.vc_pid（リンクに出る番号なので公開してよい）
-- 実質価格 = 価格 − 付与ポイント（通常ポイント。キャンペーンの上乗せは条件があるので含めない）
+- 実質価格 = 価格 − 付与ポイント（通常分＋LINEヤフーのアカウント連携でもらえる分。PayPayカード等の条件付き上乗せは含めない）
 """
 import json
 import os
@@ -44,7 +44,9 @@ class Yahoo:
         out = []
         for h in data.get("hits", []):
             price = int(h.get("price") or 0)
-            pt = int((h.get("point") or {}).get("amount") or 0)
+            po = h.get("point") or {}
+            # 誰でももらえる分（amount・bonusAmount）＋ LINEヤフーのアカウント連携でもらえる分（lyLimitedBonusAmount）
+            pt = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0) + int(po.get("lyLimitedBonusAmount") or 0)
             rv = h.get("review") or {}
             out.append({
                 "item_code": "yahoo:" + str(h.get("code", "")), "name": h.get("name", ""), "price": price,
