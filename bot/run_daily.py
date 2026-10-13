@@ -412,7 +412,7 @@ def relevant(it, w):
     return any(m in head for m in must)
 
 
-def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None):
+def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=None):
     """exclude：ほかの欄にすでに出している商品コード（項目をまたいだ重複を避ける）
     sh：これまでに出した商品（出したものは除き、まだ出していない中で実質価格の安い順）"""
     shown = set(exclude or [])
@@ -481,6 +481,22 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None):
                 shown.discard(it["item_code"])
             continue
         seen_all += top
+        # Yahoo!ショッピング（バリューコマース）の同じカテゴリから、実質価格の安い2件（2026-10-13 Yahoo!アフィリエイト開始）
+        ys = []
+        if yahoo and yahoo.ready:
+            try:
+                q = w.get("keyword") or w["name"]
+                cand = [y for y in yahoo.search(q, MIN_PRICE, MAX_PRICE, results=30)
+                        if y["review_count"] >= 30 and relevant(y, w) and not OLD_NG.search(short_name(y["name"], 80))
+                        and not any(n in y["name"] for n in ng) and not was_shown(sh, y)]
+                cand.sort(key=lambda y: y["effective"])
+                for y in cand:
+                    if not is_dup(y, ys + top):
+                        ys.append(y)
+                    if len(ys) == 2:
+                        break
+            except Exception as e:
+                print(f"   ⚠ Yahoo検索に失敗（{w['name']}）: {e}", file=sys.stderr)
         h = [x for x in hist.get(w["name"], []) if x["date"] >= cutoff and x["date"] != today]
         if top:
             h.append({"date": today, "min_effective": top[0]["effective"], "min_price": min(i["price"] for i in top)})
@@ -488,6 +504,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None):
 
         past = [x["min_effective"] for x in h if x["date"] != today]
         results.append({
+            "yahoo": ys,
             "alcohol": w.get("alcohol", False),
             "name": w["name"],
             "items": top,
@@ -796,6 +813,17 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
                 f"<span class=eff2>実質¥{it['effective']:,}</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
+        for it in r.get("yahoo", []):
+            img = (f"<img src='{esc(it['image'])}' alt='' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
+            rows.append(
+                f"<a class='card yh' href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
+                f"<span class=gtag>Yahoo!ショッピング</span>{img}"
+                f"<span class=nm>{esc(short_name(it['name'], 40))}</span>"
+                f"<span class=yen>¥{it['price']:,}</span>"
+                f"<span class=pts>{it['point']:,}pt付与</span>"
+                f"<span class=eff2>実質¥{it['effective']:,}</span>"
+                f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
+                f"<span class='go ygo'>Yahoo!で見る →</span></a>")
         badge = ""
         low = f"直近30日の実質最安：¥{r['low_30']:,}" if r["low_30"] else ""
         amz = ""
@@ -841,7 +869,7 @@ th,td{{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;verti
 .hotpt{{font-weight:800;background:#ffe4e6;border-radius:6px;padding:2px 4px}}
 .gtag{{font-size:11px;color:var(--mut)}}
 .ic{{font-size:64px;text-align:center;line-height:1.3;background:#fff7ed;border-radius:8px;padding:10px 0}}
-.go.amz{{background:#ff9900;color:#111}} .nm{{font-size:13px;line-height:1.4}} .yen{{font-weight:800;color:var(--acc);font-size:16px}}
+.go.amz{{background:#ff9900;color:#111}} .go.ygo{{background:#ff0033}} .card.yh{{border-color:#ffb3c1}} .nm{{font-size:13px;line-height:1.4}} .yen{{font-weight:800;color:var(--acc);font-size:16px}}
 .rv{{font-size:11px;color:var(--mut)}} .go{{margin-top:auto;font-size:12px;font-weight:700;color:#fff;background:#bf0000;border-radius:6px;text-align:center;padding:5px}}
 a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:6px;flex:none;border:1px solid var(--line)}}
 @media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr}}}}
@@ -849,7 +877,7 @@ a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56
 a{{color:inherit}}
 </style></head><body><main>
 <h1>{esc(cfg['site_title'])}</h1>
-<p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイトを利用しています。価格・ポイントは{stamp}時点のものです。</p>
+<p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
 <div class=intro><p><b>楽天で買う前に「実質いくら？」（価格−ポイント）が分かるページです。</b></p>
 <ul><li>毎朝、楽天の価格とポイント倍率を取り直して並べ直します</li>
 <li>毎朝の一覧で紹介する商品は<b>2,000〜8,000円</b>で、レビュー30件以上のものだけ（比較記事は実際に使った商品そのもの）</li>
@@ -895,8 +923,10 @@ def main():
 
     sh = load_shown()
     picks = fresh_picks(api, cfg, posts, sh)
-    results = price_watch(api, cfg, today, exclude=[p["item_code"] for p in picks], sh=sh, picks_shown=picks)
-    shown_now = picks + [it for r in results for it in r["items"]]
+    from yahoo import Yahoo
+    yh = Yahoo(cfg)
+    results = price_watch(api, cfg, today, exclude=[p["item_code"] for p in picks], sh=sh, picks_shown=picks, yahoo=yh)
+    shown_now = picks + [it for r in results for it in r["items"] + r.get("yahoo", [])]
     furusato = furusato_items(api, cfg, sh, shown_now)
     hotels = hotel_items(api, cfg, sh)
     bottom = (cards_section("ふるさと納税（寄付額1万円未満・ポイント倍率が高い順）", furusato, "furusato",
