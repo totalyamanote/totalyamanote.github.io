@@ -43,6 +43,9 @@ class Yahoo:
             data = json.load(r)
         out = []
         for h in data.get("hits", []):
+            # アフィリエイトリンクにならない商品（LOHACO等）は載せない
+            if not str(h.get("url", "")).startswith("https://ck.jp.ap.valuecommerce.com/"):
+                continue
             price = int(h.get("price") or 0)
             po = h.get("point") or {}
             # 誰でももらえる分（amount・bonusAmount）＋ LINEヤフーのアカウント連携でもらえる分（lyLimitedBonusAmount）
