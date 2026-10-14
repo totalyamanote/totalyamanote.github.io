@@ -49,11 +49,14 @@ class Yahoo:
             price = int(h.get("price") or 0)
             po = h.get("point") or {}
             # 誰でももらえる分（amount・bonusAmount）＋ LINEヤフーのアカウント連携でもらえる分（lyLimitedBonusAmount）
-            pt = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0) + int(po.get("lyLimitedBonusAmount") or 0)
+            base = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0)
+            ly = int(po.get("lyLimitedBonusAmount") or 0)
+            pt = base + ly
             rv = h.get("review") or {}
             out.append({
                 "item_code": "yahoo:" + str(h.get("code", "")), "name": h.get("name", ""), "price": price,
-                "point": pt, "effective": price - pt, "url": h.get("url", ""),
+                "point": pt, "pt_base": base, "pt_ly": ly, "effective": price - pt,
+                "free_shipping": (h.get("shipping") or {}).get("code") == 2, "url": h.get("url", ""),
                 "image": ((h.get("image") or {}).get("medium") or "").replace("/i/g/", "/i/l/"),
                 "review_count": int(rv.get("count") or 0), "review_avg": float(rv.get("rate") or 0),
                 "shop": (h.get("seller") or {}).get("name", ""),
