@@ -278,6 +278,11 @@
    "date": "2026-10-11",
    "min_effective": 2951,
    "min_price": 2981
+  },
+  {
+   "date": "2026-10-14",
+   "min_effective": 2832,
+   "min_price": 2981
   }
  ],
  "ワイヤレスマウス": [
@@ -411,8 +416,8 @@
   },
   {
    "date": "2026-10-14",
-   "min_effective": 2950,
-   "min_price": 2980
+   "min_effective": 2851,
+   "min_price": 2880
   }
  ],
  "LEDデスクライト": [
@@ -618,8 +623,8 @@
   },
   {
    "date": "2026-10-14",
-   "min_effective": 3346,
-   "min_price": 3380
+   "min_effective": 5425,
+   "min_price": 5480
   }
  ],
  "プロテイン": [
