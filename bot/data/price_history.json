@@ -95,6 +95,11 @@
    "date": "2026-10-13",
    "min_effective": 3881,
    "min_price": 3960
+  },
+  {
+   "date": "2026-10-15",
+   "min_effective": 2257,
+   "min_price": 2280
   }
  ],
  "日焼け止め": [
@@ -162,6 +167,11 @@
    "date": "2026-10-13",
    "min_effective": 3049,
    "min_price": 3080
+  },
+  {
+   "date": "2026-10-15",
+   "min_effective": 2657,
+   "min_price": 2684
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -418,6 +428,11 @@
    "date": "2026-10-14",
    "min_effective": 2851,
    "min_price": 2880
+  },
+  {
+   "date": "2026-10-15",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "LEDデスクライト": [
@@ -625,6 +640,11 @@
    "date": "2026-10-14",
    "min_effective": 5425,
    "min_price": 5480
+  },
+  {
+   "date": "2026-10-15",
+   "min_effective": 4949,
+   "min_price": 4999
   }
  ],
  "プロテイン": [
