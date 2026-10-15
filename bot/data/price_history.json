@@ -175,8 +175,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 2622,
-   "min_price": 2648
+   "min_effective": 3136,
+   "min_price": 3168
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -296,6 +296,11 @@
   },
   {
    "date": "2026-10-14",
+   "min_effective": 2832,
+   "min_price": 2981
+  },
+  {
+   "date": "2026-10-16",
    "min_effective": 2832,
    "min_price": 2981
   }
@@ -525,8 +530,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 5326,
-   "min_price": 5380
+   "min_effective": 4534,
+   "min_price": 4580
   }
  ],
  "ボックスティッシュ": [
@@ -663,8 +668,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 2455,
-   "min_price": 2480
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "プロテイン": [
