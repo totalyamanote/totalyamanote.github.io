@@ -172,6 +172,11 @@
    "date": "2026-10-15",
    "min_effective": 2157,
    "min_price": 2179
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 2622,
+   "min_price": 2648
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -433,6 +438,11 @@
    "date": "2026-10-15",
    "min_effective": 2158,
    "min_price": 2180
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 3445,
+   "min_price": 3480
   }
  ],
  "LEDデスクライト": [
@@ -512,6 +522,11 @@
    "date": "2026-10-13",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 5326,
+   "min_price": 5380
   }
  ],
  "ボックスティッシュ": [
@@ -645,6 +660,11 @@
    "date": "2026-10-15",
    "min_effective": 5373,
    "min_price": 5427
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "プロテイン": [
@@ -960,6 +980,11 @@
    "date": "2026-09-29",
    "min_effective": 2138,
    "min_price": 2160
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 1987,
+   "min_price": 2484
   }
  ],
  "ヘアオイル": [
