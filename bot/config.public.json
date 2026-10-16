@@ -1440,7 +1440,7 @@
       ]
     }
   ],
-  "pool_per_day": 3,
+  "pool_per_day": 6,
   "kobo": {
     "genre_id": "101904",
     "hits": 10
