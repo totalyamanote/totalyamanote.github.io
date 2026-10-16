@@ -175,8 +175,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 3136,
-   "min_price": 3168
+   "min_effective": 3920,
+   "min_price": 3960
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -301,8 +301,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 2832,
-   "min_price": 2981
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "ワイヤレスマウス": [
@@ -530,8 +530,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 4534,
-   "min_price": 4580
+   "min_effective": 5722,
+   "min_price": 5780
   }
  ],
  "ボックスティッシュ": [
@@ -668,8 +668,8 @@
   },
   {
    "date": "2026-10-16",
-   "min_effective": 2653,
-   "min_price": 2680
+   "min_effective": 2722,
+   "min_price": 2750
   }
  ],
  "プロテイン": [
@@ -722,6 +722,11 @@
    "date": "2026-10-11",
    "min_effective": 3445,
    "min_price": 3480
+  },
+  {
+   "date": "2026-10-16",
+   "min_effective": 6514,
+   "min_price": 6580
   }
  ],
  "シャンプー 詰め替え": [
