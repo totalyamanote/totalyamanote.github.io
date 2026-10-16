@@ -26,8 +26,8 @@ DATA = Path(os.environ.get("DATA_DIR") or BASE / "data").resolve()
 OUT = Path(os.environ.get("OUT_DIR") or BASE / "out").resolve()
 SITE = Path(os.environ.get("SITE_DIR") or BASE / "site").resolve()
 HISTORY_DAYS = 90
-MIN_PRICE = 2000   # 安っぽい雑貨は出さない（ユーザー指定 2026-10-01：2,000〜8,000円の商品を載せる）
-MAX_PRICE = 8000   # 商品は8,000円まで（ふるさと納税・ホテルは FURUSATO_MAX / HOTEL_MAX）
+MIN_PRICE = 1980   # 安っぽい雑貨は出さない（ユーザー指定 2026-10-01：2,000〜8,000円の商品を載せる）
+MAX_PRICE = 9800   # 商品は1,980〜9,800円（2026-10-16 ユーザー指定）（ふるさと納税・ホテルは FURUSATO_MAX / HOTEL_MAX）
 FURUSATO_MAX = 9999
 # 今どき使う人が少ない・紹介しても響かない商品は出さない（2026-09-28 ユーザー指定「プリンターのインクなど不要」）
 OLD_NG = re.compile(r"インク|トナー|プリンタ|カートリッジ|リボン|FAX|ファックス|感熱紙|フロッピー|CD-R|DVD-R|ブルーレイディスク|BD-R|(?<![A-Za-z])MD(?![A-Za-z])|カセットテープ|VHS|ビデオテープ|電話機|ワープロ|ラミネートフィルム|不織布|(?<!フェイス)(?<!シート)(?<!美容)(?<!ヘア)(?<!アイ)(?<!スリープ)マスク(?!パック)")   # マスクも不要（2026-09-28 ユーザー指定）
@@ -440,7 +440,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
         ng = w.get("ng_words", [])
         items = []
         max_p = MAX_PRICE
-        min_p = MIN_PRICE   # 項目ごとの価格帯より、全体の 2,000〜8,000円を優先
+        min_p = MIN_PRICE   # 項目ごとの価格帯より、全体の 1,980〜9,800円を優先
         for page in range(1, 11):
             batch = api.search_cheapest(w["keyword"], min_p, max_p, page=page,
                                         sort=w.get("sort", "+itemPrice"), genre_id=w.get("genre_id"))
@@ -859,7 +859,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
     page = f"""<!doctype html><html lang=ja><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>{esc(cfg['site_title'])}</title>
-<meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。2,000〜8,000円の人気商品・ふるさと納税・ホテルを毎朝入れ替えて紹介。Amazonへのリンクも。">
+<meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。1,980〜9,800円の人気商品・ふるさと納税・ホテルを毎朝入れ替えて紹介。Amazonへのリンクも。">
 <style>
 :root{{--bg:#fafaf9;--fg:#1c1917;--mut:#78716c;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#1c1917;--fg:#f5f5f4;--mut:#a8a29e;--line:#44403c;--acc:#f87171;--card:#292524}}}}
@@ -898,7 +898,7 @@ a{{color:inherit}}
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
 <div class=intro><p><b>楽天・Yahoo!ショッピングで買う前に「実質いくら？」（価格−ポイント）が分かるページです。</b></p>
 <ul><li>毎朝、楽天とYahoo!ショッピングの価格・ポイントを取り直して並べ直します（Yahoo!のポイントはLINEヤフー連携時の分を含みます）</li>
-<li>毎朝の一覧で紹介する商品は<b>2,000〜8,000円</b>で、レビュー30件以上のものだけ（比較記事は実際に使った商品そのもの）</li>
+<li>毎朝の一覧で紹介する商品は<b>1,980〜9,800円</b>で、レビュー30件以上のものだけ（比較記事は実際に使った商品そのもの）</li>
 <li>一度載せた商品は載せないので、毎朝ぜんぶ入れ替わります</li>
 <li>ポイント倍率が高い商品／日用品・食品・お酒などの実質最安（楽天とYahoo!を並べて比較）／ふるさと納税（寄付額1万円未満）／ホテル・旅館（1人1万円未満）</li>
 <li>実際に使った商品は「比較記事」にまとめています</li></ul></div>
