@@ -482,21 +482,35 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             continue
         seen_all += top
         # Yahoo!ショッピング（バリューコマース）の同じカテゴリから、実質価格の安い2件（2026-10-13 Yahoo!アフィリエイト開始）
+        # 2026-10-16 ユーザー指定「楽天ばかりだからヤフーも半々に」：1カテゴリ4件を 楽天2・Yahoo2 にする（Yahooが足りない分は楽天で埋める）
         ys = []
         if yahoo and yahoo.ready:
             try:
                 q = w.get("keyword") or w["name"]
-                cand = [y for y in yahoo.search(q, MIN_PRICE, MAX_PRICE, results=30)
-                        if y["review_count"] >= 30 and relevant(y, w) and not OLD_NG.search(short_name(y["name"], 80))
-                        and not any(n in y["name"] for n in ng) and not was_shown(sh, y)]
+                cand, seen_y = [], set()
+                for sort in ("-score", "-review_count"):
+                    for y in yahoo.search(q, MIN_PRICE, MAX_PRICE, results=50, sort=sort):
+                        if y["item_code"] in seen_y:
+                            continue
+                        seen_y.add(y["item_code"])
+                        if (y["review_count"] >= 30 and relevant(y, w) and not OLD_NG.search(short_name(y["name"], 80))
+                                and not any(n in y["name"] for n in ng) and not was_shown(sh, y)):
+                            cand.append(y)
                 cand.sort(key=lambda y: y["effective"])
+                ykeys = set()
                 for y in cand:
-                    if not is_dup(y, ys + top):
-                        ys.append(y)
+                    k2 = ("shop", y.get("shop", ""))
+                    if k2 in ykeys or is_dup(y, ys + top + seen_all):
+                        continue
+                    ykeys.add(k2); ys.append(y)
                     if len(ys) == 2:
                         break
             except Exception as e:
                 print(f"   ⚠ Yahoo検索に失敗（{w['name']}）: {e}", file=sys.stderr)
+        keep = max(2, 4 - len(ys))
+        for it in top[keep:]:
+            shown.discard(it["item_code"])
+        top = top[:keep]
         h = [x for x in hist.get(w["name"], []) if x["date"] >= cutoff and x["date"] != today]
         if top:
             h.append({"date": today, "min_effective": top[0]["effective"], "min_price": min(i["price"] for i in top)})
