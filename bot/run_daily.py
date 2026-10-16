@@ -449,7 +449,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
                       and it["review_count"] >= max(w.get("min_reviews", 30), 30)
                       and MIN_PRICE <= it["price"] <= MAX_PRICE and not was_shown(sh, it)
                       and relevant(it, w) and not OLD_NG.search(short_name(it["name"], 80)) and not ELEC_NG.search(it["name"])]   # 項目名と関係ない商品は出さない
-            if len(items) >= 8 or len(batch) < 30:
+            if len({it.get("shop") for it in items}) >= 6 or len(batch) < 30:   # 同じショップばかりだと重複除外で足りなくなるので、6ショップそろうまで見る
                 break
         # ポイントアップ中の商品も追加で探す（倍率が高いほど実質価格が下がるので、最安の候補になりうる）
         try:
