@@ -354,6 +354,11 @@
    "date": "2026-10-06",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 5227,
+   "min_price": 5280
   }
  ],
  "トイレ用洗剤": [
@@ -361,6 +366,11 @@
    "date": "2026-09-25",
    "min_effective": 2178,
    "min_price": 2200
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1970,
+   "min_price": 1990
   }
  ],
  "スマホスタンド": [
@@ -576,6 +586,11 @@
    "date": "2026-10-14",
    "min_effective": 5940,
    "min_price": 6000
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 4702,
+   "min_price": 4750
   }
  ],
  "ミネラルウォーター": [
@@ -670,6 +685,11 @@
    "date": "2026-10-16",
    "min_effective": 4049,
    "min_price": 4090
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 4604,
+   "min_price": 4650
   }
  ],
  "プロテイン": [
@@ -1553,6 +1573,11 @@
    "date": "2026-10-14",
    "min_effective": 7128,
    "min_price": 7200
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ハイボール缶": [
@@ -1560,6 +1585,34 @@
    "date": "2026-10-01",
    "min_effective": 4029,
    "min_price": 4070
+  }
+ ],
+ "猫砂": [
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
+  }
+ ],
+ "ペットシーツ": [
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
+  }
+ ],
+ "キャットフード": [
+  {
+   "date": "2026-10-17",
+   "min_effective": 2483,
+   "min_price": 2614
+  }
+ ],
+ "ドッグフード": [
+  {
+   "date": "2026-10-17",
+   "min_effective": 2970,
+   "min_price": 3000
   }
  ]
 }
