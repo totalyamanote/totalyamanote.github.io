@@ -688,8 +688,8 @@
   },
   {
    "date": "2026-10-17",
-   "min_effective": 4604,
-   "min_price": 4650
+   "min_effective": 5741,
+   "min_price": 5799
   }
  ],
  "プロテイン": [
@@ -851,6 +851,11 @@
    "date": "2026-10-01",
    "min_effective": 2000,
    "min_price": 2020
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 2277,
+   "min_price": 2300
   }
  ],
  "入浴剤": [
@@ -858,6 +863,11 @@
    "date": "2026-09-25",
    "min_effective": 346,
    "min_price": 350
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ドリップコーヒー": [
@@ -917,6 +927,11 @@
    "date": "2026-10-05",
    "min_effective": 4256,
    "min_price": 4299
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "炭酸水": [
@@ -1099,6 +1114,11 @@
    "date": "2026-10-10",
    "min_effective": 4316,
    "min_price": 4360
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ハンドクリーム": [
@@ -1228,6 +1248,11 @@
    "date": "2026-10-14",
    "min_effective": 3267,
    "min_price": 3300
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ワイン": [
@@ -1260,6 +1285,11 @@
    "date": "2026-10-02",
    "min_effective": 3910,
    "min_price": 3949
+  },
+  {
+   "date": "2026-10-17",
+   "min_effective": 4346,
+   "min_price": 4390
   }
  ],
  "靴下（メンズ）": [
@@ -1576,8 +1606,8 @@
   },
   {
    "date": "2026-10-17",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 7623,
+   "min_price": 7700
   }
  ],
  "ハイボール缶": [
@@ -1613,6 +1643,13 @@
    "date": "2026-10-17",
    "min_effective": 2970,
    "min_price": 3000
+  }
+ ],
+ "ビール": [
+  {
+   "date": "2026-10-17",
+   "min_effective": 3959,
+   "min_price": 3999
   }
  ]
 }
