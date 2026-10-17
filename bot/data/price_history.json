@@ -932,6 +932,11 @@
    "date": "2026-10-17",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "炭酸水": [
@@ -1119,6 +1124,11 @@
    "date": "2026-10-17",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ハンドクリーム": [
@@ -1171,6 +1181,11 @@
    "date": "2026-10-10",
    "min_effective": 2614,
    "min_price": 2640
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 3643,
+   "min_price": 3680
   }
  ],
  "フェイスタオル": [
@@ -1253,6 +1268,11 @@
    "date": "2026-10-17",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 5396,
+   "min_price": 5680
   }
  ],
  "ワイン": [
@@ -1307,6 +1327,11 @@
    "date": "2026-09-29",
    "min_effective": 2722,
    "min_price": 2750
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 1881,
+   "min_price": 1980
   }
  ],
  "収納ボックス": [
@@ -1339,6 +1364,11 @@
    "date": "2026-10-05",
    "min_effective": 2960,
    "min_price": 2990
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 1970,
+   "min_price": 1990
   }
  ],
  "充電ケーブル": [
@@ -1622,6 +1652,11 @@
    "date": "2026-10-17",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 2363,
+   "min_price": 2750
   }
  ],
  "ペットシーツ": [
@@ -1629,6 +1664,11 @@
    "date": "2026-10-17",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-18",
+   "min_effective": 3643,
+   "min_price": 3680
   }
  ],
  "キャットフード": [
@@ -1650,6 +1690,13 @@
    "date": "2026-10-17",
    "min_effective": 3959,
    "min_price": 3999
+  }
+ ],
+ "レモンサワー": [
+  {
+   "date": "2026-10-18",
+   "min_effective": 2722,
+   "min_price": 2750
   }
  ]
 }
