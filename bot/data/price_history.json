@@ -690,6 +690,11 @@
    "date": "2026-10-17",
    "min_effective": 5741,
    "min_price": 5799
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 5821,
+   "min_price": 5880
   }
  ],
  "プロテイン": [
@@ -789,6 +794,11 @@
    "date": "2026-10-07",
    "min_effective": 2505,
    "min_price": 2530
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 4732,
+   "min_price": 4780
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -1129,6 +1139,11 @@
    "date": "2026-10-18",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 5900,
+   "min_price": 5960
   }
  ],
  "ハンドクリーム": [
@@ -1657,6 +1672,11 @@
    "date": "2026-10-18",
    "min_effective": 2363,
    "min_price": 2750
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "ペットシーツ": [
@@ -1676,6 +1696,11 @@
    "date": "2026-10-17",
    "min_effective": 2483,
    "min_price": 2614
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 2483,
+   "min_price": 2614
   }
  ],
  "ドッグフード": [
@@ -1683,6 +1708,11 @@
    "date": "2026-10-17",
    "min_effective": 2970,
    "min_price": 3000
+  },
+  {
+   "date": "2026-10-19",
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "ビール": [
