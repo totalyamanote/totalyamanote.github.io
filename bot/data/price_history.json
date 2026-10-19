@@ -700,6 +700,11 @@
    "date": "2026-10-19",
    "min_effective": 6217,
    "min_price": 6280
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 6910,
+   "min_price": 6980
   }
  ],
  "プロテイン": [
@@ -1293,6 +1298,11 @@
    "date": "2026-10-18",
    "min_effective": 5396,
    "min_price": 5680
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 2134,
+   "min_price": 2156
   }
  ],
  "ワイン": [
@@ -1330,6 +1340,11 @@
    "date": "2026-10-17",
    "min_effective": 4346,
    "min_price": 4390
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 5326,
+   "min_price": 5380
   }
  ],
  "靴下（メンズ）": [
@@ -1658,6 +1673,11 @@
    "date": "2026-10-17",
    "min_effective": 7623,
    "min_price": 7700
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 8791,
+   "min_price": 8880
   }
  ],
  "ハイボール缶": [
@@ -1682,6 +1702,11 @@
    "date": "2026-10-19",
    "min_effective": 2546,
    "min_price": 2680
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 2228,
+   "min_price": 2250
   }
  ],
  "ペットシーツ": [
@@ -1706,6 +1731,11 @@
    "date": "2026-10-19",
    "min_effective": 2483,
    "min_price": 2614
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 3608,
+   "min_price": 3644
   }
  ],
  "ドッグフード": [
