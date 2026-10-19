@@ -703,8 +703,8 @@
   },
   {
    "date": "2026-10-20",
-   "min_effective": 6910,
-   "min_price": 6980
+   "min_effective": 7425,
+   "min_price": 7500
   }
  ],
  "プロテイン": [
@@ -762,6 +762,11 @@
    "date": "2026-10-16",
    "min_effective": 6514,
    "min_price": 6580
+  },
+  {
+   "date": "2026-10-20",
+   "min_effective": 8306,
+   "min_price": 8390
   }
  ],
  "シャンプー 詰め替え": [
@@ -1705,8 +1710,8 @@
   },
   {
    "date": "2026-10-20",
-   "min_effective": 2228,
-   "min_price": 2250
+   "min_effective": 3148,
+   "min_price": 3180
   }
  ],
  "ペットシーツ": [
