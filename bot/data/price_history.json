@@ -705,6 +705,11 @@
    "date": "2026-10-20",
    "min_effective": 7425,
    "min_price": 7500
+  },
+  {
+   "date": "2026-10-21",
+   "min_effective": 2822,
+   "min_price": 2850
   }
  ],
  "プロテイン": [
@@ -767,6 +772,11 @@
    "date": "2026-10-20",
    "min_effective": 8306,
    "min_price": 8390
+  },
+  {
+   "date": "2026-10-21",
+   "min_effective": 5425,
+   "min_price": 5480
   }
  ],
  "シャンプー 詰め替え": [
@@ -1077,6 +1087,11 @@
    "date": "2026-09-30",
    "min_effective": 2178,
    "min_price": 2200
+  },
+  {
+   "date": "2026-10-21",
+   "min_effective": 2455,
+   "min_price": 2480
   }
  ],
  "洗顔フォーム": [
@@ -1683,6 +1698,11 @@
    "date": "2026-10-20",
    "min_effective": 8791,
    "min_price": 8880
+  },
+  {
+   "date": "2026-10-21",
+   "min_effective": 8811,
+   "min_price": 8900
   }
  ],
  "ハイボール缶": [
@@ -1712,6 +1732,11 @@
    "date": "2026-10-20",
    "min_effective": 3148,
    "min_price": 3180
+  },
+  {
+   "date": "2026-10-21",
+   "min_effective": 3158,
+   "min_price": 3190
   }
  ],
  "ペットシーツ": [
