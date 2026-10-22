@@ -182,6 +182,11 @@
    "date": "2026-10-16",
    "min_effective": 4138,
    "min_price": 4180
+  },
+  {
+   "date": "2026-10-23",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -715,6 +720,11 @@
    "date": "2026-10-22",
    "min_effective": 5722,
    "min_price": 5780
+  },
+  {
+   "date": "2026-10-23",
+   "min_effective": 2624,
+   "min_price": 2650
   }
  ],
  "プロテイン": [
@@ -1429,6 +1439,11 @@
    "date": "2026-10-18",
    "min_effective": 1970,
    "min_price": 1990
+  },
+  {
+   "date": "2026-10-23",
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "充電ケーブル": [
@@ -1747,6 +1762,11 @@
    "date": "2026-10-22",
    "min_effective": 2653,
    "min_price": 2680
+  },
+  {
+   "date": "2026-10-23",
+   "min_effective": 2119,
+   "min_price": 2140
   }
  ],
  "ペットシーツ": [
@@ -1793,6 +1813,11 @@
    "date": "2026-10-22",
    "min_effective": 2318,
    "min_price": 2390
+  },
+  {
+   "date": "2026-10-23",
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "ビール": [
