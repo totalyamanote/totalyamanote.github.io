@@ -728,8 +728,8 @@
   },
   {
    "date": "2026-10-24",
-   "min_effective": 4921,
-   "min_price": 5180
+   "min_effective": 5920,
+   "min_price": 5980
   }
  ],
  "プロテイン": [
@@ -1785,8 +1785,8 @@
   },
   {
    "date": "2026-10-24",
-   "min_effective": 3158,
-   "min_price": 3190
+   "min_effective": 3148,
+   "min_price": 3180
   }
  ],
  "ペットシーツ": [
@@ -1846,8 +1846,8 @@
   },
   {
    "date": "2026-10-24",
-   "min_effective": 2673,
-   "min_price": 2700
+   "min_effective": 3049,
+   "min_price": 3080
   }
  ],
  "ビール": [
