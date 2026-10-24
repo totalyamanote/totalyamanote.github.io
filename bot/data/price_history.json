@@ -730,6 +730,11 @@
    "date": "2026-10-24",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 4336,
+   "min_price": 4380
   }
  ],
  "プロテイン": [
@@ -940,6 +945,11 @@
    "date": "2026-10-05",
    "min_effective": 3741,
    "min_price": 3779
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 3856,
+   "min_price": 3895
   }
  ],
  "緑茶ティーバッグ": [
@@ -1395,6 +1405,11 @@
    "date": "2026-10-20",
    "min_effective": 5326,
    "min_price": 5380
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 3940,
+   "min_price": 4378
   }
  ],
  "靴下（メンズ）": [
@@ -1570,6 +1585,11 @@
    "date": "2026-10-09",
    "min_effective": 2678,
    "min_price": 2761
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "モバイルバッテリー": [
@@ -1787,6 +1807,11 @@
    "date": "2026-10-24",
    "min_effective": 3148,
    "min_price": 3180
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 2752,
+   "min_price": 2780
   }
  ],
  "ペットシーツ": [
@@ -1848,6 +1873,11 @@
    "date": "2026-10-24",
    "min_effective": 3049,
    "min_price": 3080
+  },
+  {
+   "date": "2026-10-25",
+   "min_effective": 4514,
+   "min_price": 4560
   }
  ],
  "ビール": [
