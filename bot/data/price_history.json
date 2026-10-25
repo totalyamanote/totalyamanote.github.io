@@ -187,6 +187,11 @@
    "date": "2026-10-23",
    "min_effective": 2871,
    "min_price": 2900
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 4673,
+   "min_price": 4720
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -735,6 +740,11 @@
    "date": "2026-10-25",
    "min_effective": 4336,
    "min_price": 4380
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 3099,
+   "min_price": 3130
   }
  ],
  "プロテイン": [
@@ -950,6 +960,11 @@
    "date": "2026-10-25",
    "min_effective": 3856,
    "min_price": 3895
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 3931,
+   "min_price": 3971
   }
  ],
  "緑茶ティーバッグ": [
@@ -1812,6 +1827,11 @@
    "date": "2026-10-25",
    "min_effective": 2752,
    "min_price": 2780
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 3237,
+   "min_price": 3270
   }
  ],
  "ペットシーツ": [
@@ -1846,6 +1866,11 @@
    "date": "2026-10-20",
    "min_effective": 3608,
    "min_price": 3644
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 2871,
+   "min_price": 2900
   }
  ],
  "ドッグフード": [
@@ -1878,6 +1903,11 @@
    "date": "2026-10-25",
    "min_effective": 4514,
    "min_price": 4560
+  },
+  {
+   "date": "2026-10-26",
+   "min_effective": 2069,
+   "min_price": 2090
   }
  ],
  "ビール": [
