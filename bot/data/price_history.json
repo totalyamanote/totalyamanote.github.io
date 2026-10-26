@@ -192,6 +192,11 @@
    "date": "2026-10-26",
    "min_effective": 4673,
    "min_price": 4720
+  },
+  {
+   "date": "2026-10-27",
+   "min_effective": 2326,
+   "min_price": 2350
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -745,6 +750,11 @@
    "date": "2026-10-26",
    "min_effective": 3099,
    "min_price": 3130
+  },
+  {
+   "date": "2026-10-27",
+   "min_effective": 7207,
+   "min_price": 7280
   }
  ],
  "プロテイン": [
@@ -963,6 +973,11 @@
   },
   {
    "date": "2026-10-26",
+   "min_effective": 3931,
+   "min_price": 3971
+  },
+  {
+   "date": "2026-10-27",
    "min_effective": 3931,
    "min_price": 3971
   }
@@ -1908,6 +1923,11 @@
    "date": "2026-10-26",
    "min_effective": 2069,
    "min_price": 2090
+  },
+  {
+   "date": "2026-10-27",
+   "min_effective": 2614,
+   "min_price": 2640
   }
  ],
  "ビール": [
