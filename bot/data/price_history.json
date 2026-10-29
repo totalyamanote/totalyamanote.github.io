@@ -770,6 +770,11 @@
    "date": "2026-10-29",
    "min_effective": 3445,
    "min_price": 3480
+  },
+  {
+   "date": "2026-10-30",
+   "min_effective": 4010,
+   "min_price": 4050
   }
  ],
  "プロテイン": [
@@ -1408,6 +1413,11 @@
    "date": "2026-10-24",
    "min_effective": 2346,
    "min_price": 2370
+  },
+  {
+   "date": "2026-10-30",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "ワイン": [
@@ -1968,6 +1978,11 @@
    "date": "2026-10-29",
    "min_effective": 3196,
    "min_price": 3228
+  },
+  {
+   "date": "2026-10-30",
+   "min_effective": 3250,
+   "min_price": 3283
   }
  ],
  "ビール": [
