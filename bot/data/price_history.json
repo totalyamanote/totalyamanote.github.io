@@ -775,6 +775,11 @@
    "date": "2026-10-30",
    "min_effective": 5821,
    "min_price": 5880
+  },
+  {
+   "date": "2026-10-31",
+   "min_effective": 4930,
+   "min_price": 4980
   }
  ],
  "プロテイン": [
@@ -1882,6 +1887,11 @@
    "date": "2026-10-26",
    "min_effective": 3237,
    "min_price": 3270
+  },
+  {
+   "date": "2026-10-31",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ペットシーツ": [
@@ -1899,6 +1909,11 @@
    "date": "2026-10-24",
    "min_effective": 3376,
    "min_price": 3751
+  },
+  {
+   "date": "2026-10-31",
+   "min_effective": 2276,
+   "min_price": 2299
   }
  ],
  "キャットフード": [
@@ -1981,6 +1996,11 @@
   },
   {
    "date": "2026-10-30",
+   "min_effective": 3250,
+   "min_price": 3283
+  },
+  {
+   "date": "2026-10-31",
    "min_effective": 3250,
    "min_price": 3283
   }
