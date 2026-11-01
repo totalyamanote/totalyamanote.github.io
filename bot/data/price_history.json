@@ -785,6 +785,11 @@
    "date": "2026-11-01",
    "min_effective": 5128,
    "min_price": 5180
+  },
+  {
+   "date": "2026-11-02",
+   "min_effective": 5326,
+   "min_price": 5380
   }
  ],
  "プロテイン": [
@@ -2013,6 +2018,11 @@
    "date": "2026-11-01",
    "min_effective": 3029,
    "min_price": 3190
+  },
+  {
+   "date": "2026-11-02",
+   "min_effective": 3851,
+   "min_price": 3890
   }
  ],
  "ビール": [
