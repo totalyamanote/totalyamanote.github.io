@@ -616,6 +616,11 @@
    "date": "2026-10-17",
    "min_effective": 4702,
    "min_price": 4750
+  },
+  {
+   "date": "2026-11-03",
+   "min_effective": 4356,
+   "min_price": 4400
   }
  ],
  "ミネラルウォーター": [
@@ -790,6 +795,11 @@
    "date": "2026-11-02",
    "min_effective": 5722,
    "min_price": 5780
+  },
+  {
+   "date": "2026-11-03",
+   "min_effective": 4752,
+   "min_price": 4800
   }
  ],
  "プロテイン": [
@@ -1331,6 +1341,11 @@
    "date": "2026-10-18",
    "min_effective": 3643,
    "min_price": 3680
+  },
+  {
+   "date": "2026-11-03",
+   "min_effective": 2030,
+   "min_price": 2050
   }
  ],
  "フェイスタオル": [
@@ -1951,6 +1966,11 @@
    "date": "2026-10-28",
    "min_effective": 2483,
    "min_price": 2614
+  },
+  {
+   "date": "2026-11-03",
+   "min_effective": 3069,
+   "min_price": 3100
   }
  ],
  "ドッグフード": [
