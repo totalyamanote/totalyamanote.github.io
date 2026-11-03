@@ -914,6 +914,11 @@
    "date": "2026-10-19",
    "min_effective": 3049,
    "min_price": 3080
+  },
+  {
+   "date": "2026-11-04",
+   "min_effective": 2138,
+   "min_price": 2160
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -1109,6 +1114,11 @@
    "date": "2026-10-06",
    "min_effective": 2178,
    "min_price": 2200
+  },
+  {
+   "date": "2026-11-04",
+   "min_effective": 1996,
+   "min_price": 2016
   }
  ],
  "レトルトカレー": [
@@ -2043,6 +2053,11 @@
    "date": "2026-11-02",
    "min_effective": 2614,
    "min_price": 2640
+  },
+  {
+   "date": "2026-11-04",
+   "min_effective": 3861,
+   "min_price": 3900
   }
  ],
  "ビール": [
