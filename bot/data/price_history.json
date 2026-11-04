@@ -986,6 +986,11 @@
    "date": "2026-10-17",
    "min_effective": 2277,
    "min_price": 2300
+  },
+  {
+   "date": "2026-11-05",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "入浴剤": [
@@ -2058,6 +2063,11 @@
    "date": "2026-11-04",
    "min_effective": 4780,
    "min_price": 4828
+  },
+  {
+   "date": "2026-11-05",
+   "min_effective": 3158,
+   "min_price": 3190
   }
  ],
  "ビール": [
