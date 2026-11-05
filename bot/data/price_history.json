@@ -1954,6 +1954,11 @@
    "date": "2026-10-31",
    "min_effective": 2276,
    "min_price": 2299
+  },
+  {
+   "date": "2026-11-05",
+   "min_effective": 3959,
+   "min_price": 3999
   }
  ],
  "キャットフード": [
@@ -2066,8 +2071,8 @@
   },
   {
    "date": "2026-11-05",
-   "min_effective": 3158,
-   "min_price": 3190
+   "min_effective": 4781,
+   "min_price": 4829
   }
  ],
  "ビール": [
