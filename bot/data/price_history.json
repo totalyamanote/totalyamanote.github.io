@@ -202,6 +202,11 @@
    "date": "2026-10-28",
    "min_effective": 2412,
    "min_price": 2436
+  },
+  {
+   "date": "2026-11-08",
+   "min_effective": 2574,
+   "min_price": 2600
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -2088,6 +2093,11 @@
    "date": "2026-11-07",
    "min_effective": 4777,
    "min_price": 4825
+  },
+  {
+   "date": "2026-11-08",
+   "min_effective": 4940,
+   "min_price": 4990
   }
  ],
  "ビール": [
