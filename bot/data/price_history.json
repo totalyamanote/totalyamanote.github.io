@@ -877,6 +877,11 @@
    "date": "2026-10-21",
    "min_effective": 5425,
    "min_price": 5480
+  },
+  {
+   "date": "2026-11-10",
+   "min_effective": 6209,
+   "min_price": 6536
   }
  ],
  "シャンプー 詰め替え": [
@@ -1141,6 +1146,11 @@
    "date": "2026-09-25",
    "min_effective": 426,
    "min_price": 430
+  },
+  {
+   "date": "2026-11-10",
+   "min_effective": 2132,
+   "min_price": 2154
   }
  ],
  "オートミール": [
@@ -2098,6 +2108,11 @@
    "date": "2026-11-08",
    "min_effective": 5017,
    "min_price": 5068
+  },
+  {
+   "date": "2026-11-10",
+   "min_effective": 2226,
+   "min_price": 2343
   }
  ],
  "ビール": [
