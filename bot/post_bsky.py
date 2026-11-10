@@ -40,7 +40,7 @@ def main():
         print("ほかの実行が先に投稿中なので、この実行は投稿しない"); return 0
     code = 0
     try:
-        q["bsky"] = bsky.post(q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
+        q["bsky"] = bsky.post(q.get("bsky_text") or q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
                               q.get("image"), q.get("alt", ""))
         print(f"✅ Bluesky {q['at']} {q['bsky']}")
     except Exception as e:
