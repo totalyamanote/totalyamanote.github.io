@@ -493,6 +493,11 @@
    "date": "2026-11-07",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-11",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "LEDデスクライト": [
@@ -1102,6 +1107,11 @@
    "date": "2026-10-18",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-11",
+   "min_effective": 2138,
+   "min_price": 2160
   }
  ],
  "炭酸水": [
@@ -1151,6 +1161,11 @@
    "date": "2026-11-10",
    "min_effective": 2132,
    "min_price": 2154
+  },
+  {
+   "date": "2026-11-11",
+   "min_effective": 3478,
+   "min_price": 3513
   }
  ],
  "オートミール": [
