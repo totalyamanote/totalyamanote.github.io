@@ -1247,6 +1247,11 @@
    "date": "2026-10-21",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 2483,
+   "min_price": 2508
   }
  ],
  "洗顔フォーム": [
@@ -2128,6 +2133,11 @@
    "date": "2026-11-10",
    "min_effective": 2226,
    "min_price": 2343
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 3074,
+   "min_price": 3105
   }
  ],
  "ビール": [
