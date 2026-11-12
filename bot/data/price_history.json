@@ -935,8 +935,8 @@
   },
   {
    "date": "2026-11-13",
-   "min_effective": 3132,
-   "min_price": 3190
+   "min_effective": 3742,
+   "min_price": 3780
   }
  ],
  "シャンプー 詰め替え": [
@@ -992,8 +992,8 @@
   },
   {
    "date": "2026-11-13",
-   "min_effective": 2132,
-   "min_price": 2154
+   "min_effective": 2396,
+   "min_price": 2420
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -1069,8 +1069,8 @@
   },
   {
    "date": "2026-11-13",
-   "min_effective": 2000,
-   "min_price": 2020
+   "min_effective": 5643,
+   "min_price": 5940
   }
  ],
  "入浴剤": [
@@ -1081,6 +1081,11 @@
   },
   {
    "date": "2026-10-17",
+   "min_effective": 1960,
+   "min_price": 1980
+  },
+  {
+   "date": "2026-11-13",
    "min_effective": 1960,
    "min_price": 1980
   }
@@ -1115,6 +1120,11 @@
    "date": "2026-10-27",
    "min_effective": 3931,
    "min_price": 3971
+  },
+  {
+   "date": "2026-11-13",
+   "min_effective": 3315,
+   "min_price": 3348
   }
  ],
  "緑茶ティーバッグ": [
@@ -1172,6 +1182,11 @@
    "date": "2026-11-11",
    "min_effective": 2138,
    "min_price": 2160
+  },
+  {
+   "date": "2026-11-13",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "炭酸水": [
@@ -1209,6 +1224,11 @@
    "date": "2026-11-04",
    "min_effective": 1996,
    "min_price": 2016
+  },
+  {
+   "date": "2026-11-13",
+   "min_effective": 2154,
+   "min_price": 2176
   }
  ],
  "レトルトカレー": [
@@ -1971,13 +1991,18 @@
   },
   {
    "date": "2026-11-13",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 3247,
+   "min_price": 3280
   }
  ],
  "ハイボール缶": [
   {
    "date": "2026-10-01",
+   "min_effective": 4029,
+   "min_price": 4070
+  },
+  {
+   "date": "2026-11-13",
    "min_effective": 4029,
    "min_price": 4070
   }

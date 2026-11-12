@@ -111,7 +111,7 @@
  ],
  "site_title": "楽天・Yahoo!・Amazon 最安をお知らせ",
  "x_monthly_budget_usd": 0,
- "amazon_tag": "",
+ "amazon_tag": "shogo450e-22",
  "post_mode": "api",
  "api_start_date": "2026-09-27",
  "watchlist_pool": [
@@ -1665,6 +1665,5 @@
  "yahoo": {
   "vc_sid": "3784510",
   "vc_pid": "892726197"
- },
- "amazon_tag_off": "shogo450e-22"
+ }
 }

@@ -18,7 +18,12 @@ from claim import claim
 OUT = Path(os.environ.get("OUT_DIR") or Path(__file__).resolve().parent / "out").resolve()
 
 
+THREADS_AMAZON_REGISTERED = True   # 2026-11-13 Amazonのサイト一覧にThreadsを登録済み。未登録に戻ったら False
+
+
 def strip_amazon(text):
+    if THREADS_AMAZON_REGISTERED:
+        return text
     """Amazonアソシエイトは登録したサイト・アカウント（現状はXと shogo45.github.io のみ）にしかリンクを載せられない。
     Threads には Amazon のリンク行と #Amazon を載せない（楽天の部分だけ出す）。2026-11-13 管理画面で確認。"""
     lines = [l for l in text.split("\n") if not re.match(r"\s*Amazon\s*[→>]", l) and "amazon.co.jp" not in l and "amzn.to" not in l]
