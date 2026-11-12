@@ -326,9 +326,14 @@ def is_dup(it, chosen, ignore=""):
 
 
 # ---- 一度サイトに出した商品は二度と出さない（ユーザー指定「ガラッと入れ替える」） ----
+SHOWN_DAYS = 14   # 2026-11-12 ユーザー指定「サイトの商品が減ってしょぼい」：直近14日に出した商品だけ除く（以前は永久に除外→出せる商品が尽きて欄が消えた）
+
+
 def load_shown():
     d = load_json(DATA / "shown_items.json", {})
-    return {"codes": d.get("codes", {}), "keys": d.get("keys", {})}
+    cut = (datetime.now() - timedelta(days=SHOWN_DAYS)).strftime("%Y-%m-%d")
+    return {"codes": {k: v for k, v in d.get("codes", {}).items() if str(v) >= cut},
+            "keys": {k: v for k, v in d.get("keys", {}).items() if str(v) >= cut}}
 
 
 def was_shown(sh, it):
@@ -899,7 +904,7 @@ a{{color:inherit}}
 <div class=intro><p><b>楽天・Yahoo!ショッピングで買う前に「実質いくら？」（価格−ポイント）が分かるページです。</b></p>
 <ul><li>毎朝、楽天とYahoo!ショッピングの価格・ポイントを取り直して並べ直します（Yahoo!のポイントはLINEヤフー連携時の分を含みます）</li>
 <li>毎朝の一覧で紹介する商品は<b>1,980〜9,800円</b>で、レビュー30件以上のものだけ（比較記事は実際に使った商品そのもの）</li>
-<li>一度載せた商品は載せないので、毎朝ぜんぶ入れ替わります</li>
+<li>直近2週間に載せた商品は載せないので、毎朝ほとんどの商品が入れ替わります</li>
 <li>ポイント倍率が高い商品／日用品・食品・お酒などの実質最安（楽天とYahoo!を並べて比較）／ふるさと納税（寄付額1万円未満）／ホテル・旅館（1人2万円以内）</li>
 <li>実際に使った商品は「比較記事」にまとめています</li></ul></div>
 {picks_html(picks)}
