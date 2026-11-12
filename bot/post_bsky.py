@@ -8,12 +8,22 @@
 """
 import json
 import os
+import re
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bsky
 from claim import claim
+
+# 楽天アフィリエイトは「認定SNS」以外に載せられない（Instagram・X・YouTube・楽天ROOM・TikTok・Pinterest・Lemon8・Facebook・Threads・moflog。
+# Bluesky は対象外。2026-11-13 ガイドライン確認。違反は利用停止・返金請求）。楽天リンクを含む投稿は Bluesky に出さない。
+RAKUTEN = re.compile(r"hb\.afl\.rakuten\.co\.jp|rakuten\.co\.jp|a\.r10\.to|rakuten\.jp")
+
+
+def is_rakuten(q):
+    return bool(RAKUTEN.search(q.get("bsky_text") or q["text"]))
+
 
 OUT = Path(os.environ.get("OUT_DIR") or Path(__file__).resolve().parent / "out").resolve()
 
@@ -25,8 +35,15 @@ def main():
     queue = json.loads(qpath.read_text(encoding="utf-8"))
     now = datetime.now()
     due = [q for q in queue if not q.get("bsky") and datetime.strptime(q["at"], "%Y-%m-%d %H:%M") <= now]
+    changed = False
+    for q in due:
+        if is_rakuten(q):
+            q["bsky"] = "skipped"; changed = True   # 楽天リンクはBlueskyに出さない
+    if changed:
+        qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
+    due = [q for q in due if q.get("bsky") != "skipped"]
     if not due:
-        print("投稿する枠はありません"); return 0
+        print("投稿する枠はありません（楽天リンクの投稿はBlueskyに出さない）"); return 0
     for old in due[:-1]:
         old["bsky"] = "skipped"
     q = due[-1]
