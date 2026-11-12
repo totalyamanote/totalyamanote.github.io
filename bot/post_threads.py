@@ -6,6 +6,7 @@
 - 認証：GitHub Secrets の THREADS_TOKEN。未設定ならスキップ
 """
 import json
+import re
 import os
 import sys
 from datetime import datetime, timedelta
@@ -15,6 +16,13 @@ import threads
 from claim import claim
 
 OUT = Path(os.environ.get("OUT_DIR") or Path(__file__).resolve().parent / "out").resolve()
+
+
+def strip_amazon(text):
+    """Amazonアソシエイトは登録したサイト・アカウント（現状はXと shogo45.github.io のみ）にしかリンクを載せられない。
+    Threads には Amazon のリンク行と #Amazon を載せない（楽天の部分だけ出す）。2026-11-13 管理画面で確認。"""
+    lines = [l for l in text.split("\n") if not re.match(r"\s*Amazon\s*[→>]", l) and "amazon.co.jp" not in l and "amzn.to" not in l]
+    return "\n".join(lines).replace(" #Amazon", "").replace("#Amazon ", "")
 
 
 def main():
@@ -46,7 +54,7 @@ def main():
         if not claim(qpath, f"Threads 投稿中 {q['at']}"):
             print("ほかの実行が先に投稿中なので、この実行は投稿しない"); return 0
         try:
-            q["threads"] = threads.post(q["text"], os.environ["THREADS_TOKEN"], q.get("image"), q.get("quote"))
+            q["threads"] = threads.post(strip_amazon(q["text"]), os.environ["THREADS_TOKEN"], q.get("image"), q.get("quote"))
             print(f"✅ Threads {q['at']} {q['threads']}")
         except Exception as e:
             q["threads"] = "failed"
