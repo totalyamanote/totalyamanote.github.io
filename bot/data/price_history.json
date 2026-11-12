@@ -229,6 +229,11 @@
    "date": "2026-10-10",
    "min_effective": 3388,
    "min_price": 3422
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 2208,
+   "min_price": 2324
   }
  ],
  "電動歯ブラシ 替えブラシ": [
@@ -367,6 +372,11 @@
    "date": "2026-10-04",
    "min_effective": 4891,
    "min_price": 4940
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 4887,
+   "min_price": 4936
   }
  ],
  "柔軟剤 詰め替え": [
@@ -389,6 +399,11 @@
    "date": "2026-10-17",
    "min_effective": 5227,
    "min_price": 5280
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 2827,
+   "min_price": 2856
   }
  ],
  "トイレ用洗剤": [
@@ -399,6 +414,11 @@
   },
   {
    "date": "2026-10-17",
+   "min_effective": 1970,
+   "min_price": 1990
+  },
+  {
+   "date": "2026-11-12",
    "min_effective": 1970,
    "min_price": 1990
   }
@@ -589,6 +609,11 @@
    "date": "2026-09-25",
    "min_effective": 882,
    "min_price": 891
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 2128,
+   "min_price": 2149
   }
  ],
  "トイレットペーパー": [
@@ -1972,6 +1997,11 @@
    "date": "2026-10-31",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 2228,
+   "min_price": 2250
   }
  ],
  "ペットシーツ": [
@@ -1999,6 +2029,11 @@
    "date": "2026-11-05",
    "min_effective": 3959,
    "min_price": 3999
+  },
+  {
+   "date": "2026-11-12",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "キャットフード": [
@@ -2029,6 +2064,11 @@
   },
   {
    "date": "2026-11-03",
+   "min_effective": 3069,
+   "min_price": 3100
+  },
+  {
+   "date": "2026-11-12",
    "min_effective": 3069,
    "min_price": 3100
   }
@@ -2136,8 +2176,8 @@
   },
   {
    "date": "2026-11-12",
-   "min_effective": 3074,
-   "min_price": 3105
+   "min_effective": 2970,
+   "min_price": 3000
   }
  ],
  "ビール": [
