@@ -100,7 +100,7 @@ def _link_card(url, token):
     return {"$type": "app.bsky.embed.external", "external": ext}
 
 
-def post(text, handle, app_password, image=None, alt=""):
+def post(text, handle, app_password, image=None, alt="", card=None):
     token, did = login(handle, app_password)
     orig_text = text
     text, links = shorten_links(fit_raw(text))
@@ -109,7 +109,17 @@ def post(text, handle, app_password, image=None, alt=""):
     f = _facets(text, links)
     if f:
         record["facets"] = f
-    if image:
+    if card:   # 画像をタップするとアフィリエイトリンクへ飛ぶリンクカード（リンクシェア等）
+        try:
+            ext = {"uri": card["uri"], "title": card.get("title", "")[:300], "description": card.get("description", "")[:300]}
+            if card.get("image"):
+                b = _upload_image(card["image"], token)
+                if b:
+                    ext["thumb"] = b
+            record["embed"] = {"$type": "app.bsky.embed.external", "external": ext}
+        except Exception as e:
+            print(f"   リンクカードなしで投稿（{e}）")
+    if image and "embed" not in record:
         try:
             blob = _upload_image(image, token)
             if blob:

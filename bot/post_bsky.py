@@ -58,7 +58,7 @@ def main():
     code = 0
     try:
         q["bsky"] = bsky.post(q.get("bsky_text") or q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
-                              q.get("image"), q.get("alt", ""))
+                              q.get("image"), q.get("alt", ""), q.get("bsky_card"))
         print(f"✅ Bluesky {q['at']} {q['bsky']}")
     except Exception as e:
         q["bsky"] = "failed"
