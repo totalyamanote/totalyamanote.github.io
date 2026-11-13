@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /bot/
+Sitemap: https://totalyamanote.github.io/sitemap.xml
