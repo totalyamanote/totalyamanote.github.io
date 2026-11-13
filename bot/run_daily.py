@@ -620,7 +620,7 @@ def cards_section(title, items, kind, note=""):
             + "<div class=cards>" + "".join(cards) + "</div></section>")
 
 
-ART_CSS = """.hist{display:block;margin-top:4px;font-size:13px;font-weight:700;color:#0f766e}.hist small{display:block;font-weight:400;font-size:11px;color:#888}
+ART_CSS = """.hist{display:block;margin-top:4px;font-size:13px;font-weight:700;color:#0f766e}.hist small{display:block;font-weight:400;font-size:11px;color:#5f5f5f}
 .price{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
 .price img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:8px;flex:none}
 .price .eff{display:block;font-size:22px;font-weight:800;color:var(--acc)} .price .calc{display:block;font-size:14px}
@@ -888,7 +888,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
 <title>{esc(cfg['site_title'])}</title>
 <meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。1,980〜9,800円の人気商品・ふるさと納税・ホテルを毎朝入れ替えて紹介。Amazonへのリンクも。">
 <style>
-:root{{--bg:#fafaf9;--fg:#1c1917;--mut:#78716c;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
+:root{{--bg:#fafaf9;--fg:#1c1917;--mut:#665d55;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#1c1917;--fg:#f5f5f4;--mut:#a8a29e;--line:#44403c;--acc:#f87171;--card:#292524}}}}
 body{{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 Meiryo,"メイリオ","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}}
 main{{max-width:860px;margin:auto;padding:16px}}
@@ -907,14 +907,14 @@ th,td{{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;verti
 .card:hover{{transform:translateY(-2px)}}
 .card img{{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:8px}}
 .card img.book{{aspect-ratio:3/4}}
-.noimg{{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#f3f3f3;color:#999;border-radius:8px;font-size:12px}}
+.noimg{{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#f3f3f3;color:#5f5f5f;border-radius:8px;font-size:12px}}
 .card{{position:relative}} .hot{{position:absolute;top:34px;left:14px;background:#e11d48;color:#fff;font-weight:800;font-size:12px;padding:3px 8px;border-radius:999px;box-shadow:0 2px 4px rgba(0,0,0,.2)}}
 .pts{{font-size:12px;font-weight:700;color:#e11d48}} .eff2{{font-size:13px;font-weight:800;color:var(--fg);background:#fef3c7;border-radius:6px;padding:1px 6px;align-self:flex-start}}
 @media (prefers-color-scheme:dark){{.eff2{{background:#78350f}}}}
 .hotpt{{font-weight:800;background:#ffe4e6;border-radius:6px;padding:2px 4px}}
 .gtag{{font-size:11px;color:var(--mut)}}
 .ic{{font-size:64px;text-align:center;line-height:1.3;background:#fff7ed;border-radius:8px;padding:10px 0}}
-.go.amz{{background:#ff9900;color:#111}} .go.ygo{{background:#ff0033}} .card.yh{{border-color:#ffb3c1}} .nm{{font-size:13px;line-height:1.4}} .yen{{font-weight:800;color:var(--acc);font-size:16px}}
+.go.amz{{background:#ff9900;color:#111}} .go.ygo{{background:#d4002a}} .card.yh{{border-color:#ffb3c1}} .nm{{font-size:13px;line-height:1.4}} .yen{{font-weight:800;color:var(--acc);font-size:16px}}
 .rv{{font-size:11px;color:var(--mut)}} .go{{margin-top:auto;font-size:12px;font-weight:700;color:#fff;background:#bf0000;border-radius:6px;text-align:center;padding:5px}}
 a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:6px;flex:none;border:1px solid var(--line)}}
 @media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr}}}}
