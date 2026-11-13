@@ -768,7 +768,7 @@ def amazon_html(cfg, watch_names):
         cards.append(f"<a class='card amzc' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank>"
                      f"<span class=gtag>Amazonの売れ筋から探す</span><span class=ic>{icon(n)}</span>"
                      f"<span class=nm>{esc(n)}</span><span class='go amz'>Amazonで比べる →</span></a>")
-    return "<section><h2>Amazonでも比べる</h2><div class=cards>" + "".join(cards) + "</div></section>"
+    return ""  # Amazonの検索結果へのリンク（同じ商品ではない）は出さない（2026-11-14）
 
 
 def kobo_section(api, cfg, today):
@@ -870,7 +870,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
         badge = ""
         low = f"直近30日の実質最安：¥{r['low_30']:,}" if r["low_30"] else ""
         amz = ""
-        if cfg.get("amazon_tag"):
+        if False:  # Amazonの検索結果へのリンクは出さない（同じ商品のページにつながらないため・2026-11-14）
             kw = urllib.parse.quote(r.get("amazon_keyword") or r["name"])
             amz = (f"<p class=amz><a href='https://www.amazon.co.jp/s?k={kw}&tag={cfg['amazon_tag']}' "
                    f"rel='sponsored nofollow noopener' target=_blank>Amazonで「{esc(r['name'])}」を見る →</a></p>")
