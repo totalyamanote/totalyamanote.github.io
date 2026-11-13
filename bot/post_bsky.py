@@ -41,6 +41,14 @@ def main():
             q["bsky"] = "skipped"; changed = True   # 楽天リンクはBlueskyに出さない
     if changed:
         qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Blueskyは「A8」「リンクシェア」「メルカリ」の3軸（BtoC・20〜30代向け。2026-11-14 ユーザー指示）。それ以外（ニュース・Yahoo!・BookLive等）は出さない
+    AXIS = re.compile(r"px\.a8\.net|click\.linksynergy\.com|mercari\.com|mercari\.jp|\bmercari\b")
+    off = [q for q in due if q.get("bsky") != "skipped" and not AXIS.search(q.get("bsky_text") or q["text"])]
+    for q in off:
+        q["bsky"] = "skipped"
+    if off:
+        qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"A8・リンクシェア・メルカリ以外の {len(off)} 件はBlueskyに出さない")
     due = [q for q in due if q.get("bsky") != "skipped"]
     if not due:
         print("投稿する枠はありません（楽天リンクの投稿はBlueskyに出さない）"); return 0
