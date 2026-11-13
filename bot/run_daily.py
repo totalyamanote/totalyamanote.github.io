@@ -620,7 +620,7 @@ def cards_section(title, items, kind, note=""):
             + "<div class=cards>" + "".join(cards) + "</div></section>")
 
 
-ART_CSS = """
+ART_CSS = """.hist{display:block;margin-top:4px;font-size:13px;font-weight:700;color:#0f766e}.hist small{display:block;font-weight:400;font-size:11px;color:#888}
 .price{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
 .price img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:8px;flex:none}
 .price .eff{display:block;font-size:22px;font-weight:800;color:var(--acc)} .price .calc{display:block;font-size:14px}
@@ -633,16 +633,18 @@ def update_articles(api, stamp):
     """比較記事の各商品に、商品画像と「実質価格（価格−ポイント）」を入れて、毎朝最新にする（2026-09-28 ユーザー指定）。
     楽天リンクの m=…/i/<番号>/ から商品を特定し、<!--price--> 〜 <!--/price--> の間を書き換える。"""
     esc = html.escape
+    php = DATA / "article_price_history.json"
+    ph = json.loads(php.read_text(encoding="utf-8")) if php.exists() else {}
     for f in sorted((SITE / "articles").glob("*.html")):
         t = f.read_text(encoding="utf-8")
         orig = t
         if "ART_CSS" not in t:
             t = t.replace("</style>", "/*ART_CSS*/" + ART_CSS + "</style>", 1)
         t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです（毎朝更新）。", t)
-        parts = re.split(r"(?=<h2>)", t)
+        parts = re.split(r"(?=<h2[ >])", t)
         for i, blk in enumerate(parts):
-            m = re.search(r"item\.rakuten\.co\.jp%2F([^%]+)%2F[^%]+%2F&m=[^&]*%2Fi%2F(\d+)", blk)
-            if not m or not blk.startswith("<h2>"):
+            m = re.search(r"item\.rakuten\.co\.jp%2F([^%]+)%2F[^%]+%2F&(?:amp;)?m=[^&]*%2Fi%2F(\d+)", blk)
+            if not m or not blk.startswith("<h2"):
                 continue
             try:
                 items = api._get(SEARCH_URL, {"itemCode": f"{m.group(1)}:{m.group(2)}", "hits": 1}).get("Items", [])
@@ -655,10 +657,27 @@ def update_articles(api, stamp):
             pts = price * rate // 100
             img = big_image(it).replace("_ex=300x300", "_ex=400x400")
             rv = f"楽天・レビュー{int(it.get('reviewCount') or 0):,}件 ★{it.get('reviewAverage')}" if it.get("reviewCount") else "楽天"
-            box = (f"<!--price--><div class=price>" + (f"<img src='{esc(img)}' alt='' loading=lazy>" if img else "")
+            # 価格の記録（毎朝・当サイト独自のデータ）：この30日の実質価格の幅と、いまが安いほうか
+            key = f"{m.group(1)}:{m.group(2)}"
+            day = datetime.now().date().isoformat()
+            ph.setdefault(key, {})[day] = price - pts
+            hist = {d: v for d, v in ph[key].items() if d >= (datetime.now().date() - timedelta(days=30)).isoformat()}
+            hline = ""
+            if len(hist) >= 7:
+                lo, hi, now = min(hist.values()), max(hist.values()), price - pts
+                if hi > lo:
+                    pos = (now - lo) / (hi - lo)
+                    tag = "いまは安いほう" if pos <= 0.25 else ("いまは高いほう" if pos >= 0.75 else "いまはふつう")
+                else:
+                    tag = "この期間ずっと同じ価格"
+                first = min(ph[key])
+                hline = (f"<span class=hist>📈 この{len(hist)}日の実質価格：¥{lo:,}〜¥{hi:,}（{tag}）"
+                         f"<small>当サイトが毎朝記録（{first[5:].replace('-', '/')}〜）</small></span>")
+            alt = esc(re.sub(r"【.*?】|\[.*?\]", "", it["itemName"])[:40].strip())
+            box = (f"<!--price--><div class=price>" + (f"<img src='{esc(img)}' alt='{alt}' loading=lazy>" if img else "")
                    + f"<div><span class=eff>✅実質¥{price - pts:,}</span>"
                    f"<span class=calc>価格¥{price:,} − {pts:,}pt（ポイント{rate}倍）</span>"
-                   f"<span class=rv>{esc(rv)}</span></div></div><!--/price-->")
+                   f"<span class=rv>{esc(rv)}</span>{hline}</div></div><!--/price-->")
             if "<!--price-->" in blk:
                 blk = re.sub(r"<!--price-->.*?<!--/price-->", box, blk, flags=re.S)
             else:
@@ -667,6 +686,7 @@ def update_articles(api, stamp):
         t = "".join(parts)
         if t != orig:
             f.write_text(t, encoding="utf-8")
+    php.write_text(json.dumps(ph, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 
 def articles_html():
