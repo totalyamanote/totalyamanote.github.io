@@ -43,8 +43,8 @@ def main():
     queue = json.loads(qpath.read_text(encoding="utf-8"))
     now = datetime.now()
     due = [q for q in queue if not q.get("threads") and datetime.strptime(q["at"], "%Y-%m-%d %H:%M") <= now]
-    # Threadsは「A8」と「楽天」の2軸だけ（2026-11-14 ユーザー指示）。それ以外（ニュース・Yahoo!・メルカリ・BookLive・リンクシェア等）は出さない
-    AXIS = re.compile(r"px\.a8\.net|hb\.afl\.rakuten\.co\.jp|a\.r10\.to|rakuten\.co\.jp")
+    # Threadsは「A8」「楽天」「メルカリ」の3軸だけ（2026-11-14 ユーザー指示）。それ以外（ニュース・Yahoo!・メルカリ・BookLive・リンクシェア等）は出さない
+    AXIS = re.compile(r"px\.a8\.net|hb\.afl\.rakuten\.co\.jp|a\.r10\.to|rakuten\.co\.jp|mercari\.com|mercari\.jp|\bmercari\b")
     skipped_axis = [q for q in due if not AXIS.search(q["text"])]
     for q in skipped_axis:
         q["threads"] = "skipped"
