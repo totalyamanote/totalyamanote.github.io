@@ -119,6 +119,13 @@ def post(text, handle, app_password, image=None, alt="", card=None):
             record["embed"] = {"$type": "app.bsky.embed.external", "external": ext}
         except Exception as e:
             print(f"   リンクカードなしで投稿（{e}）")
+    if "embed" not in record:   # BookLive：リンクカード（表紙画像つき・タップで購入ページへ）。取れなければ従来の画像添付
+        mb = URL_RE.search(orig_text)
+        if mb and "booklive" in mb.group().lower():
+            try:
+                record["embed"] = _link_card(mb.group(), token)
+            except Exception as e:
+                print(f"   BookLiveのカード化に失敗、画像添付にします（{e}）")
     if image and "embed" not in record:
         try:
             blob = _upload_image(image, token)
