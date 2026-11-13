@@ -1,0 +1,41 @@
+# やまのて
+
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて編集部。
+
+情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
+
+## 主なページ
+- [運営者情報｜やまのて](https://totalyamanote.github.io/about.html)
+- [【2026】ブラックフライデーはいつ？楽天・Yahoo!・Amazonの日程と攻略、実質価格のおすすめ](https://totalyamanote.github.io/articles/black-friday-2026.html)
+- [ブックライブは月額いくら？評判・特徴と使い方｜無料マンガ・クーポンガチャ・来店ポイント【2026年】](https://totalyamanote.github.io/articles/booklive-guide.html)
+- [クレンジングオイルのおすすめ4選｜容量あたりの値段・成分で比較【2026年】](https://totalyamanote.github.io/articles/cleansing-oil.html)
+- [電気毛布のおすすめ3選｜洗える・掛け敷き兼用・メーカー別に比較【2026年】](https://totalyamanote.github.io/articles/electric-blanket.html)
+- [メンズ電気シェーバーのおすすめ3選｜パナソニック・ブラウン・フィリップスをメーカー別に比較【2026年】](https://totalyamanote.github.io/articles/electric-shaver.html)
+- [自動投入の洗濯洗剤と柔軟剤の選び方｜超濃縮洗剤と消臭柔軟剤を比較](https://totalyamanote.github.io/articles/laundry-auto-dosing.html)
+- [ペットシーツのおすすめ5選｜厚さ・サイズ・1枚あたりの値段で比較【2026年】](https://totalyamanote.github.io/articles/pet-sheet.html)
+- [楽天のポイント高倍率商品まとめ（9,800円以内）｜ジャンル別](https://totalyamanote.github.io/articles/point-up.html)
+- [トイレ掃除グッズの選び方｜尿石・黒ずみ用洗剤と流せるブラシを比較](https://totalyamanote.github.io/articles/toilet-cleaning.html)
+- [トイレットペーパーのまとめ買いのおすすめ5選｜1ロールの値段・長さで比較【2026年】](https://totalyamanote.github.io/articles/toilet-paper-bulk.html)
+- [洗濯機のかさ上げ台のおすすめ5選｜高さ・耐荷重・防振の選び方と人気商品【2026年】](https://totalyamanote.github.io/articles/washer-stand.html)
+- [ポット型浄水器の交換カートリッジのおすすめ4選｜型番の適合・1か月の費用で比較【2026年】](https://totalyamanote.github.io/articles/water-filter-cartridge.html)
+- [着る毛布（ルームウェア）のおすすめ4選｜サイズ・素材・洗濯の選び方と人気商品【2026年】](https://totalyamanote.github.io/articles/wearable-blanket.html)
+- [比較のしかた（商品の選び方・比べ方）｜やまのて](https://totalyamanote.github.io/compare-method.html)
+- [やまのて｜楽天・Yahoo!・Amazonの実質最安とセール攻略・無料マンガ](https://totalyamanote.github.io/)
+- [マンガを無料で読むには？期限・全巻無料・安全な読み方のよくある質問](https://totalyamanote.github.io/manga/faq.html)
+- [無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ](https://totalyamanote.github.io/manga/index.html)
+- [マンガ新刊の発売日カレンダー｜今週・来月の注目新刊（11月14日更新）](https://totalyamanote.github.io/manga/new-releases.html)
+- [電子書籍ストア比較【2026年11月】初回クーポン・ポイント還元・無料作品数・読み放題](https://totalyamanote.github.io/manga/store-compare.html)
+- [アニメ化・ドラマ化・映画化されたマンガ（作品紹介の表記）](https://totalyamanote.github.io/manga/theme/adapted.html)
+- [いま無料で読めるマンガ（期限が近い順）](https://totalyamanote.github.io/manga/theme/free-now.html)
+- [『SPY×FAMILY』（スパイファミリー）漫画は無料で読める？1巻無料は11/17まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/20206940.html)
+- [『SAKAMOTO DAYS』（サカモトデイズ・坂本デイズ）漫画は無料で読める？1巻無料は11/17まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/20206948.html)
+- [『波うららかに、めおと日和』（めおと日和）漫画は無料で読める？1巻無料は11/15まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/2504807.html)
+- [『ザ・ファブル The third secret』（ファブル 第3部）漫画は無料で読める？1巻無料は11/19まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/2509724.html)
+- [『天国大魔境』漫画は無料で読める？1巻無料は11/19まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/2509732.html)
+- [『シャングリラ・フロンティア』（シャンフロ）漫画は無料で読める？1巻無料は11/19まで｜あらすじ・登場人物](https://totalyamanote.github.io/manga/w/2509734.html)
+- [プライバシーポリシー・免責事項｜やまのて](https://totalyamanote.github.io/privacy.html)
+- [ブラックフライデー予定（楽天・Yahoo!・Amazon）と買う前のチェックリスト](https://totalyamanote.github.io/sale.html)
+
+## 方針
+- 比較のしかた：https://totalyamanote.github.io/compare-method.html
+- 運営者情報：https://totalyamanote.github.io/about.html

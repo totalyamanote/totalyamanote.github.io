@@ -1,4 +1,66 @@
+# 検索エンジンとAI（ChatGPT・Claude・Gemini・Copilot・Grok・Perplexity等）の読み込みを許可
+User-agent: GPTBot
+Allow: /
+Disallow: /bot/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /bot/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /bot/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /bot/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /bot/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /bot/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /bot/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /bot/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /bot/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /bot/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /bot/
+
+User-agent: Applebot
+Allow: /
+Disallow: /bot/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /bot/
+
+User-agent: xAI-Bot
+Allow: /
+Disallow: /bot/
+
+User-agent: GrokBot
+Allow: /
+Disallow: /bot/
+
 User-agent: *
 Allow: /
 Disallow: /bot/
+
 Sitemap: https://totalyamanote.github.io/sitemap.xml

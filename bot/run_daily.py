@@ -921,13 +921,8 @@ a{{color:inherit}}
 </style></head><body><main>
 <h1>{esc(cfg['site_title'])}</h1>
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
-<div class=intro><p><b>楽天・Yahoo!ショッピングで買う前に「実質いくら？」（価格−ポイント）が分かるページです。</b></p>
-<ul><li>毎朝、楽天とYahoo!ショッピングの価格・ポイントを取り直して並べ直します（Yahoo!のポイントはLINEヤフー連携時の分を含みます）</li>
-<li>毎朝の一覧で紹介する商品は<b>1,980〜9,800円</b>で、レビュー30件以上のものだけ（比較記事は、実際に使った商品か、楽天のレビュー数・評価で選んだ商品）</li>
-<li>直近2週間に載せた商品は載せないので、毎朝ほとんどの商品が入れ替わります</li>
-<li>ポイント倍率が高い商品／日用品・食品・お酒などの実質最安（楽天とYahoo!を並べて比較）／ふるさと納税（寄付額1万円未満）／ホテル・旅館（1人2万円以内）</li>
-<li>選び方と、レビューが多い商品は「比較記事」にまとめています</li></ul></div>
-<p class=pr>🛒 <a href='sale.html'><b>ブラックフライデー・スーパーSALEの時期の目安と、買う前のチェックリスト</b></a>　📚 <a href='manga/index.html'><b>マンガ情報（無料の期限つき）</b></a>　🆕 <a href='recent.html'><b>最近紹介した商品</b></a></p>
+<p class=note style='margin:4px 0 10px'>楽天・Yahoo!の「価格−ポイント」を毎朝比較（1,980〜9,800円・レビュー30件以上）。選び方は<a href='#articles'>比較記事</a>へ。</p>
+<p class=pr>🛒 <a href='sale.html'><b>ブラックフライデー・スーパーSALEの時期の目安と、買う前のチェックリスト</b></a>　📚 <a href='manga/index.html'><b>マンガ情報（無料の期限つき）</b></a>　📅 <a href='manga/new-releases.html'><b>マンガ新刊カレンダー</b></a></p>
 {picks_html(picks)}
 {articles_html()}
 {''.join(sections)}
