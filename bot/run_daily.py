@@ -641,6 +641,8 @@ def update_articles(api, stamp):
         if "ART_CSS" not in t:
             t = t.replace("</style>", "/*ART_CSS*/" + ART_CSS + "</style>", 1)
         t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです（毎朝更新）。", t)
+        _n = datetime.now()
+        t = re.sub(r"【\d{1,2}/\d{1,2}更新】", f"【{_n.month}/{_n.day}更新】", t)
         parts = re.split(r"(?=<h2[ >])", t)
         for i, blk in enumerate(parts):
             m = re.search(r"item\.rakuten\.co\.jp%2F([^%]+)%2F[^%]+%2F&(?:amp;)?m=[^&]*%2Fi%2F(\d+)", blk)
