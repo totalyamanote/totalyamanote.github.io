@@ -960,6 +960,12 @@ def main():
     if not args.mock:
         update_articles(api, stamp)
     render_site(cfg, results, stamp, picks, kobo_section(api, cfg, today), bottom)
+    try:  # トップをハブ（セール→マンガ→比較記事→毎朝の最安）にする後処理
+        sys.path.insert(0, str(SITE.parent))
+        import gen_hub
+        gen_hub.apply_index(); gen_hub.apply_pages()
+    except Exception as e:
+        print("gen_hub 失敗", e)
     mark_shown(sh, shown_now + furusato + hotels, today)
     save_json(DATA / "shown_items.json", sh)
     queue = build_queue(posts, texts, today, results)
