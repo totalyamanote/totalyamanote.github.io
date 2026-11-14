@@ -242,10 +242,10 @@ def main():
     print(f"Amazonボタン: 追加{na}")
     cfg = load_config(BASE)
     yh = Yahoo(cfg)
-    if not cfg or not yh.ready:
-        print("Yahoo!APIキーが無いので何もしません")
-        return 0
-    api = Rakuten(cfg)
+    ready = bool(cfg) and yh.ready
+    if not ready:
+        print("Yahoo!APIキーが無いので、新規の検索はせず、保存済みの対応表だけを記事に適用します")
+    api = Rakuten(cfg) if ready else None
     mp = load_map()
     today = date.today()
     arts = sorted(f for f in (SITE / "articles").glob("*.html") if f.name not in SKIP)
@@ -257,7 +257,7 @@ def main():
             for m in rx.finditer(t):
                 codes[(m["shop"], m["no"])] = 1
     new = 0
-    for shop, no in codes:
+    for shop, no in (codes if ready else {}):
         k = f"{shop}:{no}"
         rec = mp.get(k)
         if rec and (rec.get("y") or date.fromisoformat(rec["t"]) > today - timedelta(days=RETRY_DAYS)):
@@ -270,7 +270,8 @@ def main():
             continue
         mp[k] = {"y": r, "t": today.isoformat()}
         print(f"  {k}: {'Yahoo!あり' if r else '見つからず（楽天のみ）'}")
-    MAP.write_text(json.dumps(mp, ensure_ascii=False, indent=1), encoding="utf-8")
+    if ready:
+        MAP.write_text(json.dumps(mp, ensure_ascii=False, indent=1), encoding="utf-8")
     # ボタンを足す
     added = 0
     for f, t in texts.items():
