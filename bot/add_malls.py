@@ -15,7 +15,9 @@ import json
 import os
 import re
 import sys
+import time
 import unicodedata
+import urllib.error
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -66,33 +68,65 @@ def models(s):
     return {m.replace("-", "") for m in MODEL_RE.findall(s) if len(m.replace("-", "")) >= 4}
 
 
+QTY_RE = re.compile(r"(\d+(?:\.\d+)?)(ml|kg|g|l|枚|個|本|ロール|パック|袋|包|cm|mm|m|セット|倍|入|組|足|巻|日分|粒|錠)")
+
+
+def qty(s):
+    """商品名の数量・規格（800枚・480ml・170m・3.4倍 など）。"""
+    s = unicodedata.normalize("NFKC", html.unescape(s or "")).lower().replace(",", "")
+    return {a + b for a, b in QTY_RE.findall(s)}
+
+
+def judge(r_name, r_price, h, toks):
+    """Yahoo!の商品 h が楽天の商品と同じかを判定。同じなら点数、違えば None。
+    規格（数量）が食い違えば別商品。名前がほぼ同じ・型番が同じなら、店ごとの価格差（±45%）は許容。
+    それ以外は価格も近い（±12%）ことを求める。"""
+    if not h.get("price") or not r_price:
+        return None
+    d = abs(h["price"] - r_price) / r_price
+    ny = norm(h["name"])
+    dc = dice(norm(r_name)[:50], ny[:50])
+    cov = sum(1 for t in toks if norm(t) in ny) / len(toks) if toks else 0.0
+    qa, qb = qty(r_name), qty(h["name"])
+    if qa and qb and not (qa & qb):
+        return None
+    same_model = bool(models(r_name) & models(h["name"]))
+    ok = ((dc >= 0.85 and d <= 0.45) or (same_model and d <= 0.45)
+          or (dc >= MIN_SIM and d <= PRICE_TOL)
+          or (len(toks) >= 4 and cov >= 0.8 and dc >= 0.4 and d <= PRICE_TOL)
+          or (len(toks) >= 3 and cov >= 0.6 and d <= 0.03))
+    return (dc + cov - d) if ok else None
+
+
 def pick_yahoo(r_name, r_price, hits):
-    """楽天の商品に対応する Yahoo! の商品を選ぶ。価格が近く、名前が近い（または型番が同じ）ものだけ。無ければ None。"""
-    base = norm(r_name)[:50]
-    rm = models(r_name)
-    best, bs = None, 0.0
+    """楽天の商品に対応する Yahoo! の商品を選ぶ。無ければ None。"""
+    toks = core_tokens(r_name)
+    best, bs = None, None
     for h in hits:
-        if not h.get("price") or abs(h["price"] - r_price) > r_price * PRICE_TOL:
-            continue
-        s = dice(base, norm(h["name"])[:50])
-        if rm and rm & models(h["name"]):
-            s = max(s, 0.8)   # 型番が一致
-        if s > bs:
-            best, bs = h, s
-    return best if bs >= MIN_SIM else None
+        sc = judge(r_name, r_price, h, toks)
+        if sc is not None and (bs is None or sc > bs):
+            best, bs = h, sc
+    return best
 
 
 NOISE = re.compile(r"送料無料|楽天\S*位|レビュー\S*|公式|新登場|ポイント\S*|セット買い\S*|TVCM\S*|訳アリ|あす楽|[0-9]+[％%]\s*OFF|OFF|国産|大容量|業務用")
 
 
-def queries(name):
-    """Yahoo!検索の語：宣伝文句を除き、先頭の4語→3語→2語の順（長いと0件になるため）。"""
+def core_tokens(name):
+    """商品名から宣伝文句・記号を除いた語のリスト。"""
     s = unicodedata.normalize("NFKC", html.unescape(name or ""))
     s = re.sub(r"【[^】]*】|\[[^\]]*\]|《[^》]*》|＼[^／]*／|[★☆♪]", " ", s)
     s = re.sub(r"[【】\[\]《》＼／（）()「」『』]", " ", NOISE.sub(" ", s))
-    toks = [t for t in s.split() if len(t) >= 2]
+    return [t for t in s.split() if len(t) >= 2]
+
+
+def queries(name):
+    """Yahoo!検索の語：先頭の4語→3語→2語の順（長いと0件になるため）。最後に先頭1語（4文字以上のとき）。"""
+    toks = core_tokens(name)
     out = []
-    for n in (4, 3, 2):
+    for n in (4, 3, 2, 1):
+        if n == 1 and (not toks or len(toks[0]) < 4):
+            continue
         q = " ".join(toks[:n])
         if q and q not in out:
             out.append(q)
@@ -104,6 +138,18 @@ def load_map():
         return json.loads(MAP.read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
+
+
+def search_retry(yh, q):
+    """Yahoo!検索。呼び出し過多（429）のときは待って再試行する。"""
+    for wait in (0, 15, 40):
+        time.sleep(1.2 + wait)
+        try:
+            return yh.search(q, results=50)
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or wait == 40:
+                raise
+            print(f"  429（呼び出し過多）→ {15 if wait == 0 else 40}秒待って再試行")
 
 
 def lookup(api, yh, shop, no):
@@ -120,7 +166,7 @@ def lookup(api, yh, shop, no):
     h, hits, used = None, [], ""
     for q in queries(it["itemName"]):
         try:
-            hits = yh.search(q, results=50)
+            hits = search_retry(yh, q)
         except Exception as e:  # noqa: BLE001
             print(f"  Yahoo API失敗 {shop}:{no} {e}")
             return None
