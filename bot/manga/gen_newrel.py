@@ -117,17 +117,19 @@ def card(e, today):
     d = datetime.date.fromisoformat(e["date"])
     left = (d - today).days
     tag = ("<b class=nd>今日発売</b>" if left == 0 else (f"<b class=nd>あと{left}日</b>" if left > 0 else f"<span class=nd2>{-left}日前に発売</span>"))
-    eu = e.get('kobo') or e.get('kindle') or e.get('ebj')
+    eu = e.get('kindle') or e.get('ebj') or e.get('kobo')
     img = f"<img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy width=120 height=170>"
     return ((f"<div class=ncard id=n{e.get('isbn', '')}><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard id=n{e.get('isbn', '')}><span class=nimg>{img}</span>")
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
             f"<b class=nt>{esc(e['title'])}</b><span class=na>{esc(e['author'])}｜{esc(e['publisher'])}</span>"
-            + (f"<span class=np>電子版 ¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else "")
+            + (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else "")
             + "<div class=nbtns>"
-            + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo<small>電子"
-                + (f"・{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</small></a>") if e.get("kobo") else "")
-            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle<small>電子</small></a>" if e.get("kindle") else "")
-            + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebook<small>japan</small></a>" if e.get("ebj") else "")
+            # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
+            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else "")
+            + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebookjapan</a>" if e.get("ebj")
+               else ("<span class='nbtn off' title='ebookjapanは発売日から販売'>ebookjapan<small>発売日から</small></span>" if left >= 0 else ""))
+            + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo"
+                + (f"<small>{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}配信</small>" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</a>") if e.get("kobo") else "")
             + ("" if e.get("kobo") or e.get("kindle") or e.get("ebj") else "<span class=nwait>電子版は配信準備中</span>")
             + "</div></div>")
 
@@ -137,9 +139,9 @@ CSS = (".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
        ".ndate{font-size:12px;font-weight:800}.nd{color:#bf0000;margin-left:4px}.nd2{color:var(--mut);font-weight:400;margin-left:4px}"
        ".nt{font-size:13px;line-height:1.35}.na,.np{font-size:12px;color:var(--mut)}"
-       ".nbtns{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));gap:3px}"
+       ".nbtns{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:3px}"
        ".nbtn{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff!important;font-weight:900;font-size:11px;border-radius:8px;padding:6px 1px;white-space:nowrap;text-decoration:none;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.2)}"
-       ".nbtn small{font-size:10px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
+       ".nbtn small{font-size:10px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.off{background:#e7e5e4;color:#5f5f5f!important;box-shadow:none;font-weight:700}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
 
 
 def build():

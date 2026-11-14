@@ -90,9 +90,9 @@ def newrel_row():
     out = ""
     for e in its[:10]:
         d = datetime.date.fromisoformat(e["date"])
-        u = e.get("kobo") or e.get("kindle") or e.get("ebj")
+        u = e.get("kindle") or e.get("ebj") or e.get("kobo")
         out += (f"<a class=hm href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy>"
-                f"<b>{esc(e['title'])}</b><span style='background:#bf0000'>{d.month}/{d.day}発売・電子版</span></a>")
+                f"<b>{esc(e['title'])}</b><span style='background:#bf0000'>{d.month}/{d.day}発売</span></a>")
     return out
 
 
