@@ -105,6 +105,11 @@
    "date": "2026-10-19",
    "min_effective": 3740,
    "min_price": 4400
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 1986,
+   "min_price": 2090
   }
  ],
  "日焼け止め": [
@@ -207,6 +212,11 @@
    "date": "2026-11-08",
    "min_effective": 2574,
    "min_price": 2600
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 1782,
+   "min_price": 1980
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -234,6 +244,11 @@
    "date": "2026-11-12",
    "min_effective": 2208,
    "min_price": 2324
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 2720,
+   "min_price": 2747
   }
  ],
  "電動歯ブラシ 替えブラシ": [
@@ -377,6 +392,11 @@
    "date": "2026-11-12",
    "min_effective": 4887,
    "min_price": 4936
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 5162,
+   "min_price": 5214
   }
  ],
  "柔軟剤 詰め替え": [
@@ -404,6 +424,11 @@
    "date": "2026-11-12",
    "min_effective": 2827,
    "min_price": 2856
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 4701,
+   "min_price": 4748
   }
  ],
  "トイレ用洗剤": [
@@ -1910,6 +1935,11 @@
    "date": "2026-11-14",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 2071,
+   "min_price": 2180
   }
  ],
  "モバイルバッテリー": [
@@ -2157,6 +2187,11 @@
    "date": "2026-11-12",
    "min_effective": 2228,
    "min_price": 2250
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 2633,
+   "min_price": 2660
   }
  ],
  "ペットシーツ": [
@@ -2189,6 +2224,11 @@
    "date": "2026-11-12",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 3643,
+   "min_price": 3680
   }
  ],
  "キャットフード": [
@@ -2226,6 +2266,11 @@
    "date": "2026-11-12",
    "min_effective": 3069,
    "min_price": 3100
+  },
+  {
+   "date": "2026-11-15",
+   "min_effective": 3580,
+   "min_price": 3616
   }
  ],
  "ドッグフード": [
