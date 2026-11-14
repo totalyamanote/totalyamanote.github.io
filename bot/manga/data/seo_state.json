@@ -13,16 +13,16 @@
   "articles/water-filter-cartridge.html": "a13093d17c9087f15262a938c6ca66f2",
   "articles/wearable-blanket.html": "d0b71047cea5359d487475e4ce80c4ea",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
-  "index.html": "335fa1ebc79fa00e89716f75111555d9",
-  "manga/index.html": "1ceafa1b707971f5b667d160578f4e73",
-  "manga/theme/adapted.html": "14080540d1325f2b80591b1ba0754255",
-  "manga/theme/free-now.html": "c7952b8ac7fe0f725859334a0061ef6e",
-  "manga/w/20206940.html": "e402ef498e62292ce2dc8590ebc47b79",
-  "manga/w/20206948.html": "3e78a474c5afe390b42348d063e16dfa",
-  "manga/w/2504807.html": "ee9dca7374247f88d33e718504f7ff3f",
-  "manga/w/2509724.html": "ba9e31382c5b2ae1dce72c577dfa56b0",
-  "manga/w/2509732.html": "0fe561d5d76273c0e6f806362683a037",
-  "manga/w/2509734.html": "12fa9e808ad8c7eb0f55cd64d848356b",
+  "index.html": "fd5558cfcdd6ef4a4ff89be2e0c79c1d",
+  "manga/index.html": "cf27aae1cf53dd19d14a949042a65b20",
+  "manga/theme/adapted.html": "841ae24dada886140f182ef546a9a8e8",
+  "manga/theme/free-now.html": "913e04081be19245f44b4ca4369045cf",
+  "manga/w/20206940.html": "a036e64442db245186ea3a30542b7931",
+  "manga/w/20206948.html": "223616cb985d8cd04ad8cbf40f884985",
+  "manga/w/2504807.html": "322ea7b80801f34bd71cdc20b4385604",
+  "manga/w/2509724.html": "b3c3e79262f46e09a6ed2e45b4989abb",
+  "manga/w/2509732.html": "0aa138ca84ec40111e1a12f738023376",
+  "manga/w/2509734.html": "a89987a0c5a0f2b62e31160a3f56458e",
   "recent.html": "9aa274f96fd4e79b176831769c905e2d",
   "sabon.html": "24532636e87273bfcf95bbdf7f0a5595",
   "sale.html": "cd09c0dd4bcdc84403871a2644299163",
@@ -35,7 +35,8 @@
   "compare-method.html": "7bbd7c68292918bf4303aed027f1de8c",
   "manga/new-releases.html": "14f1aa5cd8412efd28bd6a8f9c2d4eb5",
   "manga/store-compare.html": "90a2f474540df2fe44a0e30d99ef2e4d",
-  "manga/theme/always-free.html": "6d876015a05b796e1f00195c5f5b3dac"
+  "manga/theme/always-free.html": "6d876015a05b796e1f00195c5f5b3dac",
+  "manga/w/ebj516901.html": "ad1c6f877ca60905a2c012eebe6ec19a"
  },
- "last_ping": "2026-11-14T14:25:12"
+ "last_ping": "2026-11-14T14:33:33"
 }
