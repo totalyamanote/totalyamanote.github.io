@@ -14,6 +14,7 @@ import re
 import sys
 import urllib.parse
 from pathlib import Path
+from gen_search import sbar
 
 HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
@@ -96,6 +97,7 @@ def page(title, desc, body, depth=0, style="", head=""):
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
             f"<header class=top><a class=logo href='{up}index.html' aria-label='マンガトップへ'><img src='{up}../img/brand/logo_v8.png' width=40 height=40 alt=''><span><small>YAMANOTE MANGA</small>やまのてマンガ</span></a>"
             f"<nav class=toplinks><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a><span class=sep></span><a class=shop href='{up}../articles/black-friday-2026.html'>セール</a><a class=shop href='{up}../index.html#articles'>比較記事</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>"
+            f"{sbar(up + '../')}"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
             f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は毎朝更新）　文：やまのて編集部</p>"
@@ -425,6 +427,11 @@ def main():
     index(works, themes)
     faq_page(works)
     print(f"作品 {len(works)} 件・まとめ {len(themes)} 本・作品ページ {len(works)} 本を更新")
+    try:
+        import gen_search
+        print("検索の一覧", gen_search.build(), "件")
+    except Exception as e:
+        print("検索の一覧 失敗", e)
 
 
 if __name__ == "__main__":

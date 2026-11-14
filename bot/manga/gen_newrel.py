@@ -119,7 +119,7 @@ def card(e, today):
     tag = ("<b class=nd>今日発売</b>" if left == 0 else (f"<b class=nd>あと{left}日</b>" if left > 0 else f"<span class=nd2>{-left}日前に発売</span>"))
     eu = e.get('kobo') or e.get('kindle') or e.get('ebj')
     img = f"<img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy width=120 height=170>"
-    return ((f"<div class=ncard><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard><span class=nimg>{img}</span>")
+    return ((f"<div class=ncard id=n{e.get('isbn', '')}><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard id=n{e.get('isbn', '')}><span class=nimg>{img}</span>")
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
             f"<b class=nt>{esc(e['title'])}</b><span class=na>{esc(e['author'])}｜{esc(e['publisher'])}</span>"
             + (f"<span class=np>電子版 ¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else "")
