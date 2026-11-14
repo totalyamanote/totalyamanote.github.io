@@ -57,17 +57,46 @@ def dice(a, b):
     return 2 * len(ga & gb) / (len(ga) + len(gb)) if ga and gb else 0.0
 
 
+MODEL_RE = re.compile(r"[A-Z]{1,6}-?\d{2,}[A-Z0-9-]*|\d{2,}[A-Z]{1,3}-[A-Z0-9]+")
+
+
+def models(s):
+    """商品名の型番らしい語（DS-150・CPC5・300S-B など。4文字以上）。"""
+    s = unicodedata.normalize("NFKC", html.unescape(s or "")).upper()
+    return {m.replace("-", "") for m in MODEL_RE.findall(s) if len(m.replace("-", "")) >= 4}
+
+
 def pick_yahoo(r_name, r_price, hits):
-    """楽天の商品に対応する Yahoo! の商品を選ぶ。名前が近く、価格も近いものだけ。無ければ None。"""
+    """楽天の商品に対応する Yahoo! の商品を選ぶ。価格が近く、名前が近い（または型番が同じ）ものだけ。無ければ None。"""
     base = norm(r_name)[:50]
+    rm = models(r_name)
     best, bs = None, 0.0
     for h in hits:
         if not h.get("price") or abs(h["price"] - r_price) > r_price * PRICE_TOL:
             continue
         s = dice(base, norm(h["name"])[:50])
+        if rm and rm & models(h["name"]):
+            s = max(s, 0.8)   # 型番が一致
         if s > bs:
             best, bs = h, s
     return best if bs >= MIN_SIM else None
+
+
+NOISE = re.compile(r"送料無料|楽天\S*位|レビュー\S*|公式|新登場|ポイント\S*|セット買い\S*|TVCM\S*|訳アリ|あす楽|[0-9]+[％%]\s*OFF|OFF|国産|大容量|業務用")
+
+
+def queries(name):
+    """Yahoo!検索の語：宣伝文句を除き、先頭の4語→3語→2語の順（長いと0件になるため）。"""
+    s = unicodedata.normalize("NFKC", html.unescape(name or ""))
+    s = re.sub(r"【[^】]*】|\[[^\]]*\]|《[^》]*》|＼[^／]*／|[★☆♪]", " ", s)
+    s = re.sub(r"[【】\[\]《》＼／（）()「」『』]", " ", NOISE.sub(" ", s))
+    toks = [t for t in s.split() if len(t) >= 2]
+    out = []
+    for n in (4, 3, 2):
+        q = " ".join(toks[:n])
+        if q and q not in out:
+            out.append(q)
+    return out
 
 
 def load_map():
@@ -88,19 +117,24 @@ def lookup(api, yh, shop, no):
         return ""
     it = items[0]
     r_price = int(it["itemPrice"])
-    q = re.sub(r"【[^】]*】|\[[^\]]*\]|《[^》]*》|[★☆♪]", " ", unicodedata.normalize("NFKC", it["itemName"]))
-    q = " ".join(q.split())[:60]
-    try:
-        hits = yh.search(q, price_from=int(r_price * (1 - PRICE_TOL)), price_to=int(r_price * (1 + PRICE_TOL)), results=30)
-    except Exception as e:  # noqa: BLE001
-        print(f"  Yahoo API失敗 {shop}:{no} {e}")
-        return None
-    h = pick_yahoo(it["itemName"], r_price, hits)
-    if not h:  # 診断：一番近かった候補（条件を調整する材料）
+    h, hits, used = None, [], ""
+    for q in queries(it["itemName"]):
+        try:
+            hits = yh.search(q, results=50)
+        except Exception as e:  # noqa: BLE001
+            print(f"  Yahoo API失敗 {shop}:{no} {e}")
+            return None
+        used = q
+        h = pick_yahoo(it["itemName"], r_price, hits)
+        if h:
+            break
+    if h:
+        print(f"    採用: 楽天[{it['itemName'][:28]}] ¥{r_price:,} ⇔ Yahoo[{h['name'][:28]}] ¥{h['price']:,}（検索語: {used}）")
+    else:  # 診断：一番近かった候補（条件を調整する材料）
         base = norm(it["itemName"])[:50]
         c = max(hits, key=lambda x: dice(base, norm(x["name"])[:50]), default=None)
-        print(f"    楽天: {it['itemName'][:40]} ¥{r_price:,} / 候補{len(hits)}件"
-              + (f" / 最も近い: {c['name'][:40]} ¥{c['price']:,} 類似{dice(base, norm(c['name'])[:50]):.2f}" if c else ""))
+        print(f"    不採用: 楽天[{it['itemName'][:34]}] ¥{r_price:,} / 検索語「{used}」候補{len(hits)}件"
+              + (f" / 最も近い: {c['name'][:34]} ¥{c['price']:,} 類似{dice(base, norm(c['name'])[:50]):.2f}" if c else ""))
     return h["url"] if h else ""
 
 
