@@ -35,7 +35,13 @@ MAX_NEW = int(os.environ.get("MALLS_MAX_LOOKUPS", "60"))  # 1回の実行で新�
 BTN_RE = re.compile(
     r"<a class='mini r' href='(?P<href>[^']*m\.rakuten\.co\.jp%2F(?P<shop>[^%']+)%2Fi%2F(?P<no>\d+)[^']*)'"
     r"[^>]*aria-label='(?P<label>[^']*?)を楽天で見る'>楽天</a>(?!<a class='mini y')")
+BTN2_RE = re.compile(
+    r"<a class=r href='(?P<href>[^']*m\.rakuten\.co\.jp%2F(?P<shop>[^%']+)%2Fi%2F(?P<no>\d+)[^']*)'"
+    r"[^>]*>楽天で見る</a>(?!<a class=y)")
 CSS_Y = ".mini.y{background:#d4002a!important;color:#fff!important}"
+CSS_Y2 = ".btns .y{background:#d4002a!important;color:#fff!important}"
+# 「楽天のポイント高倍率まとめ」は楽天ポイントが主題の記事なので Yahoo! は足さない
+SKIP = {"point-up.html"}
 
 
 def norm(s):
@@ -94,7 +100,11 @@ def lookup(api, yh, shop, no):
 
 
 def ensure_css(t):
-    return t if "mini.y" in t else t.replace("</style>", CSS_Y + "</style>", 1)
+    if "mini y" in t and "mini.y" not in t:
+        t = t.replace("</style>", CSS_Y + "</style>", 1)
+    if "<a class=y " in t and ".btns .y" not in t:
+        t = t.replace("</style>", CSS_Y2 + "</style>", 1)
+    return t
 
 
 def main():
@@ -106,13 +116,14 @@ def main():
     api = Rakuten(cfg)
     mp = load_map()
     today = date.today()
-    arts = sorted((SITE / "articles").glob("*.html"))
+    arts = sorted(f for f in (SITE / "articles").glob("*.html") if f.name not in SKIP)
     texts = {f: f.read_text(encoding="utf-8") for f in arts}
     # 記事に出てくる楽天商品を集める
     codes = {}
     for t in texts.values():
-        for m in BTN_RE.finditer(t):
-            codes[(m["shop"], m["no"])] = 1
+        for rx in (BTN_RE, BTN2_RE):
+            for m in rx.finditer(t):
+                codes[(m["shop"], m["no"])] = 1
     new = 0
     for shop, no in codes:
         k = f"{shop}:{no}"
@@ -141,7 +152,15 @@ def main():
             btn = (f"<a class='mini y' href='{html.escape(y, quote=True)}' rel='sponsored nofollow noopener' target=_blank "
                    f"aria-label='{label}をYahoo!で見る'>Yahoo!</a>")
             return m.group(0) + btn
-        n = BTN_RE.sub(sub, t)
+        def sub2(m):
+            nonlocal added
+            y = (mp.get(f"{m['shop']}:{m['no']}") or {}).get("y")
+            if not y:
+                return m.group(0)
+            added += 1
+            return (m.group(0) + f"<a class=y href='{html.escape(y, quote=True)}' "
+                    "rel='sponsored nofollow noopener' target=_blank>Yahoo!で見る</a>")
+        n = BTN2_RE.sub(sub2, BTN_RE.sub(sub, t))
         if n != t:
             f.write_text(ensure_css(n), encoding="utf-8")
     print(f"Yahoo!ボタン: 新規に調べた商品{new} / 追加したボタン{added}")
