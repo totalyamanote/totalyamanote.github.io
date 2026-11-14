@@ -20,6 +20,7 @@ from pathlib import Path
 
 from rakuten import SEARCH_URL, Rakuten, big_image, load_config
 from select_posts import build_queue
+from hub import apply_hub
 
 BASE = Path(__file__).resolve().parent
 DATA = Path(os.environ.get("DATA_DIR") or BASE / "data").resolve()
@@ -933,7 +934,9 @@ a{{color:inherit}}
 <p class=meta>最終更新：{stamp}</p>
 <p class=disc>Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
 </main></body></html>"""
-    (SITE / "index.html").write_text(page, encoding="utf-8")
+    idx = SITE / "index.html"
+    old = idx.read_text(encoding="utf-8") if idx.exists() else None
+    idx.write_text(apply_hub(page, old), encoding="utf-8")  # 見た目（ヘッダー等）を固定
 
 
 def main():
