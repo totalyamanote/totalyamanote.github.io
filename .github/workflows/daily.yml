@@ -44,8 +44,8 @@ jobs:
           OUT_DIR: bot/out
         run: python bot/run_daily.py
 
-      # 無料期限が過ぎたマンガ作品ページを消さず manga/past/ に蓄積（冪等）
-      - name: Archive expired manga pages
+      # 無料期限が過ぎたマンガ作品ページを消さず「無料終了」表示で残し、マンガ一覧に載せる（冪等）
+      - name: Keep expired manga pages
         env:
           TZ: Asia/Tokyo
           SITE_DIR: .

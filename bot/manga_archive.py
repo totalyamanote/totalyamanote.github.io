@@ -1,13 +1,13 @@
-"""マンガ作品ページのアーカイブ：無料の期限が過ぎた作品を消さずに manga/past/ に蓄積する。
+"""マンガ作品ページの蓄積：無料の期限が過ぎた作品ページを消さず、その場で『無料終了』表示にして残す。
 
 毎朝の自動更新（daily.yml）から呼ぶ。何度実行しても結果は同じ（冪等）。
 
-1. manga/w/ の作品ページで『1巻無料はM/Dまで』の期限が過ぎたものを
-   → manga/past/<id>.html に「無料終了」表示つきで保存し、
-   → manga/w/<id>.html は past への転送ページ（canonical つき）に置き換える。
-2. 生成ツールが期限切れページを消していても、git 履歴から最後の版を復元して past に入れる。
-3. manga/past/index.html に終了した作品の一覧（新しく終わった順）を作る。
-4. 全マンガページのメニューに「アーカイブ」リンクを足す（無ければ）。
+1. manga/w/ の作品ページで『1巻無料はM/Dまで』の期限が過ぎたもの
+   → 同じURLのまま「無料期間は終了」表示に変える（あらすじ・登場人物・読者の声はそのまま）。
+2. 生成ツールが期限切れページを消していても、git 履歴から最後の版を復元して manga/w/ に戻す。
+3. manga/index.html に「無料が終わった作品」の段を入れる（終了した作品が一覧から消えない）。
+4. 同じ作品がまた無料になり、生成ツールがページを作り直すと、終了表示と一覧の段から自動で外れる
+   （期限が未来の通常ページには手を触れない）。
 
 環境変数 SITE_DIR（既定: リポジトリ直下）、TODAY（YYYY-MM-DD・テスト用）。
 """
@@ -21,10 +21,11 @@ from pathlib import Path
 
 SITE = Path(os.environ.get("SITE_DIR") or Path(__file__).resolve().parent.parent).resolve()
 MANGA = SITE / "manga"
-W, PAST = MANGA / "w", MANGA / "past"
-ORIGIN = "https://totalyamanote.github.io"
+W = MANGA / "w"
 TITLE_RE = re.compile(r"1巻無料は(\d{1,2})/(\d{1,2})まで")
 MARK_RE = re.compile(r"<!--ended:(\d{4}-\d{2}-\d{2})-->")
+LIST_RE = re.compile(r"<!--ended-list-->.*?<!--/ended-list-->\n?", re.S)
+WD = "月火水木金土日"
 
 
 def today():
@@ -33,7 +34,7 @@ def today():
 
 
 def deadline_of(page):
-    """作品ページから無料の最終日を取り出す。無料でなければ None。"""
+    """作品ページから無料の最終日を取り出す。無料表示でない（終了済み・転送など）なら None。"""
     m = TITLE_RE.search(page)
     if not m:
         return None
@@ -51,36 +52,20 @@ def md(d):
     return f"{d.month}/{d.day}"
 
 
-WD = "月火水木金土日"
-
-
-def make_archive_page(page, wid, dl):
-    """現行の作品ページ → 『無料終了』版（past 用）。"""
+def make_ended_page(page, dl):
+    """現行（無料中）の作品ページ → 『無料終了』版。URL・canonical はそのまま。"""
     end = f"{md(dl)}（{WD[dl.weekday()]}）"
     page = re.sub(r"1巻無料は\d{1,2}/\d{1,2}まで", f"1巻の無料は終了（{md(dl)}まで）", page)
     page = re.sub(r"1巻が\d{1,2}/\d{1,2}（.）まで無料", f"1巻は{end}まで無料でした（現在は終了）", page)
-    # ヒーローの「1巻 無料／M月D日（曜）まで・あとN日」を終了表示に
     page = re.sub(
         r"<span class=free>1巻 無料</span> <span class=left>[^<]*</span>",
         "<span class=free style='background:#78716c'>無料期間は終了</span> "
         f"<span class=left>{dl.month}月{dl.day}日（{WD[dl.weekday()]}）まで無料でした</span>",
         page, count=1)
-    # 公開URL（canonical / og:url / JSON-LD）を past に
-    page = page.replace(f"{ORIGIN}/manga/w/{wid}.html", f"{ORIGIN}/manga/past/{wid}.html")
-    # 「ほかの作品」の相対リンクは w/ を指す（期限切れは w/ から past/ へ転送される）
-    page = re.sub(r"href='(\d+)\.html'", r"href='../w/\1.html'", page)
     banner = (f"<p class=note style='border:1px solid #d6d3d1;background:#f5f5f4;border-radius:8px;padding:8px 12px;margin:0 0 12px'>"
-              f"📦 <b>アーカイブ</b>：この作品の1巻無料は{end}に終了しました。いま無料の作品は"
-              f"<a href='../theme/free-now.html'>「いま無料で読めるマンガ」</a>、終わった作品は"
-              f"<a href='index.html'>アーカイブ一覧</a>へ。</p><!--ended:{dl.isoformat()}-->")
+              f"📦 この作品の1巻無料は{end}に終了しました。また無料になったら、このページを更新してお知らせします。"
+              f"いま無料の作品は<a href='../theme/free-now.html'>「いま無料で読めるマンガ」</a>へ。</p><!--ended:{dl.isoformat()}-->")
     return page.replace("<p class=pr>", banner + "<p class=pr>", 1)
-
-
-def redirect_stub(wid):
-    u = f"{ORIGIN}/manga/past/{wid}.html"
-    return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><title>アーカイブへ移動しました</title>"
-            f"<meta http-equiv=refresh content='0;url=../past/{wid}.html'><link rel=canonical href='{u}'>"
-            f"<meta name=robots content='noindex,follow'></head><body><p><a href='../past/{wid}.html'>この作品のページ（アーカイブ）へ</a></p></body></html>")
 
 
 def git(*a):
@@ -110,87 +95,60 @@ def card(wid, page):
     st = re.search(r"<span class=stars>(★[\d.]+)</span>", page)
     au = re.search(r"<th>著者</th><td>([^<]*)</td>", page)
     dl = date.fromisoformat(MARK_RE.search(page)[1])
-    return (f"<a class=card style='--g1:{g1};--g2:{g2}' href='{wid}.html'><div class=thumb>{th}</div><div class=in>"
+    return (f"<a class=card style='--g1:{g1};--g2:{g2}' href='w/{wid}.html'><div class=thumb>{th}</div><div class=in>"
             f"<b>{html.escape(name)}</b><br><span class=note>{f'<span class=stars>{st[1]}</span> ' if st else ''}{html.escape(au[1]) if au else ''}</span><br>"
             f"<span class=free style='background:#78716c'>無料終了</span> <span class=left>{md(dl)}まで</span></div></a>"), dl
 
 
-def build_index(pages):
-    items = sorted((card(w, p) + (w,) for w, p in pages.items()), key=lambda x: (x[1], x[2]), reverse=True)
-    first = next(iter(pages.values()))
-    n = len(items)
-    title = f"終了したマンガ無料キャンペーンのアーカイブ（{n}作品）｜やまのてマンガ"
-    desc = f"1巻無料の期間が終わったマンガ{n}作品の記録。あらすじ・登場人物・読者の声は、そのまま読めます。いま無料の作品は「いま無料で読めるマンガ」へ。"
-    head = first[:first.index("<body>")]
-    head = re.sub(r"<script type=application/ld\+json>.*?</script>", "", head, flags=re.S)
-    head = re.sub(r"<title>.*?</title>", lambda m: f"<title>{html.escape(title)}</title>", head, count=1, flags=re.S)
-    head = re.sub(r'(<meta (?:name=description|property=og:description) content=")[^"]*"', lambda m: m[1] + html.escape(desc, quote=True) + '"', head)
-    head = re.sub(r'(<meta property=og:title content=")[^"]*"', lambda m: m[1] + html.escape(title, quote=True) + '"', head)
-    head = head.replace("og:type content=book", "og:type content=website")
-    head = re.sub(r"(<link rel=canonical href=')[^']*'", lambda m: m[1] + f"{ORIGIN}/manga/past/index.html'", head)
-    head = re.sub(r"(og:url content=')[^']*'", lambda m: m[1] + f"{ORIGIN}/manga/past/index.html'", head)
-    head = re.sub(r"<meta property=og:image content='[^']*'>", f"<meta property=og:image content='{ORIGIN}/img/brand/x_header.png'>", head)
-    hdr = re.search(r"<header class=top>.*?</header>", first, re.S)[0]
-    tail = first[first.index("<footer"):]
-    body = (f"<body><main style=''>{hdr}<nav class=bc aria-label='パンくず'><a href='../../index.html'>トップ</a> › "
-            f"<a href='../index.html'>やまのてマンガ</a> › アーカイブ</nav>"
-            f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
-            f"<h1 style='font-size:22px;margin:10px 0'>📦 無料が終わったマンガのアーカイブ</h1>"
-            f"<p class=note>1巻無料の期間が終わった作品です（新しく終わった順）。あらすじ・登場人物・読者の声は残してあります。"
-            f"いま無料で読める作品は<a href='../theme/free-now.html'>こちら</a>。</p>"
-            f"<div class=grid>{''.join(c for c, _, _ in items)}</div>"
-            f"<p class=note><a href='../index.html'>マンガトップ</a>　<a href='../theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='../new-releases.html'>新刊カレンダー</a></p>")
-    (PAST / "index.html").write_text(head + body + tail, encoding="utf-8")
-
-
-def add_nav_link():
-    """全マンガページのメニュー『Q&A』の後に『アーカイブ』を足す（生成ツールが作り直しても戻す）。"""
-    n = 0
-    for f in MANGA.rglob("*.html"):
+def update_index_section():
+    """manga/index.html に『無料が終わった作品』の段を入れ直す（無ければ外す）。"""
+    idx = MANGA / "index.html"
+    if not idx.exists():
+        return 0
+    ended = []
+    for f in sorted(W.glob("*.html")):
         t = f.read_text(encoding="utf-8")
-        if "past/index.html'>アーカイブ" in t:
-            continue
-        m = re.search(r"<a href='((?:\.\./)*|)faq\.html'>Q&amp;A</a>", t)
-        if not m:
-            continue
-        pre = m.group(1)
-        link = f"<a href='{pre}past/index.html'>アーカイブ</a>"
-        f.write_text(t.replace(m.group(0), m.group(0) + link, 1), encoding="utf-8")
-        n += 1
-    return n
+        if MARK_RE.search(t):
+            c, dl = card(f.stem, t)
+            ended.append((dl, f.stem, c))
+    ended.sort(reverse=True)  # 新しく終わった順
+    t = idx.read_text(encoding="utf-8")
+    base = LIST_RE.sub("", t)
+    if ended:
+        sec = (f"<!--ended-list--><h2>📦 無料が終わった作品（{len(ended)}作品）</h2>"
+               f"<p class=note>1巻無料の期間が終わった作品です。あらすじ・登場人物・読者の声は残してあります。また無料になったらお知らせします。</p>"
+               f"<div class=grid>{''.join(c for _, _, c in ended)}</div><!--/ended-list-->\n")
+        for anchor in ("<h2>まとめ</h2>", "<p class=note>20", "<footer"):
+            if anchor in base:
+                base = base.replace(anchor, sec + anchor, 1)
+                break
+    if base != t:
+        idx.write_text(base, encoding="utf-8")
+    return len(ended)
 
 
 def main():
     td = today()
-    PAST.mkdir(parents=True, exist_ok=True)
-    moved = []
-    # 1. 現行ページで期限切れ → past へ移して w/ は転送ページに
+    ended_now, restored = [], []
+    # 1. 無料中の表示のまま期限が過ぎたページ → その場で終了表示に
     for f in sorted(W.glob("*.html")):
         t = f.read_text(encoding="utf-8")
         dl = deadline_of(t)
-        if dl is None or dl >= td:
-            continue
-        (PAST / f.name).write_text(make_archive_page(t, f.stem, dl), encoding="utf-8")
-        f.write_text(redirect_stub(f.stem), encoding="utf-8")
-        moved.append(f.stem)
-    # 2. 消された作品ページを履歴から復元（期限が過ぎているものだけ）
-    restored = []
+        if dl is not None and dl < td:
+            f.write_text(make_ended_page(t, dl), encoding="utf-8")
+            ended_now.append(f.stem)
+    # 2. 生成ツールに消されたページ → 履歴から復元（期限が過ぎているものだけ）
     for wid, t in deleted_from_history().items():
-        if (PAST / f"{wid}.html").exists():
+        if (W / f"{wid}.html").exists():
             continue
         dl = deadline_of(t)
-        if dl is None or dl >= td:
-            continue
-        (PAST / f"{wid}.html").write_text(make_archive_page(t, wid, dl), encoding="utf-8")
-        restored.append(wid)
-    # 3. 一覧
-    pages = {p.stem: p.read_text(encoding="utf-8") for p in sorted(PAST.glob("*.html")) if p.name != "index.html"}
-    pages = {k: v for k, v in pages.items() if MARK_RE.search(v)}
-    if pages:
-        build_index(pages)
-    # 4. メニュー
-    nav = add_nav_link() if pages else 0
-    print(f"アーカイブ: 移動{len(moved)} 履歴から復元{len(restored)} 累計{len(pages)}作品 メニュー更新{nav}ページ")
+        if dl is not None and dl < td:
+            W.mkdir(parents=True, exist_ok=True)
+            (W / f"{wid}.html").write_text(make_ended_page(t, dl), encoding="utf-8")
+            restored.append(wid)
+    # 3. マンガ一覧の段
+    n = update_index_section()
+    print(f"マンガ蓄積: 終了表示に{len(ended_now)} 履歴から復元{len(restored)} 一覧の『終了した作品』{n}件")
 
 
 if __name__ == "__main__":
