@@ -192,7 +192,54 @@ def ensure_css(t):
     return t
 
 
+AMAZON_MAP = DATA / "amazon_map.json"
+CSS_A = ".mini.a{background:#ff9900!important;color:#111!important}"
+CSS_A2 = ".btns .a{background:#ff9900;color:#111}"
+
+
+def add_amazon(tag):
+    """bot/data/amazon_map.json にある商品の楽天ボタン（＋Yahoo!）の隣に Amazon ボタンを足す。APIキー不要・何度実行しても同じ。"""
+    try:
+        amap = {k: v["asin"] for k, v in json.loads(AMAZON_MAP.read_text(encoding="utf-8")).items() if isinstance(v, dict)}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+    n = 0
+    for f in sorted((SITE / "articles").glob("*.html")):
+        if f.name in SKIP:
+            continue
+        t = f.read_text(encoding="utf-8")
+
+        def mk(kind):
+            def sub(m):
+                nonlocal n
+                asin = amap.get(f"{m['shop']}:{m['no']}")
+                tail = m.string[m.end():m.end() + 40]
+                if not asin or tail.startswith("<a class='mini a'") or tail.startswith("<a class=a "):
+                    return m.group(0)
+                n += 1
+                url = f"https://www.amazon.co.jp/dp/{asin}?tag={tag}"
+                if kind == "mini":
+                    return (m.group(0) + f"<a class='mini a' href='{url}' rel='sponsored nofollow noopener' target=_blank "
+                            f"aria-label='{m['label']}をAmazonで見る'>Amazon</a>")
+                return m.group(0) + f"<a class=a href='{url}' rel='sponsored nofollow noopener' target=_blank>Amazonで見る</a>"
+            return sub
+        # 楽天ボタン（＋あれば直後の Yahoo! ボタン）までを1かたまりとして、その直後に足す
+        r1 = re.compile(BTN_RE.pattern.replace("(?!<a class='mini y')", "") + r"(?:<a class='mini y'[^>]*>Yahoo!</a>)?")
+        r2 = re.compile(BTN2_RE.pattern.replace("(?!<a class=y)", "") + r"(?:<a class=y [^>]*>Yahoo!で見る</a>)?")
+        u = r2.sub(mk("btns"), r1.sub(mk("mini"), t))
+        if u != t:
+            if "mini a" in u and ".mini.a" not in u:
+                u = u.replace("</style>", CSS_A + "</style>", 1)
+            if "<a class=a " in u and ".btns .a" not in u:
+                u = u.replace("</style>", CSS_A2 + "</style>", 1)
+            f.write_text(u, encoding="utf-8")
+    return n
+
+
 def main():
+    cfg = load_config(BASE) or {}
+    na = add_amazon(cfg.get("amazon_tag") or "shogo450e-22")
+    print(f"Amazonボタン: 追加{na}")
     cfg = load_config(BASE)
     yh = Yahoo(cfg)
     if not cfg or not yh.ready:
