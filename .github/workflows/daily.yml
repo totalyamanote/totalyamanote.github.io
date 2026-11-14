@@ -63,6 +63,13 @@ jobs:
           SITE_DIR: .
         run: python bot/manga_archive.py
 
+      # Googleのお作法の点検（title/description/h1/canonical/sitemap/alt/sponsored など）。結果を bot/data/audit_last.txt に残し、毎朝のタスクが直す
+      - name: SEO audit
+        run: |
+          python bot/seo_audit.py > /tmp/audit.txt 2>&1 || true
+          mkdir -p bot/data
+          { date '+%Y-%m-%d %H:%M'; tail -40 /tmp/audit.txt; } > bot/data/audit_last.txt
+          tail -3 /tmp/audit.txt
       - name: Commit and push
         env:
           TZ: Asia/Tokyo
