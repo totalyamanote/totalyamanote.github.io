@@ -33,6 +33,11 @@ def go(s):
     return s["url"], False
 
 
+def logo(s, size=40):
+    f = OUT.parent.parent / "img" / "stores" / f"{s['id']}.png"
+    return (f"<img class=lg src='../img/stores/{s['id']}.png' width={size} height={size} alt='{esc(s['name'])}のロゴ' loading=lazy>" if f.exists() else "")
+
+
 def src(u):
     return f"<a class=src href='{esc(u)}' rel=noopener target=_blank>出典</a>" if u else ""
 
@@ -47,6 +52,7 @@ CSS = (".sc{width:100%;border-collapse:collapse;font-size:13px;min-width:860px}.
        ".pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:10px 0 18px}.pk div{background:var(--card,#fff);border:1px solid var(--line);border-left:5px solid #bf0000;border-radius:12px;padding:10px 14px}"
        ".pk span{display:block;font-size:12px;font-weight:800;color:#bf0000}.st{background:var(--card,#fff);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:12px 0}"
        ".st dl{display:grid;grid-template-columns:7em 1fr;gap:4px 10px;font-size:13px;margin:8px 0}.st dt{font-weight:800;color:var(--mut)}"
+       ".lg{vertical-align:middle;border-radius:10px;border:1px solid var(--line);background:#fff;margin-right:8px;object-fit:contain}.pk div{display:flex;flex-direction:column}.pk .hd{display:flex;align-items:center;margin:4px 0}.pk a.go{margin-top:auto;display:block;text-align:center;background:#bf0000;color:#fff!important;font-weight:800;border-radius:10px;padding:8px;text-decoration:none;font-size:13px}"
        ".gbtn{display:block;text-align:center;background:#bf0000;color:#fff!important;font-weight:900;border-radius:12px;padding:12px;text-decoration:none;margin:10px 0 4px;box-shadow:0 4px 0 rgba(0,0,0,.2)}")
 
 
@@ -55,7 +61,7 @@ def build():
     ck = datetime.date.fromisoformat(d["checked"])
     S = d["stores"]
     live = [s for s in S if not s["status"]]
-    rows = "".join(f"<tr><td>{esc(s['name'])}</td><td>{cell(s['first'])}{src(s['first_src'])}</td><td>{cell(s['point'])}{src(s['point_src'])}</td>"
+    rows = "".join(f"<tr><td>{logo(s, 28)}{esc(s['name'])}</td><td>{cell(s['first'])}{src(s['first_src'])}</td><td>{cell(s['point'])}{src(s['point_src'])}</td>"
                    f"<td>{cell(s['free'])}{src(s['free_src'])}</td><td>{cell(s['sub'])}{src(s['sub_src'])}</td><td>{esc(s['app'])}</td><td>{esc(s['company'])}</td></tr>" for s in live)
     by = {s["id"]: s for s in S}
     picks = [("初回をとにかく安く", "booklive", "新規会員限定70%OFFクーポン（ほぼ全作品対象）"),
@@ -64,17 +70,22 @@ def build():
              ("無料でたくさん読みたい", "mangaoh", "公式表記で常時10,000冊以上の無料漫画"),
              ("読み放題で読みたい", "bookwalker", "マンガコース月額836円／MAXコース月額1,100円"),
              ("まとめ買いでポイント重視", "dmm", "公式表記「9割の作品が25%以上ポイント還元」")]
-    pk = "".join(f"<div><span>{esc(k)}なら</span><b>{esc(by[i]['name'])}</b><br><small>{esc(r)}</small></div>" for k, i, r in picks)
+    def _pk(k, i, r):
+        u, aff = go(by[i])
+        rel = "sponsored nofollow noopener" if aff else "noopener"
+        return (f"<div><span>{esc(k)}なら</span><span class=hd>{logo(by[i], 44)}<b>{esc(by[i]['name'])}</b></span><small>{esc(r)}</small>"
+                f"<a class=go href='{esc(u)}' rel='{rel}' target=_blank>{esc(by[i]['name'])}を見る ›</a></div>")
+    pk = "".join(_pk(k, i, r) for k, i, r in picks)
     secs = ""
     for s in S:
         u, aff = go(s)
         rel = "sponsored nofollow noopener" if aff else "noopener"
         if s["status"]:
-            secs += (f"<div class=st id={s['id']}><h3>{esc(s['name'])}</h3><p class=stop>⚠️ {esc(s['status'])}{src(s.get('status_src', ''))}</p>"
+            secs += (f"<div class=st id={s['id']}><h3>{logo(s, 40)}{esc(s['name'])}</h3><p class=stop>⚠️ {esc(s['status'])}{src(s.get('status_src', ''))}</p>"
                      f"<p class=note>再開の状況は運営会社の発表を確認してください。当ページでは、全面再開を確認するまで比較表から外しています。</p></div>")
             continue
         good = "".join(f"<li>{esc(g)}</li>" for g in s["good"])
-        secs += (f"<div class=st id={s['id']}><h3>{esc(s['name'])}</h3><ul>{good}</ul><dl>"
+        secs += (f"<div class=st id={s['id']}><h3>{logo(s, 40)}{esc(s['name'])}</h3><ul>{good}</ul><dl>"
                  f"<dt>初回特典</dt><dd>{cell(s['first'])}{src(s['first_src'])}</dd><dt>ポイント</dt><dd>{cell(s['point'])}{src(s['point_src'])}</dd>"
                  f"<dt>無料作品</dt><dd>{cell(s['free'])}{src(s['free_src'])}</dd><dt>読み放題</dt><dd>{cell(s['sub'])}{src(s['sub_src'])}</dd>"
                  f"<dt>支払い</dt><dd>{cell(s['pay'])}{src(s['pay_src'])}</dd><dt>読み方</dt><dd>{esc(s['app'])}</dd><dt>運営</dt><dd>{esc(s['company'])}</dd></dl>"
@@ -97,10 +108,11 @@ def build():
           "author": {"@type": "Organization", "name": "やまのて編集部", "url": "https://totalyamanote.github.io/about.html"},
           "publisher": {"@type": "Organization", "name": "やまのて", "logo": {"@type": "ImageObject", "url": "https://totalyamanote.github.io/img/brand/logo_400.png"}},
           "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i, "name": s["name"], "url": s["url"]} for i, s in enumerate(live, 1)]}}
-    head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"
+    head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>" + "<link rel=canonical href='https://totalyamanote.github.io/manga/store-compare.html'><meta property=og:image content='https://totalyamanote.github.io/img/brand/x_header.png'>"
     page = gm.page(title, desc, body, 0, head=head).replace(
         "<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
         "<p class=pr>PR｜このページはアフィリエイト広告（バリューコマース・楽天アフィリエイト・Amazonアソシエイト）を利用しています。順位や評価は報酬で変えていません。</p>")
+    page = page.replace("logo_v8.png' width=40 height=40 alt=''>", "logo_v8.png' width=40 height=40 alt='やまのて'>")
     OUT.write_text(page, encoding="utf-8")
     print("ストア比較", len(live), "ストア（停止中", len(S) - len(live), "）")
 
