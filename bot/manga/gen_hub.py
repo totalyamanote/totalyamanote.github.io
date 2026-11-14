@@ -84,12 +84,12 @@ def newrel_row():
         return ""
     today = datetime.date.today()
     its = [e for e in json.loads(p.read_text(encoding="utf-8"))["items"]
-           if today.isoformat() <= e["date"] and ".gif" not in e["img"] and (e.get("kobo") or e.get("kindle"))]
+           if today.isoformat() <= e["date"] and ".gif" not in e["img"] and (e.get("kobo") or e.get("kindle") or e.get("ebj"))]
     its.sort(key=lambda e: (e["date"], e["rank"]))
     out = ""
     for e in its[:10]:
         d = datetime.date.fromisoformat(e["date"])
-        u = e.get("kobo") or e.get("kindle")
+        u = e.get("kobo") or e.get("kindle") or e.get("ebj")
         out += (f"<a class=hm href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy>"
                 f"<b>{esc(e['title'])}</b><span style='background:#bf0000'>{d.month}/{d.day}発売・電子版</span></a>")
     return out

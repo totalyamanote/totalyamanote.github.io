@@ -19,6 +19,7 @@ URL = "https://openapi.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 OUT = HERE / "site" / "manga" / "new-releases.html"
 DATA = HERE / "data" / "new_releases.json"
 KINDLE = HERE / "data" / "kindle_asin.json"   # 紙のISBN-10 → Kindle版ASIN（Chromeで紙の本のページから確認・"none"=Kindle版なし）
+EBJ = HERE / "data" / "ebookjapan_items.json"  # ISBN → ebookjapan ヤフー店の各巻のURL（Chromeで確認・"none"=まだ出ていない）。VCのYahoo!プログラムで報酬が付く
 KPEND = HERE / "data" / "kindle_pending.json"  # まだ確認していないISBN-10（毎朝Chromeで確認する）
 esc = html.escape
 NG = re.compile(r"ムック|原画集|イラストブック|画集|ファンブック|カレンダー|地球の歩き方|ポスト|ステッカー|グッズ")
@@ -81,6 +82,12 @@ def add_stores(items):
         elif i10 and k is None:
             pend[i10] = e["title"]
     KPEND.write_text(json.dumps(pend, ensure_ascii=False, indent=1), encoding="utf-8")
+    # ebookjapan（Yahoo!ショッピング内のebookjapan ヤフー店の各巻）：同じ巻と確認できたものだけ
+    EB = json.loads(EBJ.read_text(encoding="utf-8")) if EBJ.exists() else {}
+    for e in items:
+        u = EB.get(e.get("isbn", ""))
+        if u and u not in ("none", "ERR"):
+            e["ebj"] = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=" + __import__("urllib.parse", fromlist=["quote"]).quote("https://store.shopping.yahoo.co.jp" + u, safe="")
 
 
 def _norm(t):
@@ -110,7 +117,7 @@ def card(e, today):
     d = datetime.date.fromisoformat(e["date"])
     left = (d - today).days
     tag = ("<b class=nd>今日発売</b>" if left == 0 else (f"<b class=nd>あと{left}日</b>" if left > 0 else f"<span class=nd2>{-left}日前に発売</span>"))
-    eu = e.get('kobo') or e.get('kindle')
+    eu = e.get('kobo') or e.get('kindle') or e.get('ebj')
     img = f"<img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy width=120 height=170>"
     return ((f"<div class=ncard><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard><span class=nimg>{img}</span>")
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
@@ -120,7 +127,8 @@ def card(e, today):
             + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo<small>電子"
                 + (f"・{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</small></a>") if e.get("kobo") else "")
             + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle<small>電子</small></a>" if e.get("kindle") else "")
-            + ("" if e.get("kobo") or e.get("kindle") else "<span class=nwait>電子版は配信準備中</span>")
+            + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebook<small>japan</small></a>" if e.get("ebj") else "")
+            + ("" if e.get("kobo") or e.get("kindle") or e.get("ebj") else "<span class=nwait>電子版は配信準備中</span>")
             + "</div></div>")
 
 
@@ -131,7 +139,7 @@ CSS = (".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,
        ".nt{font-size:13px;line-height:1.35}.na,.np{font-size:12px;color:var(--mut)}"
        ".nbtns{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));gap:3px}"
        ".nbtn{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff!important;font-weight:900;font-size:11px;border-radius:8px;padding:6px 1px;white-space:nowrap;text-decoration:none;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.2)}"
-       ".nbtn small{font-size:10px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
+       ".nbtn small{font-size:10px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
 
 
 def build():
@@ -159,7 +167,7 @@ def build():
             + (f"<h2>今週発売（7日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in wk)}</div>" if wk else "")
             + f"<h2>これから発売（予約受付中）</h2><div class=ngrid>{''.join(card(e, today) for e in soon if e not in wk)}</div>"
             + (f"<h2>最近発売した新刊（14日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in past)}</div>" if past else "")
-            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindleとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
+            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.github.io/manga/new-releases.html",
           "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.github.io/manga/"},
