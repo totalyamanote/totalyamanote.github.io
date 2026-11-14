@@ -589,6 +589,12 @@ def run_all():
     apply_other_breadcrumbs()
     apply_flow()
     apply_basics()
+    try:  # GA4のタグ（全ページ）。site/bot/ga.py（クラウドと共通）
+        import importlib.util
+        _sp = importlib.util.spec_from_file_location("ga", SITE / "bot" / "ga.py")
+        _ga = importlib.util.module_from_spec(_sp); _sp.loader.exec_module(_ga); _ga.apply(str(SITE))
+    except Exception as e:
+        print("GA4タグを入れられず", e)
     return n
 
 

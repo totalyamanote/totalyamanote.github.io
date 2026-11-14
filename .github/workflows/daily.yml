@@ -64,6 +64,8 @@ jobs:
         run: python bot/manga_archive.py
 
       # Googleのお作法の点検（title/description/h1/canonical/sitemap/alt/sponsored など）。結果を bot/data/audit_last.txt に残し、毎朝のタスクが直す
+      - name: GA4 tag on all pages
+        run: python bot/ga.py .
       - name: SEO audit
         run: |
           python bot/seo_audit.py > /tmp/audit.txt 2>&1 || true
