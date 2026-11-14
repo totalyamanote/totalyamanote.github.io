@@ -96,6 +96,11 @@ def lookup(api, yh, shop, no):
         print(f"  Yahoo API失敗 {shop}:{no} {e}")
         return None
     h = pick_yahoo(it["itemName"], r_price, hits)
+    if not h:  # 診断：一番近かった候補（条件を調整する材料）
+        base = norm(it["itemName"])[:50]
+        c = max(hits, key=lambda x: dice(base, norm(x["name"])[:50]), default=None)
+        print(f"    楽天: {it['itemName'][:40]} ¥{r_price:,} / 候補{len(hits)}件"
+              + (f" / 最も近い: {c['name'][:40]} ¥{c['price']:,} 類似{dice(base, norm(c['name'])[:50]):.2f}" if c else ""))
     return h["url"] if h else ""
 
 
