@@ -116,7 +116,7 @@ def article_cards():
         im = next((m for m in re.finditer(r"<img src=['\"]?([^'\" >]+)", t) if "img/brand" not in m.group(1)), None)
         tag = "家電" if f.stem.startswith("electric") else ("まとめ" if f.stem == "point-up" else "比較")
         out += (f"<a class=ha href='articles/{f.name}'><span class=tag>{tag}</span>"
-                + (f"<img src='{esc(im.group(1))}' alt='' loading=lazy>" if im else "")
+                + (f"<img src='{esc(im.group(1).replace('../', '', 1) if im.group(1).startswith('../') else im.group(1))}' alt='' loading=lazy>" if im else "")
                 + f"<b>{esc(m.group(1) if m else f.stem)}</b></a>")
     return out
 
