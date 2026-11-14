@@ -393,7 +393,7 @@ def theme_pages(works):
     today = datetime.date.today()
     made = []
     free = sorted([w for w in works.values() if w.get("free_until") and datetime.date.fromisoformat(w["free_until"]) >= today],
-                  key=lambda w: w["free_until"]) + [w for w in works.values() if w.get("free_ongoing")]
+                  key=lambda w: w["free_until"]) + [w for w in works.values() if w.get("free_ongoing") and not w.get("free_until")]
     themes = [("free-now", "いま無料で読めるマンガ（期限が近い順）", free, "1巻が期間限定で無料になっている作品を、期限が近い順に並べました。")]
     adapt = [w for w in works.values() if re.search(r"アニメ化|ドラマ化|映画化|実写化", w.get("fact", ""))]
     if adapt:
