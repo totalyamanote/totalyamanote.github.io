@@ -44,6 +44,13 @@ jobs:
           OUT_DIR: bot/out
         run: python bot/run_daily.py
 
+      # 無料期限が過ぎたマンガ作品ページを消さず manga/past/ に蓄積（冪等）
+      - name: Archive expired manga pages
+        env:
+          TZ: Asia/Tokyo
+          SITE_DIR: .
+        run: python bot/manga_archive.py
+
       - name: Commit and push
         env:
           TZ: Asia/Tokyo
