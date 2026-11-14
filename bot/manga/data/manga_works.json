@@ -461,7 +461,7 @@
   "free_label": "1〜6巻が無料",
   "free_store_name": "ebookjapan",
   "free_url": "https://ebookjapan.yahoo.co.jp/books/516901/",
-  "free_note": "「完結！6巻無料＋最大50%OFF」キャンペーン中。終了日はストアの表示を確認してください（11/14確認）。",
+  "free_note": "「完結！6巻無料＋最大50%OFF」キャンペーン（期間：2026/11/6〜12/5）。",
   "covers": {
    "14": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/9231/9784253019231_1_26.jpg",
    "13": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8846/9784253008846_1_76.jpg",
@@ -515,6 +515,7 @@
    ],
    "checked": "2026-11-14"
   },
-  "added": "2026-11-14"
+  "added": "2026-11-14",
+  "free_until": "2026-12-05"
  }
 }

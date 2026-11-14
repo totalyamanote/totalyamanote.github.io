@@ -263,7 +263,11 @@ def work_page(w, works=None):
         free_badge = f"<span class=badge>1巻無料のキャンペーンは{d.month}月{d.day}日に終了しました</span> <span class=note>次の無料キャンペーンが出たら、このページで知らせます</span>"
     buybox = ""
     if w.get("free_ongoing"):
-        free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span>"
+        if dl is not None:
+            _d = datetime.date.fromisoformat(w["free_until"])
+            free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=left>{_d.month}月{_d.day}日（{'月火水木金土日'[_d.weekday()]}）まで・あと{dl}日</span>"
+        else:
+            free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span>"
         b = w.get("buy") or {}
         bv = b.get("vol")
         btns = ""
@@ -419,7 +423,7 @@ def theme_pages(works):
             fu = ""
             if dl is not None:
                 d = datetime.date.fromisoformat(w["free_until"])
-                fu = f"<p><span class=free>1巻 無料</span> <span class=left>{d.month}月{d.day}日まで・あと{dl}日</span></p>"
+                fu = f"<p><span class=free>{esc(w.get('free_label', '1巻 無料'))}</span> <span class=left>{d.month}月{d.day}日まで・あと{dl}日</span></p>"
             elif w.get("free_ongoing"):
                 fu = f"<p><span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span></p>"
             ebj = w.get("store") == "ebookjapan"
@@ -451,6 +455,7 @@ def index(works, themes):
         if slug == "adapted":
             ws = [w for w in ws if re.search(r"アニメ化|ドラマ化|映画化|実写化", w.get("fact", ""))]
         return [w for w in ws if w.get("real_id")][:4]
+    themes = list(reversed(themes))  # まとめも新しく作った順（2026-11-14 坂田さん指定）
     lis = "".join(f"<a class=card style='{grad(str(i + 3))}' href='theme/{s}.html'><div class=thumb>"
                   + ("".join(f"<img src='{esc(w['img'])}' alt='『{esc(w['series'])}』の表紙' loading=lazy>" for w in json.loads((HERE / "data" / "popular_trial.json").read_text(encoding="utf-8"))["works"][:4])
                      if s == "always-free" and (HERE / "data" / "popular_trial.json").exists() else
@@ -480,13 +485,15 @@ def index(works, themes):
         print("トップの新刊欄なし", _e)
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):
         dl = left_days(w)
-        if dl is None and not w.get("free_ongoing"):
-            continue
+        if dl is None:
+            continue  # 期限が分からない無料は「いますぐ」に入れない
+        if any(x is not w and x["title"] == w["title"] and (x.get("free_until") or "") > w["free_until"] for x in works.values()):
+            continue  # 同じ作品が複数のストアで無料なら、期限の長いほうを残す
         dd = datetime.date.fromisoformat(w["free_until"]) if dl is not None else None
         img = cover(w, size="M")
         quick += (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
                   f"<a href='w/{w['title_id']}.html' class=qt>『{esc(w['title'])}』</a>"
-                  + (f"<span class=qd>1巻無料 {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
+                  + (f"<span class=qd>{esc(w.get('free_label', '1巻無料'))} {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
                   + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") == "ebookjapan" else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
     # 人気作の1巻（Kindleの無料試し読み）も混ぜる（2026-11-14 坂田さん「ブルーロックみたいなの」）
@@ -503,9 +510,10 @@ def index(works, themes):
                     f"<a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qt>『{esc(w['series'])}』</a>"
                     f"<span class=qd>1巻を試し読み<b>★{esc(w['amz_rating'])}</b></span>"
                     f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
-    quick = quick + ptq
-    quick_block = (f"<h2>いますぐ無料で読む（期限つき＋人気作の試し読み）</h2>{QCSS}<div class=qrow>{quick}</div>"
-                   f"<p class=note>期限つきの無料は期限が近い順。人気作は、Kindleの無料サンプルで1巻の冒頭をいつでも試し読みできます（<a href='theme/always-free.html'>一覧</a>）。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
+    # 2026-11-14 坂田さん：「いますぐ無料で読む」は期間限定（期限が分かるもの）だけ。鬼滅などの試し読みは入れない
+    ptq = ""
+    quick_block = (f"<h2>いますぐ無料で読む（期間限定・期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>"
+                   f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>
 {quick_block}{newrel}
 <h2>作品一覧（{len(works)}作品・新しく追加した順）</h2><div class=grid>{cards}</div>
