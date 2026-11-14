@@ -166,18 +166,16 @@ def always_free_page():
                    f"<p><b style='font-size:17px'>『{esc(w['series'])}』</b></p><p class=note><span class=stars>★{esc(w['amz_rating'])}</span>（Amazonの評価 {esc(w['amz_reviews'])}件）　{esc(w['author'])}｜{esc(w['publisher'])}</p>"
                    f"<p>{esc(w['summary'])}</p>"
                    f"<p><a class=btn href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>1巻をKindleで無料で試し読み</a></p></div>")
-    title = f"いつでも無料で読めるマンガ｜人気作{len(pop)}作品の試し読み＋無料作品{len(ws)}作品"
+    title = f"いつでも無料で読めるマンガ｜人気作{len(pop)}作品の1巻を試し読み（Kindle）"
     intro = (f"ブックライブの無料コーナーで、無料の期限が表示されていない{len(ws)}作品を集めました（{ck.month}/{ck.day}確認）。"
              "急がずに、自分のペースで読み始められる作品です。")
     intro = (f"『鬼滅の刃』『ONE PIECE』など人気作{len(pop)}作品の1巻は、Kindleの無料サンプルで、いつでも冒頭を試し読みできます。"
-             f"あわせて、ブックライブで無料の期限が表示されていない{len(ws)}作品も紹介します（{ck.month}/{ck.day}確認）。")
+             f"続きが気になったら、そのまま購入できます（{ck.month}/{ck.day}確認）。")
     body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いつでも無料で読めるマンガ</h1><p>{esc(intro)}</p></div>"
             + (f"<h2>人気作の1巻を、いつでも無料で試し読み（Kindle）</h2><p class=note>Kindleの作品ページの「無料サンプルを読む」から、冒頭をいつでも無料で読めます（読める範囲は作品ごとに違います）。"
                f"評価はAmazonのレビュー（{ck.month}/{ck.day}時点）。</p>{pcards}" if pcards else "")
-            + "<h2>数冊まるごと無料（期限の表示なし・ブックライブ）</h2>"
-            f"<p class=note>期限つきで無料の作品は「<a href='free-now.html'>いま無料で読めるマンガ（期限が近い順）</a>」にまとめています。"
-            f"無料の冊数・対象は、ストアの表示が変わることがあります。読む前に作品ページで確認してください。</p>{cards}"
-            f"<p class=note>出典：{esc(d['source'])}。紹介文は、公式の作品紹介をもとに当サイトで要約しています。評価はブックライブのレビュー（{ck.month}/{ck.day}時点）。</p>")
+            + f"<p class=note>期限つきで無料の作品は「<a href='free-now.html'>いま無料で読めるマンガ（期限が近い順）</a>」にまとめています。</p>"
+            f"<p class=note>紹介文は、公式の作品紹介をもとに当サイトで要約しています。</p>")
     out = OUT / "theme" / "always-free.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.github.io/manga/theme/always-free.html",
