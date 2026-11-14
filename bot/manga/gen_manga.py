@@ -542,11 +542,41 @@ def faq_page(works):
     (OUT / "faq.html").write_text(page("マンガを無料で読むには？期限・全巻無料・安全な読み方のよくある質問", "マンガを無料で読む方法、無料の期限、全巻無料はあるか、違法サイトの危険など、よくある質問にまとめて答えます。作品ごとの期限は「いま無料で読めるマンガ」へ。", body, 0, head=head), encoding="utf-8")
 
 
+def release_from_stock():
+    """ストック（data/manga_stock.json）から、公開日（release_on）が来た作品を作品一覧へ移す。
+    1日1作ずつ小出しにして、毎日サイトに新しい作品が増えるようにする（2026-11-14 坂田さん指定）。
+    無料の期限がもう切れた作品は、出さずにストックから外す。SNSの投稿もこの公開日に合わせる。"""
+    sf = HERE / "data" / "manga_stock.json"
+    if not sf.exists():
+        return
+    stock = json.loads(sf.read_text(encoding="utf-8"))
+    today = datetime.date.today().isoformat()
+    works = json.loads(DATA.read_text(encoding="utf-8"))
+    keep, moved = [], []
+    for w in stock:
+        if w.get("free_until") and w["free_until"] < today:
+            print("ストック：期限切れで外す", w["title"])
+            continue
+        if w.get("release_on", "9999") <= today and w["title_id"] not in works:
+            w = dict(w); w["added"] = w.pop("release_on")
+            works[w["title_id"]] = w
+            moved.append(w["title"])
+        elif w["title_id"] not in works:
+            keep.append(w)
+    if moved or len(keep) != len(stock):
+        DATA.write_text(json.dumps(works, ensure_ascii=False, indent=1), encoding="utf-8")
+        sf.write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
+        for t in moved:
+            print("ストックから公開", t)
+    print("ストック残り", len(keep), "作品")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=2)
     ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
+    release_from_stock()
     works = load_works()
     for w in works.values():
         work_page(w, works)

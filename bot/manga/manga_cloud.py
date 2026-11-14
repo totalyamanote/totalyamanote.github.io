@@ -75,7 +75,7 @@ def main():
     update_hubm()
     run("gen_seo.py")
     # 生成したデータの持ち帰り（IndexNowの状態など）
-    for n in ("seo_state.json",):
+    for n in ("seo_state.json", "manga_works.json", "manga_stock.json"):   # ストックから公開した作品も持ち帰る
         s = ROOT / "data" / n
         if s.exists():
             shutil.copy(s, SRC / "data" / n)
