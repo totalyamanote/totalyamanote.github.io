@@ -100,7 +100,11 @@ def newrel_row():
 
 
 def article_cards():
-    arts = sorted((SITE / "articles").glob("*.html"), key=lambda f: f.stat().st_mtime, reverse=True)
+    # 並びは「記事を作った順（新しい順）」（2026-11-14 坂田さん指定）。登録簿（articles_generated.json）の日付と登録順で並べ、
+    # 登録簿にない手書きの記事はそのあと。毎朝の更新でファイルの時刻がそろっても、新しい記事が先頭に来る。
+    reg = json.loads((HERE / "data" / "articles_generated.json").read_text(encoding="utf-8")) if (HERE / "data" / "articles_generated.json").exists() else {}
+    order = {k: (v.get("date", ""), i) for i, (k, v) in enumerate(reg.items())}
+    arts = sorted((SITE / "articles").glob("*.html"), key=lambda f: (1, order[f.stem][0], order[f.stem][1]) if f.stem in order else (0, "", f.stat().st_mtime), reverse=True)
     out = ""
     for f in arts:
         if f.name == "black-friday-2026.html":
