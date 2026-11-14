@@ -1,0 +1,62 @@
+# マンガサイトの毎朝の更新（新刊カレンダー・無料の期限・ストア比較・作品ページ・トップのマンガの段・サイトマップ）。
+# Macが寝ていても動く。記事（articles/）とトップの見た目は触らない（bot/hub.py・apply-buttons の管轄）。
+name: manga
+
+on:
+  schedule:
+    - cron: "40 21 * * *"   # 毎朝 06:40 JST（daily.yml と同じ concurrency グループで順番に動く）
+    - cron: "5 3 * * *"     # 毎日 12:05 JST（昼の更新）
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "bot/manga/**"
+      - ".github/workflows/manga.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-site
+  cancel-in-progress: false
+
+jobs:
+  manga:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build manga site
+        env:
+          TZ: Asia/Tokyo
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: python bot/manga/manga_cloud.py
+      # 無料の期限が切れた作品ページを、消さずに「無料終了」表示で残す（daily.yml と同じ処理。生成のあとに必ず通す）
+      - name: Keep expired manga pages
+        env:
+          TZ: Asia/Tokyo
+          SITE_DIR: .
+        run: python bot/manga_archive.py
+      - name: Commit and push (manga only)
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manga index.html sitemap.xml robots.txt llms.txt bot/manga/data
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -qm "マンガ更新 $(date '+%Y-%m-%d %H:%M') (actions)"
+          git checkout -q -- . 2>/dev/null || true
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push -q origin main && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 8
+          done
+          exit 1
