@@ -451,6 +451,7 @@ OTHER_BC = {
     "manga/theme/free-now.html": [("トップ", "index.html"), ("やまのてマンガ", "manga/index.html"), ("いま無料で読めるマンガ", None)],
     "manga/store-compare.html": [("トップ", "index.html"), ("やまのてマンガ", "manga/index.html"), ("電子書籍ストア比較", None)],
     "manga/new-releases.html": [("トップ", "index.html"), ("やまのてマンガ", "manga/index.html"), ("マンガ新刊の発売日カレンダー", None)],
+    "manga/theme/always-free.html": [("トップ", "index.html"), ("やまのてマンガ", "manga/index.html"), ("いつでも無料で読めるマンガ", None)],
     "manga/theme/adapted.html": [("トップ", "index.html"), ("やまのてマンガ", "manga/index.html"), ("アニメ化・ドラマ化されたマンガ", None)],
     "sale.html": [("トップ", "index.html"), ("セール日程", None)],
     "about.html": [("トップ", "index.html"), ("運営者情報", None)],

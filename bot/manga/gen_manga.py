@@ -101,7 +101,7 @@ def page(title, desc, body, depth=0, style="", head=""):
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
             f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は毎朝更新）　文：やまのて編集部</p>"
-            f"<p class=note><a href='{up}index.html'>マンガトップ</a>　<a href='{up}theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='{up}theme/adapted.html'>アニメ化・ドラマ化されたマンガ</a>　<a href='{up}new-releases.html'>新刊カレンダー</a>　<a href='{up}store-compare.html'>電子書籍ストア比較</a>　<a href='{up}faq.html'>よくある質問</a>　<a href='{up}../index.html'>やまのて（価格・ポイントまとめ）</a></p>"
+            f"<p class=note><a href='{up}index.html'>マンガトップ</a>　<a href='{up}theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='{up}theme/adapted.html'>アニメ化・ドラマ化されたマンガ</a>　<a href='{up}theme/always-free.html'>いつでも無料で読めるマンガ</a>　<a href='{up}new-releases.html'>新刊カレンダー</a>　<a href='{up}store-compare.html'>電子書籍ストア比較</a>　<a href='{up}faq.html'>よくある質問</a>　<a href='{up}../index.html'>やまのて（価格・ポイントまとめ）</a></p>"
             f"<footer style='margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);text-align:center'>"
             f"<a href='{up}../about.html'>運営者情報</a>　<a href='{up}../privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://x.com/totalyamanote' rel=noopener target=_blank>お問い合わせ（X）</a><br>© やまのて編集部</footer></main></body></html>")
 
@@ -135,6 +135,39 @@ def list_ld(name, url, ws):
              {"@type": "ListItem", "position": i, "url": f"https://totalyamanote.github.io/manga/w/{w['title_id']}.html", "name": f"『{w['title']}』"}
              for i, w in enumerate(ws, 1)]}}
     return "<script type=application/ld+json>" + json.dumps(d, ensure_ascii=False) + "</script>"
+
+
+def always_free_page():
+    """期限の表示がない無料マンガ（いつでも読める）：data/always_free.json（ストアの無料一覧で確認・紹介文は要約）"""
+    p = HERE / "data" / "always_free.json"
+    if not p.exists():
+        return None
+    d = json.loads(p.read_text(encoding="utf-8"))
+    ws = sorted(d["works"], key=lambda w: (-int(w["free"] or 0), -float(w["rating"] or 0)))
+    ck = datetime.date.fromisoformat(d["checked"])
+    cards = ""
+    for w in ws:
+        u = VC + urllib.parse.quote(f"https://booklive.jp/product/index/title_id/{w['id']}/vol_no/001", safe="")
+        rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）　" if w.get("rating") else ""
+        cards += (f"<div class=box style='{grad(w['id'])};border-top:6px solid var(--g1)'>"
+                  f"<a class=boxcv href=\"{esc(u)}\" rel=\"nofollow sponsored\"><img src='https://res.booklive.jp/{w['id']}/001/thumbnail/M.jpg' alt='『{esc(w['title'])}』の表紙' loading=lazy></a>"
+                  f"<p><b style='font-size:17px'>『{esc(w['title'])}』</b></p><p class=note>{rt}{esc(w['author'])}</p>"
+                  f"<p><span class=free>{esc(w['free'])}冊無料</span> <span class=badge>{esc(w['genre'])}</span></p><p>{esc(w['summary'])}</p>"
+                  f"<p><a class=btn href=\"{esc(u)}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』を無料で読む\">無料で読む（ブックライブ）</a></p></div>")
+    title = f"いつでも無料で読めるマンガ{len(ws)}作品｜期限の表示なし・{ck.month}/{ck.day}確認"
+    intro = (f"ブックライブの無料コーナーで、無料の期限が表示されていない{len(ws)}作品を集めました（{ck.month}/{ck.day}確認）。"
+             "急がずに、自分のペースで読み始められる作品です。")
+    body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いつでも無料で読めるマンガ</h1><p>{esc(intro)}</p></div>"
+            f"<p class=note>期限つきで無料の作品は「<a href='free-now.html'>いま無料で読めるマンガ（期限が近い順）</a>」にまとめています。"
+            f"無料の冊数・対象は、ストアの表示が変わることがあります。読む前に作品ページで確認してください。</p>{cards}"
+            f"<p class=note>出典：{esc(d['source'])}。紹介文は、公式の作品紹介をもとに当サイトで要約しています。評価はブックライブのレビュー（{ck.month}/{ck.day}時点）。</p>")
+    out = OUT / "theme" / "always-free.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.github.io/manga/theme/always-free.html",
+          "mainEntity": {"@type": "ItemList", "numberOfItems": len(ws), "itemListElement": [
+              {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": w["title"], "author": w["author"]}} for i, w in enumerate(ws, 1)]}}
+    out.write_text(page(title, intro, body, 1, head="<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"), encoding="utf-8")
+    return ("always-free", "いつでも無料で読めるマンガ")
 
 
 def load_works():
@@ -346,6 +379,9 @@ def theme_pages(works):
 def index(works, themes):
     today = datetime.date.today()
     def _tw(slug):
+        if slug == "always-free":
+            af = json.loads((HERE / "data" / "always_free.json").read_text(encoding="utf-8"))["works"][:4]
+            return [{"real_id": w["id"], "title": w["title"]} for w in af]
         ws = sorted(works.values(), key=lambda w: (w.get("free_until") or "9999"))
         if slug == "adapted":
             ws = [w for w in ws if re.search(r"アニメ化|ドラマ化|映画化|実写化", w.get("fact", ""))]
@@ -424,6 +460,9 @@ def main():
     for w in works.values():
         work_page(w, works)
     themes = theme_pages(works)
+    af = always_free_page()
+    if af:
+        themes.append(af)
     index(works, themes)
     faq_page(works)
     print(f"作品 {len(works)} 件・まとめ {len(themes)} 本・作品ページ {len(works)} 本を更新")

@@ -139,9 +139,9 @@ CSS = (".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
        ".ndate{font-size:12px;font-weight:800}.nd{color:#bf0000;margin-left:4px}.nd2{color:var(--mut);font-weight:400;margin-left:4px}"
        ".nt{font-size:13px;line-height:1.35}.na,.np{font-size:12px;color:var(--mut)}"
-       ".nbtns{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:3px}"
-       ".nbtn{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff!important;font-weight:900;font-size:11px;border-radius:8px;padding:6px 1px;white-space:nowrap;text-decoration:none;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.2)}"
-       ".nbtn small{font-size:10px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.off{background:#e7e5e4;color:#5f5f5f!important;box-shadow:none;font-weight:700}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
+       ".nbtns{margin-top:auto;display:flex;flex-direction:column;gap:4px}"
+       ".nbtn{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff!important;font-weight:900;font-size:13px;border-radius:8px;padding:7px 6px;white-space:normal;word-break:break-word;text-decoration:none;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.2)}"
+       ".nbtn small{font-size:11px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.off{background:#e7e5e4;color:#5f5f5f!important;box-shadow:none;font-weight:700}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
 
 
 def build():
