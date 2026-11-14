@@ -489,7 +489,20 @@ def index(works, themes):
                   + (f"<span class=qd>1巻無料 {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
                   + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") == "ebookjapan" else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
-    quick_block = (f"<h2>いますぐ無料で読む（期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
+    # 人気作の1巻（Kindleの無料試し読み）も混ぜる（2026-11-14 坂田さん「ブルーロックみたいなの」）
+    ptq = ""
+    _pt = HERE / "data" / "popular_trial.json"
+    if _pt.exists():
+        _tag = json.loads((HERE / "config.json").read_text(encoding="utf-8")).get("amazon_tag", "")
+        for w in json.loads(_pt.read_text(encoding="utf-8"))["works"]:
+            u = f"https://www.amazon.co.jp/dp/{w['kindle_asin']}?tag={_tag}"
+            ptq += (f"<div class=qcard><a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qimg><img src='{esc(w['img'])}' alt='『{esc(w['series'])}』1巻の表紙' loading=lazy width=120 height=170></a>"
+                    f"<a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qt>『{esc(w['series'])}』</a>"
+                    f"<span class=qd>1巻を試し読み<b>★{esc(w['amz_rating'])}</b></span>"
+                    f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
+    quick = quick + ptq
+    quick_block = (f"<h2>いますぐ無料で読む（期限つき＋人気作の試し読み）</h2>{QCSS}<div class=qrow>{quick}</div>"
+                   f"<p class=note>期限つきの無料は期限が近い順。人気作は、Kindleの無料サンプルで1巻の冒頭をいつでも試し読みできます（<a href='theme/always-free.html'>一覧</a>）。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>
 {quick_block}{newrel}
 <h2>作品一覧（{len(works)}作品{'・無料の期限が近い順' if quick else ''}）</h2><div class=grid>{cards}</div>
