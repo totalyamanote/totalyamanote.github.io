@@ -68,7 +68,11 @@ def main():
         if not claim(qpath, f"Threads 投稿中 {q['at']}"):
             print("ほかの実行が先に投稿中なので、この実行は投稿しない"); return 0
         try:
-            q["threads"] = threads.post(strip_amazon(q["text"]), os.environ["THREADS_TOKEN"], q.get("image"), q.get("quote"))
+            from utm import tag  # 自分のサイトのリンクに目印（GA4でThreadsのどの投稿から来たか分かる）
+            _t = tag(strip_amazon(q["text"]), "threads", q.get("at", ""), q.get("kind", ""))
+            if len(_t) > 495:   # Threadsは500文字まで。目印で超えるときは付けない
+                _t = strip_amazon(q["text"])
+            q["threads"] = threads.post(_t, os.environ["THREADS_TOKEN"], q.get("image"), q.get("quote"))
             print(f"✅ Threads {q['at']} {q['threads']}")
         except Exception as e:
             q["threads"] = "failed"

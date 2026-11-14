@@ -65,8 +65,12 @@ def main():
         print("ほかの実行が先に投稿中なので、この実行は投稿しない"); return 0
     code = 0
     try:
-        q["bsky"] = bsky.post(q.get("bsky_text") or q["text"], os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
-                              q.get("image"), q.get("alt", ""), q.get("bsky_card"))
+        from utm import tag  # 自分のサイトのリンクに目印（GA4でBlueskyのどの投稿から来たか分かる）
+        _card = q.get("bsky_card")
+        if isinstance(_card, dict) and _card.get("uri"):
+            _card = dict(_card, uri=tag(_card["uri"], "bluesky", q.get("at", ""), q.get("kind", "")))
+        q["bsky"] = bsky.post(tag(q.get("bsky_text") or q["text"], "bluesky", q.get("at", ""), q.get("kind", "")), os.environ["BSKY_HANDLE"], os.environ["BSKY_APP_PASSWORD"],
+                              q.get("image"), q.get("alt", ""), _card)
         print(f"✅ Bluesky {q['at']} {q['bsky']}")
     except Exception as e:
         q["bsky"] = "failed"
