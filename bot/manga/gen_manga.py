@@ -79,7 +79,7 @@ LOGO = ("<svg viewBox='0 0 32 32' aria-hidden=true><defs><linearGradient id=lg x
 
 
 def grad(tid):
-    g1,g2=PAL[int(tid)%len(PAL)]
+    g1,g2=PAL[int(re.sub(r'\D', '', str(tid)) or 0)%len(PAL)]
     return f"--g1:{g1};--g2:{g2}"
 
 
@@ -124,7 +124,21 @@ def real_id(tid):
 
 def cover(w, vol="001", size="2L"):
     rid = w.get("real_id")
-    return f"https://res.booklive.jp/{rid}/{vol}/thumbnail/{size}.jpg" if rid else ""
+    if rid:
+        return f"https://res.booklive.jp/{rid}/{vol}/thumbnail/{size}.jpg"
+    return (w.get("covers") or {}).get(str(int(vol)), "")  # ebookjapan等の作品：楽天ブックスの表紙画像
+
+
+def wlink(w, vol="001"):
+    """作品の「読む」リンク。ebookjapanの無料作品は無料で読めるページ（報酬なし）、それ以外はブックライブ（報酬あり）。"""
+    if w.get("store") == "ebookjapan":
+        return w.get("free_url", "")
+    return link(w["title_id"], vol)
+
+
+def free_now(w):
+    """いま無料か（期限つき・または期限の表示がないキャンペーン中）。"""
+    return left_days(w) is not None or bool(w.get("free_ongoing"))
 
 
 def list_ld(name, url, ws):
@@ -247,6 +261,27 @@ def work_page(w, works=None):
         # 期限が切れたあとも、紹介ページは残す。過去の事実（いつまで無料だったか）を載せ、次の無料に備える
         d = datetime.date.fromisoformat(w["free_until"])
         free_badge = f"<span class=badge>1巻無料のキャンペーンは{d.month}月{d.day}日に終了しました</span> <span class=note>次の無料キャンペーンが出たら、このページで知らせます</span>"
+    buybox = ""
+    if w.get("free_ongoing"):
+        free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span>"
+        b = w.get("buy") or {}
+        bv = b.get("vol")
+        btns = ""
+        if b.get("kindle"):
+            btns += f"<a class='bb a' href='{esc(b['kindle'])}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>{bv}巻を見る</small></a>"
+        if b.get("ebj"):
+            btns += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻を見る</small></a>"
+        if b.get("kobo"):
+            btns += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻を見る</small></a>"
+        buybox = ("<style>.fbox{background:var(--card,#fff);border:2px solid #15803d;border-radius:14px;padding:12px 16px;margin:14px 0}.fbox h2{margin-top:0}"
+                  ".bbs{display:flex;flex-direction:column;gap:8px;margin:10px 0}.bb{display:flex;flex-direction:column;align-items:center;padding:12px;border-radius:12px;font-weight:900;font-size:17px;text-decoration:none;box-shadow:0 3px 0 rgba(0,0,0,.18)}"
+                  ".bb small{font-size:12px;font-weight:700}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}"
+                  ".fl{display:block;text-align:center;border:2px solid #15803d;color:#15803d!important;font-weight:900;border-radius:12px;padding:10px;text-decoration:none}</style>"
+                  f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(w.get('free_note', ''))}</p>"
+                  f"<a class=fl href='{esc(w.get('free_url', ''))}' rel=noopener target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"
+                  "<p class=note>※このリンクは広告ではありません（当サイトに報酬は発生しません）。</p></div>"
+                  + (f"<div class=fbox id=buy style='border-color:#c2410c'><h2>続き（{bv}巻〜）を読む</h2><p>無料の続きは、好きなストアで読めます。</p><div class=bbs>{btns}</div>"
+                     "<p class=note>価格・ポイントは各ストアの表示が最新です。</p></div>" if btns else ""))
     table = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
     syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
@@ -256,11 +291,14 @@ def work_page(w, works=None):
         for c in w["characters"]:
             n, r, v = (list(c) + ["", ""])[:3]
             im = (f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w.get(chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100))}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\">"
-                  f"<img src='{esc(cover(w, v, 'M'))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>") if v and w.get("real_id") else ""
+                  f"<img src='{esc(cover(w, v, 'M'))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>") if v and w.get("real_id") else (
+                  f"<a href='#buy'><img src='{esc(cover(w, v))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>" if v and w.get("covers") and cover(w, v) else "")
             cs.append(f"<div class=ch>{im}<b>{esc(n)}</b>{esc(r)}</div>")
         chars = "<h2>登場人物</h2><div class=chars>" + "".join(cs) + "</div>"
     nm = f"『{esc(title)}』"
-    if dl is not None:
+    if w.get("free_ongoing"):
+        a1 = f"はい。{w.get('free_store_name', '')}で{w.get('free_label', '')}で読めます（キャンペーン中・終了日はストアの表示を確認）。"
+    elif dl is not None:
         dd = datetime.date.fromisoformat(w["free_until"])
         a1 = f"はい。{dd.month}月{dd.day}日（{'月火水木金土日'[dd.weekday()]}）まで、1巻が期間限定で無料です（配信ストアの表示）。期限を過ぎると有料に戻ります。"
     else:
@@ -289,21 +327,26 @@ def work_page(w, works=None):
             + f"</div><div class=in><b>『{esc(x['title'])}』</b><br><span class=note>" + (f"<span class=stars>★{esc(x['rating'])}</span> " if x.get("rating") else "") + f"{esc(x.get('author',''))}</span><br>"
             + (f"<span class=free>無料</span> <span class=left>あと{left_days(x)}日</span>" if left_days(x) is not None else "") + "</div></a>" for x in others) + "</div>"
     cv = cover(w)
-    cvh = f"<a class=cv href=\"{esc(link(tid))}\" rel=\"nofollow sponsored\"><img src='{esc(cv)}' alt='『{esc(title)}』1巻の表紙' loading=eager></a>" if cv else ""
+    cvh = (f"<a class=cv href=\"{esc(wlink(w))}\" rel=\"{'noopener' if w.get('store') == 'ebookjapan' else 'nofollow sponsored'}\"><img src='{esc(cv)}' alt='『{esc(title)}』1巻の表紙' loading=eager></a>" if cv else "")
     vols = ""
+    if w.get("covers") and not w.get("real_id"):
+        ks = sorted((int(k) for k in w["covers"]))[:8]
+        vols = (f"<h2>表紙ギャラリー</h2><div class=vols>" + "".join(f"<a href='#buy'><img src='{esc(w['covers'][str(k)])}' alt='{k}巻の表紙' loading=lazy>{k}巻</a>" for k in ks)
+                + "</div><p class=note>表紙は楽天ブックスの書籍情報より。</p>")
     if w.get("real_id"):
         vols = "<h2>表紙ギャラリー（1〜8巻）</h2><div class=vols>" + "".join(
             f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w[chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100)]}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\"><img src='{esc(cover(w, v, 'M'))}' alt='{int(v)}巻の表紙' loading=lazy onerror=\"this.parentNode.style.display='none'\">{int(v)}巻</a>"
             for v in ("001", "002", "003", "004", "005", "006", "007", "008")) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
     body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』<small style='display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:4px'>あらすじ・登場人物・連載期間{'と、無料で読める期間' if dl is not None else '・読者の声'}</small></h1><p>{esc(w.get('hook',''))}</p><p>{free_badge}</p></div></div></div>
 <div>{tags}</div>
+{buybox}
 {syn}
 <h2>基本情報</h2><div class=box><table>{table}</table></div>
 {chars}
 {revh}
 <p class=note>❓ 無料で読める仕組み・全巻無料・安全な読み方などは「<a href='../faq.html'>よくある質問</a>」にまとめています。</p><p class=note>🏪 どのストアで読むとおトク？ → 「<a href='../store-compare.html'>電子書籍ストア比較（初回クーポン・ポイント還元）</a>」</p>
 {vols}
-<p style='text-align:center'><a class=btn href="{esc(link(tid))}" rel="nofollow sponsored">1巻を見る{'（無料）' if dl is not None else ''}</a></p>
+{"<p style='text-align:center'><a class=btn href='#read'>無料で読む・続きを読む ↑</a></p>" if w.get("store") == "ebookjapan" else f"<p style='text-align:center'><a class=btn href=" + chr(34) + esc(link(tid)) + chr(34) + " rel=" + chr(34) + "nofollow sponsored" + chr(34) + ">1巻を見る" + ("（無料）" if dl is not None else "") + "</a></p>"}
 <p class=note>無料の対象・期限、配信状況、価格は変わります。購入前に作品ページで確認してください。巻数・連載期間は{today.strftime('%Y/%m/%d')}時点の公開情報にもとづきます。あらすじ・人物紹介は、公式の紹介をもとにした要約です。</p>
 {rel}"""
     p = OUT / "w" / f"{tid}.html"
@@ -327,7 +370,10 @@ def work_page(w, works=None):
     al = "（" + "・".join(w["aliases"]) + "）" if w.get("aliases") else ""
     rt = f"★{w['rating']}（{w['reviews']}件）。" if w.get("rating") else ""
     hk = re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", w.get("hook") or "").strip().rstrip("。")
-    if dl is not None:
+    if w.get("free_ongoing"):
+        ptitle = f"『{title}』{w.get('free_label', '')}（{w.get('free_store_name', '')}）｜漫画を無料で読む方法・あらすじ"
+        pdesc = f"『{title}』{al}は{w.get('free_store_name', '')}で{w.get('free_label', '')}（キャンペーン中）。{rt}{hk + ('' if hk[-1:] in '？！?!' else '。') if hk else ''}続きの巻を読めるストア、あらすじ・登場人物・読者の声もまとめています。"
+    elif dl is not None:
         dd = datetime.date.fromisoformat(w["free_until"])
         # 検索結果（スマホは30字前後で切れる）で、期限が先に見えるように：作品名→期限→内容
         ptitle = f"『{title}』1巻無料は{dd.month}/{dd.day}まで｜漫画を無料で読む方法・あらすじ"
@@ -343,7 +389,7 @@ def theme_pages(works):
     today = datetime.date.today()
     made = []
     free = sorted([w for w in works.values() if w.get("free_until") and datetime.date.fromisoformat(w["free_until"]) >= today],
-                  key=lambda w: w["free_until"])
+                  key=lambda w: w["free_until"]) + [w for w in works.values() if w.get("free_ongoing")]
     themes = [("free-now", "いま無料で読めるマンガ（期限が近い順）", free, "1巻が期間限定で無料になっている作品を、期限が近い順に並べました。")]
     adapt = [w for w in works.values() if re.search(r"アニメ化|ドラマ化|映画化|実写化", w.get("fact", ""))]
     if adapt:
@@ -374,14 +420,18 @@ def theme_pages(works):
             if dl is not None:
                 d = datetime.date.fromisoformat(w["free_until"])
                 fu = f"<p><span class=free>1巻 無料</span> <span class=left>{d.month}月{d.day}日まで・あと{dl}日</span></p>"
+            elif w.get("free_ongoing"):
+                fu = f"<p><span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span></p>"
+            ebj = w.get("store") == "ebookjapan"
             tg = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", [])[:4])
             rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）　" if w.get("rating") else ""
             cv = cover(w, size="M")
-            cvb = f"<a class=boxcv href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\"><img src='{esc(cv)}' alt='『{esc(w['title'])}』の表紙' loading=lazy></a>" if cv else ""
+            cvb = f"<a class=boxcv href=\"{esc('../w/' + w['title_id'] + '.html#read' if ebj else link(w['title_id']))}\" rel=\"{'noopener' if ebj else 'nofollow sponsored'}\"><img src='{esc(cv)}' alt='『{esc(w['title'])}』の表紙' loading=lazy></a>" if cv else ""
             cards += (f"<div class=box style='{grad(w['title_id'])};border-top:6px solid var(--g1)'>{cvb}<p><b style='font-size:18px'><a href='../w/{w['title_id']}.html'>『{esc(w['title'])}』</a></b></p>"
                       f"<p class=note>{rt}{esc(w.get('author',''))}</p>{fu}<div>{tg}</div>"
                       f"<p>{esc(w.get('hook',''))}</p>"
-                      f"<p><a class=btn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を見る\">1巻を見る</a>　<a href='../w/{w['title_id']}.html'>あらすじ・登場人物</a></p></div>")
+                      + (f"<p><a class=btn href='../w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む・続きを読む'>無料で読む・続きを読む</a>" if ebj else f"<p><a class=btn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を見る\">1巻を見る</a>")
+                      + f"　<a href='../w/{w['title_id']}.html'>あらすじ・登場人物</a></p></div>")
         body = (f"<div class=hero><span class=kicker>まとめ</span><h1>{esc(title)}</h1><p>{esc(intro)}</p></div>{cards}"
                 f"<p class=note>{today.strftime('%Y/%m/%d')}時点。対象・期限は、配信ストアの表示のとおりです。</p>")
         p = OUT / "theme" / f"{slug}.html"
@@ -409,7 +459,7 @@ def index(works, themes):
     cards = ""
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):
         dl = left_days(w)
-        fb = f"<span class=free>無料</span> <span class=left>あと{dl}日</span>" if dl is not None else ""
+        fb = f"<span class=free>無料</span> <span class=left>あと{dl}日</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
         rt = f"<span class=stars>★{esc(w['rating'])}</span> " if w.get("rating") else ""
         cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004")) + "</div>"
                   f"<div class=in><b>『{esc(w['title'])}』</b><br><span class=note>{rt}{esc(w.get('author',''))}</span><br>{fb}</div></a>")
@@ -430,14 +480,14 @@ def index(works, themes):
         print("トップの新刊欄なし", _e)
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):
         dl = left_days(w)
-        if dl is None:
+        if dl is None and not w.get("free_ongoing"):
             continue
-        dd = datetime.date.fromisoformat(w["free_until"])
+        dd = datetime.date.fromisoformat(w["free_until"]) if dl is not None else None
         img = cover(w, size="M")
         quick += (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
                   f"<a href='w/{w['title_id']}.html' class=qt>『{esc(w['title'])}』</a>"
-                  f"<span class=qd>1巻無料 {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>"
-                  f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>")
+                  + (f"<span class=qd>1巻無料 {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
+                  + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") == "ebookjapan" else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
     quick_block = (f"<h2>いますぐ無料で読む（期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>

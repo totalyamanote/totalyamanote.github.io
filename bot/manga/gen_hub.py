@@ -58,14 +58,17 @@ def manga_row():
     ws.sort(key=lambda w: (w.get("free_until") or "9999"))
     out = ""
     for w in ws[:12]:
-        if not w.get("real_id"):
+        img = f"https://res.booklive.jp/{w['real_id']}/001/thumbnail/M.jpg" if w.get("real_id") else (w.get("covers") or {}).get("1", "")
+        if not img:
             continue
         fu = w.get("free_until")
         badge = ""
         if fu and datetime.date.fromisoformat(fu) >= today:
             d = datetime.date.fromisoformat(fu)
             badge = f"<span>{d.month}/{d.day}まで無料</span>"
-        out += (f"<a class=hm href='manga/w/{w['title_id']}.html'><img src='https://res.booklive.jp/{w['real_id']}/001/thumbnail/M.jpg' alt='『{esc(w['title'])}』の表紙' loading=lazy>"
+        elif w.get("free_ongoing"):
+            badge = f"<span>{esc(w.get('free_label', '無料'))}</span>"
+        out += (f"<a class=hm href='manga/w/{w['title_id']}.html'><img src='{esc(img)}' alt='『{esc(w['title'])}』の表紙' loading=lazy>"
                 f"<b>『{esc(w['title'])}』</b>{badge}</a>")
     return out
 
@@ -74,7 +77,7 @@ def manga_title():
     """無料中の作品がなければ、「いま無料で…」とは書かない（期限切れの後の見出し）。"""
     p = HERE / "data" / "manga_works.json"
     today = datetime.date.today().isoformat()
-    free = p.exists() and any(w.get("free_until", "") >= today and w.get("real_id") for w in json.loads(p.read_text(encoding="utf-8")).values())
+    free = p.exists() and any((w.get("free_until", "") >= today and w.get("real_id")) or w.get("free_ongoing") for w in json.loads(p.read_text(encoding="utf-8")).values())
     return "いま無料で読めるマンガ" if free else "人気マンガ（あらすじ・登場人物）"
 
 
