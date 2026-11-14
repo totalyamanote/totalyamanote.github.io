@@ -154,10 +154,27 @@ def always_free_page():
                   f"<p><b style='font-size:17px'>『{esc(w['title'])}』</b></p><p class=note>{rt}{esc(w['author'])}</p>"
                   f"<p><span class=free>{esc(w['free'])}冊無料</span> <span class=badge>{esc(w['genre'])}</span></p><p>{esc(w['summary'])}</p>"
                   f"<p><a class=btn href=\"{esc(u)}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』を無料で読む\">無料で読む（ブックライブ）</a></p></div>")
-    title = f"いつでも無料で読めるマンガ{len(ws)}作品｜期限の表示なし・{ck.month}/{ck.day}確認"
+    # 人気作の1巻（Kindleの無料サンプルでいつでも試し読みできる）を上に（2026-11-14 坂田さん「人気作品で固めて」）
+    pt = HERE / "data" / "popular_trial.json"
+    pop = json.loads(pt.read_text(encoding="utf-8"))["works"] if pt.exists() else []
+    tag = json.loads((HERE / "config.json").read_text(encoding="utf-8")).get("amazon_tag", "")
+    pcards = ""
+    for w in pop:
+        u = f"https://www.amazon.co.jp/dp/{w['kindle_asin']}?tag={tag}"
+        pcards += (f"<div class=box style='{grad(w['isbn'])};border-top:6px solid var(--g1)'>"
+                   f"<a class=boxcv href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(w['img'])}' alt='『{esc(w['series'])}』1巻の表紙' loading=lazy></a>"
+                   f"<p><b style='font-size:17px'>『{esc(w['series'])}』</b></p><p class=note><span class=stars>★{esc(w['amz_rating'])}</span>（Amazonの評価 {esc(w['amz_reviews'])}件）　{esc(w['author'])}｜{esc(w['publisher'])}</p>"
+                   f"<p>{esc(w['summary'])}</p>"
+                   f"<p><a class=btn href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>1巻をKindleで無料で試し読み</a></p></div>")
+    title = f"いつでも無料で読めるマンガ｜人気作{len(pop)}作品の試し読み＋無料作品{len(ws)}作品"
     intro = (f"ブックライブの無料コーナーで、無料の期限が表示されていない{len(ws)}作品を集めました（{ck.month}/{ck.day}確認）。"
              "急がずに、自分のペースで読み始められる作品です。")
+    intro = (f"『鬼滅の刃』『ONE PIECE』など人気作{len(pop)}作品の1巻は、Kindleの無料サンプルで、いつでも冒頭を試し読みできます。"
+             f"あわせて、ブックライブで無料の期限が表示されていない{len(ws)}作品も紹介します（{ck.month}/{ck.day}確認）。")
     body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いつでも無料で読めるマンガ</h1><p>{esc(intro)}</p></div>"
+            + (f"<h2>人気作の1巻を、いつでも無料で試し読み（Kindle）</h2><p class=note>Kindleの作品ページの「無料サンプルを読む」から、冒頭をいつでも無料で読めます（読める範囲は作品ごとに違います）。"
+               f"評価はAmazonのレビュー（{ck.month}/{ck.day}時点）。</p>{pcards}" if pcards else "")
+            + "<h2>数冊まるごと無料（期限の表示なし・ブックライブ）</h2>"
             f"<p class=note>期限つきで無料の作品は「<a href='free-now.html'>いま無料で読めるマンガ（期限が近い順）</a>」にまとめています。"
             f"無料の冊数・対象は、ストアの表示が変わることがあります。読む前に作品ページで確認してください。</p>{cards}"
             f"<p class=note>出典：{esc(d['source'])}。紹介文は、公式の作品紹介をもとに当サイトで要約しています。評価はブックライブのレビュー（{ck.month}/{ck.day}時点）。</p>")
@@ -387,7 +404,9 @@ def index(works, themes):
             ws = [w for w in ws if re.search(r"アニメ化|ドラマ化|映画化|実写化", w.get("fact", ""))]
         return [w for w in ws if w.get("real_id")][:4]
     lis = "".join(f"<a class=card style='{grad(str(i + 3))}' href='theme/{s}.html'><div class=thumb>"
-                  + "".join(f"<img src='{esc(cover(w, size='M'))}' alt='『{esc(w['title'])}』の表紙' loading=lazy>" for w in _tw(s))
+                  + ("".join(f"<img src='{esc(w['img'])}' alt='『{esc(w['series'])}』の表紙' loading=lazy>" for w in json.loads((HERE / "data" / "popular_trial.json").read_text(encoding="utf-8"))["works"][:4])
+                     if s == "always-free" and (HERE / "data" / "popular_trial.json").exists() else
+                     "".join(f"<img src='{esc(cover(w, size='M'))}' alt='『{esc(w['title'])}』の表紙' loading=lazy>" for w in _tw(s)))
                   + f"</div><div class=in><b>{esc(t)}</b></div></a>" for i, (s, t) in enumerate(themes))
     cards = ""
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):
