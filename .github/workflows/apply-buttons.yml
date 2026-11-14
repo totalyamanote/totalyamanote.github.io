@@ -1,0 +1,42 @@
+# 比較記事の購入ボタン（Yahoo!・Amazon）を、保存済みの対応表（bot/data/mall_map.json・amazon_map.json）から付け直す。
+# Mac のマンガ更新ツールなどが記事を古い内容で書き換えて push しても、数分で元に戻る（APIキーは使わない・何度動いても同じ）。
+name: apply-buttons
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "articles/**"
+      - "bot/data/mall_map.json"
+      - "bot/data/amazon_map.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-site
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Re-apply Yahoo!/Amazon buttons from saved maps
+        env:
+          SITE_DIR: .
+          DATA_DIR: bot/data
+        run: python bot/add_malls.py
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A articles
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -qm "購入ボタンを付け直し（保存済みの対応表から・Yahoo!/Amazon）"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0; sleep 5; done; exit 1
