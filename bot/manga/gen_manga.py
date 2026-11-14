@@ -494,7 +494,10 @@ def index(works, themes):
     _pt = HERE / "data" / "popular_trial.json"
     if _pt.exists():
         _tag = json.loads((HERE / "config.json").read_text(encoding="utf-8")).get("amazon_tag", "")
+        _shown = {x["title"] for x in works.values() if free_now(x)}
         for w in json.loads(_pt.read_text(encoding="utf-8"))["works"]:
+            if w["series"] in _shown:  # 期限つきで無料の作品と重ならないように
+                continue
             u = f"https://www.amazon.co.jp/dp/{w['kindle_asin']}?tag={_tag}"
             ptq += (f"<div class=qcard><a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qimg><img src='{esc(w['img'])}' alt='『{esc(w['series'])}』1巻の表紙' loading=lazy width=120 height=170></a>"
                     f"<a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qt>『{esc(w['series'])}』</a>"
