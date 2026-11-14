@@ -131,7 +131,7 @@ def cover(w, vol="001", size="2L"):
 
 def wlink(w, vol="001"):
     """作品の「読む」リンク。ebookjapanの無料作品は無料で読めるページ（報酬なし）、それ以外はブックライブ（報酬あり）。"""
-    if w.get("store") == "ebookjapan":
+    if w.get("store") in ("ebookjapan", "kindle"):
         return w.get("free_url", "")
     return link(w["title_id"], vol)
 
@@ -282,8 +282,8 @@ def work_page(w, works=None):
                   ".bb small{font-size:12px;font-weight:700}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}"
                   ".fl{display:block;text-align:center;border:2px solid #15803d;color:#15803d!important;font-weight:900;border-radius:12px;padding:10px;text-decoration:none}</style>"
                   f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(w.get('free_note', ''))}</p>"
-                  f"<a class=fl href='{esc(w.get('free_url', ''))}' rel=noopener target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"
-                  "<p class=note>※このリンクは広告ではありません（当サイトに報酬は発生しません）。</p></div>"
+                  f"<a class=fl href='{esc(w.get('free_url', ''))}' rel='{'sponsored nofollow noopener' if w.get('store') == 'kindle' else 'noopener'}' target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"
+                  + ("<p class=note>※Amazonアソシエイトのリンクです。無料の本を読んでも料金はかかりません。</p></div>" if w.get('store') == 'kindle' else "<p class=note>※このリンクは広告ではありません（当サイトに報酬は発生しません）。</p></div>")
                   + (f"<div class=fbox id=buy style='border-color:#c2410c'><h2>続き（{bv}巻〜）を読む</h2><p>無料の続きは、好きなストアで読めます。</p><div class=bbs>{btns}</div>"
                      "<p class=note>価格・ポイントは各ストアの表示が最新です。</p></div>" if btns else ""))
     table = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
@@ -350,7 +350,7 @@ def work_page(w, works=None):
 {revh}
 <p class=note>❓ 無料で読める仕組み・全巻無料・安全な読み方などは「<a href='../faq.html'>よくある質問</a>」にまとめています。</p><p class=note>🏪 どのストアで読むとおトク？ → 「<a href='../store-compare.html'>電子書籍ストア比較（初回クーポン・ポイント還元）</a>」</p>
 {vols}
-{"<p style='text-align:center'><a class=btn href='#read'>無料で読む・続きを読む ↑</a></p>" if w.get("store") == "ebookjapan" else f"<p style='text-align:center'><a class=btn href=" + chr(34) + esc(link(tid)) + chr(34) + " rel=" + chr(34) + "nofollow sponsored" + chr(34) + ">1巻を見る" + ("（無料）" if dl is not None else "") + "</a></p>"}
+{"<p style='text-align:center'><a class=btn href='#read'>無料で読む・続きを読む ↑</a></p>" if w.get("store") in ("ebookjapan", "kindle") else f"<p style='text-align:center'><a class=btn href=" + chr(34) + esc(link(tid)) + chr(34) + " rel=" + chr(34) + "nofollow sponsored" + chr(34) + ">1巻を見る" + ("（無料）" if dl is not None else "") + "</a></p>"}
 <p class=note>無料の対象・期限、配信状況、価格は変わります。購入前に作品ページで確認してください。巻数・連載期間は{today.strftime('%Y/%m/%d')}時点の公開情報にもとづきます。あらすじ・人物紹介は、公式の紹介をもとにした要約です。</p>
 {rel}"""
     p = OUT / "w" / f"{tid}.html"
@@ -426,7 +426,7 @@ def theme_pages(works):
                 fu = f"<p><span class=free>{esc(w.get('free_label', '1巻 無料'))}</span> <span class=left>{d.month}月{d.day}日まで・あと{dl}日</span></p>"
             elif w.get("free_ongoing"):
                 fu = f"<p><span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span></p>"
-            ebj = w.get("store") == "ebookjapan"
+            ebj = w.get("store") in ("ebookjapan", "kindle")
             tg = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", [])[:4])
             rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）　" if w.get("rating") else ""
             cv = cover(w, size="M")
@@ -494,7 +494,7 @@ def index(works, themes):
         quick += (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
                   f"<a href='w/{w['title_id']}.html' class=qt>『{esc(w['title'])}』</a>"
                   + (f"<span class=qd>{esc(w.get('free_label', '1巻無料'))} {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
-                  + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") == "ebookjapan" else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
+                  + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") in ("ebookjapan", "kindle") else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
     # 人気作の1巻（Kindleの無料試し読み）も混ぜる（2026-11-14 坂田さん「ブルーロックみたいなの」）
     ptq = ""

@@ -517,5 +517,259 @@
   },
   "added": "2026-11-14",
   "free_until": "2026-12-05"
+ },
+ "kB0819V93V9": {
+  "title_id": "kB0819V93V9",
+  "title": "不浄を拭うひと",
+  "store": "kindle",
+  "aliases": [],
+  "author": "沖田×華",
+  "magazine": "ぶんか社（本当にあった笑える話）",
+  "period": "単行本1巻は2019年11月",
+  "volumes": "全9巻（Kindle版）",
+  "rating": "4.5",
+  "reviews": "2,193",
+  "fact": "Kindleでレビュー2,000件超の、特殊清掃の仕事を描くマンガ",
+  "hook": "孤独死の部屋を片づける「特殊清掃」。そこに残る、故人のくらしの跡とは？🧹",
+  "synopsis": "39歳で会社を辞めた山田正人が始めたのは、孤独死などがあった部屋を元に戻す「特殊清掃」の仕事でした。さまざまな形で亡くなった人の生活の跡を片づけながら、その人がどう暮らしていたのかに思いをはせる物語です。",
+  "characters": [
+   [
+    "山田正人",
+    "39歳。会社を辞めて特殊清掃の仕事を始めた主人公",
+    ""
+   ]
+  ],
+  "tags": [
+   "お仕事",
+   "人間ドラマ",
+   "社会派",
+   "実話がもと"
+  ],
+  "user_reviews": {
+   "dist": [
+    1579,
+    395,
+    154,
+    22,
+    44
+   ],
+   "tags": [
+    "考えさせられる",
+    "仕事への尊敬",
+    "読みやすい"
+   ],
+   "top": [
+    [
+     "故人を思いやる話",
+     "作業の苦労と一緒に、亡くなった人がどんな人だったかを思いやる内容で、心が救われる、という声。",
+     0
+    ],
+    [
+     "仕事の見え方が変わった",
+     "特殊清掃の仕事がよく分かり、尊敬するようになった、という声。",
+     0
+    ],
+    [
+     "重すぎずに読める",
+     "写真つきの本のような生々しさがなく、むき出しの死を見せられる辛さが少ない、という声。",
+     0
+    ]
+   ]
+  },
+  "free_ongoing": true,
+  "free_until": "2026-11-30",
+  "free_label": "1巻無料",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B0819V93V9?tag=shogo450e-22",
+  "free_note": "Amazonの商品ページで「期間限定無料 2026/11/30 23:59まで」と表示（11/14確認）。",
+  "covers": {
+   "9": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5093/2000020685093.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/6350/2000018876350.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2486/2000016632486.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1552/2000014341552.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4193/2000013174193.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9066/2000012199066.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1571/2000008971571.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0805/2000010570805.jpg",
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1991/2000007911991.jpg"
+  },
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B08KW4DG8R?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F847e265d5a8f3865baad369ac8299cda%2F"
+  },
+  "added": "2026-11-14"
+ },
+ "kB09TS9FHX1": {
+  "title_id": "kB09TS9FHX1",
+  "title": "クラス転移に巻き込まれたコンビニ店員のおっさん",
+  "store": "kindle",
+  "aliases": [
+   "コンビニ店員のおっさん",
+   "勇者には必要なかった余り物スキルを駆使して最強となるようです"
+  ],
+  "author": "結城焔（原作）",
+  "magazine": "ぶんか社（BKコミックス）",
+  "period": "コミック版1巻は2022年3月",
+  "volumes": "コミック版 全5巻（Kindle版）",
+  "rating": "4.4",
+  "reviews": "2,214",
+  "fact": "Kindleでレビュー2,000件超の異世界ファンタジー",
+  "hook": "もらえたのは「余り物のクズスキル」。冴えないおっさんが異世界で魔道具屋を開く🛠️",
+  "synopsis": "コンビニで働く冴えないアラサーの乙木雄一は、高校生たちを異世界に呼ぶ魔法に巻き込まれます。高校生たちは強いスキルをもらいますが、乙木に残っていたのは余り物のスキルばかり。乙木はそれを組み合わせて魔道具屋を開き、姪の美樹本有咲を店員にして、異世界で商売を広げていきます。",
+  "characters": [
+   [
+    "乙木雄一",
+    "コンビニで働くアラサー。余り物のスキルで魔道具屋を開く",
+    ""
+   ],
+   [
+    "美樹本有咲",
+    "乙木の姪の女子高生。店員として働く",
+    ""
+   ]
+  ],
+  "tags": [
+   "異世界",
+   "ファンタジー",
+   "お店経営",
+   "おっさん主人公"
+  ],
+  "user_reviews": {
+   "dist": [
+    1395,
+    487,
+    244,
+    44,
+    44
+   ],
+   "tags": [
+    "おっさんの心の声が面白い",
+    "説明が多め",
+    "続きが気になる"
+   ],
+   "top": [
+    [
+     "心の声が面白くなってくる",
+     "最初は説明が多いと感じたが、巻が進むと主人公の内心が面白くなってくる、という声。",
+     0
+    ],
+    [
+     "主人公の雰囲気がいい",
+     "絵柄が好みで、主人公の言葉づかいや雰囲気に好感が持てる、という声。",
+     0
+    ],
+    [
+     "説明やセリフが多い（短所）",
+     "説明とセリフがかなり多く、話の進みがゆっくりに感じる、という声。",
+     0
+    ]
+   ]
+  },
+  "free_ongoing": true,
+  "free_until": "2026-11-30",
+  "free_label": "1巻無料",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B09TS9FHX1?tag=shogo450e-22",
+  "free_note": "Amazonの商品ページで「期間限定無料 2026/11/30 23:59まで」と表示（11/14確認）。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5487/2000010935487.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7232/2000015477232.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5079/2000013415079.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2592/2000012172592.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2398/2000018492398.jpg"
+  },
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B0BM3H5JBF?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F943b62dd15213ae0b4730c268fb22204%2F"
+  },
+  "added": "2026-11-14"
+ },
+ "kB09YYKLTW7": {
+  "title_id": "kB09YYKLTW7",
+  "title": "没落令嬢、貧乏騎士のメイドになります",
+  "store": "kindle",
+  "aliases": [
+   "没落令嬢"
+  ],
+  "author": "千世トケイ（漫画）・江本マシメサ（原作）",
+  "magazine": "ぶんか社（BKコミックスf）",
+  "period": "コミック版1巻は2022年5月",
+  "volumes": "コミック版 全6巻（Kindle版）",
+  "rating": "4.7",
+  "reviews": "1,955",
+  "fact": "Kindleで★4.7・レビュー約2,000件の恋愛マンガ",
+  "hook": "最悪の出会いから5年。没落した令嬢に手を差し伸べたのは、あの貧乏騎士だった🌹",
+  "synopsis": "「麗しの薔薇」と呼ばれた伯爵令嬢アニエスと、田舎領主の五男に生まれた貧乏騎士ベルナール。社交界での最悪の出会いから5年後、父の不祥事でアニエスの家は没落し、周りから人が去っていきます。そんな彼女に手を差し伸べたのは、ベルナールでした。誤解から始まる恋の物語です。",
+  "characters": [
+   [
+    "アニエス",
+    "「麗しの薔薇」と呼ばれた伯爵令嬢。家の没落でメイドに",
+    ""
+   ],
+   [
+    "ベルナール",
+    "田舎領主の五男に生まれた貧乏騎士",
+    ""
+   ]
+  ],
+  "tags": [
+   "恋愛",
+   "令嬢もの",
+   "じれじれ",
+   "ほのぼの"
+  ],
+  "user_reviews": {
+   "dist": [
+    1564,
+    293,
+    78,
+    0,
+    20
+   ],
+   "tags": [
+    "ヒロインがかわいい",
+    "応援したくなる",
+    "絵がきれい"
+   ],
+   "top": [
+    [
+     "ヒロインが本当にかわいい",
+     "見た目だけでなく、理由があって一生懸命がんばる素直な姿にきゅんとする、という声。",
+     0
+    ],
+    [
+     "二人とも真面目でいい人",
+     "よくある軽い展開ではなく、二人とも幸せになってほしいと思える、という声。",
+     0
+    ],
+    [
+     "続きが気になる",
+     "手を差し伸べたのは意地悪から？という始まりから、続きが気になってしょうがない、という声。",
+     0
+    ]
+   ]
+  },
+  "free_ongoing": true,
+  "free_until": "2026-11-30",
+  "free_label": "1巻無料",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B09YYKLTW7?tag=shogo450e-22",
+  "free_note": "Amazonの商品ページで「期間限定無料 2026/11/30 23:59まで」と表示（11/14確認）。楽天Koboでは2巻も0円でした（11/14確認）。",
+  "covers": {
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/6955/2000021726955.jpg",
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7306/2000011147306.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/6987/2000012246987.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3349/2000018353349.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9279/2000015519279.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2055/2000013632055.jpg"
+  },
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B0BP7GWDP5?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F40e555296484354582e238622fa37586%2F"
+  },
+  "added": "2026-11-14"
  }
 }
