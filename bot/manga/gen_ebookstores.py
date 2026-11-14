@@ -24,6 +24,8 @@ def go(s):
     """公式サイトへのリンク（提携済みのストアだけアフィリエイトリンク）。"""
     if s["aff"] == "vc_booklive":
         return gm.VC + urllib.parse.quote(s["url"], safe=""), True
+    if s["aff"] == "vc_yahoo":   # ValueCommerceのYahoo!ショッピング（提携済み）。ebookjapanの電子書籍は Yahoo!ショッピング内のお店で売られている
+        return f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=" + urllib.parse.quote(s["aff_url"], safe=""), True
     if s["aff"] == "rakuten" and CFG.get("affiliate_id"):
         return f"https://hb.afl.rakuten.co.jp/hgc/{CFG['affiliate_id']}/?pc={urllib.parse.quote(s['url'], safe='')}", True
     if s["aff"] == "amazon" and CFG.get("amazon_tag"):
@@ -76,7 +78,8 @@ def build():
                  f"<dt>初回特典</dt><dd>{cell(s['first'])}{src(s['first_src'])}</dd><dt>ポイント</dt><dd>{cell(s['point'])}{src(s['point_src'])}</dd>"
                  f"<dt>無料作品</dt><dd>{cell(s['free'])}{src(s['free_src'])}</dd><dt>読み放題</dt><dd>{cell(s['sub'])}{src(s['sub_src'])}</dd>"
                  f"<dt>支払い</dt><dd>{cell(s['pay'])}{src(s['pay_src'])}</dd><dt>読み方</dt><dd>{esc(s['app'])}</dd><dt>運営</dt><dd>{esc(s['company'])}</dd></dl>"
-                 f"<a class=gbtn href='{esc(u)}' rel='{rel}' target=_blank>{esc(s['name'])}の公式サイトを見る ›</a></div>")
+                 f"<a class=gbtn href='{esc(u)}' rel='{rel}' target=_blank>{esc(s.get('aff_label') or (s['name'] + 'の公式サイトを見る'))} ›</a>"
+                 + (f"<p class=note>{esc(s['aff_note'])}</p>" if s.get("aff_note") else "") + "</div>")
     title = f"電子書籍の初回クーポン・ポイント還元を比較【{ck.year}年{ck.month}月】マンガアプリ{len(live)}社"
     desc = f"【{ck.month}/{ck.day}確認】ブックライブ・ebookjapanは初回70%OFF、楽天Koboは初回ポイント70倍、BOOK☆WALKERは50%還元。マンガアプリ{len(live)}社の初回クーポン・ポイント還元・無料作品数・読み放題を公式情報だけで比較。"
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:19px;margin:0 0 4px'>{esc(title)}</h1>"
