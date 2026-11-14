@@ -44,6 +44,18 @@ jobs:
           OUT_DIR: bot/out
         run: python bot/run_daily.py
 
+      # 比較記事の購入ボタンに Yahoo! を足す（同じ商品が見つかった所だけ・結果は bot/data/mall_map.json に記録）
+      - name: Add Yahoo buttons to articles
+        env:
+          TZ: Asia/Tokyo
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          YAHOO_APP_ID: ${{ secrets.YAHOO_APP_ID }}
+          SITE_DIR: .
+          DATA_DIR: bot/data
+        run: python bot/add_malls.py
+
       # 無料期限が過ぎたマンガ作品ページを消さず「無料終了」表示で残し、マンガ一覧に載せる（冪等）
       - name: Keep expired manga pages
         env:
