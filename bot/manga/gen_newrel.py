@@ -71,6 +71,7 @@ def add_stores(items):
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
     tag = cfg.get("amazon_tag", "")
     KC = json.loads(KINDLE.read_text(encoding="utf-8")) if KINDLE.exists() else {}
+    KPRICE = json.loads((HERE / "data" / "kindle_price.json").read_text(encoding="utf-8")) if (HERE / "data" / "kindle_price.json").exists() else {}  # ISBN-10 → Kindle版の値段（Chromeで紙の本のページから確認）
     pend = {}
     for e in items:
         if not e.get("isbn"):
@@ -79,6 +80,9 @@ def add_stores(items):
         k = KC.get(i10)
         if i10 and tag and k and k not in ("none", "ERR"):
             e["kindle"] = f"https://www.amazon.co.jp/dp/{k}?tag={tag}"
+            kp = KPRICE.get(i10)
+            if kp and str(kp).isdigit():
+                e["kindle_price"] = int(kp)
         elif i10 and k is None:
             pend[i10] = e["title"]
     KPEND.write_text(json.dumps(pend, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -123,7 +127,9 @@ def card(e, today):
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
             + (f"<a class=nt href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank>{esc(e['title'])}</a>" if eu else f"<b class=nt>{esc(e['title'])}</b>")
             + f"<span class=na>{esc(e['author'])}｜{esc(e['publisher'])}</span>"
-            + (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else "")
+            # 値段の表示はKindleを優先（2026-11-14 坂田さん指定）。Kindleの値段が分からないときだけ楽天Kobo
+            + (f"<span class=np>¥{e['kindle_price']:,}（Kindle）</span>" if e.get('kindle_price') and e.get('kindle')
+               else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else ""))
             + "<div class=nbtns>"
             # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
             + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else "")
