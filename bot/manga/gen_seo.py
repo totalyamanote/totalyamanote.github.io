@@ -16,7 +16,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
-BASE = "https://totalyamanote.github.io/"
+BASE = "https://totalyamanote.jp/"
 STATE = HERE / "data" / "seo_state.json"
 
 
@@ -60,7 +60,7 @@ def main():
     st["hashes"] = hashes
     msg = f"sitemap {len(urls)} URL / 変更 {len(changed)}"
     if changed and not a.no_ping:
-        body = json.dumps({"host": "totalyamanote.github.io", "key": key, "keyLocation": f"{BASE}{key}.txt", "urlList": changed[:10000]}).encode()
+        body = json.dumps({"host": "totalyamanote.jp", "key": key, "keyLocation": f"{BASE}{key}.txt", "urlList": changed[:10000]}).encode()
         try:
             req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body, headers={"Content-Type": "application/json; charset=utf-8"})
             with urllib.request.urlopen(req, timeout=30) as r:

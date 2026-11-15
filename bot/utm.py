@@ -33,4 +33,4 @@ def tag(text, source, at="", kind=""):
 
 
 if __name__ == "__main__":
-    print(tag("見てね https://totalyamanote.github.io/manga/w/kB0BKSR5555.html と https://hb.afl.rakuten.co.jp/x", "x", "2026-11-15 13:40", "manga"))
+    print(tag("見てね https://totalyamanote.jp/manga/w/kB0BKSR5555.html と https://hb.afl.rakuten.co.jp/x", "x", "2026-11-15 13:40", "manga"))

@@ -144,9 +144,9 @@ def free_now(w):
 def list_ld(name, url, ws):
     """一覧ページの構造化データ（CollectionPage＋作品のItemList）。"""
     d = {"@context": "https://schema.org", "@type": "CollectionPage", "name": name, "url": url, "inLanguage": "ja",
-         "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.github.io/manga/"},
+         "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.jp/manga/"},
          "mainEntity": {"@type": "ItemList", "numberOfItems": len(ws), "itemListElement": [
-             {"@type": "ListItem", "position": i, "url": f"https://totalyamanote.github.io/manga/w/{w['title_id']}.html", "name": f"『{w['title']}』"}
+             {"@type": "ListItem", "position": i, "url": f"https://totalyamanote.jp/manga/w/{w['title_id']}.html", "name": f"『{w['title']}』"}
              for i, w in enumerate(ws, 1)]}}
     return "<script type=application/ld+json>" + json.dumps(d, ensure_ascii=False) + "</script>"
 
@@ -192,7 +192,7 @@ def always_free_page():
             f"<p class=note>紹介文は、公式の作品紹介をもとに当サイトで要約しています。</p>")
     out = OUT / "theme" / "always-free.html"
     out.parent.mkdir(parents=True, exist_ok=True)
-    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.github.io/manga/theme/always-free.html",
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/theme/always-free.html",
           "mainEntity": {"@type": "ItemList", "numberOfItems": len(ws), "itemListElement": [
               {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": w["title"], "author": w["author"]}} for i, w in enumerate(ws, 1)]}}
     out.write_text(page(title, intro, body, 1, head="<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"), encoding="utf-8")
@@ -355,7 +355,7 @@ def work_page(w, works=None):
 {rel}"""
     p = OUT / "w" / f"{tid}.html"
     p.parent.mkdir(parents=True, exist_ok=True)
-    url = f"https://totalyamanote.github.io/manga/w/{tid}.html"
+    url = f"https://totalyamanote.jp/manga/w/{tid}.html"
     book = {"@context": "https://schema.org", "@type": "Book", "name": title, "url": url, "inLanguage": "ja", "bookFormat": "https://schema.org/EBook"}
     if w.get("author"):
         book["author"] = [{"@type": "Person", "name": a.strip()} for a in w["author"].split("／")]
@@ -366,8 +366,8 @@ def work_page(w, works=None):
     if w.get("tags"):
         book["genre"] = w["tags"][:5]
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "やまのて", "item": "https://totalyamanote.github.io/"},
-        {"@type": "ListItem", "position": 2, "name": "やまのてマンガ", "item": "https://totalyamanote.github.io/manga/"},
+        {"@type": "ListItem", "position": 1, "name": "やまのて", "item": "https://totalyamanote.jp/"},
+        {"@type": "ListItem", "position": 2, "name": "やまのてマンガ", "item": "https://totalyamanote.jp/manga/"},
         {"@type": "ListItem", "position": 3, "name": title, "item": url}]}
     head = ("<script type=application/ld+json>" + json.dumps(book, ensure_ascii=False) + "</script><script type=application/ld+json>" + json.dumps(bc, ensure_ascii=False) + "</script>"
             f"<link rel=canonical href='{url}'><meta property=og:type content=book><meta property=og:title content=\"『{esc(title)}』\"><meta property=og:image content='{esc(cv)}'>")
@@ -440,7 +440,7 @@ def theme_pages(works):
                 f"<p class=note>{today.strftime('%Y/%m/%d')}時点。対象・期限は、配信ストアの表示のとおりです。</p>")
         p = OUT / "theme" / f"{slug}.html"
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(page(title, intro, body, 1, head=list_ld(title, f"https://totalyamanote.github.io/manga/theme/{slug}.html", ws)), encoding="utf-8")
+        p.write_text(page(title, intro, body, 1, head=list_ld(title, f"https://totalyamanote.jp/manga/theme/{slug}.html", ws)), encoding="utf-8")
         made.append((slug, title))
     return made
 
@@ -519,7 +519,7 @@ def index(works, themes):
 <h2>作品一覧（{len(works)}作品・新しく追加した順）</h2><div class=grid>{cards}</div>
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
-    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。毎朝更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.github.io/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
+    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。毎朝更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
 
 
 def faq_page(works):
@@ -538,7 +538,7 @@ def faq_page(works):
     body = f"""<div class=hero style='--g1:#0f766e;--g2:#38bdf8'><span class=kicker>よくある質問</span><h1>マンガを無料で読むには？期限・全巻無料・安全な読み方のよくある質問</h1><p>無料で読める仕組みと注意点を、まとめて答えます。{today.strftime('%Y/%m/%d')}更新。</p></div>
 <h2>よくある質問</h2>{qhtml}
 <p class=note>関連：<a href='../articles/booklive-guide.html'>ブックライブの特徴と使い方</a>　<a href='theme/free-now.html'>いま無料で読めるマンガ（期限が近い順）</a></p>"""
-    head = "<script type=application/ld+json>" + json.dumps(faqld, ensure_ascii=False) + "</script><link rel=canonical href='https://totalyamanote.github.io/manga/faq.html'>"
+    head = "<script type=application/ld+json>" + json.dumps(faqld, ensure_ascii=False) + "</script><link rel=canonical href='https://totalyamanote.jp/manga/faq.html'>"
     (OUT / "faq.html").write_text(page("マンガを無料で読むには？期限・全巻無料・安全な読み方のよくある質問", "マンガを無料で読む方法、無料の期限、全巻無料はあるか、違法サイトの危険など、よくある質問にまとめて答えます。作品ごとの期限は「いま無料で読めるマンガ」へ。", body, 0, head=head), encoding="utf-8")
 
 

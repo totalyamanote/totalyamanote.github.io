@@ -104,11 +104,11 @@ def build():
             f"<h2>どこで読むか迷ったら</h2><p>読みたい作品が決まっているなら、まずその作品が「無料で読めるストア」から試すのがおすすめです。"
             f"いま1巻が無料の作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」、これから出る新刊は「<a href='new-releases.html'>新刊の発売日カレンダー</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "dateModified": d["checked"],
-          "url": "https://totalyamanote.github.io/manga/store-compare.html", "inLanguage": "ja",
-          "author": {"@type": "Person", "name": "やまのて管理人", "url": "https://totalyamanote.github.io/about.html"},
-          "publisher": {"@type": "Organization", "name": "やまのて", "logo": {"@type": "ImageObject", "url": "https://totalyamanote.github.io/img/brand/logo_400.png"}},
+          "url": "https://totalyamanote.jp/manga/store-compare.html", "inLanguage": "ja",
+          "author": {"@type": "Person", "name": "やまのて管理人", "url": "https://totalyamanote.jp/about.html"},
+          "publisher": {"@type": "Organization", "name": "やまのて", "logo": {"@type": "ImageObject", "url": "https://totalyamanote.jp/img/brand/logo_400.png"}},
           "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i, "name": s["name"], "url": s["url"]} for i, s in enumerate(live, 1)]}}
-    head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>" + "<link rel=canonical href='https://totalyamanote.github.io/manga/store-compare.html'><meta property=og:image content='https://totalyamanote.github.io/img/brand/x_header.png'>"
+    head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>" + "<link rel=canonical href='https://totalyamanote.jp/manga/store-compare.html'><meta property=og:image content='https://totalyamanote.jp/img/brand/x_header.png'>"
     page = gm.page(title, desc, body, 0, head=head).replace(
         "<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
         "<p class=pr>PR｜このページはアフィリエイト広告（バリューコマース・楽天アフィリエイト・Amazonアソシエイト）を利用しています。順位や評価は報酬で変えていません。</p>")

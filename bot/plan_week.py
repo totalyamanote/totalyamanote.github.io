@@ -16,7 +16,7 @@ from run_daily import compose_post, ranking_digest, refresh_points, x_weight
 from select_posts import score, load_history, NO_REPEAT_DAYS
 
 BASE = Path(__file__).resolve().parent
-SITE = "https://totalyamanote.github.io/"
+SITE = "https://totalyamanote.jp/"
 
 SHOPPING_TIPS = [
     "楽天で比べるときは「価格」より「実質価格（価格−ポイント）」で見ると、どこが本当に安いか分かりやすい。",

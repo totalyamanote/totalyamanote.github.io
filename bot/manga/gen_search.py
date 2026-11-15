@@ -8,7 +8,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SITE = HERE / "site"
-BASE = "https://totalyamanote.github.io/"
+BASE = "https://totalyamanote.jp/"
 
 CSS = ("<style>.sbar{position:relative;margin:6px 0 12px}.sbar input{width:100%;box-sizing:border-box;padding:10px 16px;border:1px solid var(--line,#e7e5e4);border-radius:99px;font-size:16px;background:var(--card,#fff);color:inherit}"
        ".sbar input:focus-visible{outline:3px solid #2563eb;outline-offset:1px}.sbar .sr{position:absolute;left:-9999px}"

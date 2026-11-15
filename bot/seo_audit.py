@@ -27,7 +27,7 @@ for p in pages:
         if b-a>1: I.append(f'見出し飛び h{a}→h{b}'); break
     if not noidx:
         if 'rel=canonical' not in t: I.append('canonicalなし')
-        url='https://totalyamanote.github.io/'+('' if p=='index.html' else p)
+        url='https://totalyamanote.jp/'+('' if p=='index.html' else p)
         if f"<loc>{url}</loc>" not in sm: I.append('sitemapにない')
     for m in re.findall(r'<script type=application/ld\+json>(.*?)</script>',t):
         try: json.loads(m)

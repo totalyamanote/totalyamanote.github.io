@@ -198,8 +198,8 @@ def build():
             + (f"<h2>最近発売した新刊（14日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in past)}</div>" if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
-    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.github.io/manga/new-releases.html",
-          "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.github.io/manga/"},
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
+          "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.jp/manga/"},
           "mainEntity": {"@type": "ItemList", "numberOfItems": len(soon) + len(past), "itemListElement": [
               {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": e["title"], "author": {"@type": "Person", "name": e["author"]},
                                                            "publisher": {"@type": "Organization", "name": e["publisher"]}, "datePublished": e["date"], "isbn": e["isbn"]}}
