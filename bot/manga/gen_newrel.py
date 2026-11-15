@@ -22,7 +22,25 @@ KINDLE = HERE / "data" / "kindle_asin.json"   # 紙のISBN-10 → Kindle版ASIN�
 EBJ = HERE / "data" / "ebookjapan_items.json"  # ISBN → ebookjapan ヤフー店の各巻のURL（Chromeで確認・"none"=まだ出ていない）。VCのYahoo!プログラムで報酬が付く
 KPEND = HERE / "data" / "kindle_pending.json"  # まだ確認していないISBN-10（毎朝Chromeで確認する）
 esc = html.escape
-NG = re.compile(r"ムック|原画集|イラストブック|画集|ファンブック|カレンダー|地球の歩き方|ポスト|ステッカー|グッズ")
+NG = re.compile(r"ムック|原画集|イラストブック|画集|ファンブック|カレンダー|地球の歩き方|ポスト|ステッカー|グッズ|デリヘル|風俗|R-?18|成人向け")
+# 人気作だけ（2026-11-15 坂田さん「新刊も人気作のみに」）：①知名度（楽天の漫画売れ筋で上位 TOP_RANK 以内、
+# または data/popular_series.json に入っているアニメ化・ドラマ化・映画化などの作品）かつ ②5巻以上
+POP = HERE / "data" / "popular_series.json"
+TOP_RANK = 50
+MIN_VOL = 5
+
+
+def vol_no(title):
+    t = re.sub(r"[【\[].*?[】\]]|特装版.*$|限定版.*$|小冊子付き", "", title).strip()
+    m = re.search(r"[（(]\s*(\d+)\s*[）)]|(\d+)\s*巻|[\s　](\d+)\s*$", t)
+    return int(next(g for g in m.groups() if g)) if m else 0
+
+
+def is_popular(e, series):
+    if vol_no(e["title"]) < MIN_VOL:
+        return False
+    key = re.sub(r"[\s　]", "", e["title"])
+    return e["rank"] <= TOP_RANK or any(s in key for s in series)
 WD = "月火水木金土日"
 
 
@@ -46,7 +64,7 @@ def fetch(api, today):
                 continue
             if NG.search(x["title"] + x.get("seriesName", "")) or "afl" not in x.get("affiliateUrl", ""):
                 continue
-            base = re.sub(r"[【\[].*?[】\]]|特装版|限定版|小冊子付き|特典.*$", "", x["title"]).strip()
+            base = re.sub(r"[【\[].*?[】\]]|特装版.*$|限定版.*$|小冊子付き|特典.*$", "", x["title"]).strip()
             if base in seen:
                 continue
             seen.add(base)
@@ -156,6 +174,8 @@ def build():
     today = datetime.date.today()
     api = Rakuten(load_config(HERE))
     items = fetch(api, today)
+    series = [re.sub(r"[\s　]", "", s) for s in (json.loads(POP.read_text(encoding="utf-8")).get("series", []) if POP.exists() else [])]
+    items = [e for e in items if is_popular(e, series)]
     add_stores(items)
     add_kobo(api, items)
     if len(items) < 6:
@@ -169,9 +189,9 @@ def build():
     top = [e for e in soon if ".gif" not in e["img"]][:3]
     _clean = lambda t: re.sub(r"【.*?】|\[.*?\]", "", t).strip()
     tops = "・".join(_clean(e["title"]) + f"（{int(e['date'][5:7])}/{int(e['date'][8:])}）" for e in top)
-    desc = f"{tops}など、売れているマンガの新刊{len(soon)}作品の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。毎朝更新。"
+    desc = f"{tops}など、人気マンガ（アニメ化などの話題作・5巻以上）の新刊{len(soon)}作品の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。毎朝更新。"
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
-            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスで売れているマンガの新刊を、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・毎朝更新）。</p></div>"
+            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>アニメ化・ドラマ化などの話題作や、楽天ブックスの売れ筋上位の人気マンガ（5巻以上）の新刊だけを、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・毎朝更新）。</p></div>"
             f"<style>{CSS}</style>"
             + (f"<h2>今週発売（7日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in wk)}</div>" if wk else "")
             + f"<h2>これから発売（予約受付中）</h2><div class=ngrid>{''.join(card(e, today) for e in soon if e not in wk)}</div>"
