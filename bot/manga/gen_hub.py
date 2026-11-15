@@ -191,13 +191,14 @@ def apply_pages():
 
 # ---------- 信頼の土台：運営者情報・ポリシー・フッター・構造化データ（2026-11-14 追加） ----------
 BASE = "https://totalyamanote.github.io/"
-ORG = {"@type": "Organization", "name": "やまのて編集部", "url": BASE, "logo": BASE + "img/brand/logo_400.png", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote"]}
+ORG = {"@type": "Organization", "name": "やまのて", "url": BASE, "logo": BASE + "img/brand/logo_400.png", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote"]}
+AUTHOR = {"@type": "Person", "name": "やまのて管理人", "url": BASE + "about.html", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote"]}
 
 
 def footer(up=""):
     return (f"<!--ftr--><footer style='margin:36px 0 10px;padding:16px 0;border-top:1px solid var(--line,#e7e5e4);font-size:12px;color:var(--mut,#665d55);text-align:center'>"
             f"<a href='{up}about.html'>運営者情報</a>　<a href='{up}privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a>"
-            f"<br>© {datetime.date.today().year} やまのて編集部　当サイトはアフィリエイト広告を利用しています。</footer><!--/ftr-->")
+            f"<br>© {datetime.date.today().year} やまのて　当サイトはアフィリエイト広告を利用しています。</footer><!--/ftr-->")
 
 
 def jsonld(obj):
@@ -217,7 +218,7 @@ def article_ld(f, t):
             pub = r["date"]
     url = BASE + "articles/" + f.name
     art = {"@context": "https://schema.org", "@type": "Article", "headline": title[:110], "datePublished": pub, "dateModified": mod,
-           "author": ORG, "publisher": ORG, "mainEntityOfPage": url}
+           "author": AUTHOR, "publisher": ORG, "mainEntityOfPage": url}
     if im:
         art["image"] = [im.group(1)]
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -254,7 +255,7 @@ def apply_trust():
             t = t.replace("</head>", f"<!--ld-->{ld}<!--/ld--></head>", 1)
             # 見える「更新日」（無ければ見出しの下に入れる）
             t = re.sub(r"<!--upd-->.*?<!--/upd-->", "", t, flags=re.S)
-            t = re.sub(r"(</h1>)", rf"\1<!--upd--><p class=note style='font-size:12px;color:#665d55'>更新日：{mod}　文：やまのて編集部（<a href='../about.html'>運営者情報</a>）</p><!--/upd-->", t, count=1)
+            t = re.sub(r"(</h1>)", rf"\1<!--upd--><p class=note style='font-size:12px;color:#665d55'>更新日：{mod}　文：やまのて管理人（<a href='../about.html'>運営者情報</a>）</p><!--/upd-->", t, count=1)
         elif f.name == "index.html":
             ws = {"@context": "https://schema.org", "@type": "WebSite", "name": "やまのて", "url": BASE, "publisher": ORG,
                   "description": "楽天・Yahoo!ショッピング・Amazonの実質価格（価格−ポイント）、セール攻略、比較記事、無料で読めるマンガ・電子書籍の情報。"}
@@ -270,7 +271,7 @@ h1{font-size:24px}h2{font-size:19px;margin-top:1.8em;padding-left:10px;border-le
 
 
 STATIC_UPDATED = "2026-11-14"  # 運営者情報・プライバシー・比較のしかたは、中身を変えた日だけ書き換える（毎日変えると不自然）
-SDESC = {"about.html": "やまのて（やまのて編集部）の運営者情報。楽天・Yahoo!・Amazonの実質価格比較と、マンガの無料期限・新刊情報をどう調べて載せているか、広告の方針とお問い合わせ先。",
+SDESC = {"about.html": "やまのて（運営：やまのて管理人）の運営者情報。楽天・Yahoo!・Amazonの実質価格比較と、マンガの無料期限・新刊情報をどう調べて載せているか、広告の方針とお問い合わせ先。",
          "privacy.html": "やまのてのプライバシーポリシーと免責事項。アフィリエイト広告・アクセス解析（Googleアナリティクス）とCookieの扱い、掲載情報の時点、表紙画像の著作権についての方針。",
          "compare-method.html": "やまのての比較記事の作り方。2つ以上のストアで同じ商品（JAN一致）だけを選び、実質価格・レビュー・その商品だけの強み・毎朝記録した価格の動きで比べる方法を説明します。"}
 
@@ -278,8 +279,9 @@ SDESC = {"about.html": "やまのて（やまのて編集部）の運営者情�
 def write_static():
     today = datetime.date.today().isoformat()
     about = f"""<h1>運営者情報</h1><div class=box>
-<p><b>サイト名：</b>やまのて（https://totalyamanote.github.io/）</p><p><b>運営：</b>やまのて編集部</p>
+<p><b>サイト名：</b>やまのて（https://totalyamanote.github.io/）</p><p><b>運営：</b>やまのて管理人（個人運営）</p>
 <p><b>お問い合わせ：</b><a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせフォーム</a>、またはX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMで受け付けています。</p></div>
+<h2>運営者のプロフィール</h2><div class=box><p><b>やまのて管理人</b>（X・Threads：<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）</p><p>会社員をしながら、個人でこのサイトを運営しています。楽天市場・Yahoo!ショッピング・Amazonは、同じ商品でもポイントのつき方で実質価格が変わります。買う前にそれを比べられるサイトとして、物販の比較記事と、マンガの無料期限・新刊の情報をまとめています。</p><p>価格・ポイント・レビュー数などの数字は、プログラムで毎日自動で集めています。使っていない商品の体験談は書きません。自分で使った商品を紹介するときは、その旨を明記します。</p></div>
 <h2>このサイトについて</h2><p>楽天市場・Yahoo!ショッピング・Amazonで買い物をする前に、「価格−ポイント＝実質いくらか」を確かめられるサイトです。セールの日程と攻略、日用品・家電などの比較記事、無料で読めるマンガ・電子書籍の情報をまとめています。</p>
 <h2>情報の選び方・書き方の方針</h2><ul>
 <li>価格・ポイント倍率・レビュー数は、各ショップの公開データ（楽天ウェブサービス等）から毎日取得し、取得した日時を記載しています。</li>
@@ -432,7 +434,7 @@ def apply_article_manners():
             if len(heads) >= 4:
                 toc = "<nav class=toc aria-label='目次'><b>目次</b><ol>" + "".join(f"<li><a href='#{h}'>{esc(x[:50])}</a></li>" for h, x in heads) + "</ol></nav>"
         author = ("<div class=author><img src='../img/brand/logo_v8.png' width=44 height=44 alt='やまのて'>"
-                  "<div><b>この記事を書いた人：やまのて編集部</b><br>価格・ポイント・レビューなど公開データをもとに、数字の条件で商品を選んでいます。使っていない商品の体験談は書きません。"
+                  "<div><b>この記事を書いた人：やまのて管理人</b><br>価格・ポイント・レビューなど公開データをもとに、数字の条件で商品を選んでいます。使っていない商品の体験談は書きません。"
                   f"<a href='{'../../' if is_manga else '../'}about.html'>運営方針</a>" + ("" if is_manga else "・<a href='../compare-method.html'>比較のしかた</a>") + "</div></div>")
         if is_manga:
             author = author.replace("'../img/brand", "'../../img/brand")
@@ -486,7 +488,7 @@ def apply_other_breadcrumbs():
             for i, (nm, h) in enumerate(items)]}
         extra = ""
         if rel == "sale.html":
-            extra = f"<p style='font-size:12px;color:#665d55;margin:4px 0'>更新日：{datetime.date.fromtimestamp(f.stat().st_mtime).isoformat()}　文：やまのて編集部（<a href='about.html'>運営者情報</a>）</p>"
+            extra = f"<p style='font-size:12px;color:#665d55;margin:4px 0'>更新日：{datetime.date.fromtimestamp(f.stat().st_mtime).isoformat()}　文：やまのて管理人（<a href='about.html'>運営者情報</a>）</p>"
         blk = f"<!--obc--><nav class=bc aria-label='パンくず' style='font-size:12px;color:#665d55;margin:6px 0 4px'>{vis}</nav>{jsonld(ld)}<!--/obc-->"
         mh = re.search(r"<!--/hdr-->|</header>", t)
         pos = mh.end() if mh else t.find("<main>") + 6

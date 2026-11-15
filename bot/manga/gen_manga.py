@@ -100,10 +100,10 @@ def page(title, desc, body, depth=0, style="", head=""):
             f"{sbar(up + '../')}"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
-            f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は毎朝更新）　文：やまのて編集部</p>"
+            f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は毎朝更新）　文：やまのて管理人</p>"
             f"<p class=note><a href='{up}index.html'>マンガトップ</a>　<a href='{up}theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='{up}theme/adapted.html'>アニメ化・ドラマ化されたマンガ</a>　<a href='{up}theme/always-free.html'>いつでも無料で読めるマンガ</a>　<a href='{up}new-releases.html'>新刊カレンダー</a>　<a href='{up}store-compare.html'>電子書籍ストア比較</a>　<a href='{up}faq.html'>よくある質問</a>　<a href='{up}../index.html'>やまのて（価格・ポイントまとめ）</a></p>"
             f"<footer style='margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);text-align:center'>"
-            f"<a href='{up}../about.html'>運営者情報</a>　<a href='{up}../privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a><br>© やまのて編集部</footer></main></body></html>")
+            f"<a href='{up}../about.html'>運営者情報</a>　<a href='{up}../privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a><br>© やまのて</footer></main></body></html>")
 
 
 def link(tid, vol="001"):

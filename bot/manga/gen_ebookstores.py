@@ -105,7 +105,7 @@ def build():
             f"いま1巻が無料の作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」、これから出る新刊は「<a href='new-releases.html'>新刊の発売日カレンダー</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "Article", "headline": title, "description": desc, "dateModified": d["checked"],
           "url": "https://totalyamanote.github.io/manga/store-compare.html", "inLanguage": "ja",
-          "author": {"@type": "Organization", "name": "やまのて編集部", "url": "https://totalyamanote.github.io/about.html"},
+          "author": {"@type": "Person", "name": "やまのて管理人", "url": "https://totalyamanote.github.io/about.html"},
           "publisher": {"@type": "Organization", "name": "やまのて", "logo": {"@type": "ImageObject", "url": "https://totalyamanote.github.io/img/brand/logo_400.png"}},
           "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i, "name": s["name"], "url": s["url"]} for i, s in enumerate(live, 1)]}}
     head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>" + "<link rel=canonical href='https://totalyamanote.github.io/manga/store-compare.html'><meta property=og:image content='https://totalyamanote.github.io/img/brand/x_header.png'>"
