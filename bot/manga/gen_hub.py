@@ -196,7 +196,7 @@ ORG = {"@type": "Organization", "name": "やまのて編集部", "url": BASE, "l
 
 def footer(up=""):
     return (f"<!--ftr--><footer style='margin:36px 0 10px;padding:16px 0;border-top:1px solid var(--line,#e7e5e4);font-size:12px;color:var(--mut,#665d55);text-align:center'>"
-            f"<a href='{up}about.html'>運営者情報</a>　<a href='{up}privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://x.com/totalyamanote' rel=noopener target=_blank>お問い合わせ（X）</a>"
+            f"<a href='{up}about.html'>運営者情報</a>　<a href='{up}privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a>"
             f"<br>© {datetime.date.today().year} やまのて編集部　当サイトはアフィリエイト広告を利用しています。</footer><!--/ftr-->")
 
 
@@ -279,7 +279,7 @@ def write_static():
     today = datetime.date.today().isoformat()
     about = f"""<h1>運営者情報</h1><div class=box>
 <p><b>サイト名：</b>やまのて（https://totalyamanote.github.io/）</p><p><b>運営：</b>やまのて編集部</p>
-<p><b>お問い合わせ：</b>X（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMで受け付けています。</p></div>
+<p><b>お問い合わせ：</b><a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせフォーム</a>、またはX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMで受け付けています。</p></div>
 <h2>このサイトについて</h2><p>楽天市場・Yahoo!ショッピング・Amazonで買い物をする前に、「価格−ポイント＝実質いくらか」を確かめられるサイトです。セールの日程と攻略、日用品・家電などの比較記事、無料で読めるマンガ・電子書籍の情報をまとめています。</p>
 <h2>情報の選び方・書き方の方針</h2><ul>
 <li>価格・ポイント倍率・レビュー数は、各ショップの公開データ（楽天ウェブサービス等）から毎日取得し、取得した日時を記載しています。</li>
@@ -291,7 +291,7 @@ def write_static():
 <h2>広告について</h2><p>当サイトは、楽天アフィリエイト、Amazonアソシエイト、バリューコマース、A8.net、楽天リンクシェアなどのアフィリエイトプログラムに参加しています。リンク先で商品・サービスが購入・申し込みされると、当サイトに報酬が支払われることがあります。報酬の有無で、評価や順位を変えることはありません。</p>
 <p>Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p><p style='font-size:12px;color:#665d55'>最終更新：{STATIC_UPDATED}</p>"""
     privacy = f"""<h1>プライバシーポリシー・免責事項</h1>
-<h2>個人情報の取り扱い</h2><p>当サイトは、お問い合わせ（XのDM）でいただいた情報を、返信のためだけに使い、法令にもとづく場合を除き、第三者に提供しません。</p>
+<h2>個人情報の取り扱い</h2><p>当サイトは、お問い合わせ（フォーム・XのDM）でいただいた情報を、返信のためだけに使い、法令にもとづく場合を除き、第三者に提供しません。</p>
 <h2>Cookie（クッキー）について</h2><p>当サイトに掲載している広告（楽天アフィリエイト、Amazonアソシエイト、バリューコマース、A8.net、楽天リンクシェア等）では、成果の計測のためにCookieが使われることがあります。Cookieは、ブラウザの設定で無効にできます。</p>
 <h2>アクセス解析ツールについて</h2><p>当サイト（マンガのページを含む）は、Googleによるアクセス解析ツール「Googleアナリティクス」を利用しています。Googleアナリティクスはデータの収集のためにCookieを使用します。このデータは匿名で収集されており、個人を特定するものではありません。この機能はCookieを無効にすることで収集を拒否できます。詳しくは<a href='https://marketingplatform.google.com/about/analytics/terms/jp/' rel=noopener target=_blank>Googleアナリティクス利用規約</a>・<a href='https://policies.google.com/technologies/partner-sites?hl=ja' rel=noopener target=_blank>Googleのポリシーと規約</a>をご覧ください。オプトアウトは<a href='https://tools.google.com/dlpage/gaoptout?hl=ja' rel=noopener target=_blank>Googleアナリティクス オプトアウト アドオン</a>でも行えます。</p>
 <h2>免責事項</h2><ul><li>価格・ポイント・在庫・セールの条件は、掲載した時点の情報です。変わることがあるので、購入前に各ショップのページで確認してください。</li>
@@ -314,7 +314,7 @@ def write_static():
 <li>使っていない商品について、使ったような体験談は書きません。</li></ul>
 <h2>4. 更新</h2><ul>
 <li>価格・ポイント・レビュー数は毎朝更新します。商品の入れ替えは週1回見直します。</li>
-<li>誤りに気づいた場合は、確認のうえ速やかに修正します。ご指摘はX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMへ。</li></ul>
+<li>誤りに気づいた場合は、確認のうえ速やかに修正します。ご指摘は<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせフォーム</a>かX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMへ。</li></ul>
 <p>広告について：比較記事のボタンはアフィリエイトリンクです。報酬の有無や額で順位や評価を変えることはありません（<a href='about.html'>運営者情報</a>）。</p>
 <p style='font-size:12px;color:#665d55'>最終更新：{STATIC_UPDATED}</p>"""
     for name, title, body in (("about.html", "運営者情報｜やまのて", about), ("privacy.html", "プライバシーポリシー・免責事項｜やまのて", privacy), ("compare-method.html", "比較のしかた（商品の選び方・比べ方）｜やまのて", method)):
