@@ -1218,8 +1218,8 @@
   },
   {
    "date": "2026-11-16",
-   "min_effective": 4138,
-   "min_price": 4180
+   "min_effective": 4336,
+   "min_price": 4380
   }
  ],
  "緑茶ティーバッグ": [
@@ -1290,8 +1290,8 @@
   },
   {
    "date": "2026-11-16",
-   "min_effective": 2356,
-   "min_price": 2380
+   "min_effective": 2457,
+   "min_price": 2482
   }
  ],
  "炭酸水": [
@@ -1339,6 +1339,11 @@
    "date": "2026-11-14",
    "min_effective": 2284,
    "min_price": 2307
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2314,
+   "min_price": 2337
   }
  ],
  "レトルトカレー": [
@@ -1398,6 +1403,11 @@
    "date": "2026-11-14",
    "min_effective": 2189,
    "min_price": 2211
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "素焼きナッツ": [
@@ -1559,6 +1569,11 @@
    "date": "2026-11-14",
    "min_effective": 2648,
    "min_price": 2675
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2805,
+   "min_price": 3300
   }
  ],
  "ハンドクリーム": [
@@ -1631,6 +1646,11 @@
    "date": "2026-11-14",
    "min_effective": 2059,
    "min_price": 2080
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "フェイスタオル": [
@@ -1738,6 +1758,11 @@
    "date": "2026-11-14",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2158,
+   "min_price": 2180
   }
  ],
  "ワイン": [
@@ -1800,6 +1825,11 @@
    "date": "2026-11-14",
    "min_effective": 4346,
    "min_price": 4390
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 5445,
+   "min_price": 5500
   }
  ],
  "靴下（メンズ）": [
@@ -1827,6 +1857,11 @@
    "date": "2026-11-14",
    "min_effective": 1960,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-16",
+   "min_effective": 2176,
+   "min_price": 2200
   }
  ],
  "収納ボックス": [
