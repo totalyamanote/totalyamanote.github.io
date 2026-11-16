@@ -56,6 +56,18 @@ jobs:
           DATA_DIR: bot/data
         run: python bot/add_malls.py
 
+      # アウトドアブランド比較の上着（楽天・Yahoo!の同じ商品）の価格を毎朝更新。この記事だけ上限2万円（超えたら「2万円超」と出す）
+      - name: Update outdoor article prices
+        env:
+          TZ: Asia/Tokyo
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          YAHOO_APP_ID: ${{ secrets.YAHOO_APP_ID }}
+          SITE_DIR: .
+          DATA_DIR: bot/data
+        run: python bot/outdoor_prices.py || echo "アウトドア価格の更新に失敗（前の価格のまま）"
+
       # 無料期限が過ぎたマンガ作品ページを消さず「無料終了」表示で残し、マンガ一覧に載せる（冪等）
       - name: Keep expired manga pages
         env:
