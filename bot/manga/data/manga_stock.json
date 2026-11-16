@@ -414,5 +414,65 @@
   "store": "kindle",
   "free_ongoing": true,
   "free_store_name": "Kindle"
+ },
+ {
+  "title_id": "ebj769663",
+  "release_on": "2026-11-22",
+  "title": "ホタルの嫁入り",
+  "aliases": [],
+  "author": "橘オレコ",
+  "magazine": "小学館（マンガワン女子部）",
+  "period": "連載完結（全13巻）",
+  "volumes": "全13巻（完結）",
+  "rating": "4.7",
+  "reviews": "944",
+  "fact": "Amazonで★4.7（944件）。完結＆アニメ化記念で1〜4巻が無料の、契約結婚ラブサスペンス",
+  "hook": "愛が重い殺し屋×華族令嬢。命がけの契約結婚が始まる📚",
+  "synopsis": "時は明治。余命わずかと言われる伯爵令嬢・紗都子は、命を狙ってきた殺し屋・後藤進平にその場しのぎで「私と結婚してください」と持ちかけます。嘘のはずの婚約は、愛が重すぎる進平から逃げられない命がけの契約結婚へ。『プロミス・シンデレラ』の著者による、ラブサスペンスです。",
+  "characters": [
+   [
+    "紗都子",
+    "余命わずかと言われる伯爵令嬢。生き延びるため殺し屋に結婚を持ちかける",
+    ""
+   ],
+   [
+    "後藤進平",
+    "紗都子の命を狙った殺し屋。愛が重い",
+    ""
+   ]
+  ],
+  "tags": [
+   "ラブサスペンス",
+   "明治",
+   "契約結婚",
+   "アニメ化",
+   "完結"
+  ],
+  "user_reviews": {
+   "dist": [],
+   "tags": [
+    "絵が綺麗",
+    "ラストまでドキドキ",
+    "強いヒロイン"
+   ],
+   "top": []
+  },
+  "free_ongoing": true,
+  "free_until": "2026-11-28",
+  "free_label": "1〜4巻無料（ebookjapan）",
+  "free_store_name": "ebookjapan",
+  "free_url": "https://ebookjapan.yahoo.co.jp/books/769663/",
+  "free_note": "ebookjapanで「完結＆アニメ化記念 4巻無料」（11/28までの表示）。ほかのストアでは無料ではありません（11/16確認）。採用理由：アニメ化・Amazonレビュー944件★4.7・全13巻・まるごと4巻無料。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/6230/2000013116230.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1096/2000013631096.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5137/2000014935137.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4927/2000015594927.jpg"
+  },
+  "buy": {
+   "vol": 5,
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Ff7e3cc0e74173cbd9d360c34809c70fc%2F"
+  },
+  "store": "ebookjapan"
  }
 ]
