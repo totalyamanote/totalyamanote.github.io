@@ -601,7 +601,7 @@ def cards_section(title, items, kind, note=""):
     esc = html.escape
     cards = []
     for it in items:
-        img = f"<img src='{esc(it['image'])}' alt='' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>"
+        img = f"<img src='{esc(it['image'])}' alt='{esc(short_name(it.get('name') or '', 40))}' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>"
         if kind == "hotel":
             body = (f"<span class=gtag>{esc(it['area'])}{'・' + esc(it['station']) + '駅' if it.get('station') else ''}</span>{img}"
                     f"<span class=nm>{esc(it['name'][:40])}</span>"
@@ -725,7 +725,7 @@ def picks_html(picks):
         if True:
             pt = ""
             badge = f"<span class=hot>🔥ポイント{it['point_rate']}倍</span>" if it.get("point_rate", 1) >= 2 else ""
-            img = badge + (f"<img src='{esc(it['image'])}' alt='' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
+            img = badge + (f"<img src='{esc(it['image'])}' alt='{esc(short_name(it.get('name') or '', 40))}' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
             cards.append(
                 f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
                 f"<span class=gtag>{esc(g)}" + (f"・{it['rank']}位" if it.get("rank") else "") + f"</span>{img}"
@@ -828,7 +828,7 @@ def kobo_section(api, cfg, today):
                 books.append(("新着", b)); shown.add(b["item_number"])
         cards = []
         for tag, b in books:
-            img = (f"<span class=hot>🔥ポイント{b['rate']}倍</span>" if b.get("rate", 1) >= 2 else "") + (f"<img class=book src='{esc(b['image'])}' alt='' loading=lazy>" if b.get("image") else "<div class=noimg>No Image</div>")
+            img = (f"<span class=hot>🔥ポイント{b['rate']}倍</span>" if b.get("rate", 1) >= 2 else "") + (f"<img class=book src='{esc(b['image'])}' alt='{esc(short_name(b.get('title') or b.get('name') or '', 40))}' loading=lazy>" if b.get("image") else "<div class=noimg>No Image</div>")
             rv = f"⭐{b['review_avg']}（{b['review_count']:,}件）" if b["review_count"] else "レビューはまだありません"
             cards.append(
                 f"<a class=card href='{esc(b['url'])}' rel='sponsored nofollow noopener' target=_blank>"
@@ -849,7 +849,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
         for i, it in enumerate(r["items"], 1):
             # 上の欄と同じ、画像中心のカード
             badge = f"<span class=hot>🔥ポイント{it['point_rate']}倍</span>" if it["point_rate"] >= 2 else ""
-            img = badge + (f"<img src='{esc(it['image'])}' alt='' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
+            img = badge + (f"<img src='{esc(it['image'])}' alt='{esc(short_name(it.get('name') or '', 40))}' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
             rows.append(
                 f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
                 f"<span class=gtag>実質最安{i}位</span>{img}"
@@ -860,7 +860,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
         for it in r.get("yahoo", []):
-            img = (f"<img src='{esc(it['image'])}' alt='' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
+            img = (f"<img src='{esc(it['image'])}' alt='{esc(short_name(it.get('name') or '', 40))}' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>")
             rows.append(
                 f"<a class='card yh' href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
                 f"<span class=gtag>Yahoo!ショッピング</span>{img}"
