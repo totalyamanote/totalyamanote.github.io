@@ -72,7 +72,9 @@
    "description": "人気マンガ（アニメ化などの話題作・5巻以上）の新刊の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。毎朝更新。",
    "image": "https://totalyamanote.jp/img/brand/x_header.png"
   },
-  "image": "https://totalyamanote.jp/img/brand/x_header.png"
+  "image": "https://totalyamanote.jp/img/brand/x_header.png",
+  "bsky": "skipped",
+  "threads": "skipped"
  },
  {
   "at": "2026-11-17 19:45",
