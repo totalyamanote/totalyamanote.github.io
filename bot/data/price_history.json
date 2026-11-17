@@ -110,6 +110,11 @@
    "date": "2026-11-15",
    "min_effective": 1986,
    "min_price": 2090
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2232,
+   "min_price": 2255
   }
  ],
  "日焼け止め": [
@@ -216,6 +221,11 @@
   {
    "date": "2026-11-15",
    "min_effective": 1782,
+   "min_price": 1980
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 1940,
    "min_price": 1980
   }
  ],
@@ -397,6 +407,11 @@
    "date": "2026-11-15",
    "min_effective": 5162,
    "min_price": 5214
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 5881,
+   "min_price": 5940
   }
  ],
  "柔軟剤 詰め替え": [
@@ -429,6 +444,11 @@
    "date": "2026-11-15",
    "min_effective": 2156,
    "min_price": 2178
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 5227,
+   "min_price": 5280
   }
  ],
  "トイレ用洗剤": [
@@ -558,6 +578,11 @@
    "date": "2026-11-17",
    "min_effective": 2158,
    "min_price": 2180
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2554,
+   "min_price": 2580
   }
  ],
  "LEDデスクライト": [
@@ -1912,6 +1937,11 @@
    "date": "2026-11-17",
    "min_effective": 2455,
    "min_price": 2480
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2969,
+   "min_price": 2999
   }
  ],
  "収納ボックス": [
@@ -1969,6 +1999,11 @@
    "date": "2026-11-17",
    "min_effective": 2399,
    "min_price": 2546
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2168,
+   "min_price": 2190
   }
  ],
  "充電ケーブル": [
@@ -2100,6 +2135,11 @@
    "date": "2026-11-17",
    "min_effective": 2158,
    "min_price": 2180
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2376,
+   "min_price": 2400
   }
  ],
  "モバイルバッテリー": [
@@ -2362,6 +2402,11 @@
    "date": "2026-11-15",
    "min_effective": 2633,
    "min_price": 2660
+  },
+  {
+   "date": "2026-11-18",
+   "min_effective": 2752,
+   "min_price": 2780
   }
  ],
  "ペットシーツ": [
