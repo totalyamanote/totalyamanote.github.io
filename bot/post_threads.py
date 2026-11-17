@@ -43,14 +43,14 @@ def main():
     queue = json.loads(qpath.read_text(encoding="utf-8"))
     now = datetime.now()
     due = [q for q in queue if not q.get("threads") and datetime.strptime(q["at"], "%Y-%m-%d %H:%M") <= now]
-    # Threadsは「A8」「メルカリ」「ブックライブ」の3軸だけ（楽天は出さない。2026-11-14 ユーザー指示）（2026-11-14 ユーザー指示）。それ以外（ニュース・Yahoo!・メルカリ・BookLive・リンクシェア等）は出さない
+    # Threadsに出すのは：A8・メルカリ・ブックライブ・自分のサイト（totalyamanote.jp／旧github.io）・ニュース（日経・Yahoo!）のリンクがある投稿だけ。楽天リンクだけの投稿は出さない（2026-11-14 ユーザー指示）。2026-11-17 新ドメイン追加
     AXIS = re.compile(r"px\.a8\.net|mercari\.com|mercari\.jp|\bmercari\b|booklive|totalyamanote\.github\.io|totalyamanote\.jp|nikkei\.com|news\.yahoo\.co\.jp", re.I)  # 2026-11-14: サイトへの誘導・ニュースも出す
     skipped_axis = [q for q in due if not AXIS.search(q["text"]) and not q.get("engage")]   # engage=目を引く投稿（リンクなし）
     for q in skipped_axis:
         q["threads"] = "skipped"
     if skipped_axis:
         qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"A8・楽天以外の {len(skipped_axis)} 件はThreadsに出さない")
+        print(f"対象外（A8・メルカリ・ブックライブ・自分のサイト・ニュース以外）の {len(skipped_axis)} 件はThreadsに出さない")
     due = [q for q in due if q.get("threads") != "skipped"]
     if not due:
         print("投稿する枠はありません"); return 0

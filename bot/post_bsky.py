@@ -41,14 +41,14 @@ def main():
             q["bsky"] = "skipped"; changed = True   # 楽天リンクはBlueskyに出さない
     if changed:
         qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
-    # Blueskyは「A8」「リンクシェア」「メルカリ」「ブックライブ」の4軸（BtoC・20〜30代向け。2026-11-14 ユーザー指示）。それ以外（ニュース・Yahoo!・BookLive等）は出さない
+    # Blueskyに出すのは：A8・リンクシェア・メルカリ・ブックライブ・自分のサイト（totalyamanote.jp／旧github.io）・ニュース（日経・Yahoo!）のリンクがある投稿だけ（2026-11-14 ユーザー指示）。楽天リンクは上で必ず除外。2026-11-17 新ドメイン追加
     AXIS = re.compile(r"px\.a8\.net|click\.linksynergy\.com|mercari\.com|mercari\.jp|\bmercari\b|booklive|totalyamanote\.github\.io|totalyamanote\.jp|nikkei\.com|news\.yahoo\.co\.jp", re.I)  # 2026-11-14: サイトへの誘導・ニュースも出す
     off = [q for q in due if q.get("bsky") != "skipped" and not q.get("engage") and not AXIS.search(q.get("bsky_text") or q["text"])]
     for q in off:
         q["bsky"] = "skipped"
     if off:
         qpath.write_text(json.dumps(queue, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"A8・リンクシェア・メルカリ以外の {len(off)} 件はBlueskyに出さない")
+        print(f"対象外（A8・リンクシェア・メルカリ・ブックライブ・自分のサイト・ニュース以外）の {len(off)} 件はBlueskyに出さない")
     due = [q for q in due if q.get("bsky") != "skipped"]
     if not due:
         print("投稿する枠はありません（楽天リンクの投稿はBlueskyに出さない）"); return 0
