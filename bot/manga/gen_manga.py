@@ -83,6 +83,11 @@ def grad(tid):
     return f"--g1:{g1};--g2:{g2}"
 
 
+def left_label(dl):
+    """残り日数の表示。当日は「あと0日」ではなく「本日終了」。"""
+    return "本日終了" if dl == 0 else f"あと{dl}日"
+
+
 def left_days(w):
     fu=w.get("free_until")
     if not fu:
@@ -256,7 +261,7 @@ def work_page(w, works=None):
     free_badge = ""
     if dl is not None:
         d = datetime.date.fromisoformat(w["free_until"])
-        free_badge = f"<span class=free>1巻 無料</span> <span class=left>{d.month}月{d.day}日（{'月火水木金土日'[d.weekday()]}）まで・あと{dl}日</span>"
+        free_badge = f"<span class=free>1巻 無料</span> <span class=left>{d.month}月{d.day}日（{'月火水木金土日'[d.weekday()]}）まで・{left_label(dl)}</span>"
     elif w.get("free_until"):
         # 期限が切れたあとも、紹介ページは残す。過去の事実（いつまで無料だったか）を載せ、次の無料に備える
         d = datetime.date.fromisoformat(w["free_until"])
@@ -265,7 +270,7 @@ def work_page(w, works=None):
     if w.get("free_ongoing"):
         if dl is not None:
             _d = datetime.date.fromisoformat(w["free_until"])
-            free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=left>{_d.month}月{_d.day}日（{'月火水木金土日'[_d.weekday()]}）まで・あと{dl}日</span>"
+            free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=left>{_d.month}月{_d.day}日（{'月火水木金土日'[_d.weekday()]}）まで・{left_label(dl)}</span>"
         else:
             free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span>"
         b = w.get("buy") or {}
@@ -423,7 +428,7 @@ def theme_pages(works):
             fu = ""
             if dl is not None:
                 d = datetime.date.fromisoformat(w["free_until"])
-                fu = f"<p><span class=free>{esc(w.get('free_label', '1巻 無料'))}</span> <span class=left>{d.month}月{d.day}日まで・あと{dl}日</span></p>"
+                fu = f"<p><span class=free>{esc(w.get('free_label', '1巻 無料'))}</span> <span class=left>{d.month}月{d.day}日まで・{left_label(dl)}</span></p>"
             elif w.get("free_ongoing"):
                 fu = f"<p><span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span></p>"
             ebj = w.get("store") in ("ebookjapan", "kindle", "kobo")
@@ -464,7 +469,7 @@ def index(works, themes):
     cards = ""
     for _n, w in sorted(enumerate(works.values()), key=lambda t: (t[1].get("added", ""), t[0]), reverse=True):  # 作品一覧は新しく追加した順（2026-11-14 坂田さん指定）
         dl = left_days(w)
-        fb = f"<span class=free>無料</span> <span class=left>あと{dl}日</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
+        fb = f"<span class=free>無料</span> <span class=left>{left_label(dl)}</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
         rt = f"<span class=stars>★{esc(w['rating'])}</span> " if w.get("rating") else ""
         cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004")) + "</div>"
                   f"<div class=in><b>『{esc(w['title'])}』</b><br><span class=note>{rt}{esc(w.get('author',''))}</span><br>{fb}</div></a>")
@@ -493,7 +498,7 @@ def index(works, themes):
         img = cover(w, size="M")
         quick += (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
                   f"<a href='w/{w['title_id']}.html' class=qt>『{esc(w['title'])}』</a>"
-                  + (f"<span class=qd>{esc(w.get('free_label', '1巻無料'))} {dd.month}/{dd.day}まで<b>あと{dl}日</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
+                  + (f"<span class=qd>{esc(w.get('free_label', '1巻無料'))} {dd.month}/{dd.day}まで<b>{left_label(dl)}</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
                   + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") in ("ebookjapan", "kindle", "kobo") else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
     # 人気作の1巻（Kindleの無料試し読み）も混ぜる（2026-11-14 坂田さん「ブルーロックみたいなの」）
