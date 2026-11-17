@@ -13,12 +13,12 @@
   "articles/water-filter-cartridge.html": "0366b54b2f96d5b568f838d050e13828",
   "articles/wearable-blanket.html": "fe3579732e82ce48e7df1dc88432aa28",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
-  "index.html": "ac250700c4fedce6034ee99948d3570c",
-  "manga/index.html": "8ae149c2c1601f9723aa13e283eacfa8",
-  "manga/theme/adapted.html": "5806d1868281e41f47e8f0d1145648d8",
-  "manga/theme/free-now.html": "486993fc5db5ce23b7dc4b2c4d6d8ee9",
-  "manga/w/20206940.html": "3736412a9bc9a7ffbd03ea2b5c879a55",
-  "manga/w/20206948.html": "4315bead777ffed8c9a1cbf9e9adc8a1",
+  "index.html": "864cf0728dbdb3ff540ccff17ea06e4b",
+  "manga/index.html": "e94150a3d91019e8206987c5527b6d80",
+  "manga/theme/adapted.html": "357ec6712eccd5a8f458030cad2b319d",
+  "manga/theme/free-now.html": "cbd03568e5845b75173dd5cd9231ec9a",
+  "manga/w/20206940.html": "25cbcfa3de122d748afd0e37397e498f",
+  "manga/w/20206948.html": "8c0c91bef7a3cfbe61b60f11e6c087eb",
   "manga/w/2504807.html": "617091dc8a4fcbf1890a5bf38c1ec657",
   "manga/w/2509724.html": "d2a81106c5af25d12663c08a8a0bfadc",
   "manga/w/2509732.html": "d9394be4f673943c4162c4a96690c622",
@@ -33,7 +33,7 @@
   "articles/booklive-guide.html": "056cf0cc233448e4a1e6493e6f45fa01",
   "manga/faq.html": "7a0d81dfa0babc19de706fc53a786777",
   "compare-method.html": "f25311701a6bc7eb68efdcdfd47f7c26",
-  "manga/new-releases.html": "70fb38365da770d1940ca47e2467c0e1",
+  "manga/new-releases.html": "34c784ceb2466f3ce734ea38299ccded",
   "manga/store-compare.html": "992f11048a8501189400cb0c0c4a3fe2",
   "manga/theme/always-free.html": "6c8af885331112b48a71455ed06aed53",
   "manga/w/ebj516901.html": "c60715dad4caa7fef0b06c6d1b667fdf",
@@ -41,7 +41,7 @@
   "manga/w/kB0819V93V9.html": "1154e29b03527baba276a8db4158003c",
   "manga/w/kB09TS9FHX1.html": "3b316b11a7b09d5a7eab7905a4004963",
   "manga/w/kB09YYKLTW7.html": "b02334e76d924009a0dbb2e252f05999",
-  "manga/w/kB0BKSR5555.html": "cf282b4bcd7460959e3f24200073ecee",
+  "manga/w/kB0BKSR5555.html": "16887c27b26e2388564544738608631e",
   "articles/mobile-ymobile-linemo-uq.html": "e3bea425d59241b64a3a6435f8617ecd",
   "articles/rakuten-mobile-2026.html": "444d0bf363759af46bc7059a4a94a574",
   "manga/w/kB0F3G6YCWB.html": "c223d0046f8d030d23fcb240024fd7a3",
@@ -51,5 +51,5 @@
   "articles/outdoor-brands-2026.html": "1aad8e40770a509e48326ea27ff92202",
   "manga/w/kB0C9BSDSWZ.html": "d91496e2f977369b3aaa0bb8c0553927"
  },
- "last_ping": "2026-11-17T13:11:02"
+ "last_ping": "2026-11-17T15:16:18"
 }
