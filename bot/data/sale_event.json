@@ -1,0 +1,10 @@
+{
+  "title": "ブラックフライデー2026",
+  "url": "articles/black-friday-2026.html",
+  "malls": [
+    {"short": "楽天", "color": "#bf0000", "start": "2026-11-19T20:00", "end": "2026-11-25T01:59", "when": "11/19 20:00〜11/25 1:59"},
+    {"short": "Yahoo!", "color": "#d4002a", "start": "2026-11-22T00:00", "end": "2026-11-29T23:59", "when": "11/22〜11/29"},
+    {"short": "Amazon", "color": "#ff9900", "start": null, "end": null, "when": "日程は発表待ち"}
+  ],
+  "_memo": "特集バナーはトップの一番上。全モールの end を過ぎた翌日から自動で消える（startなしのモールは無視）。Amazonの日程が出たら start/end/when を書き換える（gen_event.py の MALLS も同じに）。"
+}
