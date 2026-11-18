@@ -101,6 +101,12 @@ def newrel_row():
     return out
 
 
+def short_title(t):
+    """トップのカード用の短いタイトル（【 か ｜ の手前まで）。"""
+    t = re.split(r"[【｜]", t)[0].strip()
+    return t or "記事"
+
+
 def article_cards():
     # 並びは「記事を作った順（新しい順）」（2026-11-14 坂田さん指定）。登録簿（articles_generated.json）の日付と登録順で並べ、
     # 登録簿にない手書きの記事はそのあと。毎朝の更新でファイルの時刻がそろっても、新しい記事が先頭に来る。
@@ -119,7 +125,7 @@ def article_cards():
         tag = "家電" if f.stem.startswith("electric") else ("まとめ" if f.stem == "point-up" else "比較")
         out += (f"<a class=ha href='articles/{f.name}'><span class=tag>{tag}</span>"
                 + (f"<img src='{esc(im.group(1).replace('../', '', 1) if im.group(1).startswith('../') else im.group(1))}' alt='' loading=lazy>" if im else "")
-                + f"<b>{esc(m.group(1) if m else f.stem)}</b></a>")
+                + f"<b>{esc(short_title(m.group(1) if m else f.stem))}</b></a>")
     return out
 
 
