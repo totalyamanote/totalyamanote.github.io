@@ -35,7 +35,7 @@ CSS = """<style id=hubcss>
 .hm{flex:0 0 132px;scroll-snap-align:start;text-decoration:none;color:inherit;text-align:center}
 .hm img{width:132px;height:188px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.25);display:block}
 .hm b{display:block;font-size:13px;line-height:1.35;margin-top:6px}.hm span{display:inline-block;margin-top:3px;font-size:11px;font-weight:800;border-radius:99px;padding:1px 8px;background:#15803d;color:#fff}
-.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.hmore{margin-top:12px}.hmore summary{cursor:pointer;list-style:none;text-align:center;font-weight:800;font-size:14px;color:#bf0000;border:1px solid #bf0000;border-radius:99px;padding:8px 14px}.hmore summary::-webkit-details-marker{display:none}.hmore[open] summary{margin-bottom:12px}.hmore .hgrid{margin-top:0}.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
 .ha{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card,#fff);border:1px solid var(--line,#e7e5e4);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .15s}.ha:hover{transform:translateY(-2px)}
 .ha img{width:100%;height:150px;object-fit:contain;background:#fff}.ha b{padding:8px 12px 12px;font-size:13px;line-height:1.45}
 .ha .tag{margin:8px 12px 0;align-self:flex-start;font-size:11px;font-weight:800;color:#bf0000;border:1px solid #bf0000;border-radius:99px;padding:0 8px}
@@ -123,6 +123,16 @@ def article_cards():
     return out
 
 
+def article_block():
+    """比較記事は先頭8本だけ並べ、残りは「ぜんぶ見る」に畳む（2026-11-18 坂田さん指定）。"""
+    cards = re.findall(r"<a class=ha .*?</a>", article_cards(), re.S)
+    n = 8
+    if len(cards) <= n:
+        return "<div class=hgrid>" + "".join(cards) + "</div>"
+    return ("<div class=hgrid>" + "".join(cards[:n]) + "</div>"
+            f"<details class=hmore><summary>比較記事をぜんぶ見る（残り{len(cards) - n}本）</summary><div class=hgrid>" + "".join(cards[n:]) + "</div></details>")
+
+
 def hub_block():
     now = datetime.datetime.now()
     rak = (datetime.date(2026, 11, 19) - now.date()).days
@@ -140,7 +150,7 @@ def hub_block():
             f"<div class=hhero><span class=hkick>毎日更新</span><h1>買う前に「実質いくら？」が分かる</h1>"
             f"<p>楽天・Yahoo!ショッピング・Amazonの価格−ポイント＝実質価格と、セール攻略・比較記事・無料で読めるマンガをまとめています。</p></div>"
             f"<div class=hsec><h2>🔥 セール特集</h2>{sale}</div>"
-            f"<div class=hsec id=articles><h2>📝 比較記事・おすすめ</h2><div class=hgrid>{article_cards()}</div></div>"
+            f"<div class=hsec id=articles><h2>📝 比較記事・おすすめ</h2>{article_block()}</div>"
             f"<h2 id=daily style='font-size:18px;margin:22px 0 6px;padding-left:10px;border-left:5px solid #bf0000'>🛒 毎朝の実質最安（楽天・Yahoo!）</h2><!--/hub-->")
 
 
