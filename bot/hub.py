@@ -57,12 +57,12 @@ def _refresh_countdown(s, now):
 
 SALE_JSON = Path(__file__).resolve().parent / "data" / "sale_event.json"
 SALE_CSS = ("<style id=hsalecss>"
- ".bf{position:relative;overflow:hidden;display:block;text-decoration:none;color:#fff;border-radius:18px;padding:20px 20px 18px;margin:6px 0 16px;"
+ ".bf{position:relative;overflow:hidden;display:block;text-decoration:none;color:#fff;border-radius:18px;padding:22px 20px 20px;margin:4px 0 16px;"
  "background:radial-gradient(circle at 85% 10%,rgba(255,196,0,.35),transparent 45%),radial-gradient(circle at 10% 100%,rgba(191,0,0,.7),transparent 55%),linear-gradient(135deg,#000,#1c0505 60%,#4a0a0a);"
  "box-shadow:0 8px 24px rgba(0,0,0,.35);border:1px solid #5a1a1a}"
- ".bf svg.bfart{position:absolute;right:-6px;top:-6px;width:150px;height:150px;opacity:.95;pointer-events:none}"
+ ".bf svg.bfart{position:absolute;right:-6px;top:-6px;width:170px;height:170px;opacity:.95;pointer-events:none}"
  ".bf .k{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.14em;color:#111;background:linear-gradient(90deg,#ffd54a,#ffb300);border-radius:99px;padding:2px 12px}"
- ".bf h2{margin:8px 0 2px;border:0;padding:0;font-size:28px;line-height:1.15;font-weight:900;letter-spacing:.02em;color:#fff;max-width:75%}"
+ ".bf h2{margin:8px 0 2px;border:0;padding:0;font-size:32px;line-height:1.15;font-weight:900;letter-spacing:.02em;color:#fff;max-width:75%}"
  ".bf h2 em{font-style:normal;background:linear-gradient(90deg,#ffe082,#ffb300);-webkit-background-clip:text;background-clip:text;color:transparent}"
  ".bf p{margin:4px 0 12px;font-size:13px;color:#f1d9d9;max-width:80%}"
  ".bf .ml{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}"
@@ -70,8 +70,12 @@ SALE_CSS = ("<style id=hsalecss>"
  ".bf .m b{display:block;font-size:14px}.bf .m small{display:block;font-size:11px;color:#e8cfcf;margin:2px 0 4px}"
  ".bf .st{display:inline-block;font-size:11px;font-weight:900;border-radius:99px;padding:1px 9px;background:#fff;color:#bf0000}"
  ".bf .st.on{background:#ffd54a;color:#111}.bf .st.wait{background:#665d55;color:#fff}"
+ ".bf .ph{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:2px 0 12px}"
+ ".bf .ph i{display:block;aspect-ratio:1;border-radius:12px;background:#fff center/cover no-repeat;border:2px solid #ffd54a;box-shadow:0 4px 10px rgba(0,0,0,.45);transform:rotate(-2deg)}"
+ ".bf .ph i:nth-child(even){transform:rotate(2deg) translateY(4px)}"
+ ".bf .cap{font-size:11px;color:#e8cfcf;margin:-6px 0 10px}"
  ".bf .go{display:inline-block;margin-top:12px;background:linear-gradient(90deg,#ffd54a,#ffb300);color:#111;font-weight:900;font-size:15px;border-radius:99px;padding:10px 22px}"
- "@media(max-width:560px){.bf h2{font-size:22px;max-width:70%}.bf p{max-width:100%}.bf .ml{grid-template-columns:1fr}.bf svg.bfart{width:104px;height:104px}}"
+ "@media(max-width:560px){.bf h2{font-size:24px;max-width:70%}.bf p{max-width:100%}.bf .ml{gap:6px}.bf .m{padding:6px 7px}.bf .m b{font-size:13px}.bf .m small{font-size:10px}.bf svg.bfart{width:104px;height:104px}}"
  "</style>")
 SALE_ART = ("<svg class=bfart viewBox='0 0 120 120' aria-hidden=true><defs><linearGradient id=bfg x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color='#ffe082'/><stop offset=1 stop-color='#ff9800'/></linearGradient></defs>"
  "<path d='M30 44h60l7 62H23z' fill='url(#bfg)'/><path d='M44 44c0-20 32-20 32 0' fill=none stroke='#fff' stroke-width=6 stroke-linecap=round />"
@@ -95,6 +99,25 @@ def sale_active(now, cfg=None):
     return bool(ends) and now.date() <= max(ends).date()
 
 
+def _sale_photos(n=4):
+    """特集記事の商品写真（楽天の商品画像）を並べる。記事から毎朝拾うので、特集と同じ商品になる。"""
+    try:
+        t = (SALE_JSON.parent.parent.parent / cfg_url(_sale_cfg())).read_text(encoding="utf-8")
+    except Exception:
+        return ""
+    ims = []
+    for u in re.findall(r"<a class=item [^>]*>\s*<img src='(https://[^']+)'", t):
+        if u not in ims:
+            ims.append(u)
+    if len(ims) < 2:
+        return ""
+    return "<div class=ph>" + "".join(f"<i style=\"background-image:url('{u}')\"></i>" for u in ims[:n]) + "</div>"
+
+
+def cfg_url(cfg):
+    return (cfg or {}).get("url", "articles/black-friday-2026.html")
+
+
 def sale_banner(now, cfg=None):
     cfg = cfg or _sale_cfg()
     if not sale_active(now, cfg):
@@ -116,18 +139,18 @@ def sale_banner(now, cfg=None):
     return ("<!--hubsale-->" + SALE_CSS +
             f"<a class=bf href='{cfg['url']}'>{SALE_ART}<span class=k>SALE SPECIAL</span>"
             f"<h2><em>BLACK FRIDAY</em> 2026</h2><p>楽天・Yahoo!・Amazonの日程と攻略、実質価格のおすすめをまとめました。</p>"
-            f"<div class=ml>{''.join(cells)}</div><span class=go>日程と攻略を見る →</span></a><!--/hubsale-->")
+            f"{_sale_photos()}<div class=ml>{''.join(cells)}</div><span class=go>日程と攻略を見る →</span></a><!--/hubsale-->")
 
 
 def apply_sale(page, now=None):
-    """トップの一番上（ヒーローの下・毎朝の最安の上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
+    """トップの一番上（ヘッダーの直下・検索窓より上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
     now = now or datetime.now()
     page = re.sub(r"<!--hubsale-->.*?<!--/hubsale-->", "", page, flags=re.S)
     page = re.sub(r"<style id=hsalecss>.*?</style>", "", page, flags=re.S)
     page = re.sub(r"<div class=hsec><h2>🔥 セール特集</h2>.*?</a></div>", "", page, flags=re.S)
     ban = sale_banner(now)
     if ban:
-        page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)
+        page = page.replace("<!--sbar-->", ban + "<!--sbar-->", 1)
     else:
         page = re.sub(r"<a href='articles/black-friday-2026\.html'>セール</a>", "", page, count=1)
     return page
