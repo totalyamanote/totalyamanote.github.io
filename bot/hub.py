@@ -157,9 +157,41 @@ def move_tail_sections(page):
     return page
 
 
+def prune_manga(page, now):
+    """トップの『いま無料で読めるマンガ』から、無料が終わった作品（期限切れ・無料の表示がないもの）を外す（2026-11-18 坂田さん「読めなくなったのは載せていかない」）。
+    毎朝実行されるので、期限の翌日には自然に消える。1作品も残らなければ、その段ごと外す。"""
+    m = re.search(r"<!--hubm-->(.*?)<!--/hubm-->", page, re.S)
+    if not m:
+        return page
+    blk = m.group(1)
+    sec = re.search(r"<div class=hsec[^>]*><h2>📚[^<]*<a href='manga/index\.html'>.*?</div></div>", blk, re.S)
+    if not sec:
+        return page
+
+    def keep(a):
+        a = a.group(0)
+        b = re.search(r"<span>(\d+)/(\d+)まで無料</span>", a)
+        if b:
+            mo, d = int(b.group(1)), int(b.group(2))
+            y = now.year + (1 if mo < now.month - 6 else 0)
+            try:
+                return a if datetime(y, mo, d).date() >= now.date() else ""
+            except ValueError:
+                return a
+        return a if "<span>" in a else ""   # 無料の表示がない＝いま無料ではない
+
+    new = re.sub(r"<a class=hm href='manga/w/[^']*'>.*?</a>", keep, sec.group(0), flags=re.S)
+    if "<a class=hm" not in new:
+        new = ""
+    elif "人気マンガ（あらすじ・登場人物）" in new:
+        pass
+    return page.replace(sec.group(0), new, 1)
+
+
 def apply_sale(page, now=None):
     """トップの一番上（ヘッダーの直下・検索窓より上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
     now = now or datetime.now()
+    page = prune_manga(page, now)
     page = move_tail_sections(page)
     page = re.sub(r"<!--hubsale-->.*?<!--/hubsale-->", "", page, flags=re.S)
     page = re.sub(r"<style id=hsalecss>.*?</style>", "", page, flags=re.S)
