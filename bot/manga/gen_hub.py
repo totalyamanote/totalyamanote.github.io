@@ -55,6 +55,8 @@ def manga_row():
         return ""
     today = datetime.date.today()
     ws = list(json.loads(p.read_text(encoding="utf-8")).values())
+    # いま無料で読めるものだけ（期限切れ・無料の表示がないものは載せない：2026-11-18 坂田さん）
+    ws = [w for w in ws if (w.get("free_until") and datetime.date.fromisoformat(w["free_until"]) >= today) or w.get("free_ongoing")]
     ws.sort(key=lambda w: (w.get("free_until") or "9999"))
     out = ""
     for w in ws[:12]:
