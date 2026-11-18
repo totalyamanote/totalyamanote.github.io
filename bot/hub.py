@@ -142,9 +142,25 @@ def sale_banner(now, cfg=None):
             f"{_sale_photos()}<div class=ml>{''.join(cells)}</div><span class=go>日程と攻略を見る →</span></a><!--/hubsale-->")
 
 
+def move_tail_sections(page):
+    """ふるさと納税・ホテルの段は、比較記事の下・マンガの上へ（2026-11-18 坂田さん「ホテル、ふるさと納税は、マンガの上で」）。冪等。"""
+    got = []
+    for h in ("ふるさと納税", "ホテル"):
+        m = re.search(rf"<section><h2>{h}[^<]*</h2>.*?</section>\n?", page, re.S)
+        if m:
+            got.append(m.group(0))
+            page = page.replace(m.group(0), "", 1)
+    if got and "<!--hubm-->" in page:
+        page = page.replace("<!--hubm-->", "".join(got) + "<!--hubm-->", 1)
+    elif got:
+        return page.replace("</main>", "".join(got) + "</main>", 1)
+    return page
+
+
 def apply_sale(page, now=None):
     """トップの一番上（ヘッダーの直下・検索窓より上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
     now = now or datetime.now()
+    page = move_tail_sections(page)
     page = re.sub(r"<!--hubsale-->.*?<!--/hubsale-->", "", page, flags=re.S)
     page = re.sub(r"<style id=hsalecss>.*?</style>", "", page, flags=re.S)
     page = re.sub(r"<div class=hsec><h2>🔥 セール特集</h2>.*?</a></div>", "", page, flags=re.S)
