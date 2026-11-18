@@ -189,7 +189,7 @@ def prune_manga(page, now):
 
 
 def apply_sale(page, now=None):
-    """トップの一番上（ヘッダーの直下・検索窓より上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
+    """トップの上のほう（検索欄・PR表記・ひとこと説明の直下、毎朝の最安の上）にセール特集を置く。セール終了後は特集・メニューの「セール」・下の旧カードを外す。"""
     now = now or datetime.now()
     page = prune_manga(page, now)
     page = move_tail_sections(page)
@@ -198,7 +198,7 @@ def apply_sale(page, now=None):
     page = re.sub(r"<div class=hsec><h2>🔥 セール特集</h2>.*?</a></div>", "", page, flags=re.S)
     ban = sale_banner(now)
     if ban:
-        page = page.replace("<!--sbar-->", ban + "<!--sbar-->", 1)
+        page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)   # 検索欄・PR・ひとことは最上段に固定、その直下にセール特集（2026-11-18 坂田さん）
     else:
         page = re.sub(r"<a href='articles/black-friday-2026\.html'>セール</a>", "", page, count=1)
     return page
