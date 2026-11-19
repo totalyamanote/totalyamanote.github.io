@@ -53,6 +53,7 @@ h1{font-size:23px;line-height:1.4} h2{font-size:19px;margin:1.9em 0 .6em;padding
 .chars b{display:block;color:var(--acc)}
 .ch img{width:100%;max-width:150px;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.25);display:block;margin:0 auto 4px}.ch .note{display:block;text-align:center;margin-bottom:6px}
 .chars{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important}
+.hmore{margin-top:12px}.hmore summary{cursor:pointer;list-style:none;text-align:center;font-weight:800;font-size:14px;color:#bf0000;border:1px solid #bf0000;border-radius:99px;padding:8px 14px}.hmore summary::-webkit-details-marker{display:none}.hmore[open] summary{margin-bottom:12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .card .top{height:64px;background:linear-gradient(135deg,var(--g1),var(--g2))}
@@ -76,6 +77,15 @@ PAL=[("#c1272d","#f59e0b"),("#0f766e","#38bdf8"),("#7c3aed","#f472b6"),("#1d4ed8
 LOGO = ("<svg viewBox='0 0 32 32' aria-hidden=true><defs><linearGradient id=lg x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color='#c1272d'/><stop offset=1 stop-color='#f59e0b'/></linearGradient></defs>"
         "<rect x=2 y=3 width=28 height=26 rx=7 fill='url(#lg)'/><path d='M8 10h7v12H8z' fill='#fff' opacity=.95/><path d='M17 10h7v12h-7z' fill='#fff' opacity=.75/>"
         "<path d='M16 9v14' stroke='#7a1d1d' stroke-width=1.4/><circle cx=24.5 cy=8 r=3.2 fill='#ffd400' stroke='#fff' stroke-width=1.2/></svg>")
+
+
+def fold_cards(cards, n=8):
+    """作品一覧は先頭n作品だけ並べ、残りは「ぜんぶ見る」に畳む（2026-11-19 坂田さん「比較記事みたいに折りたたみに」）。"""
+    items = re.findall(r"<a class=card .*?</a>", cards, re.S)
+    if len(items) <= n:
+        return "<div class=grid>" + cards + "</div>"
+    return ("<div class=grid>" + "".join(items[:n]) + "</div>"
+            f"<details class=hmore><summary>作品をぜんぶ見る（残り{len(items) - n}作品）</summary><div class=grid>" + "".join(items[n:]) + "</div></details>")
 
 
 def grad(tid):
@@ -467,8 +477,13 @@ def index(works, themes):
                      "".join(f"<img src='{esc(cover(w, size='M'))}' alt='『{esc(w['title'])}』の表紙' loading=lazy>" for w in _tw(s)))
                   + f"</div><div class=in><b>{esc(t)}</b></div></a>" for i, (s, t) in enumerate(themes))
     cards = ""
+    listed = 0
     for _n, w in sorted(enumerate(works.values()), key=lambda t: (t[1].get("added", ""), t[0]), reverse=True):  # 作品一覧は新しく追加した順（2026-11-14 坂田さん指定）
         dl = left_days(w)
+        # 作品一覧は「いま無料で読める（公開中）」だけ（2026-11-19 坂田さん）。期限が過ぎた作品は一覧から外す（作品ページ自体は残る）
+        if (w.get("free_until") and dl is None) or (not w.get("free_until") and not w.get("free_ongoing")):
+            continue
+        listed += 1
         fb = f"<span class=free>無料</span> <span class=left>{left_label(dl)}</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
         rt = f"<span class=stars>★{esc(w['rating'])}</span> " if w.get("rating") else ""
         cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004")) + "</div>"
@@ -521,7 +536,7 @@ def index(works, themes):
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>
 {quick_block}{newrel}
-<h2>作品一覧（{len(works)}作品・新しく追加した順）</h2><div class=grid>{cards}</div>
+<h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
     (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。毎朝更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
