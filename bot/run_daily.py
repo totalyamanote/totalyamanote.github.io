@@ -52,9 +52,13 @@ def short_name(name, limit=38):
     # 楽天の商品名は【】や送料無料などの宣伝文句が長いので落とす
     s = re.sub(r"【[^】]*】|\[[^\]]*\]|＼[^／]*／|★|☆|◆|♪", " ", name)
     s = re.sub(r"(送料無料|ポイント\d+倍|楽天\d+位|あす楽|クーポン\S*|P\d+倍)", " ", s)
+    # 日付は商品名ではない（2026-11-19 坂田さん「日付不要」）：11/14・11/14〜11/17・11月14日・(11/14)
+    s = re.sub(r"[（(]?\d{1,2}/\d{1,2}[）)]?(\s*[〜～~\-－]\s*[（(]?\d{1,2}/\d{1,2}[）)]?)?|\d{1,2}月\d{1,2}日(\s*[〜～~]\s*\d{1,2}月?\d{1,2}日)?", " ", s)
     # 宣伝の語（期限・倍率・割引・限定など）を含む語は落とす（商品名だけ残す）
     s = " ".join(w for w in s.split() if not re.search(r"マデ|まで|迄|限定|OFF|off|%|％|倍|クーポン|セール|SALE|送料|ランキング|位|受賞|獲得|特典|お買い物マラソン|\d+日|\d+:\d+|^[+＋]", w))
     s = re.sub(r"\s+", " ", s).strip()
+    if not s:  # 全部落ちたら元の名前を使う
+        s = re.sub(r"\s+", " ", name).strip()
     return s if len(s) <= limit else s[:limit - 1] + "…"
 
 
@@ -604,7 +608,7 @@ def cards_section(title, items, kind, note=""):
         img = f"<img src='{esc(it['image'])}' alt='{esc(short_name(it.get('name') or '', 40))}' loading=lazy>" if it.get("image") else "<div class=noimg>No Image</div>"
         if kind == "hotel":
             body = (f"<span class=gtag>{esc(it['area'])}{'・' + esc(it['station']) + '駅' if it.get('station') else ''}</span>{img}"
-                    f"<span class=nm>{esc(it['name'][:40])}</span>"
+                    f"<span class=nm>{esc(short_name(it['name'], 40))}</span>"
                     f"<span class=yen>¥{it['price']:,}〜</span><span class=rv>1人あたりの最安料金</span>"
                     f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                     f"<span class=go>楽天トラベルで見る →</span>")
