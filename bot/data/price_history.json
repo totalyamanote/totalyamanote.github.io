@@ -588,6 +588,11 @@
    "date": "2026-11-19",
    "min_effective": 1979,
    "min_price": 1999
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2257,
+   "min_price": 2280
   }
  ],
  "LEDデスクライト": [
@@ -1241,6 +1246,11 @@
    "date": "2026-11-13",
    "min_effective": 5643,
    "min_price": 5940
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "入浴剤": [
@@ -1397,6 +1407,11 @@
    "date": "2026-11-19",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2780,
+   "min_price": 2808
   }
  ],
  "炭酸水": [
@@ -1709,6 +1724,11 @@
    "date": "2026-11-19",
    "min_effective": 2240,
    "min_price": 2800
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ハンドクリーム": [
@@ -1794,6 +1814,11 @@
   },
   {
    "date": "2026-11-19",
+   "min_effective": 2950,
+   "min_price": 2980
+  },
+  {
+   "date": "2026-11-20",
    "min_effective": 2950,
    "min_price": 2980
   }
@@ -1918,6 +1943,11 @@
    "date": "2026-11-19",
    "min_effective": 3006,
    "min_price": 3036
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 3135,
+   "min_price": 3300
   }
  ],
  "ワイン": [
@@ -1995,6 +2025,11 @@
    "date": "2026-11-19",
    "min_effective": 3465,
    "min_price": 3500
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 5694,
+   "min_price": 5900
   }
  ],
  "靴下（メンズ）": [
@@ -2104,6 +2139,11 @@
    "date": "2026-11-19",
    "min_effective": 2356,
    "min_price": 2380
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2851,
+   "min_price": 2880
   }
  ],
  "充電ケーブル": [
@@ -2240,6 +2280,11 @@
    "date": "2026-11-18",
    "min_effective": 2376,
    "min_price": 2400
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2900,
+   "min_price": 2990
   }
  ],
  "モバイルバッテリー": [
