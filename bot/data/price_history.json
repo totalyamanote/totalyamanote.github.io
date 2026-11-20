@@ -115,6 +115,11 @@
    "date": "2026-11-18",
    "min_effective": 2232,
    "min_price": 2255
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2277,
+   "min_price": 2300
   }
  ],
  "日焼け止め": [
@@ -227,6 +232,11 @@
    "date": "2026-11-18",
    "min_effective": 1940,
    "min_price": 1980
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 1940,
+   "min_price": 1980
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -259,6 +269,11 @@
    "date": "2026-11-15",
    "min_effective": 2720,
    "min_price": 2747
+  },
+  {
+   "date": "2026-11-20",
+   "min_effective": 2944,
+   "min_price": 2974
   }
  ],
  "電動歯ブラシ 替えブラシ": [
@@ -591,8 +606,8 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 2257,
-   "min_price": 2280
+   "min_effective": 3445,
+   "min_price": 3480
   }
  ],
  "LEDデスクライト": [
@@ -1727,8 +1742,8 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 2069,
+   "min_price": 2090
   }
  ],
  "ハンドクリーム": [
@@ -1819,8 +1834,8 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 2950,
-   "min_price": 2980
+   "min_effective": 2030,
+   "min_price": 2050
   }
  ],
  "フェイスタオル": [
@@ -1946,7 +1961,7 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 3135,
+   "min_effective": 3168,
    "min_price": 3300
   }
  ],
@@ -2142,8 +2157,8 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 2851,
-   "min_price": 2880
+   "min_effective": 1970,
+   "min_price": 1990
   }
  ],
  "充電ケーブル": [
@@ -2283,8 +2298,8 @@
   },
   {
    "date": "2026-11-20",
-   "min_effective": 2900,
-   "min_price": 2990
+   "min_effective": 2232,
+   "min_price": 2480
   }
  ],
  "モバイルバッテリー": [
