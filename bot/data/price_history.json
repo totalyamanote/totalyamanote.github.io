@@ -729,6 +729,11 @@
    "date": "2026-11-21",
    "min_effective": 2366,
    "min_price": 2390
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 2604,
+   "min_price": 2630
   }
  ],
  "トイレットペーパー": [
@@ -806,6 +811,11 @@
    "date": "2026-11-21",
    "min_effective": 3398,
    "min_price": 3432
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 4338,
+   "min_price": 4382
   }
  ],
  "ミネラルウォーター": [
@@ -1045,6 +1055,11 @@
    "date": "2026-11-21",
    "min_effective": 4306,
    "min_price": 4350
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "プロテイン": [
@@ -1147,6 +1162,11 @@
    "date": "2026-11-21",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 5534,
+   "min_price": 5590
   }
  ],
  "シャンプー 詰め替え": [
@@ -1224,6 +1244,11 @@
    "date": "2026-11-19",
    "min_effective": 3812,
    "min_price": 3850
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 2614,
+   "min_price": 2640
   }
  ],
  "食器用洗剤 詰め替え": [
@@ -1472,6 +1497,11 @@
    "date": "2026-11-20",
    "min_effective": 2780,
    "min_price": 2808
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 2376,
+   "min_price": 2400
   }
  ],
  "炭酸水": [
@@ -1794,6 +1824,11 @@
    "date": "2026-11-21",
    "min_effective": 2356,
    "min_price": 2380
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 3344,
+   "min_price": 3410
   }
  ],
  "ハンドクリーム": [
@@ -2568,6 +2603,11 @@
    "date": "2026-11-21",
    "min_effective": 2347,
    "min_price": 2420
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 4930,
+   "min_price": 4980
   }
  ],
  "ハイボール缶": [
@@ -2868,6 +2908,11 @@
    "date": "2026-11-21",
    "min_effective": 2376,
    "min_price": 2640
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 2374,
+   "min_price": 2398
   }
  ],
  "ビール": [
