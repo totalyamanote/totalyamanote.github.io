@@ -724,6 +724,11 @@
    "date": "2026-11-12",
    "min_effective": 2128,
    "min_price": 2149
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 2366,
+   "min_price": 2390
   }
  ],
  "トイレットペーパー": [
@@ -796,6 +801,11 @@
    "date": "2026-11-19",
    "min_effective": 4891,
    "min_price": 4940
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 3398,
+   "min_price": 3432
   }
  ],
  "ミネラルウォーター": [
@@ -833,6 +843,11 @@
    "date": "2026-11-19",
    "min_effective": 3528,
    "min_price": 3564
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 6435,
+   "min_price": 6500
   }
  ],
  "無洗米": [
@@ -1025,6 +1040,11 @@
    "date": "2026-11-19",
    "min_effective": 3266,
    "min_price": 3299
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 4306,
+   "min_price": 4350
   }
  ],
  "プロテイン": [
@@ -1122,6 +1142,11 @@
    "date": "2026-11-19",
    "min_effective": 6056,
    "min_price": 6180
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "シャンプー 詰め替え": [
@@ -2538,6 +2563,11 @@
    "date": "2026-11-19",
    "min_effective": 2069,
    "min_price": 2178
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 2347,
+   "min_price": 2420
   }
  ],
  "ハイボール缶": [
@@ -2622,6 +2652,11 @@
    "date": "2026-11-18",
    "min_effective": 2752,
    "min_price": 2780
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 2633,
+   "min_price": 2660
   }
  ],
  "ペットシーツ": [
@@ -2659,6 +2694,11 @@
    "date": "2026-11-15",
    "min_effective": 3643,
    "min_price": 3680
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 3940,
+   "min_price": 3980
   }
  ],
  "キャットフード": [
@@ -2823,6 +2863,11 @@
    "date": "2026-11-18",
    "min_effective": 2673,
    "min_price": 2700
+  },
+  {
+   "date": "2026-11-21",
+   "min_effective": 2376,
+   "min_price": 2640
   }
  ],
  "ビール": [
