@@ -43,7 +43,7 @@ BTN2_RE = re.compile(
 CSS_Y = ".mini.y{background:#d4002a!important;color:#fff!important}"
 CSS_Y2 = ".btns .y{background:#d4002a!important;color:#fff!important}"
 # 「楽天のポイント高倍率まとめ」は楽天ポイントが主題の記事なので Yahoo! は足さない
-SKIP = {"point-up.html", "outdoor-brands-2026.html", "humidifier.html"}  # アウトドア比較は bot/outdoor_prices.py が価格を持ち、Amazonは付けない
+SKIP = {"point-up.html", "outdoor-brands-2026.html", "humidifier.html", "protein.html", "toothpaste.html", "hair-oil.html", "hair-dryer.html"}  # アウトドア比較は bot/outdoor_prices.py が価格を持ち、Amazonは付けない
 
 
 def norm(s):
