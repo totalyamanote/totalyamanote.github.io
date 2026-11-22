@@ -130,6 +130,11 @@
    "date": "2026-11-22",
    "min_effective": 3267,
    "min_price": 3300
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3321,
+   "min_price": 3355
   }
  ],
  "日焼け止め": [
@@ -257,6 +262,11 @@
    "date": "2026-11-22",
    "min_effective": 2178,
    "min_price": 2200
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 2297,
+   "min_price": 2320
   }
  ],
  "サプリ（マルチビタミン）": [
@@ -2757,6 +2767,11 @@
    "date": "2026-11-21",
    "min_effective": 2633,
    "min_price": 2660
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 2683,
+   "min_price": 2981
   }
  ],
  "ペットシーツ": [
