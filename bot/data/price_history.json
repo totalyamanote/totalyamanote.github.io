@@ -764,6 +764,11 @@
    "date": "2026-11-22",
    "min_effective": 2604,
    "min_price": 2630
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3419,
+   "min_price": 3454
   }
  ],
  "トイレットペーパー": [
@@ -2817,8 +2822,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 3959,
-   "min_price": 3999
+   "min_effective": 4237,
+   "min_price": 4280
   }
  ],
  "キャットフード": [
@@ -2996,8 +3001,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 2505,
-   "min_price": 2530
+   "min_effective": 3250,
+   "min_price": 3283
   }
  ],
  "ビール": [
