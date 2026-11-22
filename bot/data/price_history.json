@@ -628,6 +628,11 @@
    "date": "2026-11-21",
    "min_effective": 1980,
    "min_price": 2000
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 1921,
+   "min_price": 1980
   }
  ],
  "LEDデスクライト": [
@@ -1500,8 +1505,8 @@
   },
   {
    "date": "2026-11-22",
-   "min_effective": 2376,
-   "min_price": 2400
+   "min_effective": 2459,
+   "min_price": 2484
   }
  ],
  "炭酸水": [
@@ -1827,7 +1832,7 @@
   },
   {
    "date": "2026-11-22",
-   "min_effective": 3344,
+   "min_effective": 3376,
    "min_price": 3410
   }
  ],
@@ -1926,6 +1931,11 @@
    "date": "2026-11-21",
    "min_effective": 2396,
    "min_price": 2420
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 2257,
+   "min_price": 2280
   }
  ],
  "フェイスタオル": [
@@ -2058,6 +2068,11 @@
    "date": "2026-11-21",
    "min_effective": 3265,
    "min_price": 3298
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 3452,
+   "min_price": 3487
   }
  ],
  "ワイン": [
@@ -2259,6 +2274,11 @@
    "date": "2026-11-21",
    "min_effective": 2505,
    "min_price": 2530
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 3544,
+   "min_price": 3580
   }
  ],
  "充電ケーブル": [
@@ -2405,6 +2425,11 @@
    "date": "2026-11-21",
    "min_effective": 2232,
    "min_price": 2480
+  },
+  {
+   "date": "2026-11-22",
+   "min_effective": 3184,
+   "min_price": 3490
   }
  ],
  "モバイルバッテリー": [
@@ -2606,8 +2631,8 @@
   },
   {
    "date": "2026-11-22",
-   "min_effective": 4930,
-   "min_price": 4980
+   "min_effective": 5920,
+   "min_price": 5980
   }
  ],
  "ハイボール缶": [
