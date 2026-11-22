@@ -950,8 +950,8 @@ a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56
 .cards{{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:24px 18px}}
 .cards .card{{border:0;box-shadow:none;background:transparent;padding:0;border-radius:0;gap:3px}}
 .cards .card img{{border:1px solid var(--line);border-radius:0;padding:6px;box-sizing:border-box;margin-bottom:8px}}
-.cards .card .gtag{{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.62);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;z-index:1}}
-.cards .card .hot{{top:34px;left:8px}}
+.cards .card .gtag{{order:-1;position:static;background:none;color:var(--mut);font-size:12px;font-weight:700;padding:0;margin-bottom:4px;line-height:1.3}}
+.cards .card .hot{{top:32px;left:8px}}
 .cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:15px;line-height:1.45;min-height:2.9em}}
 .cards .card .eff2{{order:3;background:none;color:#c8102e;font-size:22px;padding:0;margin-top:2px}}
 .cards .card .yen{{order:4;font-weight:500;color:var(--mut);font-size:13px}} .cards .card .yen::before{{content:"価格 "}}
