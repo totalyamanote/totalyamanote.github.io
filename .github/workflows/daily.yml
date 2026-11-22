@@ -44,6 +44,16 @@ jobs:
           OUT_DIR: bot/out
         run: python bot/run_daily.py
 
+      # トップの「楽天ファッション（レディース）」の段（毎朝・run_daily のあとに差し替える。bot/hub.py は hubf を引き継ぐ）
+      - name: Fashion section
+        env:
+          TZ: Asia/Tokyo
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          SITE_DIR: .
+        run: python bot/fashion.py
+
       # 比較記事の購入ボタンに Yahoo! を足す（同じ商品が見つかった所だけ・結果は bot/data/mall_map.json に記録）
       - name: Add Yahoo buttons to articles
         env:
