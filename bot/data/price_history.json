@@ -1103,8 +1103,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 2077,
-   "min_price": 2098
+   "min_effective": 2722,
+   "min_price": 2750
   }
  ],
  "プロテイン": [
@@ -1547,6 +1547,11 @@
    "date": "2026-11-22",
    "min_effective": 2566,
    "min_price": 2592
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3465,
+   "min_price": 3500
   }
  ],
  "炭酸水": [
@@ -2696,8 +2701,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 2950,
-   "min_price": 2980
+   "min_effective": 3841,
+   "min_price": 3880
   }
  ],
  "ハイボール缶": [
