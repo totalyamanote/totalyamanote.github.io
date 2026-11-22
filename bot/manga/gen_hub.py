@@ -46,7 +46,7 @@ CSS = """<style id=hubcss>
 def header(up=""):
     return (f"<header class=hbar><a class=hlogo href='{up}index.html' aria-label='トップへ'><img src='{up}img/brand/logo_v8.png' width=42 height=42 alt=''><span><small>YAMANOTE</small>やまのて</span></a>"
             f"<nav class=hnav><a href='{up}articles/black-friday-2026.html'>セール</a>"
-            f"<a href='{up}index.html#articles'>比較記事</a><a href='{up}index.html#daily'>毎朝の最安</a><a class=mgbtn href='{up}manga/index.html' aria-label='やまのてマンガ（無料で読めるマンガ）へ'>📚 マンガ</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>" + sbar(up))
+            f"<a href='{up}compare/index.html'>比較記事</a><a href='{up}index.html#daily'>毎朝の最安</a><a class=mgbtn href='{up}manga/index.html' aria-label='やまのてマンガ（無料で読めるマンガ）へ'>📚 マンガ</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>" + sbar(up))
 
 
 def manga_row():
@@ -242,7 +242,7 @@ def article_ld(f, t):
         art["image"] = [im.group(1)]
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "やまのて", "item": BASE},
-        {"@type": "ListItem", "position": 2, "name": "比較記事", "item": BASE + "index.html#articles"},
+        {"@type": "ListItem", "position": 2, "name": "比較記事", "item": BASE + "compare/index.html"},
         {"@type": "ListItem", "position": 3, "name": title[:60], "item": url}]}
     og = (f"<meta property=og:type content=article><meta property=og:title content=\"{esc(title)}\"><meta property=og:url content='{url}'>"
           + (f"<meta property=og:image content='{esc(im.group(1))}'>" if im else "") + f"<link rel=canonical href='{url}'>")
@@ -435,7 +435,7 @@ def apply_article_manners():
             wname = (title.split("』")[0] + "』") if "』" in title else title[:30]
             bc = f"<nav class=bc aria-label='パンくず'><a href='../../index.html'>トップ</a> › <a href='../index.html'>やまのてマンガ</a> › {esc(wname)}</nav>"
         else:
-            bc = f"<nav class=bc aria-label='パンくず'><a href='../index.html'>トップ</a> › <a href='../index.html#articles'>比較記事</a> › {esc(title[:40])}</nav>"
+            bc = f"<nav class=bc aria-label='パンくず'><a href='../index.html'>トップ</a> › <a href='../compare/index.html'>比較記事</a> › {esc(title[:40])}</nav>"
         # 見出しにidを付けて目次を作る（記事のみ・見出し4つ以上）
         toc = ""
         if not is_manga:
