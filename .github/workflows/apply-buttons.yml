@@ -32,6 +32,8 @@ jobs:
           SITE_DIR: .
           DATA_DIR: bot/data
         run: python bot/add_malls.py
+      - name: Amazon tracking IDs per page
+        run: python bot/amazon_tags.py .
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
