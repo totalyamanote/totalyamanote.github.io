@@ -27,6 +27,11 @@ BY_PAGE = {
     "articles/water-filter-cartridge.html": "ymnote-filter-22",
     "articles/pet-sheet.html": "ymnote-petsheet-22",
     "articles/washer-stand.html": "ymnote-washer-22",
+    "articles/protein.html": "ymnote-protein-22",
+    "articles/toothpaste.html": "ymnote-toothpaste-22",
+    "articles/hair-oil.html": "ymnote-hairoil-22",
+    "articles/hair-dryer.html": "ymnote-dryer-22",
+    "articles/humidifier.html": "ymnote-humid-22",
     "manga/new-releases.html": "ymnote-newrel-22",
     "manga/store-compare.html": "ymnote-store-22",
 }
