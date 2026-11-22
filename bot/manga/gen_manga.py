@@ -359,7 +359,9 @@ def work_page(w, works=None):
                 f"<p class=note>ストアの購入者レビュー（参考になった数が多い順）を、当サイトで短く要約しました。{esc(rv.get('checked',''))}時点。</p>")
     rel = ""
     if works:
-        others = [x for x in works.values() if x["title_id"] != tid][:4]
+        # 全作品が同じ数だけ「ほかの作品」からリンクされるよう、次の4作品を順番に（先頭4作品だけに集中させない）
+        _ws = list(works.values()); _i = next((k for k, x in enumerate(_ws) if x["title_id"] == tid), 0)
+        others = [_ws[(_i + k) % len(_ws)] for k in range(1, min(5, len(_ws)))]
         rel = "<h2>ほかの作品</h2><div class=grid>" + "".join(
             f"<a class=card style='{grad(x['title_id'])}' href='{x['title_id']}.html'><div class=thumb>"
             + "".join(f"<img src='{esc(cover(x, v, 'M'))}' alt='『{esc(x['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004"))
