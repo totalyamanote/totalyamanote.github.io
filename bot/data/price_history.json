@@ -851,6 +851,11 @@
    "date": "2026-11-22",
    "min_effective": 4338,
    "min_price": 4382
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 5445,
+   "min_price": 5500
   }
  ],
  "ミネラルウォーター": [
@@ -1095,6 +1100,11 @@
    "date": "2026-11-22",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 5227,
+   "min_price": 5280
   }
  ],
  "プロテイン": [
@@ -3001,8 +3011,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 3250,
-   "min_price": 3283
+   "min_effective": 3564,
+   "min_price": 3960
   }
  ],
  "ビール": [
