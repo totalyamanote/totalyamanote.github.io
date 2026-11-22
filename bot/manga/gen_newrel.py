@@ -135,6 +135,26 @@ def add_kobo(api, items):
                 break
 
 
+GEN_AFL = "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc="  # 楽天の汎用アフィリエイトリンク（pc= に楽天のURLを渡す）
+VC_Y = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url="
+
+
+def series_kw(title):
+    """巻数・特装版などを除いたシリーズ名（ストアの検索用）。"""
+    t = re.sub(r"【.*?】|\[.*?\]|特装版.*$|限定版.*$|小冊子付き.*$|[（(]\s*\d+\s*[）)]|[\s　]+\d+\s*$", "", title).strip()
+    t = re.split(r"[〜～]", t)[0].strip(" 　")
+    return t or title
+
+
+def series_links(e):
+    """この巻のページがストアにまだ無いとき用：シリーズ名での検索ページ（前の巻から読める）。"""
+    from urllib.parse import quote
+    kw = series_kw(e["title"])
+    kobo = GEN_AFL + quote("https://books.rakuten.co.jp/search?sitem=" + quote(kw) + "&g=101904", safe="")
+    ebj = VC_Y + quote("https://store.shopping.yahoo.co.jp/ebookjapan/search.html?p=" + quote(kw), safe="")
+    return kobo, ebj
+
+
 def card(e, today):
     d = datetime.date.fromisoformat(e["date"])
     left = (d - today).days
@@ -150,12 +170,12 @@ def card(e, today):
                else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else ""))
             + "<div class=nbtns>"
             # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
-            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else "")
+            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else (f"<a class='nbtn a' href='https://www.amazon.co.jp/s?k={__import__('urllib.parse', fromlist=['quote']).quote(series_kw(e['title']))}&i=digital-text&tag=ymnote-newrel-22' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をKindleで探す（この巻はまだ出ていません）'>Kindle<small>シリーズ</small></a>" if left >= 0 else ""))
             + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebookjapan</a>" if e.get("ebj")
-               else ("<span class='nbtn off' title='ebookjapanは発売日から販売'>ebookjapan<small>発売日から</small></span>" if left >= 0 else ""))
+               else (f"<a class='nbtn e' href='{esc(series_links(e)[1])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をebookjapanで探す（この巻はまだ出ていません）'>ebookjapan<small>シリーズ</small></a>" if left >= 0 else ""))
             + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo"
-                + (f"<small>{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}配信</small>" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</a>") if e.get("kobo") else "")
-            + ("" if e.get("kobo") or e.get("kindle") or e.get("ebj") else "<span class=nwait>電子版は配信準備中</span>")
+                + (f"<small>{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}配信</small>" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</a>") if e.get("kobo") else (f"<a class='nbtn k' href='{esc(series_links(e)[0])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}を楽天Koboで探す（この巻はまだ出ていません）'>楽天Kobo<small>シリーズ</small></a>" if left >= 0 else ""))
+            + ("" if e.get("kobo") or e.get("kindle") or e.get("ebj") else "<span class=nwait>この巻の電子版は配信準備中。「シリーズ」から前の巻を読めます</span>")
             + "</div></div>")
 
 
@@ -196,7 +216,7 @@ def build():
             + (f"<h2>今週発売（7日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in wk)}</div>" if wk else "")
             + f"<h2>これから発売（予約受付中）</h2><div class=ngrid>{''.join(card(e, today) for e in soon if e not in wk)}</div>"
             + (f"<h2>最近発売した新刊（14日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in past)}</div>" if past else "")
-            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
+            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
           "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.jp/manga/"},
