@@ -16,9 +16,11 @@ GA_ID = "G-KMYVSH7X05"
 SNIPPET = (
     "<!--ga4--><script async src=\"https://www.googletagmanager.com/gtag/js?id=" + GA_ID + "\"></script>"
     "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','" + GA_ID + "');"
-    "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[rel~=sponsored]');if(!a)return;var h=a.href,"
-    "s=/rakuten/.test(h)?'楽天':/amazon\\.co\\.jp/.test(h)?'Amazon':/pid=892746726/.test(h)?'ブックライブ':/valuecommerce/.test(h)?'Yahoo!':/a8\\.net/.test(h)?'A8':'その他';"
-    "gtag('event','affiliate_click',{store:s,link_url:h.slice(0,100),page_path:location.pathname})},true);</script><!--/ga4-->"
+    "document.addEventListener('click',function(e){var t=e.target.closest?e.target:null;if(!t)return;var n=t.closest('a[href*=\\\"x.com/totalyamanote\\\"],a[href*=\\\"threads.com/@totalyamanote\\\"],a[href*=\\\"bsky.app/profile/totalyamanote\\\"]');"
+    "if(n){gtag('event','sns_follow_click',{network:/x\\.com/.test(n.href)?'X':/threads/.test(n.href)?'Threads':'Bluesky',page_path:location.pathname});return}"
+    "var a=t.closest('a[rel~=sponsored]');if(!a)return;var h=a.href,sec=a.closest('section[id],div[id]'),"
+    "s=/rakuten/.test(h)?'楽天':/amazon\\.co\\.jp/.test(h)?'Amazon':/pid=892746726/.test(h)?'ブックライブ':/valuecommerce/.test(h)?'Yahoo!':/a8\\.net/.test(h)?'A8':/linksynergy/.test(h)?'リンクシェア':'その他';"
+    "gtag('event','affiliate_click',{store:s,link_url:h.slice(0,100),page_path:location.pathname,section:sec?sec.id:''})},true);</script><!--/ga4-->"
 )
 PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 

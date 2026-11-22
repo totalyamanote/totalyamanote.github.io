@@ -206,8 +206,8 @@ def apply_pages():
 
 # ---------- 信頼の土台：運営者情報・ポリシー・フッター・構造化データ（2026-11-14 追加） ----------
 BASE = "https://totalyamanote.jp/"
-ORG = {"@type": "Organization", "name": "やまのて", "url": BASE, "logo": BASE + "img/brand/logo_400.png", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote"]}
-AUTHOR = {"@type": "Person", "name": "やまのて管理人", "url": BASE + "about.html", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote"]}
+ORG = {"@type": "Organization", "name": "やまのて", "url": BASE, "logo": BASE + "img/brand/logo_400.png", "alternateName": ["totalyamanote", "やまのて 楽天", "やまのてマンガ"], "description": "やまのて（totalyamanote.jp）は、楽天・Yahoo!・Amazonの実質価格（価格−ポイント）の比較と、マンガの無料期限・新刊情報を載せる個人運営サイト。", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote", "https://bsky.app/profile/totalyamanote.bsky.social"]}
+AUTHOR = {"@type": "Person", "name": "やまのて管理人", "url": BASE + "about.html", "alternateName": ["totalyamanote", "やまのて 楽天", "やまのてマンガ"], "description": "やまのて（totalyamanote.jp）は、楽天・Yahoo!・Amazonの実質価格（価格−ポイント）の比較と、マンガの無料期限・新刊情報を載せる個人運営サイト。", "sameAs": ["https://x.com/totalyamanote", "https://www.threads.com/@totalyamanote", "https://bsky.app/profile/totalyamanote.bsky.social"]}
 
 
 def footer(up=""):
@@ -272,8 +272,8 @@ def apply_trust():
             t = re.sub(r"<!--upd-->.*?<!--/upd-->", "", t, flags=re.S)
             t = re.sub(r"(</h1>)", rf"\1<!--upd--><p class=note style='font-size:12px;color:#665d55'>更新日：{mod}　文：やまのて管理人（<a href='../about.html'>運営者情報</a>）</p><!--/upd-->", t, count=1)
         elif f.name == "index.html":
-            ws = {"@context": "https://schema.org", "@type": "WebSite", "name": "やまのて", "url": BASE, "publisher": ORG,
-                  "description": "楽天・Yahoo!ショッピング・Amazonの実質価格（価格−ポイント）、セール攻略、比較記事、無料で読めるマンガ・電子書籍の情報。"}
+            ws = {"@context": "https://schema.org", "@type": "WebSite", "name": "やまのて", "alternateName": ["totalyamanote", "やまのて 楽天", "やまのてマンガ"], "inLanguage": "ja", "url": BASE, "publisher": ORG,
+                  "description": "やまのて（totalyamanote.jp）は楽天・Yahoo!ショッピング・Amazonの実質価格（価格−ポイント）、セール攻略、比較記事、無料で読めるマンガ・電子書籍の情報。"}
             t = t.replace("</head>", f"<!--ld-->{jsonld(ws)}<link rel=canonical href='{BASE}'><!--/ld--></head>", 1)
         f.write_text(t, encoding="utf-8")
         n += 1
