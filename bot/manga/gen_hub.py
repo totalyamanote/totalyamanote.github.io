@@ -162,12 +162,8 @@ def hub_block():
 
 
 def hub_manga():
-    """トップの下（毎朝の実質最安の下）に置くマンガの段（2026-11-14 坂田さん指定）。"""
-    return ("<!--hubm-->"
-            f"<div class=hsec style='margin-top:28px'><h2>📚 {manga_title()} <a href='manga/index.html'>すべて見る →</a></h2><div class=hrow>{manga_row()}</div></div>"
-            f"<div class=hsec><h2>📅 まもなく発売のマンガ新刊 <a href='manga/new-releases.html'>カレンダーを見る →</a></h2><div class=hrow>{newrel_row()}</div></div>"
-            "<!--/hubm-->")
-
+    """マンガの段は、物販トップには出さない（2026-11-23 坂田さん「漫画サイトがあるから、物販から取り除いて」）。マーカーだけ残す（クラウドの更新が差し込み先を探すため）。"""
+    return "<!--hubm--><!--/hubm-->"
 
 def apply_index():
     p = SITE / "index.html"
