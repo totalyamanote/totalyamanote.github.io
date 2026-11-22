@@ -498,10 +498,12 @@ def index(works, themes):
                   + f"</div><div class=in><b>{esc(t)}</b></div></a>" for i, (s, t) in enumerate(themes))
     cards = ""
     listed = 0
+    ended = []
     for _n, w in sorted(enumerate(works.values()), key=lambda t: (t[1].get("added", ""), t[0]), reverse=True):  # 作品一覧は新しく追加した順（2026-11-14 坂田さん指定）
         dl = left_days(w)
         # 作品一覧は「いま無料で読める（公開中）」だけ（2026-11-19 坂田さん）。期限が過ぎた作品は一覧から外す（作品ページ自体は残る）
         if (w.get("free_until") and dl is None) or (not w.get("free_until") and not w.get("free_ongoing")):
+            ended.append(w)  # 一覧には出さないが、作品ページへのリンクは「終了した作品」欄に残す（行き止まりのページを作らない）
             continue
         listed += 1
         fb = f"<span class=free>無料</span> <span class=left>{left_label(dl)}</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
@@ -556,7 +558,7 @@ def index(works, themes):
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>
 {quick_block}{newrel}
-<h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}
+<h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
     (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。毎朝更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
