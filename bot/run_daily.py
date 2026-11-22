@@ -953,9 +953,9 @@ a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56
 .cards .card .gtag{{order:-1;position:static;background:none;color:var(--mut);font-size:11px;font-weight:500;letter-spacing:.06em;padding:0;margin-bottom:5px;line-height:1.3}}
 .cards .card .hot{{top:30px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:0;box-shadow:none}}
 .cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13.5px;font-weight:400;line-height:1.55;min-height:3.1em;color:var(--fg);letter-spacing:.01em}}
-.cards .card .yen{{order:3;font-weight:600;color:var(--fg);font-size:17px;margin-top:4px;letter-spacing:.02em}}
+.cards .card .yen{{order:3;font-weight:700;color:var(--fg);font-size:22px;margin-top:6px;margin-bottom:2px;letter-spacing:.01em;line-height:1.3}}
 .cards .card .eff2{{order:4;background:none;color:var(--mut);font-size:12px;font-weight:400;padding:0}}
-.cards .card .pts{{order:5;font-size:11.5px;font-weight:400;color:var(--mut)}} .cards .card .rv{{order:6;font-size:11.5px;color:var(--mut)}}
+.cards .card .pts{{order:5;font-size:12px;font-weight:600;color:var(--fg)}} .cards .card .rv{{order:6;font-size:11.5px;color:var(--mut)}}
 .cards .card .go,.cards .card .go.amz,.cards .card .go.ygo{{order:7;margin-top:8px;background:none;color:var(--fg);padding:0 0 2px;text-align:left;font-size:12px;font-weight:500;letter-spacing:.06em;border-radius:0;border-bottom:1px solid var(--fg);align-self:flex-start}}
 @media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr;gap:24px 12px}}}}
 .pt{{display:block;font-size:11px;color:var(--acc)}} .low{{font-size:12px;color:var(--acc);margin-left:6px}}
