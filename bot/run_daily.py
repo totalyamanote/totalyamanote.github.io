@@ -37,6 +37,26 @@ HOTEL_MAX = 20000   # ホテルは1人2万円以内（2026-10-16 ユーザー指
 ELEC_NG = re.compile(r"家電|電気|電動|充電|電池|バッテリー|USB|イヤホン|ヘッドホン|スピーカー|ドライヤー|ヘアアイロン|ヒーター|加湿器|除湿機|空気清浄|扇風機|サーキュレーター|ケトル|炊飯器|電子レンジ|トースター|掃除機|シェーバー|美顔器|マッサージ器|LED|デスクライト|マウス(?!ウォッシュ|ピース)|キーボード|ケーブル|充電器|Bluetooth|ワイヤレス")
 
 
+def bf_active():
+    """ブラックフライデー期間か（site/bot/data/sale_event.json の最初の開始日の3日前〜最後の終了日）。この間は「ポイント倍率が高い商品」を増やす（2026-11-22 坂田さん）。"""
+    try:
+        import datetime as _dt
+        for base in (Path(__file__).resolve().parent / "data", Path(__file__).resolve().parent / "bot" / "data", Path(__file__).resolve().parent / "site" / "bot" / "data"):
+            f = base / "sale_event.json"
+            if f.exists():
+                ms = json.loads(f.read_text(encoding="utf-8"))["malls"]
+                st = min(m["start"] for m in ms if m.get("start"))
+                en = max(m["end"] for m in ms if m.get("end"))
+                today = _dt.date.today()
+                return _dt.date.fromisoformat(st[:10]) - _dt.timedelta(days=3) <= today <= _dt.date.fromisoformat(en[:10])
+    except Exception as e:  # noqa: BLE001
+        print("BF期間の判定に失敗（通常表示）", e)
+    return False
+
+
+BF_ON = bf_active()
+
+
 def load_json(path, default):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -366,6 +386,8 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
         cands, keys = [], set()
         w = gw.get(RANK_TO_GENRE.get(g["name"]), 1.0)
         per_genre = 3 if w >= 1.2 else (1 if w < 0.8 else 2)   # 反応が良いジャンルは多めに
+        if BF_ON:
+            per_genre += 1   # ブラックフライデー中は倍率の高い商品を1ジャンルあたり1件多く
 
         def take(pool):
             for it in pool:
@@ -720,7 +742,7 @@ def picks_html(picks):
         k = dedupe_key(p)
         if k in seen:
             continue
-        if len(by.setdefault(p["genre"], [])) < 2:
+        if len(by.setdefault(p["genre"], [])) < (3 if BF_ON else 2):
             by[p["genre"]].append(p); seen.add(k)
     flat = sorted((it for items in by.values() for it in items),
                   key=lambda p: (-p.get("point_rate", 1), -p.get("review_count", 0)))
@@ -738,7 +760,8 @@ def picks_html(picks):
                 f"<span class=pts>ポイント{it.get('point_rate', 1)}倍（{it['price'] * it.get('point_rate', 1) // 100:,}pt）</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
-    return ("<section><h2>ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）</h2>"
+    ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）"
+    return (f"<section><h2>{ttl}</h2>"
             "<div class=cards>" + "".join(cards) + "</div></section>")
 
 
