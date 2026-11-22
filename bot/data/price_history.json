@@ -643,6 +643,11 @@
    "date": "2026-11-22",
    "min_effective": 2455,
    "min_price": 2480
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "LEDデスクライト": [
@@ -1844,6 +1849,11 @@
    "date": "2026-11-22",
    "min_effective": 3812,
    "min_price": 3850
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3752,
+   "min_price": 3790
   }
  ],
  "ハンドクリーム": [
@@ -2083,6 +2093,11 @@
    "date": "2026-11-22",
    "min_effective": 4237,
    "min_price": 4280
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "ワイン": [
@@ -2289,6 +2304,11 @@
    "date": "2026-11-22",
    "min_effective": 3006,
    "min_price": 3036
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 2950,
+   "min_price": 2980
   }
  ],
  "充電ケーブル": [
