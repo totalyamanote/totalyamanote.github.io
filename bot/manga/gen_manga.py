@@ -144,6 +144,23 @@ def cover(w, vol="001", size="2L"):
     return (w.get("covers") or {}).get(str(int(vol)), "")  # ebookjapan等の作品：楽天ブックスの表紙画像
 
 
+def thumb_vols(w, n=4):
+    """作品カードの表紙は4枚並べる。抜けている巻（表紙が無い巻）は飛ばして、次の巻で埋める（2026-11-22 坂田さん「画像の隙間は漫画の画像で埋めて」）。"""
+    vols = [v for v in ("001", "002", "003", "004") if cover(w, v, "M")]
+    if len(vols) < n:
+        have = sorted({int(k) for k in (w.get("covers") or {}) if str(k).isdigit() and (w.get("covers") or {}).get(k)})
+        for k in have:
+            v = f"{k:03d}"
+            if v not in vols and len(vols) < n:
+                vols.append(v)
+        if len(vols) < n and w.get("real_id"):
+            for k in range(5, 13):
+                v = f"{k:03d}"
+                if v not in vols and len(vols) < n:
+                    vols.append(v)
+    return sorted(vols)[:n]
+
+
 def wlink(w, vol="001"):
     """作品の「読む」リンク。ebookjapanの無料作品は無料で読めるページ（報酬なし）、それ以外はブックライブ（報酬あり）。"""
     if w.get("store") in ("ebookjapan", "kindle", "kobo"):
@@ -486,7 +503,7 @@ def index(works, themes):
         listed += 1
         fb = f"<span class=free>無料</span> <span class=left>{left_label(dl)}</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
         rt = f"<span class=stars>★{esc(w['rating'])}</span> " if w.get("rating") else ""
-        cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004")) + "</div>"
+        cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in thumb_vols(w)) + "</div>"
                   f"<div class=in><b>『{esc(w['title'])}』</b><br><span class=note>{rt}{esc(w.get('author',''))}</span><br>{fb}</div></a>")
     quick = ""
     # 新刊（今週・来週発売）：gen_newrel が作った data/new_releases.json から
