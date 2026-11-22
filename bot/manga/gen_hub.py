@@ -84,19 +84,26 @@ def manga_title():
 
 
 def newrel_row():
-    """マンガ新刊（まもなく発売・電子版のページへ）。元データ：data/new_releases.json（gen_newrel.py）"""
+    """マンガ新刊（まもなく発売）。元データ：data/new_releases.json（gen_newrel.py）。
+    電子版のページが分かるものはそこへ、なければ新刊カレンダー（自サイト）へ。表紙がまだ無い予約中の作品は、文字のカードで載せる（2026-11-22 坂田さん「新刊が何もない状態だった」）。"""
     p = HERE / "data" / "new_releases.json"
     if not p.exists():
         return ""
     today = datetime.date.today()
-    its = [e for e in json.loads(p.read_text(encoding="utf-8"))["items"]
-           if today.isoformat() <= e["date"] and ".gif" not in e["img"] and (e.get("kobo") or e.get("kindle") or e.get("ebj"))]
+    its = [e for e in json.loads(p.read_text(encoding="utf-8"))["items"] if today.isoformat() <= e["date"]]
     its.sort(key=lambda e: (e["date"], e["rank"]))
     out = ""
     for e in its[:10]:
         d = datetime.date.fromisoformat(e["date"])
         u = e.get("kindle") or e.get("ebj") or e.get("kobo")
-        out += (f"<a class=hm href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy>"
+        has_img = ".gif" not in e["img"]
+        if has_img:
+            pic = f"<img src='{esc(e['img'])}' alt='{esc(e['title'])}の表紙' loading=lazy>"
+        else:
+            pic = (f"<span style='display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:3/4;border-radius:8px;"
+                   f"background:linear-gradient(135deg,#be185d,#fb923c);color:#fff;font-weight:800;font-size:13px;text-align:center;padding:6px;box-sizing:border-box'>NEW<br>予約受付中</span>")
+        attrs = f"href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank" if u else "href='manga/new-releases.html'"
+        out += (f"<a class=hm {attrs}>{pic}"
                 f"<b>{esc(e['title'])}</b><span style='background:#bf0000'>{d.month}/{d.day}発売</span></a>")
     return out
 
