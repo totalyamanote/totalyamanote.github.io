@@ -293,7 +293,7 @@ SDESC = {"about.html": "やまのて（運営：やまのて管理人）の運�
 
 def write_static():
     today = datetime.date.today().isoformat()
-    about = f"""<h1>運営者情報</h1><div class=box>
+    about = f"""<h1>やまのて（totalyamanote）の運営者情報</h1><div class=box>
 <p><b>サイト名：</b>やまのて（https://totalyamanote.jp/）</p><p><b>運営：</b>やまのて管理人（個人運営）</p>
 <p><b>お問い合わせ：</b><a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせフォーム</a>、またはX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMで受け付けています。</p></div>
 <h2>運営者のプロフィール</h2><div class=box><p><b>やまのて管理人</b>（X・Threads：<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）</p><p>会社員をしながら、個人でこのサイトを運営しています。楽天市場・Yahoo!ショッピング・Amazonは、同じ商品でもポイントのつき方で実質価格が変わります。買う前にそれを比べられるサイトとして、物販の比較記事と、マンガの無料期限・新刊の情報をまとめています。</p><p>価格・ポイント・レビュー数などの数字は、プログラムで毎日自動で集めています。使っていない商品の体験談は書きません。自分で使った商品を紹介するときは、その旨を明記します。</p></div>
