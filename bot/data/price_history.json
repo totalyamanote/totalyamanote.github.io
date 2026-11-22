@@ -2770,8 +2770,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 2683,
-   "min_price": 2981
+   "min_effective": 2943,
+   "min_price": 3180
   }
  ],
  "ペットシーツ": [
@@ -2814,6 +2814,11 @@
    "date": "2026-11-21",
    "min_effective": 3940,
    "min_price": 3980
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3959,
+   "min_price": 3999
   }
  ],
  "キャットフード": [
@@ -2988,6 +2993,11 @@
    "date": "2026-11-22",
    "min_effective": 2374,
    "min_price": 2398
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 2505,
+   "min_price": 2530
   }
  ],
  "ビール": [
