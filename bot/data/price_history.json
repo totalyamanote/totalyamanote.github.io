@@ -646,8 +646,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 1958,
+   "min_price": 2200
   }
  ],
  "LEDデスクライト": [
@@ -2096,8 +2096,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 2752,
+   "min_price": 2780
   }
  ],
  "ワイン": [
@@ -2460,6 +2460,11 @@
    "date": "2026-11-22",
    "min_effective": 2968,
    "min_price": 2998
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 3572,
+   "min_price": 3608
   }
  ],
  "モバイルバッテリー": [
