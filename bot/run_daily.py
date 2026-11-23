@@ -620,6 +620,23 @@ def hotel_items(api, cfg, sh, n=4):
     return cands[:n]
 
 
+def amazon_cards(n=4):
+    """Amazon注目商品（bot/data/amazon_sale.json・毎朝 amazon-sale-daily が更新）。価格は載せない（Amazon規約）。"""
+    try:
+        aj = json.loads((Path(__file__).resolve().parent / "data" / "amazon_sale.json").read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    esc = html.escape
+    out = []
+    for x in aj.get("items", [])[:n]:
+        out.append(f"<a class=card href='https://www.amazon.co.jp/dp/{esc(x['asin'])}?tag=ymnote-top-22' rel='sponsored nofollow noopener' target=_blank>"
+                   f"<span class=gtag>Amazon注目</span><img src='{esc(x['image'])}' alt='{esc(short_name(x['name'], 40))}' loading=lazy>"
+                   f"<span class=nm>{esc(short_name(x['name'], 40))}</span>"
+                   f"<span class=rv>{esc(x.get('why', ''))}</span><span class=rv>価格はAmazonで確認</span>"
+                   f"<span class='go amz'>Amazonで見る →</span></a>")
+    return out
+
+
 def cards_section(title, items, kind, note=""):
     """ふるさと納税・ホテルの画像カード欄。"""
     if not items:
@@ -760,6 +777,7 @@ def picks_html(picks):
                 f"<span class=pts>ポイント{it.get('point_rate', 1)}倍（{it['price'] * it.get('point_rate', 1) // 100:,}pt）</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
+    cards += amazon_cards(4)
     ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）"
     return (f"<section><h2>{ttl}</h2>"
             "<div class=cards>" + "".join(cards) + "</div></section>")
