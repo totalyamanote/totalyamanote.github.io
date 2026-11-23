@@ -1,11 +1,41 @@
 {
- "date": "2026-11-23",
+ "date": "2026-11-24",
  "items": [
   {
    "asin": "B0B9G4QR1M",
    "name": "ザバス ホエイプロテイン100 リッチショコラ味 1kg",
    "image": "https://m.media-amazon.com/images/I/81ez83BNLcL.jpg",
-   "why": "プロテイン人気順で上位・★4.5"
+   "why": "ホエイプロテイン ベストセラー2位・レビュー9,272件・★4.5"
+  },
+  {
+   "asin": "B0C6X64277",
+   "name": "REYS レイズ ホエイプロテイン 1kg カフェオレ風味",
+   "image": "https://m.media-amazon.com/images/I/71L89PGVtpL.jpg",
+   "why": "ホエイプロテイン ベストセラー1位・レビュー8,657件・★4.3"
+  },
+  {
+   "asin": "B08YKGM5XZ",
+   "name": "KATE リップモンスター 04 パンプキンワイン",
+   "image": "https://m.media-amazon.com/images/I/51guf1SnDHL.jpg",
+   "why": "ビューティー売れ筋22位・レビュー16,122件・★4.4"
+  },
+  {
+   "asin": "B083X5R6VR",
+   "name": "VTCOSMETICS フェイスマスク CICAデイリースージングマスク",
+   "image": "https://m.media-amazon.com/images/I/71yfSHaERxL.jpg",
+   "why": "ビューティー売れ筋7位・レビュー17,225件・★4.4"
+  },
+  {
+   "asin": "B0DGFTDTJD",
+   "name": "ザバス ソイプロテイン100 ココア味 920g",
+   "image": "https://m.media-amazon.com/images/I/81hrnUGobpL.jpg",
+   "why": "ソイプロテイン ベストセラー1位・レビュー2,204件・★4.3"
+  },
+  {
+   "asin": "B081DZMLYL",
+   "name": "ザバス ミルクプロテイン 脂肪ゼロ ココア風味 200ml×24本",
+   "image": "https://m.media-amazon.com/images/I/71L0iEnrBtL.jpg",
+   "why": "スポーツ飲料 ベストセラー5位・レビュー5,205件・★4.4"
   },
   {
    "asin": "B07B456KKP",
@@ -14,52 +44,22 @@
    "why": "ビューティー売れ筋2位・レビュー13,129件・★4.3"
   },
   {
-   "asin": "B0DGFTDTJD",
-   "name": "ザバス ソイプロテイン100 ココア味 920g",
-   "image": "https://m.media-amazon.com/images/I/81hrnUGobpL.jpg",
-   "why": "プロテイン人気順で上位・★4.3"
-  },
-  {
-   "asin": "B06X17VVNQ",
-   "name": "オルビス エッセンスインヘアミルク",
-   "image": "https://m.media-amazon.com/images/I/611K8qd+sjL.jpg",
-   "why": "ビューティー売れ筋3位・レビュー2,753件・★4.5"
-  },
-  {
-   "asin": "B083X5R6VR",
-   "name": "VTCOSMETICS フェイスマスク",
-   "image": "https://m.media-amazon.com/images/I/71yfSHaERxL.jpg",
-   "why": "ビューティー売れ筋7位・レビュー17,225件・★4.4"
+   "asin": "B004WBF8EG",
+   "name": "Loretta ハードゼリー 300g スタイリング剤",
+   "image": "https://m.media-amazon.com/images/I/61bpiIZHFhL.jpg",
+   "why": "ビューティー売れ筋16位・レビュー17,894件・★4.4"
   },
   {
    "asin": "B01JKV7AIE",
-   "name": "ニュートロジーナ ノルウェーフォーミュラ ボディエマルジョン",
+   "name": "ニュートロジーナ ノルウェーフォーミュラ ボディエマルジョン 250ml",
    "image": "https://m.media-amazon.com/images/I/61AKRo+rl9L.jpg",
    "why": "ビューティー売れ筋5位・レビュー7,771件・★4.4"
   },
   {
-   "asin": "B00IEA4OSW",
-   "name": "ザバス アクアホエイプロテイン100 グレープフルーツ風味",
-   "image": "https://m.media-amazon.com/images/I/71zNYCOf9qL.jpg",
-   "why": "プロテイン人気順で上位・★4.4"
-  },
-  {
-   "asin": "B0CJXS8CB2",
-   "name": "アテニア スキンクリア クレンズ オイル",
-   "image": "https://m.media-amazon.com/images/I/41QwW36fXWL.jpg",
-   "why": "ビューティー売れ筋6位・レビュー3,415件・★4.5"
-  },
-  {
-   "asin": "B0CJN2ZZVX",
-   "name": "ルルルン ハイドラEXマスク 28枚入り",
-   "image": "https://m.media-amazon.com/images/I/71xPXTLw35L.jpg",
-   "why": "ビューティー売れ筋10位・レビュー1,547件・★4.4"
-  },
-  {
-   "asin": "B0CC5JWFMK",
-   "name": "ケアセラ APフェイス&ボディ乳液 大容量400ml",
-   "image": "https://m.media-amazon.com/images/I/71YfRFWMf9L.jpg",
-   "why": "ビューティー売れ筋4位・レビュー1,324件・★4.5"
+   "asin": "B07CZKGD7X",
+   "name": "ReKERA リケラ エマルジョン 200mL",
+   "image": "https://m.media-amazon.com/images/I/51YPRn3iR+L.jpg",
+   "why": "ビューティー売れ筋9位・レビュー2,411件・★4.6"
   }
  ]
 }
