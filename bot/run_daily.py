@@ -949,9 +949,10 @@ a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56
 /* 2026-11-23 商品一覧：マムートふうのすっきりしたカード。品のある控えめな文字。価格を主に、実質は補足 */
 .cards{{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:34px 16px}}
 .cards .card{{border:0;box-shadow:none;background:transparent;padding:0;border-radius:0;gap:3px}}
-.cards .card img{{border:1px solid var(--line);border-radius:0;padding:0;box-sizing:border-box;margin-bottom:10px}}
+.cards .card img{{background:#f3f3f3;border:0;border-radius:0;padding:0;margin-bottom:10px;object-fit:contain;mix-blend-mode:multiply}}
+:root[data-theme=dark] .cards .card img{{mix-blend-mode:normal}}
 .cards .card .gtag{{order:-1;position:static;background:none;color:var(--mut);font-size:10.5px;font-weight:500;letter-spacing:.06em;padding:0;margin-bottom:5px;line-height:1.3}}
-.cards .card .hot{{top:30px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:0;box-shadow:none}}
+.cards .card .hot{{z-index:2;top:30px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:0;box-shadow:none}}
 .cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;font-weight:400;line-height:1.55;min-height:3.1em;color:var(--fg);letter-spacing:.01em}}
 .cards .card .yen{{order:3;font-weight:700;color:var(--fg);font-size:16px;margin-top:6px;margin-bottom:2px;letter-spacing:.01em;line-height:1.3}}
 .cards .card .eff2{{order:4;background:none;color:var(--mut);font-size:11.5px;font-weight:400;padding:0}}
