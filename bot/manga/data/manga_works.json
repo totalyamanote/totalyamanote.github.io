@@ -2106,5 +2106,125 @@
   },
   "store": "ebookjapan",
   "added": "2026-11-23"
+ },
+ "ebj424599": {
+  "title_id": "ebj424599",
+  "title": "彼女、お借りします",
+  "aliases": [],
+  "author": "宮島礼吏",
+  "magazine": "講談社（週刊少年マガジン）",
+  "period": "連載中",
+  "volumes": "既刊49巻（連載中）",
+  "rating": "4.0",
+  "reviews": "7",
+  "fact": "TVアニメ化されたレンタル彼女ラブコメ。ebookjapanで1〜3巻が11/30まで無料",
+  "hook": "ダメダメ大学生とレンタル彼女の、ウソから始まるラブコメ💘",
+  "synopsis": "都内に暮らす大学生・木ノ下和也は、ふられた直後の勢いでレンタル彼女を利用し、超絶美少女の水原千鶴と出会います。割り切った関係のはずが、二人の距離は少しずつ変わっていきます。「レンタル」をきっかけに広がる、恋とウソのラブコメディです。",
+  "characters": [
+   [
+    "木ノ下和也",
+    "20歳の大学生。ダメな自分を変えようともがく",
+    ""
+   ],
+   [
+    "水原千鶴",
+    "事情を抱えた超絶美少女のレンタル彼女",
+    ""
+   ]
+  ],
+  "tags": [
+   "ラブコメ",
+   "アニメ化",
+   "学生",
+   "連載中"
+  ],
+  "user_reviews": {
+   "dist": [],
+   "tags": [
+    "読みやすい",
+    "続きが気になる",
+    "ドキドキ"
+   ],
+   "top": []
+  },
+  "free_ongoing": true,
+  "free_until": "2026-11-30",
+  "free_label": "1〜3巻無料（ebookjapan）",
+  "free_store_name": "ebookjapan",
+  "free_url": "https://ebookjapan.yahoo.co.jp/books/424599/",
+  "free_note": "ebookjapanの商品ページで「【11/30まで】34話無料キャンペーン中」の表示と、1〜3巻が無料の表示を確認（11/17確認）。巻ごとの無料期間は表示が異なる可能性があります。評価は楽天Kobo1巻の値。採用理由：TVアニメ化・全49巻・まるごと3巻無料・期限残り6日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3481/2000005583481.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/6402/2000005756402.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2228/2000006052228.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4568/2000006214568.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4fd8f669bdd83a108c421becc30b2eef%2F"
+  },
+  "store": "ebookjapan",
+  "added": "2026-11-24"
+ },
+ "ebj120481": {
+  "title_id": "ebj120481",
+  "title": "GIANT KILLING",
+  "aliases": [
+   "ジャイアントキリング"
+  ],
+  "author": "ツジトモ（原作：綱本将也）",
+  "magazine": "講談社（モーニング）",
+  "period": "連載中",
+  "volumes": "全71冊（既刊）",
+  "rating": "4.5",
+  "reviews": "161",
+  "fact": "アニメ化もされたサッカーマンガの名作。ebookjapanで1〜3冊が12/3まで無料",
+  "hook": "弱小クラブを変える監督の逆転劇⚽ 1〜3冊が無料",
+  "synopsis": "東京の下町にある弱小プロサッカークラブ・ETU。イングランド帰りの若き監督・達海猛が就任し、意表をつく戦略とカリスマ性で、負け癖のついた選手やスタッフ、サポーターを変えていきます。大物喰い（ジャイアント・キリング）を狙う、サッカー漫画の新しいスタンダードです。",
+  "characters": [
+   [
+    "達海猛",
+    "35歳。イングランド帰りの新監督。大番狂わせが好物",
+    "1"
+   ],
+   [
+    "ETU",
+    "負けグセのついた東京下町の弱小クラブ",
+    "1"
+   ]
+  ],
+  "tags": [
+   "スポーツ",
+   "サッカー",
+   "アニメ化",
+   "連載中"
+  ],
+  "user_reviews": {
+   "dist": [],
+   "tags": [
+    "いい試合",
+    "熱い戦い",
+    "成長を描く"
+   ],
+   "top": []
+  },
+  "free_ongoing": true,
+  "free_until": "2026-12-03",
+  "free_label": "1〜3冊無料（ebookjapan）",
+  "free_store_name": "ebookjapan",
+  "free_url": "https://ebookjapan.yahoo.co.jp/books/120481/",
+  "free_note": "ebookjapanの商品ページで「【12/3まで】42話無料キャンペーン中！」の表示と、1〜3冊が無料の表示を確認（11/23確認）。評価は楽天Kobo1巻の値。採用理由：アニメ化・全71冊・まるごと3冊無料・期限残り5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1559/2000000161559.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7810/2000000147810.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4324/2000000214324.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0665/2000000190665.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F7254461ea74e4f03814411822e98421f%2F"
+  },
+  "store": "ebookjapan",
+  "added": "2026-11-24"
  }
 }
