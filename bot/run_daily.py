@@ -377,6 +377,10 @@ RANK_TO_GENRE = {"美容・コスメ": "スキンケア・美容", "日用消耗
                  "日用品雑貨": "掃除・洗濯・日用品"}
 
 
+PICK_MIN_RATE = 6    # 「ポイント倍率が高い商品」はポイント6倍以上だけ（2026-11-23 坂田さん「5倍以下は表示しない」）
+PICK_MAX = 8         # 楽天の商品は最大8点（同「商品数少なくして」）。Amazon注目は2点
+
+
 def fresh_picks(api, cfg, posts, sh, per_genre=2):
     """上の欄：まだ出していない1万円未満で、ポイント2倍以上の商品だけをジャンルごとに集める（1倍は出さない＝ユーザー指定）。
     ランキングを上から見て、足りなければポイントアップ中の商品検索（pointRateFlag=1）で補う。
@@ -394,7 +398,7 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
             for it in pool:
                 k = dedupe_key(it)
                 w = (short_name(it["name"], 80).split() or [""])[0]
-                if (not MIN_PRICE <= it["price"] <= MAX_PRICE or it["review_count"] < 30 or it.get("point_rate", 1) < 2
+                if (not MIN_PRICE <= it["price"] <= MAX_PRICE or it["review_count"] < 30 or it.get("point_rate", 1) < PICK_MIN_RATE
                         or OLD_NG.search(short_name(it["name"], 80)) or ELEC_NG.search(it["name"])
                         or was_shown(sh, it) or k in keys or (len(w) >= 4 and w in heads)):
                     continue
@@ -429,7 +433,7 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
                 except ValueError:
                     pass
                 c.update(price=d["price"], point_rate=d["point_rate"])
-            if c["point_rate"] < 2 or not MIN_PRICE <= c["price"] <= MAX_PRICE:
+            if c["point_rate"] < PICK_MIN_RATE or not MIN_PRICE <= c["price"] <= MAX_PRICE:
                 continue
             if (len(c["_head"]) >= 4 and c["_head"] in heads) or is_dup(c, out + chosen):
                 continue
@@ -760,10 +764,12 @@ def picks_html(picks):
         k = dedupe_key(p)
         if k in seen:
             continue
-        if len(by.setdefault(p["genre"], [])) < (3 if BF_ON else 2):
+        if p.get("point_rate", 1) < PICK_MIN_RATE:
+            continue
+        if len(by.setdefault(p["genre"], [])) < 2:
             by[p["genre"]].append(p); seen.add(k)
     flat = sorted((it for items in by.values() for it in items),
-                  key=lambda p: (-p.get("point_rate", 1), -p.get("review_count", 0)))
+                  key=lambda p: (-p.get("point_rate", 1), -p.get("review_count", 0)))[:PICK_MAX]
     for it in flat:
         g = it["genre"]
         if True:
@@ -778,7 +784,7 @@ def picks_html(picks):
                 f"<span class=pts>ポイント{it.get('point_rate', 1)}倍（{it['price'] * it.get('point_rate', 1) // 100:,}pt）</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
-    cards += amazon_cards(4)
+    cards += amazon_cards(2)
     ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）"
     return (f"<section><h2>{ttl}</h2>"
             "<div class=cards>" + "".join(cards) + "</div></section>")
