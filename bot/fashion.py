@@ -44,9 +44,10 @@ def brand(name):
 
 TYPES = [("コート・アウター", r"コート|アウター|ジャケット|ダウン|ブルゾン|ベスト"), ("ニット", r"ニット|セーター|プルオーバー"), ("ワンピース", r"ワンピース|ドレス"),
          ("カーディガン", r"カーディガン|ボレロ"), ("スカート", r"スカート"), ("パンツ", r"パンツ|デニム|ジーンズ"), ("ブラウス・トップス", r"ブラウス|シャツ|カットソー|トップス|Tシャツ|スウェット|パーカー")]
+OTHER_NG = re.compile(r"メンズ|MEN'S|ユニセックス|キッズ|ベビー|United Athle")   # レディースの段なので
 BAG_NG = re.compile(r"福袋|HAPPY BOX|福箱|ラッキーバッグ|LUCKY")
 # 冬（11〜2月）は半袖・ノースリーブなど夏物を出さない（2026-11-23）
-SUMMER_NG = re.compile(r"半袖|ノースリーブ|キャミ|タンクトップ|サンダル|リネン|水着") if datetime.now().month in (11, 12, 1, 2) else re.compile(r"(?!x)x")
+SUMMER_NG = re.compile(r"半袖|ノースリーブ|キャミ|タンクトップ|サンダル|リネン|水着|ラッシュガード|水陸両用|サマー|夏") if datetime.now().month in (11, 12, 1, 2) else re.compile(r"(?!x)x")
 
 
 def kind_of(name):
@@ -96,81 +97,64 @@ def ranked(api):
 
 
 def pick(api):
-    """売れそうな順＝楽天のレディースファッションのランキングで上位の商品。種類（コート・ニット・ワンピースなど）を散らして8点。"""
-    cand = []
+    """割引率の高い順（2026-11-23 坂田さん「すべて別の商品に、割引高いの優先」）。
+    候補＝レディースファッション売れ筋ランキングに入る楽天ファッションの商品＋楽天ファッションの種類ごとの検索（レビュー多い順）。
+    前の2日に出した商品は出さない（毎日8点すべて入れ替え）。レビュー10件以上・★4.0以上、9,800円まで。種類を散らし、同じブランドは2点まで。"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    hist = _load_hist()
+    recent = {code for d, codes in hist.items() if d != today and d >= _days_ago(2) for code in codes}
+    raw = {}
     for x in ranked(api):
+        raw[x["itemCode"]] = (int(x["rank"]), x)
+    for kw in ["SALE", "ニット", "コート", "ワンピース", "カーディガン", "スカート", "パンツ", "ブラウス", "ジャケット"]:
+        for pg in (1, 2):
+            try:
+                dd = api._get(SEARCH_URL, {"shopCode": SHOP, "keyword": kw, "sort": "-reviewCount", "hits": 30, "page": pg, "availability": 1})
+            except Exception:
+                continue
+            for y in dd.get("Items", []):
+                y = y.get("Item", y)
+                raw.setdefault(y["itemCode"], (999, y))
+    cand = []
+    for code, (rank, x) in raw.items():
+        name0 = x["itemName"]
         price = int(x.get("itemPrice") or 0)
-        if not (0 < price <= MAX_PRICE) or BAG_NG.search(x["itemName"]) or SUMMER_NG.search(x["itemName"]):
+        if code in recent or not (0 < price <= MAX_PRICE) or BAG_NG.search(name0) or SUMMER_NG.search(name0) or OTHER_NG.search(name0):
+            continue
+        if int(x.get("reviewCount") or 0) < 10 or float(x.get("reviewAverage") or 0) < 4.0:
             continue
         imgs = x.get("mediumImageUrls") or []
         img = (imgs[0] if isinstance(imgs[0], str) else imgs[0].get("imageUrl")) if imgs else ""
         if not img:
             continue
-        nm, sale = clean(x["itemName"])
+        nm, sale = clean(name0)
         kd = kind_of(nm)
-        if kd == "その他":                                      # ブランド名だけになるものは、種類の言葉を含む語を元の名前から足す
+        if kd == "その他":
             for lab, rxk in TYPES:
-                w = next((t for t in re.sub(r"【[^】]*】|\[[^\]]*\]|《[^》]*》", " ", x["itemName"]).split() if re.search(rxk, t) and not re.fullmatch(r"[ァ-ヶー・]+", t)), "")
+                w = next((t for t in re.sub(r"【[^】]*】|\[[^\]]*\]|《[^》]*》", " ", name0).split() if re.search(rxk, t) and not re.fullmatch(r"[ァ-ヶー・]+", t)), "")
                 if w:
                     nm = (nm + " " + w).strip(); kd = lab; break
         if kd == "その他":
             continue
-        rc0, av0 = int(x.get("reviewCount") or 0), float(x.get("reviewAverage") or 0)
-        if rc0 < 10 or av0 < 4.0:                               # 売れそう＝順位が高く、レビューも一定数あって評価が低くないもの
-            continue
-        cand.append({"rank": int(x["rank"]), "kind": kd, "code": x["itemCode"], "name": nm[:44] + ("…" if len(nm) > 44 else ""),
-                     "sale": sale, "img": img.replace("_ex=128x128", "_ex=300x300"), "url": x.get("affiliateUrl") or x["itemUrl"], "brand": brand(x["itemName"])})
-    # 毎日入れ替える（2026-11-23 坂田さん「楽天ファッションも入れ変わんないの？」）：前の2日に出した商品は後回し。同じ日の再実行では同じ顔ぶれ。
-    today = datetime.now().strftime("%Y-%m-%d")
-    hist = _load_hist()
-    recent = {code for d, codes in hist.items() if d != today and d >= _days_ago(2) for code in codes}
-    cand.sort(key=lambda c: (c["code"] in recent, c["rank"]))
+        cand.append({"rank": rank, "kind": kd, "code": code, "name": nm[:44] + ("…" if len(nm) > 44 else ""), "off": int(sale or 0),
+                     "sale": sale, "img": img.replace("_ex=128x128", "_ex=300x300"), "url": x.get("affiliateUrl") or x["itemUrl"], "brand": brand(name0)})
+    cand.sort(key=lambda c: (-c["off"], c["rank"]))
     seen_nm, uniq = set(), []
-    for c in cand:                                   # 同じ商品の色違い・サイズ違い（名前が同じ）は1つだけ
+    for c in cand:                                   # 色違い・サイズ違い（名前が同じ）は1つだけ
         k = re.sub(r"\s+", "", c["name"])[:18]
-        if k in seen_nm:
-            continue
-        seen_nm.add(k); uniq.append(c)
-    cand = uniq
-    MAX_REPEAT = 4                                   # 前の日と同じ商品は8点のうち4点まで（毎日半分以上は入れ替わる）
-    chosen, used_kind, per_brand = [], set(), {}
-    rep = lambda: sum(1 for c in chosen if c["code"] in recent)
-    for c in cand:                                   # まず種類ごとに、いちばん順位が高いもの（前の日に出していないものを先に）
-        if c["code"] in recent and rep() >= MAX_REPEAT:
-            continue
-        if c["kind"] in used_kind or c["kind"] == "その他" or per_brand.get(c["brand"], 0) >= 3:
-            continue
-        used_kind.add(c["kind"]); per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1; chosen.append(c)
-    for c in cand:                                   # 足りなければ順位の高い順に
-        if len(chosen) >= 8:
-            break
-        if c not in chosen and per_brand.get(c["brand"], 0) < 3 and not (c["code"] in recent and rep() >= MAX_REPEAT):
-            per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1; chosen.append(c)
-    out = []
-    if len(chosen) < 8:                                  # 足りなければ、レビューが多い順の検索（種類ごと）で補う
-        have = {c["code"] for c in chosen}
-        kws = ["ニット", "コート", "ワンピース", "カーディガン", "スカート", "パンツ", "ブラウス", "ジャケット"]
-        k0 = datetime.now().toordinal() % len(kws)                  # 補う種類の順番も日ごとにずらす
-        for kw in kws[k0:] + kws[:k0]:
-            try:
-                dd = api._get(SEARCH_URL, {"shopCode": SHOP, "keyword": kw, "sort": "-reviewCount", "hits": 30, "availability": 1})
-            except Exception:
-                continue
-            for y in dd.get("Items", []):
-                y = y.get("Item", y)
-                pz = int(y.get("itemPrice") or 0); im = y.get("mediumImageUrls") or []
-                if y["itemCode"] in have or y["itemCode"] in recent or not (0 < pz <= MAX_PRICE) or BAG_NG.search(y["itemName"]) or SUMMER_NG.search(y["itemName"]) or not im or kw not in clean(y["itemName"])[0] \
-                        or int(y.get("reviewCount") or 0) < 50 or float(y.get("reviewAverage") or 0) < 4.0:
-                    continue
-                nm2, sale2 = clean(y["itemName"]); have.add(y["itemCode"])
-                chosen.append({"rank": 999, "kind": kw, "code": y["itemCode"], "name": nm2[:44], "sale": sale2,
-                               "img": (im[0] if isinstance(im[0], str) else im[0].get("imageUrl")).replace("_ex=128x128", "_ex=300x300"),
-                               "url": y.get("affiliateUrl") or y["itemUrl"], "brand": brand(y["itemName"])})
-                break
+        if k not in seen_nm:
+            seen_nm.add(k); uniq.append(c)
+    chosen, kind_n, per_brand = [], {}, {}
+    for limit in (1, 2, 8):                          # まず種類ごとに1点（割引の大きい順）→ 足りなければ種類2点まで → それでも足りなければ制限なし
+        for c in uniq:
             if len(chosen) >= 8:
                 break
-    for c in sorted(chosen, key=lambda c: c["rank"])[:8]:   # 並びは順位順
-        d = api.item_detail(c["code"])                # 価格・ポイント・レビューを検索APIで取り直す（ランキングは古いことがある）
+            if c in chosen or kind_n.get(c["kind"], 0) >= limit or per_brand.get(c["brand"], 0) >= 2:
+                continue
+            chosen.append(c); kind_n[c["kind"]] = kind_n.get(c["kind"], 0) + 1; per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1
+    out = []
+    for c in chosen:                                 # 並びは割引の大きい順
+        d = api.item_detail(c["code"])                # 価格・ポイント・レビューを取り直す
         if not d or not (0 < d["price"] <= MAX_PRICE):
             continue
         pr = d["point_rate"]
@@ -180,6 +164,7 @@ def pick(api):
         except ValueError:
             pass
         out.append({**c, "price": d["price"], "pr": pr, "pt": d["price"] * pr // 100, "rc": d["review_count"], "av": d["review_avg"]})
+    out.sort(key=lambda c: (-c["off"], c["rank"]))   # 並びは割引の大きい順
     return out
 
 
@@ -188,7 +173,7 @@ def render(items, stamp):
     for it in items:
         sale = f"<span class=hot>SALE {it['sale']}%OFF</span>" if it["sale"] else ""
         cards += (f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
-                  f"<span class=gtag>{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "・レビュー多い") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
+                  f"<span class=gtag>{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
                   f"<span class=nm>{esc(it['name'])}</span><span class=yen>¥{it['price']:,}</span>"
                   f"<span class=pts>ポイント{it['pr']}倍（{it['pt']:,}pt）</span><span class=eff2>実質¥{it['price'] - it['pt']:,}</span>"
                   + (f"<span class=rv>⭐{it['av']}（{it['rc']:,}件）</span>" if it['rc'] else "<span class=rv>新着・レビューはこれから</span>")
@@ -196,7 +181,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 楽天ファッション（レディース）の人気アイテム</h2>"
-            f"<p class=meta>楽天のレディースファッション売れ筋ランキングで上位の、楽天ファッションの商品から（{MAX_PRICE:,}円まで・福袋を除く）。コート・ニット・ワンピースなど種類を分けて8点。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>楽天ファッションの商品から、割引の大きい順に（{MAX_PRICE:,}円まで・レビュー★4.0以上・福袋を除く）。コート・ニット・ワンピースなど種類を分けて8点、毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天ファッションへのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
