@@ -1212,6 +1212,11 @@
    "date": "2026-11-22",
    "min_effective": 5534,
    "min_price": 5590
+  },
+  {
+   "date": "2026-11-23",
+   "min_effective": 2688,
+   "min_price": 2830
   }
  ],
  "シャンプー 詰め替え": [
@@ -1882,8 +1887,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 2178,
-   "min_price": 2200
+   "min_effective": 2592,
+   "min_price": 2618
   }
  ],
  "ハンドクリーム": [
@@ -2493,8 +2498,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 1960,
-   "min_price": 1980
+   "min_effective": 3069,
+   "min_price": 3100
   }
  ],
  "モバイルバッテリー": [
