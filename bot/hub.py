@@ -71,7 +71,7 @@ SALE_CSS = ("<style id=hsalecss>"
  ".bf .st{display:inline-block;font-size:11px;font-weight:900;border-radius:99px;padding:1px 9px;background:#fff;color:#bf0000}"
  ".bf .st.on{background:#ffd54a;color:#111}.bf .st.wait{background:#665d55;color:#fff}"
  ".bf .ph{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2px 0 12px}"
- ".bf .ph i{display:block;aspect-ratio:1;border-radius:12px;background:#fff center/cover no-repeat;border:2px solid #ffd54a;box-shadow:0 4px 10px rgba(0,0,0,.45);transform:rotate(-2deg)}"
+ ".bf .ph i{display:block;aspect-ratio:1;border-radius:12px;background:#fff center/contain no-repeat;background-origin:content-box;padding:6px;box-sizing:border-box;border:2px solid #ffd54a;box-shadow:0 4px 10px rgba(0,0,0,.45);transform:rotate(-2deg)}"
  ".bf .ph i:nth-child(even){transform:rotate(2deg) translateY(4px)}"
  ".bf .cap{font-size:11px;color:#e8cfcf;margin:-6px 0 10px}"
  ".bf .go{display:inline-block;margin-top:12px;background:linear-gradient(90deg,#ffd54a,#ffb300);color:#111;font-weight:900;font-size:15px;border-radius:99px;padding:10px 22px}"
@@ -122,12 +122,17 @@ def _sale_photos_from_page(page, n=6):
     sec = page[i:]
     j = sec.find("</section>")
     sec = sec[:j] if j > 0 else sec
-    rak, amz = [], []
+    rak, amz, seen = [], [], set()
     for m in re.finditer(r"<a class=card [^>]*>(.*?)</a>", sec, re.S):
         blk = m.group(1)
         im = re.search(r"<img src='(https://[^']+)'", blk)
         if not im:
             continue
+        al = re.search(r"alt='([^']*)'", blk)
+        key = re.split(r"[\s　]", (al.group(1) if al else "").strip() or im.group(1))[0]   # ブランド（先頭の語）。同じブランドは1つだけ（2026-11-23 坂田さん「プロテイン2個になってる」）
+        if key in seen or re.search(r"ライナー|ペンシル|マスカラ|リップ|ネイル", (al.group(1) if al else "")):   # 細長い商品は写真が小さく見えるので使わない（2026-11-23 坂田さん「キャンメイク 画像サイズあってない」）
+            continue
+        seen.add(key)
         (amz if "Amazon注目" in blk else rak).append(im.group(1))
     out = []
     for k in range(3):
@@ -135,6 +140,10 @@ def _sale_photos_from_page(page, n=6):
             out.append(rak[k])
         if k < len(amz):
             out.append(amz[k])
+    for u in rak[3:] + amz[3:]:   # どちらかが足りないときは残りで埋めて6枚にする
+        if len(out) >= n:
+            break
+        out.append(u)
     if len(out) < 4:
         return ""
     return "<div class=ph>" + "".join(f"<i style=\"background-image:url('{u}')\"></i>" for u in out[:n]) + "</div>"
