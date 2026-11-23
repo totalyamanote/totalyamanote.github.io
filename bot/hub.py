@@ -70,7 +70,7 @@ SALE_CSS = ("<style id=hsalecss>"
  ".bf .m b{display:block;font-size:14px}.bf .m small{display:block;font-size:11px;color:#e8cfcf;margin:2px 0 4px}"
  ".bf .st{display:inline-block;font-size:11px;font-weight:900;border-radius:99px;padding:1px 9px;background:#fff;color:#bf0000}"
  ".bf .st.on{background:#ffd54a;color:#111}.bf .st.wait{background:#665d55;color:#fff}"
- ".bf .ph{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:2px 0 12px}"
+ ".bf .ph{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2px 0 12px}"
  ".bf .ph i{display:block;aspect-ratio:1;border-radius:12px;background:#fff center/cover no-repeat;border:2px solid #ffd54a;box-shadow:0 4px 10px rgba(0,0,0,.45);transform:rotate(-2deg)}"
  ".bf .ph i:nth-child(even){transform:rotate(2deg) translateY(4px)}"
  ".bf .cap{font-size:11px;color:#e8cfcf;margin:-6px 0 10px}"
@@ -114,11 +114,37 @@ def _sale_photos(n=4):
     return "<div class=ph>" + "".join(f"<i style=\"background-image:url('{u}')\"></i>" for u in ims[:n]) + "</div>"
 
 
+def _sale_photos_from_page(page, n=6):
+    """バナーの写真：トップの「ポイント倍率が高い商品」（ランキング上位×倍率順）の先頭3つと、Amazon注目（売れ筋ランキング）の先頭3つを交互に（2026-11-23 坂田さん「バナー画像をもっと売れ筋商品に」）。"""
+    i = page.find("ポイント倍率が高い商品")
+    if i < 0:
+        return ""
+    sec = page[i:]
+    j = sec.find("</section>")
+    sec = sec[:j] if j > 0 else sec
+    rak, amz = [], []
+    for m in re.finditer(r"<a class=card [^>]*>(.*?)</a>", sec, re.S):
+        blk = m.group(1)
+        im = re.search(r"<img src='(https://[^']+)'", blk)
+        if not im:
+            continue
+        (amz if "Amazon注目" in blk else rak).append(im.group(1))
+    out = []
+    for k in range(3):
+        if k < len(rak):
+            out.append(rak[k])
+        if k < len(amz):
+            out.append(amz[k])
+    if len(out) < 4:
+        return ""
+    return "<div class=ph>" + "".join(f"<i style=\"background-image:url('{u}')\"></i>" for u in out[:n]) + "</div>"
+
+
 def cfg_url(cfg):
     return (cfg or {}).get("url", "articles/black-friday-2026.html")
 
 
-def sale_banner(now, cfg=None):
+def sale_banner(now, cfg=None, page=None):
     cfg = cfg or _sale_cfg()
     if not sale_active(now, cfg):
         return ""
@@ -139,7 +165,7 @@ def sale_banner(now, cfg=None):
     return ("<!--hubsale-->" + SALE_CSS +
             f"<a class=bf href='{cfg['url']}'>{SALE_ART}<span class=k>SALE SPECIAL</span>"
             f"<h2><em>BLACK FRIDAY</em> 2026</h2><p>楽天・Yahoo!・Amazonの日程と攻略、実質価格のおすすめをまとめました。</p>"
-            f"{_sale_photos()}<div class=ml>{''.join(cells)}</div><span class=go>日程と攻略を見る →</span></a><!--/hubsale-->")
+            f"{(_sale_photos_from_page(page) if page else '') or _sale_photos()}<div class=ml>{''.join(cells)}</div><span class=go>日程と攻略を見る →</span></a><!--/hubsale-->")
 
 
 def move_tail_sections(page):
@@ -196,7 +222,7 @@ def apply_sale(page, now=None):
     page = re.sub(r"<!--hubsale-->.*?<!--/hubsale-->", "", page, flags=re.S)
     page = re.sub(r"<style id=hsalecss>.*?</style>", "", page, flags=re.S)
     page = re.sub(r"<div class=hsec><h2>🔥 セール特集</h2>.*?</a></div>", "", page, flags=re.S)
-    ban = sale_banner(now)
+    ban = sale_banner(now, page=page)
     if ban:
         page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)   # 検索欄・PR・ひとことは最上段に固定、その直下にセール特集（2026-11-18 坂田さん）
     else:
