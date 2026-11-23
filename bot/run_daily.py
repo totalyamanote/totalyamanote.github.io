@@ -946,19 +946,18 @@ th,td{{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;verti
 .rv{{font-size:11px;color:var(--mut)}} .go{{margin-top:auto;font-size:12px;font-weight:700;color:#fff;background:#bf0000;border-radius:6px;text-align:center;padding:5px}}
 a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:6px;flex:none;border:1px solid var(--line)}}
 @media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr}}}}
-/* 2026-11-23 商品一覧：ゴールドウインふうの、シンプルな3行（画像・商品名・価格＋小さな補足） */
-.cards{{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:34px 16px}}
-.cards .card{{border:0;box-shadow:none;background:transparent;padding:0;border-radius:0;gap:2px}}
-.cards .card img{{background:#f3f3f3;border:0;border-radius:0;padding:0;margin-bottom:10px;object-fit:contain;mix-blend-mode:multiply}}
-:root[data-theme=dark] .cards .card img{{mix-blend-mode:normal}}
-.cards .card .hot{{top:8px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:500;letter-spacing:.06em;padding:2px 7px;border-radius:0;box-shadow:none}}
-.cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;font-weight:400;line-height:1.55;min-height:3.1em;color:var(--fg)}}
-.cards .card .yen{{order:3;font-weight:500;color:var(--fg);font-size:16px;margin-top:2px;line-height:1.4}}
-.cards .card .eff2,.cards .card .pts,.cards .card .rv{{background:none;padding:0;font-size:11.5px;font-weight:400;color:var(--mut);line-height:1.5}}
-.cards .card .eff2{{order:4}} .cards .card .pts{{order:5}} .cards .card .rv{{order:6}}
-.cards .card .go,.cards .card .go.amz,.cards .card .go.ygo{{order:7;margin-top:6px;background:none;color:var(--mut);padding:0;text-align:left;font-size:11.5px;font-weight:400;border-radius:0;align-self:flex-start}}
-.cards .card .gtag{{order:8;position:static;background:none;color:var(--mut);font-size:10.5px;font-weight:400;padding:0;margin:4px 0 0;line-height:1.4;opacity:.8}}
-@media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr;gap:28px 12px}}}}
+/* 2026-11-23 商品一覧：マムートふうのすっきりしたカード。品のある控えめな文字。価格を主に、実質は補足 */
+.cards{{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:28px 18px}}
+.cards .card{{border:0;box-shadow:none;background:transparent;padding:0;border-radius:0;gap:3px}}
+.cards .card img{{border:1px solid var(--line);border-radius:0;padding:6px;box-sizing:border-box;margin-bottom:8px}}
+.cards .card .gtag{{order:-1;position:static;background:none;color:var(--mut);font-size:11px;font-weight:500;letter-spacing:.06em;padding:0;margin-bottom:5px;line-height:1.3}}
+.cards .card .hot{{top:30px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:0;box-shadow:none}}
+.cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13.5px;font-weight:400;line-height:1.55;min-height:3.1em;color:var(--fg);letter-spacing:.01em}}
+.cards .card .yen{{order:3;font-weight:700;color:var(--fg);font-size:22px;margin-top:6px;margin-bottom:2px;letter-spacing:.01em;line-height:1.3}}
+.cards .card .eff2{{order:4;background:none;color:var(--mut);font-size:12px;font-weight:400;padding:0}}
+.cards .card .pts{{order:5;font-size:12px;font-weight:600;color:var(--fg)}} .cards .card .rv{{order:6;font-size:11.5px;color:var(--mut)}}
+.cards .card .go,.cards .card .go.amz,.cards .card .go.ygo{{order:7;margin-top:8px;background:none;color:var(--fg);padding:0 0 2px;text-align:left;font-size:12px;font-weight:500;letter-spacing:.06em;border-radius:0;border-bottom:1px solid var(--fg);align-self:flex-start}}
+@media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr;gap:24px 12px}}}}
 .pt{{display:block;font-size:11px;color:var(--acc)}} .low{{font-size:12px;color:var(--acc);margin-left:6px}}
 a{{color:inherit}}
 </style></head><body><main>
