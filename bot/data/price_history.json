@@ -1550,8 +1550,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 4256,
-   "min_price": 4299
+   "min_effective": 4930,
+   "min_price": 4980
   }
  ],
  "炭酸水": [
@@ -1882,8 +1882,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 4180,
-   "min_price": 4400
+   "min_effective": 2178,
+   "min_price": 2200
   }
  ],
  "ハンドクリーム": [
@@ -2493,8 +2493,8 @@
   },
   {
    "date": "2026-11-23",
-   "min_effective": 3623,
-   "min_price": 3660
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ],
  "モバイルバッテリー": [
