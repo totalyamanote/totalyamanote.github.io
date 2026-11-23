@@ -45,6 +45,8 @@ def brand(name):
 TYPES = [("コート・アウター", r"コート|アウター|ジャケット|ダウン|ブルゾン|ベスト"), ("ニット", r"ニット|セーター|プルオーバー"), ("ワンピース", r"ワンピース|ドレス"),
          ("カーディガン", r"カーディガン|ボレロ"), ("スカート", r"スカート"), ("パンツ", r"パンツ|デニム|ジーンズ"), ("ブラウス・トップス", r"ブラウス|シャツ|カットソー|トップス|Tシャツ|スウェット|パーカー")]
 BAG_NG = re.compile(r"福袋|HAPPY BOX|福箱|ラッキーバッグ|LUCKY")
+# 冬（11〜2月）は半袖・ノースリーブなど夏物を出さない（2026-11-23）
+SUMMER_NG = re.compile(r"半袖|ノースリーブ|キャミ|タンクトップ|サンダル|リネン|水着") if datetime.now().month in (11, 12, 1, 2) else re.compile(r"(?!x)x")
 
 
 def kind_of(name):
@@ -52,6 +54,28 @@ def kind_of(name):
         if re.search(rx, name):
             return label
     return "その他"
+
+
+HIST = BASE / "data" / "fashion_shown.json"
+
+
+def _days_ago(n):
+    from datetime import timedelta
+    return (datetime.now() - timedelta(days=n)).strftime("%Y-%m-%d")
+
+
+def _load_hist():
+    try:
+        return json.loads(HIST.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_hist(codes):
+    h = _load_hist()
+    h[datetime.now().strftime("%Y-%m-%d")] = codes
+    h = {d: v for d, v in h.items() if d >= _days_ago(7)}
+    HIST.write_text(json.dumps(h, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 def ranked(api):
@@ -76,7 +100,7 @@ def pick(api):
     cand = []
     for x in ranked(api):
         price = int(x.get("itemPrice") or 0)
-        if not (0 < price <= MAX_PRICE) or BAG_NG.search(x["itemName"]):
+        if not (0 < price <= MAX_PRICE) or BAG_NG.search(x["itemName"]) or SUMMER_NG.search(x["itemName"]):
             continue
         imgs = x.get("mediumImageUrls") or []
         img = (imgs[0] if isinstance(imgs[0], str) else imgs[0].get("imageUrl")) if imgs else ""
@@ -96,28 +120,46 @@ def pick(api):
             continue
         cand.append({"rank": int(x["rank"]), "kind": kd, "code": x["itemCode"], "name": nm[:44] + ("…" if len(nm) > 44 else ""),
                      "sale": sale, "img": img.replace("_ex=128x128", "_ex=300x300"), "url": x.get("affiliateUrl") or x["itemUrl"], "brand": brand(x["itemName"])})
+    # 毎日入れ替える（2026-11-23 坂田さん「楽天ファッションも入れ変わんないの？」）：前の2日に出した商品は後回し。同じ日の再実行では同じ顔ぶれ。
+    today = datetime.now().strftime("%Y-%m-%d")
+    hist = _load_hist()
+    recent = {code for d, codes in hist.items() if d != today and d >= _days_ago(2) for code in codes}
+    cand.sort(key=lambda c: (c["code"] in recent, c["rank"]))
+    seen_nm, uniq = set(), []
+    for c in cand:                                   # 同じ商品の色違い・サイズ違い（名前が同じ）は1つだけ
+        k = re.sub(r"\s+", "", c["name"])[:18]
+        if k in seen_nm:
+            continue
+        seen_nm.add(k); uniq.append(c)
+    cand = uniq
+    MAX_REPEAT = 4                                   # 前の日と同じ商品は8点のうち4点まで（毎日半分以上は入れ替わる）
     chosen, used_kind, per_brand = [], set(), {}
-    for c in cand:                                   # まず種類ごとに、いちばん順位が高いもの
+    rep = lambda: sum(1 for c in chosen if c["code"] in recent)
+    for c in cand:                                   # まず種類ごとに、いちばん順位が高いもの（前の日に出していないものを先に）
+        if c["code"] in recent and rep() >= MAX_REPEAT:
+            continue
         if c["kind"] in used_kind or c["kind"] == "その他" or per_brand.get(c["brand"], 0) >= 3:
             continue
         used_kind.add(c["kind"]); per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1; chosen.append(c)
     for c in cand:                                   # 足りなければ順位の高い順に
         if len(chosen) >= 8:
             break
-        if c not in chosen and per_brand.get(c["brand"], 0) < 3:
+        if c not in chosen and per_brand.get(c["brand"], 0) < 3 and not (c["code"] in recent and rep() >= MAX_REPEAT):
             per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1; chosen.append(c)
     out = []
     if len(chosen) < 8:                                  # 足りなければ、レビューが多い順の検索（種類ごと）で補う
         have = {c["code"] for c in chosen}
-        for kw in ("ニット", "コート", "ワンピース", "カーディガン", "スカート", "パンツ"):
+        kws = ["ニット", "コート", "ワンピース", "カーディガン", "スカート", "パンツ", "ブラウス", "ジャケット"]
+        k0 = datetime.now().toordinal() % len(kws)                  # 補う種類の順番も日ごとにずらす
+        for kw in kws[k0:] + kws[:k0]:
             try:
-                dd = api._get(SEARCH_URL, {"shopCode": SHOP, "keyword": kw, "sort": "-reviewCount", "hits": 10, "availability": 1})
+                dd = api._get(SEARCH_URL, {"shopCode": SHOP, "keyword": kw, "sort": "-reviewCount", "hits": 30, "availability": 1})
             except Exception:
                 continue
             for y in dd.get("Items", []):
                 y = y.get("Item", y)
                 pz = int(y.get("itemPrice") or 0); im = y.get("mediumImageUrls") or []
-                if y["itemCode"] in have or not (0 < pz <= MAX_PRICE) or BAG_NG.search(y["itemName"]) or not im or kw not in clean(y["itemName"])[0] \
+                if y["itemCode"] in have or y["itemCode"] in recent or not (0 < pz <= MAX_PRICE) or BAG_NG.search(y["itemName"]) or SUMMER_NG.search(y["itemName"]) or not im or kw not in clean(y["itemName"])[0] \
                         or int(y.get("reviewCount") or 0) < 50 or float(y.get("reviewAverage") or 0) < 4.0:
                     continue
                 nm2, sale2 = clean(y["itemName"]); have.add(y["itemCode"])
@@ -127,7 +169,7 @@ def pick(api):
                 break
             if len(chosen) >= 8:
                 break
-    for c in sorted(chosen, key=lambda c: c["rank"])[:8]:
+    for c in sorted(chosen, key=lambda c: c["rank"])[:8]:   # 並びは順位順
         d = api.item_detail(c["code"])                # 価格・ポイント・レビューを検索APIで取り直す（ランキングは古いことがある）
         if not d or not (0 < d["price"] <= MAX_PRICE):
             continue
@@ -175,6 +217,8 @@ def main():
         t2 = t
     if t2 != t:
         p.write_text(t2, encoding="utf-8")
+    if items:
+        _save_hist([i["code"] for i in items])
     print(f"ファッション {len(items)} 点", [i['kind'] for i in items])
 
 
