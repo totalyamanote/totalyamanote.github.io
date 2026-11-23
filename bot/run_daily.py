@@ -930,7 +930,7 @@ th,td{{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;verti
 .num{{text-align:right;white-space:nowrap}} .eff{{font-weight:700;color:var(--acc)}}
 .n{{color:var(--mut)}} .shop,.meta{{font-size:12px;color:var(--mut);margin:0}}
 .amz a{{display:inline-block;margin:6px 0 2px;padding:6px 12px;border-radius:8px;background:#ff9900;color:#111;text-decoration:none;font-weight:600;font-size:13px}}
-.cards{{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}}
+.cards{{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}}
 .card{{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;padding:10px;text-decoration:none;color:inherit;background:var(--card);box-shadow:0 2px 6px rgba(0,0,0,.06);transition:transform .15s}}
 .card:hover{{transform:translateY(-2px)}}
 .card img{{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:8px}}
@@ -946,19 +946,6 @@ th,td{{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;verti
 .rv{{font-size:11px;color:var(--mut)}} .go{{margin-top:auto;font-size:12px;font-weight:700;color:#fff;background:#bf0000;border-radius:6px;text-align:center;padding:5px}}
 a.row{{display:flex;gap:10px;align-items:center;color:inherit}} img.th{{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:6px;flex:none;border:1px solid var(--line)}}
 @media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr}}}}
-/* 2026-11-23 商品一覧：マムートふうのすっきりしたカード。品のある控えめな文字。価格を主に、実質は補足 */
-.cards{{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:34px 16px}}
-.cards .card{{border:0;box-shadow:none;background:transparent;padding:0;border-radius:0;gap:3px}}
-.cards .card img{{background:#f3f3f3;border:0;border-radius:0;padding:0;margin-bottom:10px;object-fit:contain;mix-blend-mode:multiply}}
-:root[data-theme=dark] .cards .card img{{mix-blend-mode:normal}}
-.cards .card .gtag{{order:-1;position:static;background:none;color:var(--mut);font-size:10.5px;font-weight:500;letter-spacing:.06em;padding:0;margin-bottom:5px;line-height:1.3}}
-.cards .card .hot{{z-index:2;top:30px;left:8px;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;padding:2px 7px;border-radius:0;box-shadow:none}}
-.cards .card .nm{{order:2;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;font-weight:400;line-height:1.55;min-height:3.1em;color:var(--fg);letter-spacing:.01em}}
-.cards .card .yen{{order:3;font-weight:700;color:var(--fg);font-size:16px;margin-top:6px;margin-bottom:2px;letter-spacing:.01em;line-height:1.3}}
-.cards .card .eff2{{order:4;background:none;color:var(--mut);font-size:11.5px;font-weight:400;padding:0}}
-.cards .card .pts{{order:5;font-size:11.5px;font-weight:600;color:var(--fg)}} .cards .card .rv{{order:6;font-size:11.5px;color:var(--mut)}}
-.cards .card .go,.cards .card .go.amz,.cards .card .go.ygo{{order:7;margin-top:8px;background:none;color:var(--fg);padding:0 0 2px;text-align:left;font-size:11.5px;font-weight:500;letter-spacing:.06em;border-radius:0;border-bottom:1px solid var(--fg);align-self:flex-start}}
-@media (max-width:480px){{.cards{{grid-template-columns:1fr 1fr;gap:28px 12px}}}}
 .pt{{display:block;font-size:11px;color:var(--acc)}} .low{{font-size:12px;color:var(--acc);margin-left:6px}}
 a{{color:inherit}}
 </style></head><body><main>
