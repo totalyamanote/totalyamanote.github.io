@@ -376,7 +376,7 @@ def work_page(w, works=None):
     if w.get("characters"):
         cs = []
         _chs = list(w["characters"])
-        if sum(1 for c in _chs if len(c) > 3 and c[3]) >= 3:   # 画像のあるキャラが3人以上なら、画像のないキャラは載せない（2026-11-24 坂田さん「埋まってないものは表示自体やめよう」）
+        if sum(1 for c in _chs if len(c) > 3 and c[3]) >= 1:   # 画像のあるキャラが1人でもいれば、画像のあるキャラだけ載せる（マンガサイトはキャラ画像だけ・俳優写真は載せない。2026-11-24 坂田さん）
             _chs = [c for c in _chs if len(c) > 3 and c[3]]
         for c in _chs:
             n, r, v, cimg, ccr = (list(c) + ["", "", "", "", ""])[:5]
