@@ -278,7 +278,7 @@ def render(items, stamp):
                   + "<span class=go>楽天市場で見る →</span></a>")
     if not cards:
         return "<!--hubf--><!--/hubf-->"
-    return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション（楽天市場）</h2>"
+    return ("<!--hubf--><section id=fashion style='margin-top:12px'><h2>楽天市場のレディースファッション</h2>"
             f"<p class=meta>楽天市場のレディースファッションを、割引の大きい順に（{INSTA_MAX:,}円まで）。{esc(stamp)}時点。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
@@ -309,15 +309,18 @@ def main():
         if items:
             _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
     blk = render(items, datetime.now().strftime("%Y/%m/%d %H:%M"))
-    p = SITE / "index.html"; t = p.read_text(encoding="utf-8")
-    if "<!--hubf-->" in t:
+    # 2026-11-25 坂田さん「物販のレディースファッションはファッションページへ移籍」：商品の段は fashion/index.html に出す。トップ（物販）からは外す。
+    p = SITE / "fashion" / "index.html"
+    if p.exists():
+        t = p.read_text(encoding="utf-8")
         t2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", lambda m: blk, t, count=1, flags=re.S)
-    elif "<!--hubart-->" in t:
-        t2 = t.replace("<!--hubart-->", blk + "<!--hubart-->", 1)
-    else:
-        t2 = t
-    if t2 != t:
-        p.write_text(t2, encoding="utf-8")
+        if t2 != t:
+            p.write_text(t2, encoding="utf-8")
+    pi = SITE / "index.html"
+    ti = pi.read_text(encoding="utf-8")
+    ti2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", "<!--hubf--><!--/hubf-->", ti, count=1, flags=re.S)
+    if ti2 != ti:
+        pi.write_text(ti2, encoding="utf-8")
     if items and not _reused:
         _save_hist([i["code"] for i in items] + [_nkey(i["name"]) for i in items])
     print(f"ファッション {len(items)} 点", [i['kind'] for i in items])

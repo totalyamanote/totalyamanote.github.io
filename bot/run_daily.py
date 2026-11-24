@@ -1108,9 +1108,8 @@ def main():
                 _cf.write_text(json.dumps(_full, ensure_ascii=False, default=str), encoding="utf-8")
             except Exception:
                 pass
-    bottom = (cards_section("ふるさと納税（寄付額1万円未満・ポイント倍率が高い順）", furusato, "furusato",
-                            "控除の上限額は年収や家族構成で変わります。寄付の前に楽天ふるさと納税のシミュレーターで確認を。")
-              + cards_section("ホテル・旅館（1人2万円以内・評価4.0以上）", hotels, "hotel",
+    # 2026-11-25 坂田さん「物販のふるさと納税はふるさと納税ページへ移籍」：トップ（物販）には出さない（商品は furusato/index.html ← bot/furusato.py）
+    bottom = (cards_section("ホテル・旅館（1人2万円以内・評価4.0以上）", hotels, "hotel",
                               "料金は時期・人数・プランで変わります。空室と最新の料金はリンク先で確認してください。"))
     if not args.mock:
         update_articles(api, stamp)
