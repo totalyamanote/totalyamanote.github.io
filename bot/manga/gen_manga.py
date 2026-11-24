@@ -366,7 +366,7 @@ def work_page(w, works=None):
                   ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
                   ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}.bb.b{background:#0b5fa5;color:#fff!important}"
                   ".fl{display:block;text-align:center;border:2px solid #15803d;color:#15803d!important;font-weight:900;border-radius:12px;padding:10px;text-decoration:none}</style>"
-                  f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(public_note(w.get('free_note', '')))}</p>"
+                  f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。</p>"
                   f"<a class=fl href='{esc(w.get('free_url', ''))}' rel='{'sponsored nofollow noopener' if w.get('store') in ('kindle', 'kobo') else 'noopener'}' target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"
                   + ("<p class=note>※Amazonアソシエイトのリンクです。無料の本を読んでも料金はかかりません。</p></div>" if w.get('store') == 'kindle' else ("<p class=note>※楽天アフィリエイトのリンクです。無料の本を読んでも料金はかかりません。</p></div>" if w.get('store') == 'kobo' else "<p class=note>※このリンクは広告ではありません（当サイトに報酬は発生しません）。</p></div>"))
                   + (f"<div class=fbox id=buy style='border-color:#c2410c'><h2>続き（{bv}巻〜）を読む</h2><p>無料の続きは、好きなストアで読めます。</p><div class=bbs>{btns}</div>"
@@ -385,8 +385,6 @@ def work_page(w, works=None):
         _pt = _slug in ("tengoku-daimakyo", "the-fable")   # ポイント作品（有料）のアニメ
         _st = "ポイント作品（有料）" if _pt else "見放題"
         vidbox = (f"<div class=fbox id=video style='border-color:#7c3aed'><h2>🎬 アニメをU-NEXTで見る</h2>"
-                  f"<p>『{esc(title)}』のアニメは、動画配信サービスU-NEXTで配信されています（<b>{_st}</b>・2026年11月24日時点）。"
-                  f"最新の配信状況はU-NEXTサイトにてご確認ください。</p>"
                   f"<a class=fl style='background:linear-gradient(135deg,#7c3aed,#a78bfa);border-color:#7c3aed;color:#fff!important' href='https://h.accesstrade.net/sp/cc?rk=0100ougc00p32l' rel='sponsored nofollow noopener' target=_blank>U-NEXTで見る ›</a>"
                   f"<p style='margin:8px 0 0'><a href='../../video/w/{_slug}.html'>配信状況・あらすじ・登場人物の紹介ページ ›</a></p>"
                   f"<p class=note>PR｜U-NEXTのアフィリエイト広告を利用しています。31日間の無料トライアルがあります（条件は公式サイトで確認）。ポイント作品は別料金です。</p></div>")
@@ -432,15 +430,18 @@ def work_page(w, works=None):
           (f"{nm}は何巻まで出ている？", f"{esc(w.get('volumes', '作品ページで確認してください。'))}")]
     faq = "<h2>よくある質問</h2>" + "".join(f"<div class=box><p style='margin:0'><b>Q. {q}</b></p><p style='margin:6px 0 0'>A. {a}</p></div>" for q, a in qa)
     revh = ""
-    rv = w.get("user_reviews")
-    if rv:
-        tot = sum(rv["dist"]) or 1
-        bars = "".join(f"<div class=bar><span>★{5 - i}</span><i style='width:{n * 100 // tot}%'></i><em>{n:,}件</em></div>" for i, n in enumerate(rv["dist"]))
-        tg = "".join(f"<span class=badge>＃{esc(t)}</span>" for t in rv.get("tags", []))
-        cards = "".join(f"<div class=rv><b>「{esc(h)}」</b><p>{esc(b)}</p><span class=note>参考になった {n}人</span></div>" for h, b, n in rv.get("top", []))
-        revh = (f"<h2>読者レビュー</h2><div class=box><p style='margin:0 0 6px'><span class=stars>★{esc(w.get('rating',''))}</span>（{esc(w.get('reviews',''))}件）</p>{bars}"
-                f"<p style='margin:10px 0 0'>レビューに多い気持ち：{tg}</p></div><div class=rvs>{cards}</div>"
-                f"<p class=note>ストアの購入者レビュー（参考になった数が多い順）を、当サイトで短く要約しました。{esc(rv.get('checked',''))}時点。</p>")
+    rv = w.get("user_reviews") or {}
+    if w.get("rating"):   # 動画サイトと同じ見せ方：星を大きく＋出どころ1行＋声は1行（2026-11-25 坂田さん「動画サイトの構成に合わせて見やすく」）
+        _src = {"kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
+        _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
+        _hs = "／".join(h for h, _b, _x in (rv.get("top") or [])[:3])
+        _tg = "".join(f"<span class=badge>＃{esc(t)}</span>" for t in rv.get("tags", [])[:5])
+        revh = ("<style>.rvs0{font-size:34px;line-height:1.2;margin:2px 0 2px}.rvs0 .st{color:#f59e0b;letter-spacing:2px;font-size:28px}.rvs0 b{margin-left:8px}.rvs0 .mx{font-size:16px;opacity:.7;margin-left:4px}"
+                ".rvsrc0{font-size:13px;opacity:.7;margin:0 0 10px}.rv1{margin:8px 0 0;font-size:16px;line-height:1.7;font-weight:700}</style>"
+                f"<h2>読者の評価と声</h2><div class=box><div class=rvs0><span class=st aria-hidden=true>{'★' * _k}{'☆' * (5 - _k)}</span><b>{_n:.1f}</b><span class=mx>/ 5</span></div>"
+                f"<div class=rvsrc0>{esc(_src)}・{esc(w.get('reviews',''))}件・{today.strftime('%Y-%m-%d')}時点</div>"
+                + (f"<div>{_tg}</div>" if _tg else "") + (f"<p class=rv1>👍{esc(_hs)}</p>" if _hs else "")
+                + "<p class=note style='margin-top:8px'>評価の数字はストアの公開情報、声の一言は購入者レビューを当サイトで短くまとめたものです。</p></div>")
     rel = ""
     if works:
         # 全作品が同じ数だけ「ほかの作品」からリンクされるよう、次の4作品を順番に（先頭4作品だけに集中させない）
@@ -462,13 +463,13 @@ def work_page(w, works=None):
         vols = "<h2>表紙ギャラリー（1〜8巻）</h2><div class=vols>" + "".join(
             f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w[chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100)]}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\"><img src='{esc(cover(w, v, 'M'))}' alt='{int(v)}巻の表紙' loading=lazy onerror=\"this.parentNode.style.display='none'\">{int(v)}巻</a>"
             for v in ("001", "002", "003", "004", "005", "006", "007", "008")) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
-    body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』<small style='display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:4px'>あらすじ・登場人物・連載期間{'と、無料で読める期間' if dl is not None else '・読者の声'}</small></h1><p>{esc(w.get('hook',''))}</p><p>{free_badge}</p></div></div></div>
+    body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』</h1><p>{free_badge}</p></div></div></div>
 <div>{tags}</div>
-{buybox}{vidbox}
 {syn}
 <h2>基本情報</h2><div class=box><table>{table}</table></div>
 {chars}
 {revh}
+{buybox}{vidbox}
 <p class=note>❓ 無料で読める仕組み・全巻無料・安全な読み方などは「<a href='../faq.html'>よくある質問</a>」にまとめています。</p><p class=note>🏪 どのストアで読むとおトク？ → 「<a href='../store-compare.html'>電子書籍ストア比較（初回クーポン・ポイント還元）</a>」</p>
 {vols}
 {"<p style='text-align:center'><a class=btn href='#read'>無料で読む・続きを読む ↑</a></p>" if w.get("store") in ("ebookjapan", "kindle", "kobo") else f"<p style='text-align:center'><a class=btn href=" + chr(34) + esc(link(tid)) + chr(34) + " rel=" + chr(34) + "nofollow sponsored" + chr(34) + ">1巻を見る" + ("（無料）" if dl is not None else "") + "</a></p>"}
