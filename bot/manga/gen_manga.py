@@ -323,13 +323,13 @@ def work_page(w, works=None):
         b = w.get("buy") or {}
         bv = b.get("vol")
         btns = ""
-        # ボタンの順番：楽天Kobo → ebookjapan → Kindle（2026-11-24 坂田さん指定）
-        if b.get("kobo"):
-            btns += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻</small></a>"
-        if b.get("ebj"):
-            btns += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
+        # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-24 坂田さん指定）
         if b.get("kindle"):
             btns += f"<a class='bb a' href='{esc(b['kindle'])}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>{bv}巻</small></a>"
+        if b.get("ebj"):
+            btns += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
+        if b.get("kobo"):
+            btns += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻</small></a>"
         buybox = ("<style>.fbox{background:var(--card,#fff);border:2px solid #15803d;border-radius:14px;padding:12px 16px;margin:14px 0}.fbox h2{margin-top:0}"
                   ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
                   ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}"
