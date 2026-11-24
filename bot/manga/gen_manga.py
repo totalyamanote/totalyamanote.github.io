@@ -330,9 +330,11 @@ def work_page(w, works=None):
             btns += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
         if b.get("kobo"):
             btns += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻</small></a>"
+        if w.get("real_id"):   # ブックライブ（提携済み・バリューコマース）。ブックライブの作品IDが分かる作品だけ（2026-11-24 坂田さん「ブックライブボタンも入れていい」）
+            btns += f"<a class='bb b' href='{esc(link(w['title_id'], f'{int(bv or 2):03d}'))}' rel='sponsored nofollow noopener' target=_blank>ブックライブ<small>{bv}巻</small></a>"
         buybox = ("<style>.fbox{background:var(--card,#fff);border:2px solid #15803d;border-radius:14px;padding:12px 16px;margin:14px 0}.fbox h2{margin-top:0}"
                   ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
-                  ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}"
+                  ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}.bb.b{background:#0b5fa5;color:#fff!important}"
                   ".fl{display:block;text-align:center;border:2px solid #15803d;color:#15803d!important;font-weight:900;border-radius:12px;padding:10px;text-decoration:none}</style>"
                   f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(w.get('free_note', ''))}</p>"
                   f"<a class=fl href='{esc(w.get('free_url', ''))}' rel='{'sponsored nofollow noopener' if w.get('store') in ('kindle', 'kobo') else 'noopener'}' target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"

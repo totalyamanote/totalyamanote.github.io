@@ -78,7 +78,13 @@
   "aliases": [
    "サカモトデイズ",
    "坂本デイズ"
-  ]
+  ],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B093L1ZNDH?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162612904.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F11d2765e2c773113b7da56b82d3184c5%2F"
+  }
  },
  "20206940": {
   "title_id": "20206940",
@@ -166,7 +172,13 @@
   "reviews": "778",
   "aliases": [
    "スパイファミリー"
-  ]
+  ],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B07X3HFJ9Q?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162245603.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F0c76b654a13c3cb5abf43f4ae2ce2f39%2F"
+  }
  },
  "2504807": {
   "title_id": "2504807",
@@ -234,7 +246,13 @@
   "reviews": "100",
   "aliases": [
    "めおと日和"
-  ]
+  ],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B0C6SR6QWN?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00164218671.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F86fb38fe12a03353a6662f7ff02d5067%2F"
+  }
  },
  "2509734": {
   "title_id": "2509734",
@@ -306,7 +324,13 @@
   "reviews": "212",
   "aliases": [
    "シャンフロ"
-  ]
+  ],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B08PNTQ3CD?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162486750.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa847890636113c37aebba5dc97f9c4fc%2F"
+  }
  },
  "2509732": {
   "title_id": "2509732",
@@ -374,7 +398,13 @@
    "checked": "2026-11-14"
   },
   "reviews": "107",
-  "aliases": []
+  "aliases": [],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B07PLX9G1C?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162118928.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fec7e3b56ec2538dfbd7eae90a3b468eb%2F"
+  }
  },
  "2509724": {
   "title_id": "2509724",
@@ -443,7 +473,13 @@
   "reviews": "50",
   "aliases": [
    "ファブル 第3部"
-  ]
+  ],
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B0FNZNGKH2?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00166198674.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fc6708178e6e43757a729dcced01cd583%2F"
+  }
  },
  "ebj516901": {
   "title_id": "ebj516901",
@@ -507,7 +543,8 @@
    "vol": 7,
    "kindle": "https://www.amazon.co.jp/dp/B0B6FJ3PHT?tag=shogo450e-22",
    "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00163225882.html",
-   "ebj_price": 649
+   "ebj_price": 649,
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F95e26b2911b3361da9177af30c5f984a%2F"
   },
   "user_reviews": {
    "dist": [
@@ -622,7 +659,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B08KW4DG8R?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F847e265d5a8f3865baad369ac8299cda%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F847e265d5a8f3865baad369ac8299cda%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162459191.html"
   },
   "added": "2026-11-14"
  },
@@ -708,7 +746,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B0BM3H5JBF?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F943b62dd15213ae0b4730c268fb22204%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F943b62dd15213ae0b4730c268fb22204%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00163598528.html"
   },
   "added": "2026-11-14"
  },
@@ -794,7 +833,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B0BP7GWDP5?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F40e555296484354582e238622fa37586%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F40e555296484354582e238622fa37586%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00163692430.html"
   },
   "added": "2026-11-14"
  },
@@ -883,7 +923,8 @@
   "buy": {
    "vol": 2,
    "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa8c1443ef514375590bf5f9c1cfa18dc%2F",
-   "kindle": "https://www.amazon.co.jp/dp/B0BX23DFZW?tag=shogo450e-22"
+   "kindle": "https://www.amazon.co.jp/dp/B0BX23DFZW?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00163926528.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -966,7 +1007,9 @@
   },
   "buy": {
    "vol": 2,
-   "kindle": "https://www.amazon.co.jp/dp/B0FTSC5BJJ?tag=shogo450e-22"
+   "kindle": "https://www.amazon.co.jp/dp/B0FTSC5BJJ?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00166343922.html",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fb465a12b138f3df2bb839c630f0efae1%2F"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1047,7 +1090,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B0CW1JD2Y4?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa506e3d7630236ceba7a530d74237148%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa506e3d7630236ceba7a530d74237148%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00164883221.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1135,7 +1179,8 @@
   "buy": {
    "vol": 2,
    "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F5ebe71db9b6633a3969a5a3bb57ead21%2F",
-   "kindle": "https://www.amazon.co.jp/dp/B0CJY18ZFK?tag=shogo450e-22"
+   "kindle": "https://www.amazon.co.jp/dp/B0CJY18ZFK?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00164666867.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1227,7 +1272,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B0C775YG9P?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fd9dc0612123a3a1a9b5a6a9e13ed063e%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fd9dc0612123a3a1a9b5a6a9e13ed063e%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00164229503.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1317,7 +1363,9 @@
   },
   "buy": {
    "vol": 3,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F3154af7e30d63ce7a777301c8b55c3eb%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F3154af7e30d63ce7a777301c8b55c3eb%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B06WLQ6JZ2?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160734327.html"
   },
   "store": "ebookjapan",
   "free_ongoing": true,
@@ -1409,7 +1457,9 @@
   },
   "buy": {
    "vol": 4,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F2d78acfbb71240869191c77dbe91d6a9%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F2d78acfbb71240869191c77dbe91d6a9%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B009PL81SI?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060080316.html"
   },
   "store": "ebookjapan",
   "free_ongoing": true,
@@ -1502,7 +1552,9 @@
   "free_url": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa07e80a4008139bebd5748703259b8b3%2F",
   "buy": {
    "vol": 3,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F9b33142fb8fa464a9a3b24a3c54288be%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F9b33142fb8fa464a9a3b24a3c54288be%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B00AQBEW4S?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060095223.html"
   },
   "title_id": "koboa07e80a4008139bebd5748703259b8b3",
   "store": "kobo",
@@ -1688,7 +1740,9 @@
   },
   "buy": {
    "vol": 3,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4c7e63a81ac94a809faeb7300942f721%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4c7e63a81ac94a809faeb7300942f721%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B009PL86KQ?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060084045.html"
   },
   "store": "ebookjapan",
   "free_ongoing": true,
@@ -1757,7 +1811,8 @@
   "buy": {
    "vol": 2,
    "kindle": "https://www.amazon.co.jp/dp/B094XVHZB1?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fe84eac575a0a3e2bba506ec8ca5c65e4%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fe84eac575a0a3e2bba506ec8ca5c65e4%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162603593.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1845,7 +1900,8 @@
   "buy": {
    "vol": 3,
    "kindle": "https://www.amazon.co.jp/dp/B00AA6MQ1K?tag=shogo450e-22",
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fd5767214e6ca4d47ac1eceeec17f8678%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fd5767214e6ca4d47ac1eceeec17f8678%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060084230.html"
   },
   "store": "kindle",
   "free_ongoing": true,
@@ -1911,7 +1967,9 @@
   },
   "buy": {
    "vol": 5,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Ff7e3cc0e74173cbd9d360c34809c70fc%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Ff7e3cc0e74173cbd9d360c34809c70fc%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B0DBL8SW3W?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00165328865.html"
   },
   "store": "ebookjapan",
   "added": "2026-11-22"
@@ -2001,7 +2059,9 @@
   "free_url": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fdcf484ebabcb385ca9f45621f968b76b%2F",
   "buy": {
    "vol": 2,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fc3418a007a6d4edd8fa2ef9fcf4917c0%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fc3418a007a6d4edd8fa2ef9fcf4917c0%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B009LHBVOW?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060081190.html"
   },
   "title_id": "kobodcf484ebabcb385ca9f45621f968b76b",
   "store": "kobo",
@@ -2081,7 +2141,9 @@
   "free_url": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F153fa5036946361290bf7b7e58fed3b5%2F",
   "buy": {
    "vol": 4,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F6ae8589c07df39e6a06824e6fcb55fca%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F6ae8589c07df39e6a06824e6fcb55fca%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B07436KT5L?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160774780.html"
   },
   "title_id": "kobo153fa5036946361290bf7b7e58fed3b5",
   "store": "kobo",
@@ -2146,7 +2208,9 @@
   },
   "buy": {
    "vol": 4,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F0c42569f358339a797d6e5e65a0f0582%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F0c42569f358339a797d6e5e65a0f0582%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B07SXT4YFB?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162181573.html"
   },
   "store": "ebookjapan",
   "added": "2026-11-23"
@@ -2207,7 +2271,9 @@
   },
   "buy": {
    "vol": 4,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4fd8f669bdd83a108c421becc30b2eef%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4fd8f669bdd83a108c421becc30b2eef%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B07BWQY6KG?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160853545.html"
   },
   "store": "ebookjapan",
   "added": "2026-11-24"
@@ -2268,7 +2334,9 @@
   },
   "buy": {
    "vol": 4,
-   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F7254461ea74e4f03814411822e98421f%2F"
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/g00reb4o.dmbdn449.g00reb4o.dmbdo1b8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F7254461ea74e4f03814411822e98421f%2F",
+   "kindle": "https://www.amazon.co.jp/dp/B009KWTINY?tag=shogo450e-22",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060050800.html"
   },
   "store": "ebookjapan",
   "added": "2026-11-24"
