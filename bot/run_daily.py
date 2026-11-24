@@ -381,6 +381,9 @@ PICK_MIN_RATE = 6    # 「ポイント倍率が高い商品」はポイント6�
 PICK_MAX = 8         # 楽天の商品は最大8点（同「商品数少なくして」）。Amazon注目は2点
 
 
+PICK_JUNK = re.compile(r"ゴミ箱|ごみ箱|ダストボックス|収納ボックス|収納ケース|防犯カメラ|見守りカメラ|監視カメラ|デリケートゾーン|スライサー|ネジ|ボルト|工具|替刃|替え刃|シール|ステッカー")   # 地味で衝動買いされにくい物は出さない（2026-11-24 坂田さん「売れそうなの頼む」）
+
+
 def fresh_picks(api, cfg, posts, sh, per_genre=2):
     """上の欄：まだ出していない1万円未満で、ポイント2倍以上の商品だけをジャンルごとに集める（1倍は出さない＝ユーザー指定）。
     ランキングを上から見て、足りなければポイントアップ中の商品検索（pointRateFlag=1）で補う。
@@ -398,8 +401,8 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
             for it in pool:
                 k = dedupe_key(it)
                 w = (short_name(it["name"], 80).split() or [""])[0]
-                if (not MIN_PRICE <= it["price"] <= MAX_PRICE or it["review_count"] < 30 or it.get("point_rate", 1) < PICK_MIN_RATE
-                        or OLD_NG.search(short_name(it["name"], 80)) or ELEC_NG.search(it["name"])
+                if (not MIN_PRICE <= it["price"] <= MAX_PRICE or it["review_count"] < (100 if it.get("rank") and it["rank"] <= 40 else 300) or it.get("point_rate", 1) < PICK_MIN_RATE
+                        or PICK_JUNK.search(it["name"]) or OLD_NG.search(short_name(it["name"], 80)) or ELEC_NG.search(it["name"])
                         or was_shown(sh, it) or k in keys or (len(w) >= 4 and w in heads)):
                     continue
                 keys.add(k); cands.append({"genre": g["name"], "_head": w, **it})
@@ -422,7 +425,8 @@ def fresh_picks(api, cfg, posts, sh, per_genre=2):
                                          genre_id=g["genre_id"], point_only=True))
             except RuntimeError:
                 break
-        cands.sort(key=lambda p: (-p.get("point_rate", 1), -p.get("review_count", 0)))
+        # 売れ筋（ジャンルのランキング上位）を最優先。5位ごとの帯の中で、ポイント倍率が高い順（2026-11-24 坂田さん「売れそうなの頼む」）
+        cands.sort(key=lambda p: ((p.get("rank") or 99) // 5, -p.get("point_rate", 1), -p.get("review_count", 0)))
         chosen = []
         for c in cands:
             d = api.item_detail(c["item_code"])
