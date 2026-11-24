@@ -375,7 +375,10 @@ def work_page(w, works=None):
     chars = ""
     if w.get("characters"):
         cs = []
-        for c in w["characters"]:
+        _chs = list(w["characters"])
+        if sum(1 for c in _chs if len(c) > 3 and c[3]) >= 3:   # 画像のあるキャラが3人以上なら、画像のないキャラは載せない（2026-11-24 坂田さん「埋まってないものは表示自体やめよう」）
+            _chs = [c for c in _chs if len(c) > 3 and c[3]]
+        for c in _chs:
             n, r, v, cimg, ccr = (list(c) + ["", "", "", "", ""])[:5]
             im = (f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w.get(chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100))}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\">"
                   f"<img src='{esc(cover(w, v, 'M'))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>") if v and w.get("real_id") else (
