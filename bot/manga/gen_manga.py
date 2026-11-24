@@ -379,7 +379,16 @@ def work_page(w, works=None):
                   f"<a class=fl style='background:linear-gradient(135deg,#7c3aed,#a78bfa);border-color:#7c3aed;color:#fff!important' href='https://h.accesstrade.net/sp/cc?rk=0100ougc00p32l' rel='sponsored nofollow noopener' target=_blank>U-NEXTで見る ›</a>"
                   f"<p style='margin:8px 0 0'><a href='../../video/w/{_slug}.html'>配信状況・あらすじ・登場人物の紹介ページ ›</a></p>"
                   f"<p class=note>PR｜U-NEXTのアフィリエイト広告を利用しています。31日間の無料トライアルがあります（条件は公式サイトで確認）。ポイント作品は別料金です。</p></div>")
-    syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
+    _s3 = {}
+    try:
+        _s3 = json.loads((HERE / "data" / "manga_syn3.json").read_text(encoding="utf-8")).get(str(w.get("title_id")), [])
+    except Exception:
+        _s3 = []
+    if _s3:   # 太字の一言＋続きが気になる2文（見出し・枠なし）（2026-11-25 坂田さん「作品紹介も同じく」）
+        syn = (f"<div class=syn style='font-size:16px;line-height:2'>"
+               + "".join(f"<p style='margin:0 0 2px'>{esc(x)}</p>" for x in _s3[:2]) + "</div>")
+    else:
+        syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
     chars = ""
     if w.get("characters"):
         cs = []
