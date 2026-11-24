@@ -60,7 +60,8 @@ def kind_of(name):
 # Instagram発ブランド（2026-11-24 坂田さん「これらのブランド使って掲載」）。楽天で新品が売られているものだけ。
 # 調べた結果：Lil Ambition・BIRTHDAY BASH・Bibiy.は楽天では中古だけ、THE TOE・OBLI・Acak.は楽天に出店なし → 入れない
 INSTA = [("eimy istoire", r"eimy\s*istoire|エイミーイストワール"), ("anuans", r"anuans|アニュアンス"),
-         ("CREDONA", r"CREDONA|クレドナ"), ("ETRÉ TOKYO", r"ETR[EÉ]\s*TOKYO|エトレトウキョウ|エトレトーキョー")]
+         ("CREDONA", r"CREDONA|クレドナ"), ("ETRÉ TOKYO", r"ETR[EÉ]\s*TOKYO|エトレトウキョウ|エトレトーキョー"),
+         ("deres", r"deres\s*[/／]?\s*デレス|デレス\s*deres|\bderes\b.*(?:レディース|ワンピース|ニット|パンツ|スカート)")]   # deres は2026-11-24時点で楽天は中古だけ。新品が出たら自動で載る
 # 2026-11-24 G-BLO「芸能人の服ブランド一覧」（女性24）も調べた：楽天で新品の服があるのは ETRÉ TOKYO（杉田純奈）だけ。
 # 虜・ROSY LUCE・LAVANDA・Par la magie・ALLISON BROWN・miraville・INTIMITE・MES VACANCES・FUKUU・Ange Charme・Parsley・mmts・RE.・ESS BY・conte・MiiA・SAAKIN・ROY・WCJ・PUNYUS・loin.・newnow・Herlipto は中古だけ／出店なし／服以外
 # 2026-11-24 追加で調べたもの（楽天で新品なし→載せない）：deres・JOSE MOON（中古だけ）、Her lip to（楽天は化粧品と下着だけ）、
@@ -260,7 +261,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：インフルエンサー・モデル発ブランド</h2>"
-            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
