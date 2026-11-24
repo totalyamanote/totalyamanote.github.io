@@ -212,8 +212,27 @@ def _works():
     return _WORKS
 
 
+_KR = None
+
+
+def _kr():
+    global _KR
+    if _KR is None:
+        _KR = {}
+        for f in (HERE / "data" / "newrel_ratings.json", HERE / "site" / "bot" / "manga" / "data" / "newrel_ratings.json", HERE / "data" / "newrel_ratings.json"):
+            try:
+                _KR = json.loads(f.read_text(encoding="utf-8"))
+                break
+            except Exception:
+                continue
+    return _KR
+
+
 def rating_of(e):
-    """新刊の星評価：①楽天ブックスのその巻のレビューが3件以上ならそれ ②なければ同じ作品の評価（マンガサイトの作品データ・掲載ストアの表示） ③なければ出さない"""
+    """新刊の星評価（2026-11-24 坂田さん「Kindle優先・なければKobo・発売前は同じシリーズの別の巻のKindle」）：①data/newrel_ratings.json（Kindleの商品ページの評価。その巻、発売前なら直近の既刊）②楽天ブックスのその巻のレビューが3件以上ならそれ ②なければ同じ作品の評価（マンガサイトの作品データ・掲載ストアの表示） ③なければ出さない"""
+    kr = _kr().get(e.get("isbn", ""))
+    if kr and kr.get("rating") and kr.get("count"):
+        return f"{float(kr['rating']):.1f}", int(kr["count"]), kr.get("source", "Kindle")
     try:
         if e.get("rb_rating") and int(e.get("rb_reviews") or 0) >= 3:
             return f"{float(e['rb_rating']):.1f}", int(e["rb_reviews"]), "楽天ブックス" + ("・シリーズ" if e.get("rb_series") else "")
