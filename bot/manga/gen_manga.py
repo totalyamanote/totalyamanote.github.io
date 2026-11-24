@@ -274,6 +274,13 @@ def always_free_page():
 
 def load_works():
     works = json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else {}
+    for _w in (works.values() if isinstance(works, dict) else works):   # 星評価は小数1桁にそろえる（2026-11-24 坂田さん）
+        for _k in ("rating", "amz_rating"):
+            try:
+                if _w.get(_k):
+                    _w[_k] = f"{float(_w[_k]):.1f}"
+            except (TypeError, ValueError):
+                pass
     if QUEUE.exists():
         for e in json.loads(QUEUE.read_text(encoding="utf-8")):
             t = e["text"]
