@@ -1,7 +1,7 @@
 """サイト全ページをGoogleのお作法で点検（title/description/h1/見出し順/canonical/sitemap/JSON-LD/alt/広告リンクのsponsored/PR表示位置/リンク切れ/重複/孤立）。使い方：cd site && python3 ../seo_audit.py"""
 import re,glob,json,os,html,collections,urllib.parse
 SITE='.'
-pages=[p for p in sorted(glob.glob('*.html')+glob.glob('articles/*.html')+glob.glob('compare/*.html')+glob.glob('manga/**/*.html',recursive=True)) if not p.startswith('google')]
+pages=[p for p in sorted(glob.glob('*.html')+glob.glob('articles/*.html')+glob.glob('compare/*.html')+glob.glob('video/**/*.html',recursive=True)+glob.glob('manga/**/*.html',recursive=True)) if not p.startswith('google')]
 sm=open('sitemap.xml',encoding='utf-8').read()
 titles=collections.defaultdict(list); descs=collections.defaultdict(list); inbound=collections.Counter()
 issues=collections.defaultdict(list)
