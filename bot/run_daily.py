@@ -1076,10 +1076,23 @@ def main():
     out.write_text(("\n\n" + "-" * 30 + "\n\n").join(texts) + "\n", encoding="utf-8")
 
     sh = load_shown()
-    picks = fresh_picks(api, cfg, posts, sh)
     from yahoo import Yahoo
     yh = Yahoo(cfg)
-    results = price_watch(api, cfg, today, exclude=[p["item_code"] for p in picks], sh=sh, picks_shown=picks, yahoo=yh)
+    # トップの商品は2日間同じものを見せる（2026-11-24 坂田さん「2日間見せようか」）。同じ2日の間は、手動で更新を走らせても入れ替えない。
+    _cf = DATA / "top_cache.json"
+    _key = datetime.now().toordinal() // 2
+    try:
+        _c = json.loads(_cf.read_text(encoding="utf-8")) if _cf.exists() else {}
+    except Exception:
+        _c = {}
+    if (not args.mock) and _c.get("key") == _key and _c.get("picks") is not None and _c.get("results") is not None:
+        picks, results = _c["picks"], _c["results"]
+        print("   トップの商品：2日間の固定（前回の選び方を再利用）")
+    else:
+        picks = fresh_picks(api, cfg, posts, sh)
+        results = price_watch(api, cfg, today, exclude=[p["item_code"] for p in picks], sh=sh, picks_shown=picks, yahoo=yh)
+        if not args.mock:
+            _cf.write_text(json.dumps({"key": _key, "date": today, "picks": picks, "results": results}, ensure_ascii=False, default=str), encoding="utf-8")
     shown_now = picks + [it for r in results for it in r["items"] + r.get("yahoo", [])]
     furusato = furusato_items(api, cfg, sh, shown_now)
     hotels = hotel_items(api, cfg, sh)
