@@ -54,16 +54,6 @@ jobs:
           SITE_DIR: .
         run: python bot/fashion.py
 
-      # ふるさと納税ページ（site/furusato/index.html）の商品の段（毎朝）
-      - name: Furusato page
-        env:
-          TZ: Asia/Tokyo
-          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
-          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
-          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
-          SITE_DIR: .
-        run: python bot/furusato.py || echo "ふるさと納税の更新に失敗（前の内容のまま）"
-
       # ブラックフライデー記事の「実質価格で選ぶ：楽天のおすすめ」の商品を、更新のたびに入れ替える（ポイント倍率の高い順・最新の価格とポイント）
       - name: Black Friday article products
         env:
