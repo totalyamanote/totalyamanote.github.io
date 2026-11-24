@@ -133,6 +133,13 @@ def insta_pool(api, recent):
 HIST = BASE / "data" / "fashion_shown.json"
 
 
+HIST_DAYS = 30   # 2026-11-24 坂田さん「毎日は、被らないようなね」：30日以内に出した商品（色違い＝同じ名前も）は出さない
+
+
+def _nkey(name):
+    return "n:" + re.sub(r"\s+", "", name)[:18]
+
+
 def _days_ago(n):
     from datetime import timedelta
     return (datetime.now() - timedelta(days=n)).strftime("%Y-%m-%d")
@@ -148,7 +155,7 @@ def _load_hist():
 def _save_hist(codes):
     h = _load_hist()
     h[datetime.now().strftime("%Y-%m-%d")] = codes
-    h = {d: v for d, v in h.items() if d >= _days_ago(7)}
+    h = {d: v for d, v in h.items() if d >= _days_ago(HIST_DAYS + 5)}
     HIST.write_text(json.dumps(h, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
@@ -175,7 +182,7 @@ def pick(api):
     前の2日に出した商品は出さない（毎日8点すべて入れ替え）。レビュー10件以上・★4.0以上、9,800円まで。種類を散らし、同じブランドは2点まで。"""
     today = datetime.now().strftime("%Y-%m-%d")
     hist = _load_hist()
-    recent = {code for d, codes in hist.items() if d != today and d >= _days_ago(2) for code in codes}
+    recent = {code for d, codes in hist.items() if d != today and d >= _days_ago(HIST_DAYS) for code in codes}
     raw = {}
     for x in ranked(api):
         raw[x["itemCode"]] = (int(x["rank"]), x)
@@ -224,6 +231,16 @@ def pick(api):
         if k not in seen_i:
             seen_i.add(k); ins_u.append(c)
     # 2026-11-24 坂田さん「新品あり乗せ」：8点ともInstagram発ブランド（新品）で埋める。8点に届かない日だけ楽天ファッションの人気品で補う
+    ins_u = [c for c in ins_u if _nkey(c["name"]) not in recent]      # 色違い（名前が同じ）も30日は出さない
+    if len(ins_u) < 8:                                                # 30日で候補が尽きたら、14日より前に出したものは戻す（ほかのブランドで埋めない）
+        recent14 = {code for d, codes in hist.items() if d != today and d >= _days_ago(14) for code in codes}
+        more = sorted(insta_pool(api, recent14), key=lambda c: -c["off"])
+        have = {c["code"] for c in ins_u} | {_nkey(c["name"]) for c in ins_u}
+        for c in more:
+            k = _nkey(c["name"])
+            if c["code"] not in have and k not in have and k not in recent14:
+                ins_u.append(c); have |= {c["code"], k}
+    uniq = [c for c in uniq if _nkey(c["name"]) not in recent]
     uniq = ins_u if len(ins_u) >= 8 else ins_u + uniq
     chosen, kind_n, per_brand = [], {}, {}
     for limit in (1, 2, 8):                          # まず種類ごとに1点（割引の大きい順）→ 足りなければ種類2点まで → それでも足りなければ制限なし
@@ -262,7 +279,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：インフルエンサー・モデル発ブランド</h2>"
-            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
@@ -284,7 +301,7 @@ def main():
     if t2 != t:
         p.write_text(t2, encoding="utf-8")
     if items:
-        _save_hist([i["code"] for i in items])
+        _save_hist([i["code"] for i in items] + [_nkey(i["name"]) for i in items])
     print(f"ファッション {len(items)} 点", [i['kind'] for i in items])
 
 
