@@ -637,7 +637,26 @@ def amazon_cards(n=4):
         return []
     esc = html.escape
     out = []
-    for x in aj.get("items", [])[:n]:
+    # 毎日、種類（プロテイン・コスメ・その他）を交互にして、日ごとに先頭をずらす（2026-11-24 坂田さん「アマゾンはずっとプロテイン固定？他のも混ぜて」）
+    groups = {}
+    for x in aj.get("items", []):
+        w = x.get("why", "") + x.get("name", "")
+        k = "protein" if "プロテイン" in w else ("beauty" if "ビューティー" in w else "other")
+        groups.setdefault(k, []).append(x)
+    day = datetime.now().timetuple().tm_yday
+    keys = sorted(groups)
+    keys = keys[day % len(keys):] + keys[:day % len(keys)] if keys else []
+    picked = []
+    for r in range(n):
+        for k in keys:
+            g = groups[k]
+            if r < len(g) and len(picked) < n:
+                picked.append(g[(r + day) % len(g)])
+    seen_a, uniq = set(), []
+    for x in picked:
+        if x["asin"] not in seen_a:
+            seen_a.add(x["asin"]); uniq.append(x)
+    for x in uniq[:n]:
         out.append(f"<a class=card href='https://www.amazon.co.jp/dp/{esc(x['asin'])}?tag=ymnote-top-22' rel='sponsored nofollow noopener' target=_blank>"
                    f"<span class=gtag>Amazon注目</span><img src='{esc(x['image'])}' alt='{esc(short_name(x['name'], 40))}' loading=lazy>"
                    f"<span class=nm>{esc(short_name(x['name'], 40))}</span>"
