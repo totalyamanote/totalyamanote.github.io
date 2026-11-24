@@ -235,7 +235,7 @@ def always_free_page():
     cards = ""
     for w in ws:
         u = VC + urllib.parse.quote(f"https://booklive.jp/product/index/title_id/{w['id']}/vol_no/001", safe="")
-        rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）　" if w.get("rating") else ""
+        rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）<br>" if w.get("rating") else ""
         cards += (f"<div class=box style='{grad(w['id'])};border-top:6px solid var(--g1)'>"
                   f"<a class=boxcv href=\"{esc(u)}\" rel=\"nofollow sponsored\"><img src='https://res.booklive.jp/{w['id']}/001/thumbnail/M.jpg' alt='『{esc(w['title'])}』の表紙' loading=lazy></a>"
                   f"<p><b style='font-size:17px'>『{esc(w['title'])}』</b></p><p class=note>{rt}{esc(w['author'])}</p>"
@@ -428,7 +428,7 @@ def work_page(w, works=None):
         rel = "<h2>ほかの作品</h2><div class=grid>" + "".join(
             f"<a class=card style='{grad(x['title_id'])}' href='{x['title_id']}.html'><div class=thumb>"
             + "".join(f"<img src='{esc(cover(x, v, 'M'))}' alt='『{esc(x['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004"))
-            + f"</div><div class=in><b>『{esc(x['title'])}』</b><br><span class=note>" + (f"<span class=stars>★{esc(x['rating'])}</span> " if x.get("rating") else "") + f"{esc(x.get('author',''))}</span><br>"
+            + f"</div><div class=in><b>『{esc(x['title'])}』</b><br>" + (f"<span class=stars>★{esc(x['rating'])}</span><span class=note>（{esc(x.get('reviews', ''))}件）</span><br>" if x.get("rating") and x.get("reviews") else (f"<span class=stars>★{esc(x['rating'])}</span><br>" if x.get("rating") else "")) + f"<span class=note>{esc(x.get('author',''))}</span><br>"
             + (f"<span class=free>無料</span> <span class=left>あと{left_days(x)}日</span>" if left_days(x) is not None else "") + "</div></a>" for x in others) + "</div>"
     cv = cover(w)
     cvh = (f"<a class=cv href=\"{esc(wlink(w))}\" rel=\"{'noopener' if w.get('store') == 'ebookjapan' else 'nofollow sponsored'}\"><img src='{esc(cv)}' alt='『{esc(title)}』1巻の表紙' loading=eager></a>" if cv else "")
@@ -528,7 +528,7 @@ def theme_pages(works):
                 fu = f"<p><span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span></p>"
             ebj = w.get("store") in ("ebookjapan", "kindle", "kobo")
             tg = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", [])[:4])
-            rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）　" if w.get("rating") else ""
+            rt = f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）<br>" if w.get("rating") else ""
             cv = cover(w, size="M")
             cvb = f"<a class=boxcv href=\"{esc('../w/' + w['title_id'] + '.html#read' if ebj else link(w['title_id']))}\" rel=\"{'noopener' if ebj else 'nofollow sponsored'}\"><img src='{esc(cv)}' alt='『{esc(w['title'])}』の表紙' loading=lazy></a>" if cv else ""
             cards += (f"<div class=box style='{grad(w['title_id'])};border-top:6px solid var(--g1)'>{cvb}<p><b style='font-size:18px'><a href='../w/{w['title_id']}.html'>『{esc(w['title'])}』</a></b></p>"
