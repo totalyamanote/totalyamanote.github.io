@@ -271,15 +271,15 @@ def render(items, stamp):
     for it in items:
         sale = f"<span class=hot>SALE {it['sale']}%OFF</span>" if it["sale"] else ""
         cards += (f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
-                  f"<span class=gtag>{'インフルエンサー発・' if it.get('insta') else ''}{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
+                  f"<span class=gtag>{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
                   f"<span class=nm>{esc(it['name'])}</span><span class=yen>¥{it['price']:,}</span>"
                   f"<span class=pts>ポイント{it['pr']}倍（{it['pt']:,}pt）</span><span class=eff2>実質¥{it['price'] - it['pt']:,}</span>"
                   + (f"<span class=rv>⭐{it['av']}（{it['rc']:,}件）</span>" if it['rc'] else "<span class=rv>新着・レビューはこれから</span>")
                   + "<span class=go>楽天市場で見る →</span></a>")
     if not cards:
         return "<!--hubf--><!--/hubf-->"
-    return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：インフルエンサー・モデル発ブランド</h2>"
-            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+    return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション（楽天市場）</h2>"
+            f"<p class=meta>新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
