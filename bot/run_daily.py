@@ -1035,7 +1035,7 @@ a{{color:inherit}}
 </style></head><body><main>
 <h1>{esc(cfg['site_title'])}</h1>
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
-<p class=note style='margin:4px 0 10px'>楽天・Yahoo!の「価格−ポイント」を比較（1,980〜9,800円・レビュー30件以上・{STEP}入れ替え）。選び方は<a href='#articles'>比較記事</a>へ。</p>
+
 <p class=pr>🛒 <a href='sale.html'><b>ブラックフライデー・スーパーSALEの時期の目安と、買う前のチェックリスト</b></a>　📚 <a href='manga/index.html'><b>マンガ情報（無料の期限つき）</b></a>　📅 <a href='manga/new-releases.html'><b>マンガ新刊カレンダー</b></a></p>
 {picks_html(picks, yahoo)}
 {articles_html()}
