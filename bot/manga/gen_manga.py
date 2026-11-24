@@ -52,7 +52,7 @@ h1{font-size:23px;line-height:1.4} h2{font-size:19px;margin:1.9em 0 .6em;padding
 .chars div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .chars b{display:block;color:var(--acc)}
 .ch .av{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;margin:0 auto 6px;color:#fff;font-size:34px;font-weight:900;background:linear-gradient(135deg,var(--g1,#7c3aed),var(--g2,#f472b6));box-shadow:0 3px 10px rgba(0,0,0,.2)}
-.ch img{width:100%;max-width:150px;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.25);display:block;margin:0 auto 4px}.ch .note{display:block;text-align:center;margin-bottom:6px}
+.ch img.cp{max-width:120px;max-height:150px;object-fit:contain;background:#f4f4f5}.ch img{width:100%;max-width:150px;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.25);display:block;margin:0 auto 4px}.ch .note{display:block;text-align:center;margin-bottom:6px}
 .chars{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important}
 .hmore{margin-top:12px}.hmore summary{cursor:pointer;list-style:none;text-align:center;font-weight:800;font-size:14px;color:#bf0000;border:1px solid #bf0000;border-radius:99px;padding:8px 14px}.hmore summary::-webkit-details-marker{display:none}.hmore[open] summary{margin-bottom:12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
@@ -326,10 +326,13 @@ def work_page(w, works=None):
     if w.get("characters"):
         cs = []
         for c in w["characters"]:
-            n, r, v = (list(c) + ["", ""])[:3]
+            n, r, v, cimg, ccr = (list(c) + ["", "", "", "", ""])[:5]
             im = (f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w.get(chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100))}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\">"
                   f"<img src='{esc(cover(w, v, 'M'))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>") if v and w.get("real_id") else (
                   f"<a href='#buy'><img src='{esc(cover(w, v))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>" if v and w.get("covers") and cover(w, v) else "")
+            if not im and cimg:  # 公式サイトのキャラクター画像（自前で小さく保存したもの）＋出典（2026-11-24 坂田さん「公式サイトの画像使ってもいい」）
+                im = (f"<img class=cp src='https://totalyamanote.jp/{esc(cimg)}' alt='{esc(n)}（公式キャラクター画像）' loading=lazy>"
+                      f"<span class=note>出典：{esc(ccr or '公式サイト')}</span>")
             if not im:  # 表紙に描かれている巻が確認できないキャラは、頭文字の丸アイコンで見た目をそろえる（写真の代わり）
                 im = f"<span class=av style='{grad(w['title_id'])}'>{esc(n[:1])}</span>"
             cs.append(f"<div class=ch>{im}<b>{esc(n)}</b>{esc(r)}</div>")
