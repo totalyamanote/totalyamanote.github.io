@@ -2815,8 +2815,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 2653,
-   "min_price": 2680
+   "min_effective": 2960,
+   "min_price": 2990
   }
  ],
  "ペットシーツ": [
@@ -2905,6 +2905,11 @@
   {
    "date": "2026-11-15",
    "min_effective": 2561,
+   "min_price": 2614
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 2483,
    "min_price": 2614
   }
  ],
@@ -3077,8 +3082,8 @@
  "コーヒー（ドリップ・インスタント）": [
   {
    "date": "2026-11-24",
-   "min_effective": 2522,
-   "min_price": 2802
+   "min_effective": 3078,
+   "min_price": 3240
   }
  ]
 }
