@@ -107,7 +107,7 @@ def left_days(w):
     return d if d>=0 else None
 
 
-VIDEO_MAP = {'20206940': 'spy-family', 'koboa07e80a4008139bebd5748703259b8b3': 'haikyu', 'kobodcf484ebabcb385ca9f45621f968b76b': 'kingdom', 'ebj495291': 'blue-lock', '20206948': 'sakamoto-days', 'ebj390133': 'yakusoku-neverland', 'ebj516901': 'boku-yaba', 'ebj424599': 'kanokari', 'kB00AA6MPWU': 'hikaru-no-go', '2509734': 'shangri-la-frontier', 'ebj134503': 'shin-tennis', 'ebj769663': 'hotaru-no-yomeiri', '2509732': 'tengoku-daimakyo', '2509724': 'the-fable', 'kobo1e66bc136efa3aafa944dfc854a9f2b0': 'keihi'}   # 動画ページ（/video/w/）がある作品。マンガのページから映像へリンク（2026-11-24 坂田さん「アニメは漫画サイトにリンクくっつけよう」）
+VIDEO_MAP = {'20206940': 'spy-family', 'koboa07e80a4008139bebd5748703259b8b3': 'haikyu', 'kobodcf484ebabcb385ca9f45621f968b76b': 'kingdom', 'ebj495291': 'blue-lock', '20206948': 'sakamoto-days', 'ebj390133': 'yakusoku-neverland', 'ebj516901': 'boku-yaba', 'ebj424599': 'kanokari', 'kB00AA6MPWU': 'hikaru-no-go', '2509734': 'shangri-la-frontier', 'ebj134503': 'shin-tennis', 'ebj769663': 'hotaru-no-yomeiri', '2509732': 'tengoku-daimakyo', '2509724': 'the-fable'}   # 動画ページ（/video/w/）がある作品。マンガのページから映像へリンク（2026-11-24 坂田さん「アニメは漫画サイトにリンクくっつけよう」）
 
 
 def page(title, desc, body, depth=0, style="", head=""):
@@ -326,7 +326,7 @@ def work_page(w, works=None):
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
     vidbox = ""
     if tid in VIDEO_MAP:
-        _k = "ドラマ" if tid.startswith("kobo1e66") else "アニメ"
+        _k = "アニメ"
         vidbox = (f"<div class=fbox id=video style='border-color:#4f46e5'><h2>🎬 {_k}でも楽しめます</h2><p>『{esc(title)}』の{_k}は、動画配信サービスU-NEXTで配信されています（見放題かポイント作品かは、紹介ページで確認できます）。</p>"
                   f"<a class=fl style='border-color:#4f46e5;color:#4f46e5!important' href='../../video/w/{VIDEO_MAP[tid]}.html'>{_k}の配信状況を見る ›</a></div>")
     syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
