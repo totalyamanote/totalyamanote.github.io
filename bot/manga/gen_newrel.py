@@ -240,11 +240,11 @@ def card(e, today):
     return ((f"<div class=ncard id=n{e.get('isbn', '')}><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard id=n{e.get('isbn', '')}><span class=nimg>{img}</span>")
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
             + (f"<a class=nt href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank>{esc(e['title'])}</a>" if eu else f"<b class=nt>{esc(e['title'])}</b>")
-            + ((lambda r: f"<span class=nr><b>★{r[0]}</b>（{r[1]}件）<small>{esc(r[2])}の表示</small></span>" if r else "")(rating_of(e)))
+            + ((lambda r: f"<span class=nr><b>★{r[0]}</b>（{int(str(r[1]).replace(',', '')):,}件）</span>" if r else "")(rating_of(e)))
             + f"<span class=na>{esc(e['author'])}｜{esc(e['publisher'])}</span>"
             # 値段の表示はKindleを優先（2026-11-14 坂田さん指定）。Kindleの値段が分からないときだけ楽天Kobo
             + (f"<span class=np>¥{e['kindle_price']:,}（Kindle）</span>" if e.get('kindle_price') and e.get('kindle')
-               else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else ""))
+               else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else (f"<span class=np>¥{e['price']:,}（紙の本・税込）</span>" if e.get('price') else "")))
             + "<div class=nbtns>"
             # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
             + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else "")
