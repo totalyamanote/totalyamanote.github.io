@@ -329,7 +329,8 @@ def work_page(w, works=None):
     if w.get("volumes"):
         rows.append(("巻数", esc(w["volumes"])))
     if w.get("rating"):
-        rows.append(("ストアの評価", f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）"))
+        _sn = {"kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("store"), "電子書籍ストア")   # 評価の出どころ（掲載しているストアの商品ページの表示。ブックライブの名前は出さない方針）
+        rows.append((f"ストアの評価<br><small>{_sn}の表示</small>", f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）"))
     if w.get("fact"):
         rows.append(("メディア化・受賞", esc(w["fact"])))
     dl = left_days(w)
