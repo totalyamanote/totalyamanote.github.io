@@ -110,6 +110,22 @@ def left_days(w):
 VIDEO_MAP = {'20206940': 'spy-family', 'koboa07e80a4008139bebd5748703259b8b3': 'haikyu', 'kobodcf484ebabcb385ca9f45621f968b76b': 'kingdom', 'ebj495291': 'blue-lock', '20206948': 'sakamoto-days', 'ebj390133': 'yakusoku-neverland', 'ebj516901': 'boku-yaba', 'ebj424599': 'kanokari', 'kB00AA6MPWU': 'hikaru-no-go', '2509734': 'shangri-la-frontier', 'ebj134503': 'shin-tennis', 'ebj769663': 'hotaru-no-yomeiri', '2509732': 'tengoku-daimakyo', '2509724': 'the-fable'}   # 動画ページ（/video/w/）がある作品。マンガのページから映像へリンク（2026-11-24 坂田さん「アニメは漫画サイトにリンクくっつけよう」）
 
 
+
+def _unext_ng(title):
+    """U-NEXTが訴求を禁止している「日テレ・TBS・FOD」の作品欄（data/unext_ng_titles.json）に入っている作品か。入っていたら、U-NEXTのボタンは出さない（対象外）。"""
+    import re as _r
+    f = HERE / "data" / "unext_ng_titles.json"
+    if not f.exists():
+        return False
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    nz = lambda x: _r.sub(r"[\s　・：:!！?？〜~\-－「」『』（）()\[\]【】。、,，.．]", "", x).lower()
+    t = nz(title)
+    return any(len(nz(x)) >= 4 and (t == nz(x) or (len(t) >= 5 and (t in nz(x) or nz(x) in t))) for k in ("nittere", "tbs", "fod") for x in d.get(k, []))
+
+
 def page(title, desc, body, depth=0, style="", head=""):
     up = "../" * depth
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
@@ -326,7 +342,7 @@ def work_page(w, works=None):
     table = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
     vidbox = ""
-    if tid in VIDEO_MAP:
+    if tid in VIDEO_MAP and not _unext_ng(title):
         _slug = VIDEO_MAP[tid]
         _pt = _slug in ("tengoku-daimakyo", "the-fable")   # ポイント作品（有料）のアニメ
         _st = "ポイント作品（有料）" if _pt else "見放題"
