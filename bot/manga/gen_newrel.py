@@ -195,6 +195,12 @@ def series_links(e):
     return kobo, ebj
 
 
+def kindle_search(e):
+    """この巻のKindleページ（ASIN）がまだ確認できないとき用：Kindleストアでのシリーズ名の検索ページ（アソシエイトのタグ付き）。"""
+    from urllib.parse import quote
+    return "https://www.amazon.co.jp/s?k=" + quote(series_kw(e["title"])) + "&i=digital-text&tag=shogo450e-22"
+
+
 _WORKS = None
 
 
@@ -266,7 +272,8 @@ def card(e, today):
                else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else (f"<span class=np>¥{e['price']:,}（紙の本・税込）</span>" if e.get('price') else "")))
             + "<div class=nbtns>"
             # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
-            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle") else "")
+            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle")
+               else f"<a class='nbtn a' href='{esc(kindle_search(e))}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をKindleで探す（この巻はまだ出ていない場合は、前の巻から読めます）'>Kindle</a>")
             + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebookjapan</a>" if e.get("ebj")
                else (f"<a class='nbtn e' href='{esc(series_links(e)[1])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をebookjapanで探す（この巻はまだ出ていません）'>ebookjapan<small>シリーズ</small></a>" if left >= 0 else ""))
             + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo"
