@@ -216,13 +216,14 @@ def pick(api):
         k = re.sub(r"\s+", "", c["name"])[:18]
         if k not in seen_i:
             seen_i.add(k); ins_u.append(c)
-    uniq = ins_u + uniq                              # Instagram発ブランドを先に。足りない分だけ楽天ファッションの人気品
+    # 2026-11-24 坂田さん「新品あり乗せ」：8点ともInstagram発ブランド（新品）で埋める。8点に届かない日だけ楽天ファッションの人気品で補う
+    uniq = ins_u if len(ins_u) >= 8 else ins_u + uniq
     chosen, kind_n, per_brand = [], {}, {}
     for limit in (1, 2, 8):                          # まず種類ごとに1点（割引の大きい順）→ 足りなければ種類2点まで → それでも足りなければ制限なし
         for c in uniq:
             if len(chosen) >= 8:
                 break
-            if c in chosen or kind_n.get(c["kind"], 0) >= (max(limit, 2) if c.get("insta") else limit) or per_brand.get(c["brand"], 0) >= 2:
+            if c in chosen or kind_n.get(c["kind"], 0) >= (max(limit, 2) if c.get("insta") else limit) or per_brand.get(c["brand"], 0) >= (3 if c.get("insta") and limit == 8 else 2):
                 continue
             chosen.append(c); kind_n[c["kind"]] = kind_n.get(c["kind"], 0) + 1; per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1
     out = []
@@ -254,7 +255,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：Instagram発ブランド</h2>"
-            f"<p class=meta>Instagram発のブランド（eimy istoire・anuans・CREDONA・deres）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。足りない日は楽天ファッションの人気品（レビュー★4.0以上）で補います。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>Instagram発のブランド（eimy istoire・anuans・CREDONA・deres）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
