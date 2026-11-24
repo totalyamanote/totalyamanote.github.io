@@ -1110,6 +1110,11 @@
    "date": "2026-11-23",
    "min_effective": 4732,
    "min_price": 4780
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 4839,
+   "min_price": 4888
   }
  ],
  "プロテイン": [
@@ -2723,6 +2728,11 @@
    "date": "2026-11-23",
    "min_effective": 4138,
    "min_price": 4180
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 5425,
+   "min_price": 5480
   }
  ],
  "ハイボール缶": [
@@ -3056,8 +3066,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 2970,
-   "min_price": 3000
+   "min_effective": 3366,
+   "min_price": 3400
   }
  ],
  "ビール": [
