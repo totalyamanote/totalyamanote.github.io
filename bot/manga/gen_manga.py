@@ -330,7 +330,7 @@ def work_page(w, works=None):
             im = (f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w.get(chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100))}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\">"
                   f"<img src='{esc(cover(w, v, 'M'))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>") if v and w.get("real_id") else (
                   f"<a href='#buy'><img src='{esc(cover(w, v))}' alt='{esc(n)}が表紙の{int(v)}巻' loading=lazy></a><span class=note>{int(v)}巻の表紙</span>" if v and w.get("covers") and cover(w, v) else "")
-            if not im and cimg:  # 公式サイトのキャラクター画像（自前で小さく保存したもの）＋出典（2026-11-24 坂田さん「公式サイトの画像使ってもいい」）
+            if cimg:  # 公式サイトのキャラクター画像（自前で小さく保存したもの）＋出典（2026-11-24 坂田さん「公式サイトの画像使ってもいい」）
                 im = (f"<img class=cp src='https://totalyamanote.jp/{esc(cimg)}' alt='{esc(n)}（公式キャラクター画像）' loading=lazy>"
                       f"<span class=note>出典：{esc(ccr or '公式サイト')}</span>")
             if not im:  # 表紙に描かれている巻が確認できないキャラは、頭文字の丸アイコンで見た目をそろえる（写真の代わり）
