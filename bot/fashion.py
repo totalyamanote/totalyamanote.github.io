@@ -291,7 +291,11 @@ def main():
     api = Rakuten(cfg)
     # 商品は3日間同じものを見せる（2026-11-24 坂田さん「全商品3日固定にしようか」）。同じ3日の間は、更新を何度走らせても入れ替えない。
     _cf = Path(__file__).resolve().parent / "data" / "fashion_cache.json"
-    _key = datetime.now().toordinal() // 3
+    try:
+        from run_daily import BF_ON as _bf
+    except Exception:
+        _bf = False
+    _key = datetime.now().toordinal() // (1 if _bf else 3)
     try:
         _c = json.loads(_cf.read_text(encoding="utf-8")) if _cf.exists() else {}
     except Exception:
