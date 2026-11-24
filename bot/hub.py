@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 HUB = Path(__file__).resolve().parent / "hub"
-KEYS = ("ld", "basic", "hub", "hubf", "hubart", "hubm", "ftr")
+KEYS = ("ld", "basic", "hub", "hubf", "hubart", "hubv", "hubm", "ftr")
 
 
 def _split_old_hub(old):
@@ -256,5 +256,5 @@ def apply_hub(page, old=None, now=None):
     page = re.sub(r"<p class=pr>🛒.*?</p>\n?", "", page, 1, re.S)
     page = re.sub(r"<section><h2>比較記事（選び方とおすすめ）</h2>.*?</section>\n?", "", page, 1, re.S)
     # 末尾：比較記事（とセール特集）→マンガの段→フッター（2026-11-18 坂田さん「毎朝最安を上にして、その下に比較記事」）
-    page = page.replace("</main></body></html>", b["hubf"] + b["hubart"] + b["hubm"] + b["ftr"] + "</main></body></html>", 1)
+    page = page.replace("</main></body></html>", b["hubf"] + b["hubart"] + b["hubv"] + b["hubm"] + b["ftr"] + "</main></body></html>", 1)
     return apply_sale(page, now)
