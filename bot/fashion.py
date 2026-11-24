@@ -279,7 +279,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション（楽天市場）</h2>"
-            f"<p class=meta>新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を3日ごとにすべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（3日ごとに入れ替え）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>楽天市場のレディースファッションを、割引の大きい順に（{INSTA_MAX:,}円まで）。{esc(stamp)}時点。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
