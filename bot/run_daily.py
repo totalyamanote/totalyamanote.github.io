@@ -981,7 +981,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", 
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class='go ygo'>Yahoo!で見る →</span></a>")
         badge = ""
-        low = f"直近30日の実質最安：¥{r['low_30']:,}" if r["low_30"] else ""
+        low = ""   # 「直近30日の実質最安」の表記は不要（2026-11-24 坂田さん「意味がわからない表記」）
         amz = ""
         if False:  # Amazonの検索結果へのリンクは出さない（同じ商品のページにつながらないため・2026-11-14）
             kw = urllib.parse.quote(r.get("amazon_keyword") or r["name"])
