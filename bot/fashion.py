@@ -60,7 +60,9 @@ def kind_of(name):
 # Instagram発ブランド（2026-11-24 坂田さん「これらのブランド使って掲載」）。楽天で新品が売られているものだけ。
 # 調べた結果：Lil Ambition・BIRTHDAY BASH・Bibiy.は楽天では中古だけ、THE TOE・OBLI・Acak.は楽天に出店なし → 入れない
 INSTA = [("eimy istoire", r"eimy\s*istoire|エイミーイストワール"), ("anuans", r"anuans|アニュアンス"),
-         ("CREDONA", r"CREDONA|クレドナ")]
+         ("CREDONA", r"CREDONA|クレドナ"), ("ETRÉ TOKYO", r"ETR[EÉ]\s*TOKYO|エトレトウキョウ|エトレトーキョー")]
+# 2026-11-24 G-BLO「芸能人の服ブランド一覧」（女性24）も調べた：楽天で新品の服があるのは ETRÉ TOKYO（杉田純奈）だけ。
+# 虜・ROSY LUCE・LAVANDA・Par la magie・ALLISON BROWN・miraville・INTIMITE・MES VACANCES・FUKUU・Ange Charme・Parsley・mmts・RE.・ESS BY・conte・MiiA・SAAKIN・ROY・WCJ・PUNYUS・loin.・newnow・Herlipto は中古だけ／出店なし／服以外
 # 2026-11-24 追加で調べたもの（楽天で新品なし→載せない）：deres・JOSE MOON（中古だけ）、Her lip to（楽天は化粧品と下着だけ）、
 # WYM・ADRER・SOERTE・GRANCY・SINSS・LILL・CLEL・epnok・RUUBON・Loose（ZOZOTOWN中心。楽天は出店なしか中古だけ）
 # 中古は商品名に「中古」と書かない店がある（コンコルドストア等）→ 説明文の「状態ランク」「ご入札」なども見る
@@ -79,7 +81,7 @@ def iname(n0, rx):
     """Instagram発ブランドの商品名：飾り・ブランド名・品番・色・サイズを外して、商品名の部分だけ（30字まで）。"""
     s = re.sub(r"【[^】]*】|\[[^\]]*\]|（[^）]*）|\([^)]*\)|《[^》]*》", " ", n0)
     s = re.sub(rx, " ", s, flags=re.I)
-    s = re.sub(r"セール|SALE|半額|送料無料|レディース|\b\d{4}(?:AW|SS)\b|\b[0-9][0-9\-]{5,}\b|[|／/｜]|\bF\b", " ", s, flags=re.I)
+    s = re.sub(r"セール|SALE|半額|送料無料|レディース|\b\d{4}(?:AW|SS)\b|\b[0-9][0-9\-]{5,}\b|[|／/｜]|\bF\b|フリークスストア|\S+ストア$", " ", s, flags=re.I)
     out = ""
     for t in s.split():
         if t in CAT_WORDS and out:
@@ -98,14 +100,14 @@ def insta_pool(api, recent):
     for bname, rx in INSTA:
         for pg in (1, 2, 3):
             try:
-                d = api._get(SEARCH_URL, {"keyword": bname, "hits": 30, "page": pg, "availability": 1, "maxPrice": MAX_PRICE, "sort": "-reviewCount"})
+                d = api._get(SEARCH_URL, {"keyword": bname.replace("É", "E"), "NGKeyword": "中古 古着", "hits": 30, "page": pg, "availability": 1, "maxPrice": MAX_PRICE, "sort": "-reviewCount"})
             except Exception:
                 break
             for x in d.get("Items", []):
                 x = x.get("Item", x); n0 = x["itemName"]; code = x["itemCode"]
                 if code in seen or code in recent or not re.search(rx, n0, re.I):
                     continue
-                if USED_NG.search(n0 + " " + (x.get("itemCaption") or "")) or BAG_NG.search(n0) or SUMMER_NG.search(n0) or OTHER_NG.search(n0):
+                if re.search(r"帽|キャップ|ビーニー|ハット|バッグ|ソックス|靴下|マフラー|ストール|手袋", n0) or USED_NG.search(n0 + " " + (x.get("itemCaption") or "")) or BAG_NG.search(n0) or SUMMER_NG.search(n0) or OTHER_NG.search(n0):
                     continue
                 if int(x.get("reviewCount") or 0) and float(x.get("reviewAverage") or 0) < 3.5:
                     continue
@@ -250,15 +252,15 @@ def render(items, stamp):
     for it in items:
         sale = f"<span class=hot>SALE {it['sale']}%OFF</span>" if it["sale"] else ""
         cards += (f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
-                  f"<span class=gtag>{'Instagram発・' if it.get('insta') else ''}{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
+                  f"<span class=gtag>{'インフルエンサー発・' if it.get('insta') else ''}{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
                   f"<span class=nm>{esc(it['name'])}</span><span class=yen>¥{it['price']:,}</span>"
                   f"<span class=pts>ポイント{it['pr']}倍（{it['pt']:,}pt）</span><span class=eff2>実質¥{it['price'] - it['pt']:,}</span>"
                   + (f"<span class=rv>⭐{it['av']}（{it['rc']:,}件）</span>" if it['rc'] else "<span class=rv>新着・レビューはこれから</span>")
                   + "<span class=go>楽天市場で見る →</span></a>")
     if not cards:
         return "<!--hubf--><!--/hubf-->"
-    return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：Instagram発ブランド</h2>"
-            f"<p class=meta>Instagram発のブランド（eimy istoire・anuans・CREDONA）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+    return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：インフルエンサー・モデル発ブランド</h2>"
+            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
