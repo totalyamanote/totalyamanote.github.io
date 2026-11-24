@@ -18,6 +18,7 @@ SHOP = "stylife"                      # 楽天ファッション（楽天市場�
 # 種類（レディース中心）。1種類につき1商品（その種類でレビューがいちばん多いもの）を載せる
 KINDS = ["ワンピース", "ニット", "コート", "スカート", "パンツ", "ブラウス", "カーディガン", "セーター"]
 MAX_PRICE = 9800                      # 価格は9,800円まで（運用ルール）
+INSTA_MAX = 19800                     # インフルエンサー発ブランドだけ19,800円まで（2026-11-24 坂田さん「いろいろ掲載して」。9,800円だと候補が約100点しかない）
 MIN_REVIEWS, MIN_AVG = 50, 4.0
 esc = html.escape
 
@@ -47,7 +48,7 @@ TYPES = [("コート・アウター", r"コート|アウター|ジャケット|�
 OTHER_NG = re.compile(r"メンズ|MEN'S|ユニセックス|キッズ|ベビー|United Athle")   # レディースの段なので
 BAG_NG = re.compile(r"福袋|HAPPY BOX|福箱|ラッキーバッグ|LUCKY")
 # 冬（11〜2月）は半袖・ノースリーブなど夏物を出さない（2026-11-23）
-SUMMER_NG = re.compile(r"半袖|ノースリーブ|キャミ|タンクトップ|サンダル|リネン|水着|ラッシュガード|水陸両用|サマー|夏|綿麻") if datetime.now().month in (11, 12, 1, 2) else re.compile(r"(?!x)x")
+SUMMER_NG = re.compile(r"半袖|ノースリーブ|キャミ|タンクトップ|サンダル|リネン|水着|ラッシュガード|水陸両用|サマー|夏|綿麻|ハーフスリーブ|ショートスリーブ|フレンチスリーブ|五分袖|5分袖") if datetime.now().month in (11, 12, 1, 2) else re.compile(r"(?!x)x")
 
 
 def kind_of(name):
@@ -99,9 +100,9 @@ def insta_pool(api, recent):
     """Instagram発ブランドの新品（9,800円まで・冬は夏物なし・中古なし）。レビューはまだ少ないので件数は問わず、ついている場合は★3.5以上だけ。"""
     out, seen = [], set()
     for bname, rx in INSTA:
-        for pg in (1, 2, 3):
+        for pg in (1, 2, 3, 4, 5, 6):
             try:
-                d = api._get(SEARCH_URL, {"keyword": bname.replace("É", "E"), "NGKeyword": "中古 古着", "hits": 30, "page": pg, "availability": 1, "maxPrice": MAX_PRICE, "sort": "-reviewCount"})
+                d = api._get(SEARCH_URL, {"keyword": bname.replace("É", "E"), "NGKeyword": "中古 古着", "hits": 30, "page": pg, "availability": 1, "maxPrice": INSTA_MAX, "sort": "-reviewCount"})
             except Exception:
                 break
             for x in d.get("Items", []):
@@ -117,7 +118,7 @@ def insta_pool(api, recent):
                 nm = iname(n0, rx)
                 hits = [(m.end(), lab) for lab, r2 in TYPES for m in re.finditer(r2, nm)]
                 kd = max(hits)[1] if hits else kind_of(n0)   # 「ニット…スカート」はスカート（名前のいちばん後ろの種類）
-                if not img or not nm or kd == "その他" or not (0 < int(x.get("itemPrice") or 0) <= MAX_PRICE):
+                if not img or not nm or kd == "その他" or not (0 < int(x.get("itemPrice") or 0) <= INSTA_MAX):
                     continue
                 seen.add(code)
                 off = _off(n0)
@@ -235,7 +236,7 @@ def pick(api):
     out = []
     for c in chosen:                                 # 並びは割引の大きい順
         d = api.item_detail(c["code"])                # 価格・ポイント・レビューを取り直す
-        if not d or not (0 < d["price"] <= MAX_PRICE):
+        if not d or not (0 < d["price"] <= (INSTA_MAX if c.get("insta") else MAX_PRICE)):
             continue
         pr = d["point_rate"]
         try:
@@ -261,7 +262,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：インフルエンサー・モデル発ブランド</h2>"
-            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>インフルエンサー・モデル発のブランド（eimy istoire・anuans・CREDONA・ETRÉ TOKYO・deres）の新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
