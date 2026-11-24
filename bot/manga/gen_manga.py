@@ -17,6 +17,17 @@ from pathlib import Path
 from gen_search import sbar
 
 HERE = Path(__file__).resolve().parent
+
+import re as _re
+
+
+def public_note(t):
+    """ページに出す注意書きから、社内メモ（採用理由・「〜さん指示」・評価の出どころの内部メモ）を除く（2026-11-25 坂田さん「こういう指示は載せないのが普通でしょう」）"""
+    t = _re.sub(r"(評価は[^。]*の値。)?採用理由：.*$", "", t or "")
+    t = _re.sub(r"[^。]*(坂田|指示)[^。]*。?", "", t)
+    return t.strip()
+
+
 SITE = HERE / "site"
 OUT = SITE / "manga"
 DATA = HERE / "data" / "manga_works.json"
@@ -355,7 +366,7 @@ def work_page(w, works=None):
                   ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
                   ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}.bb.b{background:#0b5fa5;color:#fff!important}"
                   ".fl{display:block;text-align:center;border:2px solid #15803d;color:#15803d!important;font-weight:900;border-radius:12px;padding:10px;text-decoration:none}</style>"
-                  f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(w.get('free_note', ''))}</p>"
+                  f"<div class=fbox id=read><h2>まずは無料で読む</h2><p>{esc(w.get('free_store_name', ''))}で<b>{esc(w.get('free_label', ''))}</b>で読めます。{esc(public_note(w.get('free_note', '')))}</p>"
                   f"<a class=fl href='{esc(w.get('free_url', ''))}' rel='{'sponsored nofollow noopener' if w.get('store') in ('kindle', 'kobo') else 'noopener'}' target=_blank>{esc(w.get('free_store_name', ''))}で無料で読む ›</a>"
                   + ("<p class=note>※Amazonアソシエイトのリンクです。無料の本を読んでも料金はかかりません。</p></div>" if w.get('store') == 'kindle' else ("<p class=note>※楽天アフィリエイトのリンクです。無料の本を読んでも料金はかかりません。</p></div>" if w.get('store') == 'kobo' else "<p class=note>※このリンクは広告ではありません（当サイトに報酬は発生しません）。</p></div>"))
                   + (f"<div class=fbox id=buy style='border-color:#c2410c'><h2>続き（{bv}巻〜）を読む</h2><p>無料の続きは、好きなストアで読めます。</p><div class=bbs>{btns}</div>"
