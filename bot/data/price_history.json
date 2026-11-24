@@ -1115,6 +1115,11 @@
    "date": "2026-11-24",
    "min_effective": 5128,
    "min_price": 5180
+  },
+  {
+   "date": "2026-11-25",
+   "min_effective": 4633,
+   "min_price": 4680
   }
  ],
  "プロテイン": [
@@ -1470,6 +1475,11 @@
    "date": "2026-11-17",
    "min_effective": 4544,
    "min_price": 4590
+  },
+  {
+   "date": "2026-11-25",
+   "min_effective": 5132,
+   "min_price": 5184
   }
  ],
  "緑茶ティーバッグ": [
@@ -2731,6 +2741,11 @@
   },
   {
    "date": "2026-11-24",
+   "min_effective": 5920,
+   "min_price": 5980
+  },
+  {
+   "date": "2026-11-25",
    "min_effective": 5920,
    "min_price": 5980
   }
