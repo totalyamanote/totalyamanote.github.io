@@ -394,7 +394,13 @@ def work_page(w, works=None):
     except Exception:
         _s3 = []
     if _s3:   # 太字の一言＋続きが気になる2文（見出し・枠なし）（2026-11-25 坂田さん「作品紹介も同じく」）
-        syn = (f"<div class=syn style='font-size:16px;line-height:2'>"
+        _o1 = {}
+        try:
+            _o1 = json.loads((HERE / "data" / "manga_oneliner.json").read_text(encoding="utf-8"))
+        except Exception:
+            _o1 = {}
+        _lead = f"<p style='margin:0 0 4px;font-weight:800;font-size:17px;line-height:1.8'>{esc(_o1[str(w.get('title_id'))])}</p>" if _o1.get(str(w.get("title_id"))) else ""
+        syn = (f"<div class=syn style='font-size:16px;line-height:2'>" + _lead
                + "".join(f"<p style='margin:0 0 2px'>{esc(x)}</p>" for x in _s3[:2]) + "</div>")
     else:
         syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
