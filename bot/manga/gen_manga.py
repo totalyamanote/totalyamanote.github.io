@@ -448,6 +448,10 @@ def work_page(w, works=None):
                 f"<div class=rvsrc0>{esc(_src)}・{esc(w.get('reviews',''))}件・{today.strftime('%Y-%m-%d')}時点</div>"
                 + (f"<div>{_tg}</div>" if _tg else "") + (f"<p class=rv1>👍{esc(_hs)}</p>" if _hs else "")
                 + "<p class=note style='margin-top:8px'>評価の数字はストアの公開情報、声の一言は購入者レビューを当サイトで短くまとめたものです。</p></div>")
+        _cards = "".join(f"<div class=rv><b>「{esc(h)}」</b><p>{esc(b)}</p><span class=note>参考になった {n}人</span></div>" for h, b, n in (rv.get("top") or []))
+        if _cards:   # トップコメント（参考になった数が多い順・ネタバレなし）（2026-11-25 坂田さん「トップコメント載せよう」）
+            revh += (f"<h3 style='font-size:15px;margin:14px 0 4px'>トップコメント</h3><div class=rvs>{_cards}</div>"
+                     f"<p class=note>ストアの購入者レビュー（参考になった数が多い順）を、当サイトで短く要約しました。{esc(rv.get('checked',''))}時点。ネタバレは含みません。</p>")
     rel = ""
     if works:
         # 全作品が同じ数だけ「ほかの作品」からリンクされるよう、次の4作品を順番に（先頭4作品だけに集中させない）
