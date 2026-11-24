@@ -76,6 +76,7 @@ SALE_CSS = ("<style id=hsalecss>"
  ".bf .cap{font-size:11px;color:#e8cfcf;margin:-6px 0 10px}"
  ".bf .go{display:inline-block;margin-top:12px;background:linear-gradient(90deg,#ffd54a,#ffb300);color:#111;font-weight:900;font-size:15px;border-radius:99px;padding:10px 22px}"
  "@media(max-width:560px){.bf h2{font-size:24px;max-width:70%}.bf p{max-width:100%}.bf .ml{gap:6px}.bf .m{padding:6px 7px}.bf .m b{font-size:13px}.bf .m small{font-size:10px}.bf svg.bfart{width:104px;height:104px}}"
+    "@media(min-width:700px){.bf{padding:14px 20px 14px}.bf svg.bfart{width:110px;height:110px}.bf h2{font-size:24px;margin:6px 0 0;max-width:60%}.bf p{font-size:12px;margin:2px 0 8px}.bf .ph{grid-template-columns:repeat(6,1fr);gap:8px;margin:0 0 8px}.bf .ph i{padding:4px}.bf .m{padding:6px 10px}.bf .go{margin-top:8px;padding:7px 18px;font-size:14px}}"
  "</style>")
 SALE_ART = ("<svg class=bfart viewBox='0 0 120 120' aria-hidden=true><defs><linearGradient id=bfg x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color='#ffe082'/><stop offset=1 stop-color='#ff9800'/></linearGradient></defs>"
  "<path d='M30 44h60l7 62H23z' fill='url(#bfg)'/><path d='M44 44c0-20 32-20 32 0' fill=none stroke='#fff' stroke-width=6 stroke-linecap=round />"
