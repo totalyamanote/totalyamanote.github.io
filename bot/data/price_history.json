@@ -1220,8 +1220,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 2851,
-   "min_price": 2880
+   "min_effective": 4930,
+   "min_price": 4980
   }
  ],
  "シャンプー 詰め替え": [
@@ -1897,8 +1897,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 4247,
-   "min_price": 4290
+   "min_effective": 1980,
+   "min_price": 2000
   }
  ],
  "ハンドクリーム": [
@@ -3072,8 +3072,8 @@
  "コーヒー（ドリップ・インスタント）": [
   {
    "date": "2026-11-24",
-   "min_effective": 2365,
-   "min_price": 2438
+   "min_effective": 2257,
+   "min_price": 2376
   }
  ]
 }
