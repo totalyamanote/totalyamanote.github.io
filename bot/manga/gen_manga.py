@@ -107,6 +107,27 @@ def left_days(w):
     return d if d>=0 else None
 
 
+
+BB_CSS = ("<style>.fbox{background:var(--card,#fff);border:2px solid #15803d;border-radius:14px;padding:12px 16px;margin:14px 0}.fbox h2{margin-top:0}"
+          ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
+          ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}.bb.b{background:#0b5fa5;color:#fff!important}</style>")
+
+
+def _buy_btns(w):
+    """続きを読むボタン。順番：Kindle → ebookjapan → 楽天Kobo →（分かる作品は）ブックライブ（2026-11-24 坂田さん指定）。"""
+    b = w.get("buy") or {}
+    bv = b.get("vol")
+    out = ""
+    if b.get("kindle"):
+        out += f"<a class='bb a' href='{esc(b['kindle'])}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>{bv}巻</small></a>"
+    if b.get("ebj"):
+        out += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
+    if b.get("kobo"):
+        out += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻</small></a>"
+    if w.get("real_id"):
+        out += f"<a class='bb b' href='{esc(link(w['title_id'], f'{int(bv or 2):03d}'))}' rel='sponsored nofollow noopener' target=_blank>ブックライブ<small>{bv}巻</small></a>"
+    return out
+
 VIDEO_MAP = {'20206940': 'spy-family', 'koboa07e80a4008139bebd5748703259b8b3': 'haikyu', 'kobodcf484ebabcb385ca9f45621f968b76b': 'kingdom', 'ebj495291': 'blue-lock', '20206948': 'sakamoto-days', 'ebj390133': 'yakusoku-neverland', 'ebj516901': 'boku-yaba', 'ebj424599': 'kanokari', 'kB00AA6MPWU': 'hikaru-no-go', '2509734': 'shangri-la-frontier', 'ebj134503': 'shin-tennis', 'ebj769663': 'hotaru-no-yomeiri', '2509732': 'tengoku-daimakyo', '2509724': 'the-fable'}   # 動画ページ（/video/w/）がある作品。マンガのページから映像へリンク（2026-11-24 坂田さん「アニメは漫画サイトにリンクくっつけよう」）
 
 
@@ -320,18 +341,8 @@ def work_page(w, works=None):
             free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=left>{_d.month}月{_d.day}日（{'月火水木金土日'[_d.weekday()]}）まで・{left_label(dl)}</span>"
         else:
             free_badge = f"<span class=free>{esc(w.get('free_label', '無料'))}</span> <span class=note>{esc(w.get('free_store_name', ''))}・キャンペーン中</span>"
-        b = w.get("buy") or {}
-        bv = b.get("vol")
-        btns = ""
-        # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-24 坂田さん指定）
-        if b.get("kindle"):
-            btns += f"<a class='bb a' href='{esc(b['kindle'])}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>{bv}巻</small></a>"
-        if b.get("ebj"):
-            btns += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
-        if b.get("kobo"):
-            btns += f"<a class='bb k' href='{esc(b['kobo'])}' rel='sponsored nofollow noopener' target=_blank>楽天Kobo<small>{bv}巻</small></a>"
-        if w.get("real_id"):   # ブックライブ（提携済み・バリューコマース）。ブックライブの作品IDが分かる作品だけ（2026-11-24 坂田さん「ブックライブボタンも入れていい」）
-            btns += f"<a class='bb b' href='{esc(link(w['title_id'], f'{int(bv or 2):03d}'))}' rel='sponsored nofollow noopener' target=_blank>ブックライブ<small>{bv}巻</small></a>"
+        bv = (w.get("buy") or {}).get("vol")
+        btns = _buy_btns(w)
         buybox = ("<style>.fbox{background:var(--card,#fff);border:2px solid #15803d;border-radius:14px;padding:12px 16px;margin:14px 0}.fbox h2{margin-top:0}"
                   ".bbs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.bb{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-weight:900;font-size:14px;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.18)}"
                   ".bb small{font-size:11px;font-weight:700;opacity:.9}.bb.a{background:#ff9900;color:#111!important}.bb.e{background:#d4002a;color:#fff!important}.bb.k{background:#bf0000;color:#fff!important}.bb.b{background:#0b5fa5;color:#fff!important}"
@@ -343,6 +354,12 @@ def work_page(w, works=None):
                      "<p class=note>価格・ポイントは各ストアの表示が最新です。</p></div>" if btns else ""))
     table = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
+    if not buybox:
+        _b = w.get("buy") or {}
+        _btns = _buy_btns(w)
+        if _btns:
+            buybox = (BB_CSS + f"<div class=fbox id=buy style='border-color:#c2410c'><h2>続き（{_b.get('vol', 2)}巻〜）を読む</h2><p>好きなストアで読めます。</p><div class=bbs>{_btns}</div>"
+                      "<p class=note>価格・ポイントは各ストアの表示が最新です。</p></div>")
     vidbox = ""
     if tid in VIDEO_MAP and not _unext_ng(title):
         _slug = VIDEO_MAP[tid]
