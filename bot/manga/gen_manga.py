@@ -565,9 +565,9 @@ def index(works, themes):
             continue
         listed += 1
         fb = f"<span class=free>無料</span> <span class=left>{left_label(dl)}</span>" if dl is not None else (f"<span class=free>{esc(w.get('free_label', '無料'))}</span>" if w.get("free_ongoing") else "")
-        rt = f"<span class=stars>★{esc(w['rating'])}</span> " if w.get("rating") else ""
+        rt = f"<span class=stars>★{esc(w['rating'])}</span><span class=note>（{esc(w.get('reviews', ''))}件）</span><br>" if w.get("rating") and w.get("reviews") else (f"<span class=stars>★{esc(w['rating'])}</span><br>" if w.get("rating") else "")
         cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in thumb_vols(w)) + "</div>"
-                  f"<div class=in><b>『{esc(w['title'])}』</b><br><span class=note>{rt}{esc(w.get('author',''))}</span><br>{fb}</div></a>")
+                  f"<div class=in><b>『{esc(w['title'])}』</b><br>{rt}<span class=note>{esc(w.get('author',''))}</span><br>{fb}</div></a>")
     quick = ""
     # 新刊（今週・来週発売）：gen_newrel が作った data/new_releases.json から
     newrel = ""
