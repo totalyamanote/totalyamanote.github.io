@@ -752,7 +752,43 @@ def articles_html():
     return f"<section><h2>比較記事（選び方とおすすめ）</h2><ul>{''.join(items)}</ul></section>"
 
 
-def picks_html(picks):
+YH_QUERIES = ["プロテイン", "化粧水", "シャンプー", "洗顔フォーム", "コーヒー", "日焼け止め", "サプリメント", "洗濯洗剤", "ボディソープ", "ミネラルウォーター"]
+
+
+def yahoo_cards(yahoo, n=4):
+    """トップ「ポイント倍率が高い商品」にも、Yahoo!ショッピングの人気商品を混ぜる（2026-11-24 坂田さん「各項目Yahooも載せて・楽天に偏ってる」）。
+    毎日キーワードを回し、レビュー100件以上・1,980〜9,800円・付与ポイントの率が高い順。1店舗1件。"""
+    if not yahoo or not yahoo.ready:
+        return ""
+    esc = html.escape
+    day = datetime.now().timetuple().tm_yday
+    qs = [YH_QUERIES[(day * 2 + k) % len(YH_QUERIES)] for k in range(n)]
+    out, shops, names = "", set(), []
+    for q in qs:
+        try:
+            cand = [y for y in yahoo.search(q, MIN_PRICE, MAX_PRICE, results=50, sort="-score")
+                    if y["review_count"] >= 100 and not OLD_NG.search(short_name(y["name"], 80)) and not ELEC_NG.search(y["name"])]
+        except Exception as e:
+            print(f"   ⚠ Yahoo検索に失敗（{q}）: {e}", file=sys.stderr)
+            continue
+        cand.sort(key=lambda y: (-(y["point"] / max(y["price"], 1)), -y["review_count"]))
+        for y in cand:
+            if y.get("shop") in shops or short_name(y["name"], 12) in names:
+                continue
+            shops.add(y.get("shop")); names.append(short_name(y["name"], 12))
+            img = (f"<img src='{esc(y['image'])}' alt='{esc(short_name(y['name'], 40))}' loading=lazy>" if y.get("image") else "<div class=noimg>No Image</div>")
+            out += (f"<a class='card yh' href='{esc(y['url'])}' rel='sponsored nofollow noopener' target=_blank>"
+                    f"<span class=gtag>Yahoo!ショッピング・{esc(q)}</span>{img}"
+                    f"<span class=nm>{esc(short_name(y['name'], 40))}</span><span class=yen>¥{y['price']:,}</span>"
+                    f"<span class=pts>{y['point']:,}pt付与（LINEヤフー連携時）</span>"
+                    f"<span class=eff2>実質¥{y['effective']:,}</span>"
+                    f"<span class=rv>⭐{y['review_avg']}（{y['review_count']:,}件）</span>"
+                    f"<span class='go ygo'>Yahoo!で見る →</span></a>")
+            break
+    return out
+
+
+def picks_html(picks, yahoo=None):
     """今日の注目：ランキングからジャンルごとに2件ずつ、画像付きカードで（毎日入れ替わる）。"""
     if not picks:
         return ""
@@ -784,8 +820,9 @@ def picks_html(picks):
                 f"<span class=pts>ポイント{it.get('point_rate', 1)}倍（{it['price'] * it.get('point_rate', 1) // 100:,}pt）</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
+    cards += [yahoo_cards(yahoo, 4)]
     cards += amazon_cards(2)
-    ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天の人気商品から・毎朝入れ替え）"
+    ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・毎朝入れ替え）"
     return (f"<section><h2>{ttl}</h2>"
             "<div class=cards>" + "".join(cards) + "</div></section>")
 
@@ -893,7 +930,7 @@ def kobo_section(api, cfg, today):
     return "".join(out)
 
 
-def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html=""):
+def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", yahoo=None):
     esc = html.escape
     sections = []
     for r in results:
@@ -978,7 +1015,7 @@ a{{color:inherit}}
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
 <p class=note style='margin:4px 0 10px'>楽天・Yahoo!の「価格−ポイント」を毎朝比較（1,980〜9,800円・レビュー30件以上）。選び方は<a href='#articles'>比較記事</a>へ。</p>
 <p class=pr>🛒 <a href='sale.html'><b>ブラックフライデー・スーパーSALEの時期の目安と、買う前のチェックリスト</b></a>　📚 <a href='manga/index.html'><b>マンガ情報（無料の期限つき）</b></a>　📅 <a href='manga/new-releases.html'><b>マンガ新刊カレンダー</b></a></p>
-{picks_html(picks)}
+{picks_html(picks, yahoo)}
 {articles_html()}
 {''.join(sections)}
 {bottom_html}
@@ -1031,7 +1068,7 @@ def main():
                               "料金は時期・人数・プランで変わります。空室と最新の料金はリンク先で確認してください。"))
     if not args.mock:
         update_articles(api, stamp)
-    render_site(cfg, results, stamp, picks, kobo_section(api, cfg, today), bottom)
+    render_site(cfg, results, stamp, picks, kobo_section(api, cfg, today), bottom, yahoo=yh)
     try:  # トップをハブ（セール→マンガ→比較記事→毎朝の最安）にする後処理
         sys.path.insert(0, str(SITE.parent))
         import gen_hub
