@@ -279,7 +279,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション（楽天市場）</h2>"
-            f"<p class=meta>新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>新品を楽天市場から、割引の大きい順に（{INSTA_MAX:,}円まで・中古と福袋を除く）。8点を3日ごとにすべて入れ替え（30日は同じ商品を出しません）。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
@@ -289,7 +289,21 @@ def main():
     if not cfg:
         sys.exit("設定が読めません")
     api = Rakuten(cfg)
-    items = pick(api)
+    # 商品は3日間同じものを見せる（2026-11-24 坂田さん「全商品3日固定にしようか」）。同じ3日の間は、更新を何度走らせても入れ替えない。
+    _cf = Path(__file__).resolve().parent / "data" / "fashion_cache.json"
+    _key = datetime.now().toordinal() // 3
+    try:
+        _c = json.loads(_cf.read_text(encoding="utf-8")) if _cf.exists() else {}
+    except Exception:
+        _c = {}
+    if _c.get("key") == _key and _c.get("items"):
+        items = _c["items"]
+        _reused = True
+    else:
+        items = pick(api)
+        _reused = False
+        if items:
+            _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
     blk = render(items, datetime.now().strftime("%Y/%m/%d %H:%M"))
     p = SITE / "index.html"; t = p.read_text(encoding="utf-8")
     if "<!--hubf-->" in t:
@@ -300,7 +314,7 @@ def main():
         t2 = t
     if t2 != t:
         p.write_text(t2, encoding="utf-8")
-    if items:
+    if items and not _reused:
         _save_hist([i["code"] for i in items] + [_nkey(i["name"]) for i in items])
     print(f"ファッション {len(items)} 点", [i['kind'] for i in items])
 

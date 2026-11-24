@@ -1078,24 +1078,35 @@ def main():
     sh = load_shown()
     from yahoo import Yahoo
     yh = Yahoo(cfg)
-    # トップの商品は2日間同じものを見せる（2026-11-24 坂田さん「2日間見せようか」）。同じ2日の間は、手動で更新を走らせても入れ替えない。
+    # トップの商品は3日間同じものを見せる（2026-11-24 坂田さん「全商品3日固定にしようか」）。同じ3日の間は、手動で更新を走らせても入れ替えない。
     _cf = DATA / "top_cache.json"
-    _key = datetime.now().toordinal() // 2
+    _key = datetime.now().toordinal() // 3
     try:
         _c = json.loads(_cf.read_text(encoding="utf-8")) if _cf.exists() else {}
     except Exception:
         _c = {}
     if (not args.mock) and _c.get("key") == _key and _c.get("picks") is not None and _c.get("results") is not None:
         picks, results = _c["picks"], _c["results"]
-        print("   トップの商品：2日間の固定（前回の選び方を再利用）")
+        print("   トップの商品：3日間の固定（前回の選び方を再利用）")
     else:
         picks = fresh_picks(api, cfg, posts, sh)
         results = price_watch(api, cfg, today, exclude=[p["item_code"] for p in picks], sh=sh, picks_shown=picks, yahoo=yh)
         if not args.mock:
             _cf.write_text(json.dumps({"key": _key, "date": today, "picks": picks, "results": results}, ensure_ascii=False, default=str), encoding="utf-8")
     shown_now = picks + [it for r in results for it in r["items"] + r.get("yahoo", [])]
-    furusato = furusato_items(api, cfg, sh, shown_now)
-    hotels = hotel_items(api, cfg, sh)
+    _c2 = _c if isinstance(_c, dict) else {}
+    if (not args.mock) and _c2.get("key") == _key and _c2.get("furusato") is not None and _c2.get("hotels") is not None:
+        furusato, hotels = _c2["furusato"], _c2["hotels"]
+    else:
+        furusato = furusato_items(api, cfg, sh, shown_now)
+        hotels = hotel_items(api, cfg, sh)
+        if not args.mock:
+            try:
+                _full = json.loads(_cf.read_text(encoding="utf-8"))
+                _full.update({"furusato": furusato, "hotels": hotels})
+                _cf.write_text(json.dumps(_full, ensure_ascii=False, default=str), encoding="utf-8")
+            except Exception:
+                pass
     bottom = (cards_section("ふるさと納税（寄付額1万円未満・ポイント倍率が高い順）", furusato, "furusato",
                             "控除の上限額は年収や家族構成で変わります。寄付の前に楽天ふるさと納税のシミュレーターで確認を。")
               + cards_section("ホテル・旅館（1人2万円以内・評価4.0以上）", hotels, "hotel",
