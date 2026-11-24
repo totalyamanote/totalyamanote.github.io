@@ -1,4 +1,4 @@
-"""マンガ新刊カレンダー（毎朝更新・他より早く）：site/manga/new-releases.html
+"""マンガ新刊カレンダー（定期更新・他より早く）：site/manga/new-releases.html
 
 元データ：楽天ブックス書籍検索API（漫画ジャンル 001001・売れている順）。発売日が「今日から30日後まで（予約受付中）」と「この14日に発売」の作品だけ。
 事実（発売日・価格・出版社）だけを載せる。発売日は楽天ブックスの表示どおり（「頃」は予定）。
@@ -71,8 +71,48 @@ def fetch(api, today):
             out.append({"date": dt.isoformat(), "approx": "頃" in x.get("salesDate", ""), "title": x["title"], "author": x.get("author", ""),
                         "publisher": x.get("publisherName", ""), "label": x.get("seriesName", ""), "price": int(x.get("itemPrice") or 0),
                         "img": (x.get("largeImageUrl") or "").replace("?_ex=200x200", "?_ex=240x240"), "url": x["affiliateUrl"], "rank": rank,
-                        "isbn": x.get("isbn", "")})
+                        "isbn": x.get("isbn", ""),
+                        "rb_rating": x.get("reviewAverage") or "", "rb_reviews": int(x.get("reviewCount") or 0)})
     return out
+
+
+def _base(title):
+    t = re.sub(r"[（(]\d+[）)].*$", "", title)
+    t = re.sub(r"[\s　]+\d+\s*$", "", t)
+    return t.strip()
+
+
+def add_series_ratings(api, items):
+    """各新刊に、同じシリーズ（作品名が同じ巻）の楽天ブックスのレビューを、件数つきの平均にして付ける。その巻にレビューが無いとき（発売前など）のため。
+    ※出版社のレーベル名（ジャンプコミックス等）では集計しない（別の作品が混ざるため）。"""
+    cache = {}
+    nz = lambda t: re.sub(r"[\s　]", "", t)
+    for e in items:
+        if int(e.get("rb_reviews") or 0) >= 3:
+            continue
+        key = _base(e["title"])
+        if len(nz(key)) < 2:
+            continue
+        if key not in cache:
+            tot = cnt = 0
+            try:
+                d = api._get(URL, {"booksGenreId": "001001", "keyword": key[:40], "hits": 30, "sort": "sales"})
+                for x in d.get("Items", []):
+                    x = x.get("Item", x)
+                    if not nz(x.get("title", "")).startswith(nz(key)):
+                        continue
+                    c = int(x.get("reviewCount") or 0)
+                    if c > 0:
+                        tot += float(x.get("reviewAverage") or 0) * c
+                        cnt += c
+            except Exception as ex:  # noqa: BLE001
+                print("シリーズ評価の取得失敗", key, ex)
+            cache[key] = (round(tot / cnt, 2), cnt) if cnt >= 3 else None
+        r = cache[key]
+        if r:
+            e["rb_rating"], e["rb_reviews"], e["rb_series"] = r[0], r[1], True
+        else:
+            e["rb_rating"], e["rb_reviews"], e["rb_series"] = "", 0, None
 
 
 def isbn10(i13):
@@ -155,6 +195,42 @@ def series_links(e):
     return kobo, ebj
 
 
+_WORKS = None
+
+
+def _works():
+    global _WORKS
+    if _WORKS is None:
+        _WORKS = []
+        for f in (HERE / "data" / "manga_works.json", HERE / "site" / "bot" / "manga" / "data" / "manga_works.json"):
+            try:
+                m = json.loads(f.read_text(encoding="utf-8"))
+                _WORKS = list(m.values()) if isinstance(m, dict) else m
+                break
+            except Exception:
+                continue
+    return _WORKS
+
+
+def rating_of(e):
+    """新刊の星評価：①楽天ブックスのその巻のレビューが3件以上ならそれ ②なければ同じ作品の評価（マンガサイトの作品データ・掲載ストアの表示） ③なければ出さない"""
+    try:
+        if e.get("rb_rating") and int(e.get("rb_reviews") or 0) >= 3:
+            return f"{float(e['rb_rating']):.1f}", int(e["rb_reviews"]), "楽天ブックス" + ("・シリーズ" if e.get("rb_series") else "")
+    except (TypeError, ValueError):
+        pass
+    t = re.sub(r"[\s　]", "", e["title"])
+    for w in sorted(_works(), key=lambda w: -len(w.get("title", ""))):
+        wt = re.sub(r"[\s　]", "", w.get("title", ""))
+        if wt and w.get("rating") and w.get("reviews") and t.startswith(wt):
+            sn = {"kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("store"), "電子書籍ストア")
+            try:
+                return f"{float(w['rating']):.1f}", w["reviews"], sn + "・シリーズ"
+            except (TypeError, ValueError):
+                return None
+    return None
+
+
 def card(e, today):
     d = datetime.date.fromisoformat(e["date"])
     left = (d - today).days
@@ -164,6 +240,7 @@ def card(e, today):
     return ((f"<div class=ncard id=n{e.get('isbn', '')}><a href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank class=nimg>{img}</a>" if eu else f"<div class=ncard id=n{e.get('isbn', '')}><span class=nimg>{img}</span>")
             + f"<span class=ndate>{d.month}/{d.day}（{WD[d.weekday()]}）{'頃' if e['approx'] else ''} {tag}</span>"
             + (f"<a class=nt href='{esc(eu)}' rel='sponsored nofollow noopener' target=_blank>{esc(e['title'])}</a>" if eu else f"<b class=nt>{esc(e['title'])}</b>")
+            + ((lambda r: f"<span class=nr><b>★{r[0]}</b>（{r[1]}件）<small>{esc(r[2])}の表示</small></span>" if r else "")(rating_of(e)))
             + f"<span class=na>{esc(e['author'])}｜{esc(e['publisher'])}</span>"
             # 値段の表示はKindleを優先（2026-11-14 坂田さん指定）。Kindleの値段が分からないときだけ楽天Kobo
             + (f"<span class=np>¥{e['kindle_price']:,}（Kindle）</span>" if e.get('kindle_price') and e.get('kindle')
@@ -184,7 +261,7 @@ CSS = (".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
        ".ndate{font-size:12px;font-weight:800}.nd{color:#bf0000;margin-left:4px}.nd2{color:var(--mut);font-weight:400;margin-left:4px}"
        ".nt{font-size:13px;line-height:1.35;font-weight:800;color:inherit!important;text-decoration:none}a.nt:hover{text-decoration:underline}.na,.np{font-size:12px;color:var(--mut)}"
-       ".nbtns{margin-top:auto;display:flex;flex-direction:column;gap:4px}"
+       ".nr{font-size:12px;font-weight:700;color:var(--mut)}.nr b{color:#b45309}.nr small{display:block;font-weight:400;font-size:10px}.nbtns{margin-top:auto;display:flex;flex-direction:column;gap:4px}"
        ".nbtn{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff!important;font-weight:900;font-size:13px;border-radius:8px;padding:7px 6px;white-space:normal;word-break:break-word;text-decoration:none;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.2)}"
        ".nbtn small{font-size:11px;font-weight:700;opacity:.95}.nbtn.r{background:#bf0000}.nbtn.k{background:#bf0000}.nbtn.e{background:#d4002a}.nbtn.off{background:#e7e5e4;color:#5f5f5f!important;box-shadow:none;font-weight:700}.nbtn.y{background:#d4002a}.nbtn.a{background:#ff9900;color:#111!important}.nwait{grid-column:1/-1;text-align:center;font-size:11px;color:var(--mut);background:#f5f5f4;border-radius:8px;padding:6px}")
 
@@ -198,6 +275,7 @@ def build():
     items = [e for e in items if is_popular(e, series)]
     add_stores(items)
     add_kobo(api, items)
+    add_series_ratings(api, items)
     if len(items) < 6:
         print("新刊が少ないので更新しない", len(items))
         return False
@@ -209,9 +287,9 @@ def build():
     top = [e for e in soon if ".gif" not in e["img"]][:3]
     _clean = lambda t: re.sub(r"【.*?】|\[.*?\]", "", t).strip()
     tops = "・".join(_clean(e["title"]) + f"（{int(e['date'][5:7])}/{int(e['date'][8:])}）" for e in top)
-    desc = f"{tops}など、人気マンガ（アニメ化などの話題作・5巻以上）の新刊{len(soon)}作品の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。毎朝更新。"
+    desc = f"{tops}など、人気マンガ（アニメ化などの話題作・5巻以上）の新刊{len(soon)}作品の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。定期更新。"
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
-            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>アニメ化・ドラマ化などの話題作や、楽天ブックスの売れ筋上位の人気マンガ（5巻以上）の新刊だけを、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・毎朝更新）。</p></div>"
+            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>アニメ化・ドラマ化などの話題作や、楽天ブックスの売れ筋上位の人気マンガ（5巻以上）の新刊だけを、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
             + (f"<h2>今週発売（7日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in wk)}</div>" if wk else "")
             + f"<h2>これから発売（予約受付中）</h2><div class=ngrid>{''.join(card(e, today) for e in soon if e not in wk)}</div>"
