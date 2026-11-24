@@ -31,7 +31,7 @@ CSS = """:root{--bg:#f6f3ee;--fg:#1f1b16;--mut:#665d55;--line:#e6dfd5;--card:#ff
 
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:18px;letter-spacing:.02em;color:inherit!important}
 .logo small{display:block;font-size:10px;font-weight:800;color:var(--mut);letter-spacing:.14em;line-height:1}
-.top{flex-wrap:wrap;gap:6px 14px}.toplinks{display:flex;flex:1;justify-content:flex-end;align-items:center;gap:16px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}.toplinks a{font-size:13px;font-weight:700;text-decoration:none;margin:0;color:var(--mut);padding:4px 0}.toplinks a:hover{color:#bf0000}.toplinks .sep{width:1px;height:14px;background:var(--line);flex:none}.toplinks a.shop{color:#bf0000}.toplinks a.shopbtn{flex:none;color:#fff;background:#bf0000;border-radius:99px;padding:5px 12px;font-weight:900;box-shadow:0 2px 0 rgba(0,0,0,.18)}.toplinks a.shopbtn:hover{color:#fff;background:#9a0000}@media (max-width:700px){.toplinks{order:3;flex-basis:100%;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:4px}}
+.top{flex-wrap:wrap;gap:6px 14px}.toplinks{display:flex;flex:1;justify-content:flex-end;align-items:center;gap:16px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}.toplinks a{font-size:13px;font-weight:700;text-decoration:none;margin:0;color:var(--mut);padding:4px 0}.toplinks a:hover{color:#bf0000}.toplinks .sep{width:1px;height:14px;background:var(--line);flex:none}.toplinks a.shop{color:#bf0000}.toplinks a.vidbtn{background:#111827;color:#fff!important;border-radius:99px;padding:6px 12px;font-weight:900;text-decoration:none}.shopbtn{flex:none;color:#fff;background:#bf0000;border-radius:99px;padding:5px 12px;font-weight:900;box-shadow:0 2px 0 rgba(0,0,0,.18)}.toplinks a.shopbtn:hover{color:#fff;background:#9a0000}@media (max-width:700px){.toplinks{order:3;flex-basis:100%;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:4px}}
 .top+.hero{margin-top:0}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.85 Meiryo,"メイリオ","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
 main{max-width:780px;margin:auto;padding:0 16px 40px}
@@ -107,12 +107,15 @@ def left_days(w):
     return d if d>=0 else None
 
 
+VIDEO_MAP = {'20206940': 'spy-family', 'koboa07e80a4008139bebd5748703259b8b3': 'haikyu', 'kobodcf484ebabcb385ca9f45621f968b76b': 'kingdom', 'ebj495291': 'blue-lock', '20206948': 'sakamoto-days', 'ebj390133': 'yakusoku-neverland', 'ebj516901': 'boku-yaba', 'ebj424599': 'kanokari', 'kB00AA6MPWU': 'hikaru-no-go', '2509734': 'shangri-la-frontier', 'ebj134503': 'shin-tennis', 'ebj769663': 'hotaru-no-yomeiri', '2509732': 'tengoku-daimakyo', '2509724': 'the-fable', 'kobo1e66bc136efa3aafa944dfc854a9f2b0': 'keihi'}   # 動画ページ（/video/w/）がある作品。マンガのページから映像へリンク（2026-11-24 坂田さん「アニメは漫画サイトにリンクくっつけよう」）
+
+
 def page(title, desc, body, depth=0, style="", head=""):
     up = "../" * depth
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
             f"<header class=top><a class=logo href='{up}index.html' aria-label='マンガトップへ'><img src='{up}../img/brand/logo_v8.png' width=40 height=40 alt=''><span><small>YAMANOTE MANGA</small>やまのてマンガ</span></a>"
-            f"<nav class=toplinks><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a><span class=sep></span><a class=shopbtn href='{up}../index.html' aria-label='物販（楽天・Yahoo!・Amazonの実質最安）へ'>🛒 物販</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>"
+            f"<nav class=toplinks><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a><a class=vidbtn href='{up}../video/index.html'>🎬 動画</a><span class=sep></span><a class=shopbtn href='{up}../index.html' aria-label='物販（楽天・Yahoo!・Amazonの実質最安）へ'>🛒 物販</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>"
             f"{sbar(up + '../')}"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
@@ -321,6 +324,11 @@ def work_page(w, works=None):
                      "<p class=note>価格・ポイントは各ストアの表示が最新です。</p></div>" if btns else ""))
     table = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
+    vidbox = ""
+    if tid in VIDEO_MAP:
+        _k = "ドラマ" if tid.startswith("kobo1e66") else "アニメ"
+        vidbox = (f"<div class=fbox id=video style='border-color:#4f46e5'><h2>🎬 {_k}でも楽しめます</h2><p>『{esc(title)}』の{_k}は、動画配信サービスU-NEXTで配信されています（見放題かポイント作品かは、紹介ページで確認できます）。</p>"
+                  f"<a class=fl style='border-color:#4f46e5;color:#4f46e5!important' href='../../video/w/{VIDEO_MAP[tid]}.html'>{_k}の配信状況を見る ›</a></div>")
     syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
     chars = ""
     if w.get("characters"):
@@ -383,7 +391,7 @@ def work_page(w, works=None):
             for v in ("001", "002", "003", "004", "005", "006", "007", "008")) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
     body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』<small style='display:block;font-size:14px;font-weight:700;opacity:.92;margin-top:4px'>あらすじ・登場人物・連載期間{'と、無料で読める期間' if dl is not None else '・読者の声'}</small></h1><p>{esc(w.get('hook',''))}</p><p>{free_badge}</p></div></div></div>
 <div>{tags}</div>
-{buybox}
+{buybox}{vidbox}
 {syn}
 <h2>基本情報</h2><div class=box><table>{table}</table></div>
 {chars}
@@ -475,7 +483,7 @@ def theme_pages(works):
                       f"<p class=note>{rt}{esc(w.get('author',''))}</p>{fu}<div>{tg}</div>"
                       f"<p>{esc(w.get('hook',''))}</p>"
                       + (f"<p><a class=btn href='../w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む・続きを読む'>無料で読む・続きを読む</a>" if ebj else f"<p><a class=btn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を見る\">1巻を見る</a>")
-                      + f"　<a href='../w/{w['title_id']}.html'>あらすじ・登場人物</a></p></div>")
+                      + f"　<a href='../w/{w['title_id']}.html'>あらすじ・登場人物</a>" + (f"　<a href='../../video/w/{VIDEO_MAP[w['title_id']]}.html'>🎬 アニメ・ドラマを見る</a>" if w['title_id'] in VIDEO_MAP else "") + "</p></div>")
         body = (f"<div class=hero><span class=kicker>まとめ</span><h1>{esc(title)}</h1><p>{esc(intro)}</p></div>{cards}"
                 f"<p class=note>{today.strftime('%Y/%m/%d')}時点。対象・期限は、配信ストアの表示のとおりです。</p>")
         p = OUT / "theme" / f"{slug}.html"
