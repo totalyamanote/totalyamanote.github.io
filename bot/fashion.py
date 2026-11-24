@@ -60,8 +60,11 @@ def kind_of(name):
 # Instagram発ブランド（2026-11-24 坂田さん「これらのブランド使って掲載」）。楽天で新品が売られているものだけ。
 # 調べた結果：Lil Ambition・BIRTHDAY BASH・Bibiy.は楽天では中古だけ、THE TOE・OBLI・Acak.は楽天に出店なし → 入れない
 INSTA = [("eimy istoire", r"eimy\s*istoire|エイミーイストワール"), ("anuans", r"anuans|アニュアンス"),
-         ("CREDONA", r"CREDONA|クレドナ"), ("deres", r"\bderes\b|デレス")]
-USED_NG = re.compile(r"中古|古着|USED|未使用品|リユース")
+         ("CREDONA", r"CREDONA|クレドナ")]
+# 2026-11-24 追加で調べたもの（楽天で新品なし→載せない）：deres・JOSE MOON（中古だけ）、Her lip to（楽天は化粧品と下着だけ）、
+# WYM・ADRER・SOERTE・GRANCY・SINSS・LILL・CLEL・epnok・RUUBON・Loose（ZOZOTOWN中心。楽天は出店なしか中古だけ）
+# 中古は商品名に「中古」と書かない店がある（コンコルドストア等）→ 説明文の「状態ランク」「ご入札」なども見る
+USED_NG = re.compile(r"中古|古着|USED|ユーズド|未使用品|リユース|状態ランク|コンディション|ご入札|使用感|目立った傷")
 
 
 def _off(name):
@@ -102,7 +105,7 @@ def insta_pool(api, recent):
                 x = x.get("Item", x); n0 = x["itemName"]; code = x["itemCode"]
                 if code in seen or code in recent or not re.search(rx, n0, re.I):
                     continue
-                if USED_NG.search(n0) or BAG_NG.search(n0) or SUMMER_NG.search(n0) or OTHER_NG.search(n0):
+                if USED_NG.search(n0 + " " + (x.get("itemCaption") or "")) or BAG_NG.search(n0) or SUMMER_NG.search(n0) or OTHER_NG.search(n0):
                     continue
                 if int(x.get("reviewCount") or 0) and float(x.get("reviewAverage") or 0) < 3.5:
                     continue
@@ -223,7 +226,7 @@ def pick(api):
         for c in uniq:
             if len(chosen) >= 8:
                 break
-            if c in chosen or kind_n.get(c["kind"], 0) >= (max(limit, 2) if c.get("insta") else limit) or per_brand.get(c["brand"], 0) >= (3 if c.get("insta") and limit == 8 else 2):
+            if c in chosen or kind_n.get(c["kind"], 0) >= (max(limit, 2) if c.get("insta") else limit) or per_brand.get(c["brand"], 0) >= (3 if c.get("insta") and limit >= 2 else 2):
                 continue
             chosen.append(c); kind_n[c["kind"]] = kind_n.get(c["kind"], 0) + 1; per_brand[c["brand"]] = per_brand.get(c["brand"], 0) + 1
     out = []
@@ -255,7 +258,7 @@ def render(items, stamp):
     if not cards:
         return "<!--hubf--><!--/hubf-->"
     return ("<!--hubf--><section id=fashion style='margin-top:28px'><h2>👗 レディースファッション：Instagram発ブランド</h2>"
-            f"<p class=meta>Instagram発のブランド（eimy istoire・anuans・CREDONA・deres）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
+            f"<p class=meta>Instagram発のブランド（eimy istoire・anuans・CREDONA）の新品を楽天市場から、割引の大きい順に（{MAX_PRICE:,}円まで・中古と福袋を除く）。8点を毎日すべて入れ替え。{esc(stamp)}時点（毎朝更新）。サイズ・色で価格が変わる場合があります。</p>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
