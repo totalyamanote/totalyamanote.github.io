@@ -27,7 +27,7 @@ PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
 def apply(root="."):
     n = 0
-    files = glob.glob(os.path.join(root, "*.html")) + glob.glob(os.path.join(root, "articles", "*.html")) + glob.glob(os.path.join(root, "compare", "*.html")) + glob.glob(os.path.join(root, "video", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "manga", "**", "*.html"), recursive=True)
+    files = glob.glob(os.path.join(root, "*.html")) + glob.glob(os.path.join(root, "articles", "*.html")) + glob.glob(os.path.join(root, "compare", "*.html")) + glob.glob(os.path.join(root, "video", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "manga", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "game", "**", "*.html"), recursive=True)
     for p in files:
         if os.path.basename(p).startswith("google"):
             continue
