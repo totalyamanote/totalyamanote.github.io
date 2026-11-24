@@ -326,9 +326,15 @@ def work_page(w, works=None):
     tags = "".join(f"<span class=badge>{esc(t)}</span>" for t in w.get("tags", []))
     vidbox = ""
     if tid in VIDEO_MAP:
-        _k = "アニメ"
-        vidbox = (f"<div class=fbox id=video style='border-color:#4f46e5'><h2>🎬 {_k}でも楽しめます</h2><p>『{esc(title)}』の{_k}は、動画配信サービスU-NEXTで配信されています（見放題かポイント作品かは、紹介ページで確認できます）。</p>"
-                  f"<a class=fl style='border-color:#4f46e5;color:#4f46e5!important' href='../../video/w/{VIDEO_MAP[tid]}.html'>{_k}の配信状況を見る ›</a></div>")
+        _slug = VIDEO_MAP[tid]
+        _pt = _slug in ("tengoku-daimakyo", "the-fable")   # ポイント作品（有料）のアニメ
+        _st = "ポイント作品（有料）" if _pt else "見放題"
+        vidbox = (f"<div class=fbox id=video style='border-color:#7c3aed'><h2>🎬 アニメをU-NEXTで見る</h2>"
+                  f"<p>『{esc(title)}』のアニメは、動画配信サービスU-NEXTで配信されています（<b>{_st}</b>・2026年11月24日時点）。"
+                  f"最新の配信状況はU-NEXTサイトにてご確認ください。</p>"
+                  f"<a class=fl style='background:linear-gradient(135deg,#7c3aed,#a78bfa);border-color:#7c3aed;color:#fff!important' href='https://h.accesstrade.net/sp/cc?rk=0100ougc00p32l' rel='sponsored nofollow noopener' target=_blank>U-NEXTで見る ›</a>"
+                  f"<p style='margin:8px 0 0'><a href='../../video/w/{_slug}.html'>配信状況・あらすじ・登場人物の紹介ページ ›</a></p>"
+                  f"<p class=note>PR｜U-NEXTのアフィリエイト広告を利用しています。31日間の無料トライアルがあります（条件は公式サイトで確認）。ポイント作品は別料金です。</p></div>")
     syn = f"<h2>あらすじ</h2><p>{esc(w['synopsis'])}</p>" if w.get("synopsis") else (f"<p>{esc(w['hook'])}</p>" if w.get("hook") else "")
     chars = ""
     if w.get("characters"):
