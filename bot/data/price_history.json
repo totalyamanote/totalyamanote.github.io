@@ -1220,8 +1220,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 4930,
-   "min_price": 4980
+   "min_effective": 2780,
+   "min_price": 2808
   }
  ],
  "シャンプー 詰め替え": [
@@ -2812,6 +2812,11 @@
    "date": "2026-11-23",
    "min_effective": 2943,
    "min_price": 3180
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 2653,
+   "min_price": 2680
   }
  ],
  "ペットシーツ": [
@@ -3072,8 +3077,8 @@
  "コーヒー（ドリップ・インスタント）": [
   {
    "date": "2026-11-24",
-   "min_effective": 2257,
-   "min_price": 2376
+   "min_effective": 2522,
+   "min_price": 2802
   }
  ]
 }
