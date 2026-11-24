@@ -856,6 +856,11 @@
    "date": "2026-11-23",
    "min_effective": 5445,
    "min_price": 5500
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 4418,
+   "min_price": 4650
   }
  ],
  "ミネラルウォーター": [
@@ -2909,8 +2914,8 @@
   },
   {
    "date": "2026-11-24",
-   "min_effective": 2483,
-   "min_price": 2614
+   "min_effective": 2871,
+   "min_price": 2900
   }
  ],
  "ドッグフード": [
@@ -3048,6 +3053,11 @@
    "date": "2026-11-23",
    "min_effective": 2614,
    "min_price": 2640
+  },
+  {
+   "date": "2026-11-24",
+   "min_effective": 2970,
+   "min_price": 3000
   }
  ],
  "ビール": [
