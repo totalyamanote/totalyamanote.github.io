@@ -156,7 +156,7 @@ def page(title, desc, body, depth=0, style="", head=""):
             f"{sbar(up + '../')}"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
-            f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は毎朝更新）　文：やまのて管理人</p>"
+            f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は定期的に更新）　文：やまのて管理人</p>"
             f"<p class=note><a href='{up}index.html'>マンガトップ</a>　<a href='{up}theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='{up}theme/adapted.html'>アニメ化・ドラマ化されたマンガ</a>　<a href='{up}theme/always-free.html'>いつでも無料で読めるマンガ</a>　<a href='{up}new-releases.html'>新刊カレンダー</a>　<a href='{up}store-compare.html'>電子書籍ストア比較</a>　<a href='{up}faq.html'>よくある質問</a>　<a href='{up}../index.html'>やまのて（価格・ポイントまとめ）</a></p>"
             f"<footer style='margin:30px 0 8px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);text-align:center'>"
             f"<a href='{up}../about.html'>運営者情報</a>　<a href='{up}../privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a><br>© やまのて</footer></main></body></html>")
@@ -503,7 +503,7 @@ def theme_pages(works):
         names = "・".join(f"『{w['title']}』" for w in ws[:3]) + ("など" if len(ws) > 3 else "")
         if slug == "free-now":
             title = f"いま無料で読めるマンガ{len(ws)}作品【{today.month}/{today.day}更新】1巻無料の期限つき"
-            intro = f"{names}、1巻が期間限定で無料の{len(ws)}作品を、期限が近い順に。あらすじ・評価つき。毎朝更新。"
+            intro = f"{names}、1巻が期間限定で無料の{len(ws)}作品を、期限が近い順に。あらすじ・評価つき。定期更新。"
         elif slug == "adapted":
             title = f"アニメ化・ドラマ化されたマンガ{len(ws)}作品｜原作を無料で読める期限・あらすじ"
             intro = f"{names}、作品紹介にアニメ化・ドラマ化・映画化の表記がある{len(ws)}作品。原作マンガの無料期限・あらすじつき。"
@@ -577,7 +577,7 @@ def index(works, themes):
         if _up:
             newrel = ("<h2>まもなく発売の新刊（売れている作品から）</h2><style>" + _nr.CSS + "</style>"
                       "<div class=ngrid>" + "".join(_nr.card(e, _today) for e in _up) + "</div>"
-                      "<p class=note>📅 1か月先までの新刊は「<a href='new-releases.html'>マンガ新刊の発売日カレンダー</a>」（毎朝更新）。</p>")
+                      "<p class=note>📅 1か月先までの新刊は「<a href='new-releases.html'>マンガ新刊の発売日カレンダー</a>」。</p>")
     except Exception as _e:
         print("トップの新刊欄なし", _e)
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):
@@ -616,7 +616,7 @@ def index(works, themes):
 <h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
-    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。毎朝更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
+    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。定期更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
 
 
 def faq_page(works):

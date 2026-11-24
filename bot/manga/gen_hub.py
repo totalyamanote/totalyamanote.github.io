@@ -1,7 +1,7 @@
 """トップ（site/index.html）を「軸」のハブにする後処理。run_daily.py が index.html を書いた後に実行する（何度実行しても同じ結果）。
 
 - ロゴ付きの固定ヘッダー（セール／マンガ／比較記事／毎朝の最安）
-- 上から：セール特集（イベント記事）→ マンガ（表紙カード）→ 比較記事（商品画像カード）→ 毎朝の実質最安（既存）
+- 上から：セール特集（イベント記事）→ マンガ（表紙カード）→ 比較記事（商品画像カード）→ 実質最安（既存）
 - 比較記事（site/articles/*.html）とセール日程ページにも同じヘッダーを入れる
 - 使い方：python3 gen_hub.py
 """
@@ -46,7 +46,7 @@ CSS = """<style id=hubcss>
 def header(up=""):
     return (f"<header class=hbar><a class=hlogo href='{up}index.html' aria-label='トップへ'><img src='{up}img/brand/logo_v8.png' width=42 height=42 alt=''><span><small>YAMANOTE</small>やまのて</span></a>"
             f"<nav class=hnav><a class=nb-sale href='{up}articles/black-friday-2026.html'>🛍️ セール</a>"
-            f"<a class=nb-daily href='{up}index.html#daily'>📉 毎朝の最安</a><a class=nb-cmp href='{up}compare/index.html'>📊 比較記事</a><a class=nb-vid href='{up}video/index.html'>🎬 動画</a><a class=mgbtn href='{up}manga/index.html' aria-label='やまのてマンガ（無料で読めるマンガ）へ'>📚 マンガ</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>" + sbar(up))
+            f"<a class=nb-daily href='{up}index.html#daily'>📉 実質最安</a><a class=nb-cmp href='{up}compare/index.html'>📊 比較記事</a><a class=nb-vid href='{up}video/index.html'>🎬 動画</a><a class=mgbtn href='{up}manga/index.html' aria-label='やまのてマンガ（無料で読めるマンガ）へ'>📚 マンガ</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>" + sbar(up))
 
 
 def manga_row():
@@ -158,7 +158,7 @@ def hub_block():
             f"<p>楽天・Yahoo!ショッピング・Amazonの価格−ポイント＝実質価格と、セール攻略・比較記事・無料で読めるマンガをまとめています。</p></div>"
             f"<div class=hsec><h2>🔥 セール特集</h2>{sale}</div>"
             f"<div class=hsec id=articles><h2>📝 比較記事・おすすめ</h2>{article_block()}</div>"
-            f"<h2 id=daily style='font-size:18px;margin:22px 0 6px;padding-left:10px;border-left:5px solid #bf0000'>🛒 毎朝の実質最安（楽天・Yahoo!）</h2><!--/hub-->")
+            f"<h2 id=daily style='font-size:18px;margin:22px 0 6px;padding-left:10px;border-left:5px solid #bf0000'>🛒 実質最安（楽天・Yahoo!）</h2><!--/hub-->")
 
 
 def hub_manga():
@@ -330,7 +330,7 @@ def write_static():
 <li>購入者のレビューを読み、よく書かれている点を当サイトの言葉で短く要約します（そのまま転載はしません）。確認した日付を記載します。</li>
 <li>使っていない商品について、使ったような体験談は書きません。</li></ul>
 <h2>4. 更新</h2><ul>
-<li>価格・ポイント・レビュー数は毎朝更新します。商品の入れ替えは週1回見直します。</li>
+<li>価格・ポイント・レビュー数は定期的に更新します。商品の入れ替えは週1回見直します。</li>
 <li>誤りに気づいた場合は、確認のうえ速やかに修正します。ご指摘は<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせフォーム</a>かX（<a href='https://x.com/totalyamanote' rel=noopener target=_blank>@totalyamanote</a>）のDMへ。</li></ul>
 <p>広告について：比較記事のボタンはアフィリエイトリンクです。報酬の有無や額で順位や評価を変えることはありません（<a href='about.html'>運営者情報</a>）。</p>
 <p style='font-size:12px;color:#665d55'>最終更新：{STATIC_UPDATED}</p>"""

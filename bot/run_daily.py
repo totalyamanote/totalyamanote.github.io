@@ -712,7 +712,7 @@ def update_articles(api, stamp):
         orig = t
         if "ART_CSS" not in t:
             t = t.replace("</style>", "/*ART_CSS*/" + ART_CSS + "</style>", 1)
-        t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです（毎朝更新）。", t)
+        t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです。", t)
         _n = datetime.now()
         t = re.sub(r"【\d{1,2}/\d{1,2}更新】", f"【{_n.month}/{_n.day}更新】", t)
         parts = re.split(r"(?=<h2[ >])", t)
@@ -845,7 +845,7 @@ def picks_html(picks, yahoo=None):
                 f"<span class=go>楽天で見る →</span></a>")
     cards += [yahoo_cards(yahoo, 4)]
     cards += amazon_cards(2)
-    ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・毎朝入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・毎朝入れ替え）"
+    ttl = "🔥ブラックフライデー中：ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・3日ごとに入れ替え）" if BF_ON else "ポイント倍率が高い商品（楽天・Yahoo!・Amazonの人気商品から・3日ごとに入れ替え）"
     return (f"<section><h2>{ttl}</h2>"
             "<div class=cards>" + "".join(cards) + "</div></section>")
 
@@ -997,7 +997,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", 
     page = f"""<!doctype html><html lang=ja><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>{esc(cfg['site_title'])}</title>
-<meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。1,980〜9,800円の人気商品・ふるさと納税・ホテルを毎朝入れ替えて紹介。Amazonへのリンクも。">
+<meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。1,980〜9,800円の人気商品・ふるさと納税・ホテルを3日ごとに入れ替えて紹介。Amazonへのリンクも。">
 <style>
 :root{{--bg:#fafaf9;--fg:#1c1917;--mut:#665d55;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#1c1917;--fg:#f5f5f4;--mut:#a8a29e;--line:#44403c;--acc:#f87171;--card:#292524}}}}
@@ -1034,7 +1034,7 @@ a{{color:inherit}}
 </style></head><body><main>
 <h1>{esc(cfg['site_title'])}</h1>
 <p class=disc>PR｜楽天アフィリエイト・Amazonアソシエイト・バリューコマース（Yahoo!ショッピング）を利用しています。価格・ポイントは{stamp}時点のものです。</p>
-<p class=note style='margin:4px 0 10px'>楽天・Yahoo!の「価格−ポイント」を毎朝比較（1,980〜9,800円・レビュー30件以上）。選び方は<a href='#articles'>比較記事</a>へ。</p>
+<p class=note style='margin:4px 0 10px'>楽天・Yahoo!の「価格−ポイント」を比較（1,980〜9,800円・レビュー30件以上・3日ごとに入れ替え）。選び方は<a href='#articles'>比較記事</a>へ。</p>
 <p class=pr>🛒 <a href='sale.html'><b>ブラックフライデー・スーパーSALEの時期の目安と、買う前のチェックリスト</b></a>　📚 <a href='manga/index.html'><b>マンガ情報（無料の期限つき）</b></a>　📅 <a href='manga/new-releases.html'><b>マンガ新刊カレンダー</b></a></p>
 {picks_html(picks, yahoo)}
 {articles_html()}
