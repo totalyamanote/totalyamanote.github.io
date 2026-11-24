@@ -968,7 +968,6 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", 
                 f"<span class=nm>{esc(short_name(it['name'], 40))}</span>"
                 f"<span class=yen>¥{it['price']:,}</span>"
                 f"<span class=pts>ポイント{it['point_rate']}倍（{it['price'] * it['point_rate'] // 100:,}pt）</span>"
-                f"<span class=eff2>実質¥{it['effective']:,}</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class=go>楽天で見る →</span></a>")
         for it in r.get("yahoo", []):
@@ -979,7 +978,6 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", 
                 f"<span class=nm>{esc(short_name(it['name'], 40))}</span>"
                 f"<span class=yen>¥{it['price']:,}</span>"
                 f"<span class=pts>{it['point']:,}pt付与（LINEヤフー連携時）</span>"
-                f"<span class=eff2>実質¥{it['effective']:,}</span>"
                 f"<span class=rv>⭐{it['review_avg']}（{it['review_count']:,}件）</span>"
                 f"<span class='go ygo'>Yahoo!で見る →</span></a>")
         badge = ""
