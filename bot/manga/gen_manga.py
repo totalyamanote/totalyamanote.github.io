@@ -465,11 +465,12 @@ def work_page(w, works=None):
             for v in ("001", "002", "003", "004", "005", "006", "007", "008")) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
     body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』</h1><p>{free_badge}</p></div></div></div>
 <div>{tags}</div>
+{buybox}
 {syn}
 <h2>基本情報</h2><div class=box><table>{table}</table></div>
 {chars}
 {revh}
-{buybox}{vidbox}
+{vidbox}
 <p class=note>❓ 無料で読める仕組み・全巻無料・安全な読み方などは「<a href='../faq.html'>よくある質問</a>」にまとめています。</p><p class=note>🏪 どのストアで読むとおトク？ → 「<a href='../store-compare.html'>電子書籍ストア比較（初回クーポン・ポイント還元）</a>」</p>
 {vols}
 {"<p style='text-align:center'><a class=btn href='#read'>無料で読む・続きを読む ↑</a></p>" if w.get("store") in ("ebookjapan", "kindle", "kobo") else f"<p style='text-align:center'><a class=btn href=" + chr(34) + esc(link(tid)) + chr(34) + " rel=" + chr(34) + "nofollow sponsored" + chr(34) + ">1巻を見る" + ("（無料）" if dl is not None else "") + "</a></p>"}
