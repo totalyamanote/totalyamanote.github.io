@@ -299,7 +299,7 @@ def ztile(c, rank=None, store=""):
     pr = f"<span class='zp{' zred' if off else ''}'>¥{price:,}</span>" + (f"<s class=zorig>¥{orig:,}</s>" if orig and orig > price else "")
     ptx = f"<span class=zpt>ポイント{max(1, round(pt * 100 / price))}%（{pt:,}pt）</span>" if pt > 0 and price else ""
     rv = f"<span class=zrv>★{float(c['av']):.1f}<small>（{int(c['rc']):,}）</small></span>" if c.get("rc") else ""
-    return (f"<a class=zc href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank><span class=zi><img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>{lb}{rk}</span>"
+    return (f"<a class=zc href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank><span class=zi><img src='{esc(c['img'])}' alt='{esc(c['name'])}' width=300 height=400 loading=lazy>{lb}{rk}</span>"
             f"<b class=zb>{brand_}</b><span class=zn>{esc(_nm)}</span><span class=zprow>{pr}</span>{ptx}{rv}</a>")
 
 

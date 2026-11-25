@@ -239,7 +239,7 @@ def free_now(w):
 
 def list_ld(name, url, ws):
     """一覧ページの構造化データ（CollectionPage＋作品のItemList）。"""
-    d = {"@context": "https://schema.org", "@type": "CollectionPage", "name": name, "url": url, "inLanguage": "ja",
+    d = {"@context": "https://schema.org", "@type": "CollectionPage", "name": name, "url": url, "inLanguage": "ja", "description": f"{name}。マンガ{len(ws)}作品を、あらすじ・登場人物・読者の評価つきで紹介しています。",
          "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.jp/manga/"},
          "mainEntity": {"@type": "ItemList", "numberOfItems": len(ws), "itemListElement": [
              {"@type": "ListItem", "position": i, "url": f"https://totalyamanote.jp/manga/w/{w['title_id']}.html", "name": f"『{w['title']}』"}
