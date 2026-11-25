@@ -329,7 +329,7 @@ def build():
                                                            "publisher": {"@type": "Organization", "name": e["publisher"]}, "datePublished": e["date"], "isbn": e["isbn"]}}
               for i, e in enumerate(soon + past, 1)]}}
     head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"
-    OUT.write_text(gm.page(title, desc, body, 0, head=head).replace("<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
+    OUT.write_text(gm.page(title, desc, body, 0, head=head, canon='https://totalyamanote.jp/manga/new-releases.html').replace("<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
                                                                     "<p class=pr>PR｜このページはアフィリエイト広告（楽天アフィリエイト・バリューコマース・Amazonアソシエイト）を利用しています。</p>"), encoding="utf-8")
     print(f"新刊 {len(items)} 作品（今週{len(wk)}・予約{len(soon)}・発売済み{len(past)}）")
     return True

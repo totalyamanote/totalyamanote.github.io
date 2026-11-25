@@ -170,7 +170,9 @@ def hdr(site_up):
         return ""
 
 
-def page(title, desc, body, depth=0, style="", head=""):
+def page(title, desc, body, depth=0, style="", head="", canon=""):
+    if canon and "rel=canonical" not in head:
+        head = head + f"<link rel=canonical href='{canon}'>"
     up = "../" * depth
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
@@ -289,7 +291,7 @@ def always_free_page():
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/theme/always-free.html",
           "mainEntity": {"@type": "ItemList", "numberOfItems": len(ws), "itemListElement": [
               {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": w["title"], "author": w["author"]}} for i, w in enumerate(ws, 1)]}}
-    out.write_text(page(title, intro, body, 1, head="<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"), encoding="utf-8")
+    out.write_text(page(title, intro, body, 1, head="<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>", canon="https://totalyamanote.jp/manga/theme/always-free.html"), encoding="utf-8")
     return ("always-free", "いつでも無料で読めるマンガ")
 
 
@@ -551,7 +553,7 @@ def theme_pages(works):
                 lst = "".join(f"<li><a href='../w/{w['title_id']}.html'>『{esc(w['title'])}』</a>（★{esc(w.get('rating', '—'))}）</li>" for w in allw)
                 body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いま無料で読めるマンガ</h1><p>いま1巻無料のキャンペーン中の作品は、ありません。新しい無料の作品が見つかり次第、毎朝このページに追加します。</p></div>"
                         f"<h2>評価の高い作品（あらすじ・登場人物）</h2><ul>{lst}</ul><p class=note>{today.strftime('%Y/%m/%d')}時点。<a href='../new-releases.html'>新刊カレンダー</a>・<a href='../store-compare.html'>ストア比較（初回クーポン）</a>もどうぞ。</p>")
-                p.write_text(page("いま無料で読めるマンガ｜1巻無料の作品が出たらここに追加", "いま1巻無料のキャンペーン中のマンガは、ありません。新しい無料の作品は毎朝追加します。", body, 1), encoding="utf-8")
+                p.write_text(page("いま無料で読めるマンガ｜1巻無料の作品が出たらここに追加", "いま1巻無料のキャンペーン中のマンガは、ありません。新しい無料の作品は毎朝追加します。", body, 1, canon="https://totalyamanote.jp/manga/theme/free-now.html"), encoding="utf-8")
                 made.append((slug, "いま無料で読めるマンガ"))
             continue
         names = "・".join(f"『{w['title']}』" for w in ws[:3]) + ("など" if len(ws) > 3 else "")
@@ -584,7 +586,7 @@ def theme_pages(works):
                 f"<p class=note>{today.strftime('%Y/%m/%d')}時点。対象・期限は、配信ストアの表示のとおりです。</p>")
         p = OUT / "theme" / f"{slug}.html"
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(page(title, intro, body, 1, head=list_ld(title, f"https://totalyamanote.jp/manga/theme/{slug}.html", ws)), encoding="utf-8")
+        p.write_text(page(title, intro, body, 1, head=list_ld(title, f"https://totalyamanote.jp/manga/theme/{slug}.html", ws), canon=f"https://totalyamanote.jp/manga/theme/{slug}.html"), encoding="utf-8")
         made.append((slug, title))
     return made
 
@@ -664,14 +666,17 @@ def index(works, themes):
                     f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
     # 2026-11-14 坂田さん：「いますぐ無料で読む」は期間限定（期限が分かるもの）だけ。鬼滅などの試し読みは入れない
     ptq = ""
-    quick_block = (f"<h2>いますぐ無料で読む（期間限定・期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>"
+    quick_block = (f"<h2 id=free>いますぐ無料で読む（期間限定・期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>"
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
-    body = f"""<h1 style='position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden'>無料で読める作品・期限つき</h1>
+    chips = ("<style>.chips2{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}.chips2 a{background:var(--card,#fff);border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:5px 13px;font-weight:800;font-size:13px;text-decoration:none;color:var(--fg,#1c1917)}</style>"
+             "<h1 style='font-size:20px;margin:10px 0 6px'>やまのてマンガ</h1>"
+             "<div class=chips2><a href='#free'>🆓 いま無料で読む</a><a href='new-releases.html'>🆕 新刊カレンダー</a><a href='#all'>📖 作品一覧</a><a href='theme/adapted.html'>🎬 アニメ化・ドラマ化</a><a href='theme/always-free.html'>♾️ いつでも無料</a><a href='store-compare.html'>📊 ストア比較</a><a href='faq.html'>❓ Q&amp;A</a></div>")
+    body = f"""{chips}
 {quick_block}{newrel}
-<h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
+<h2 id=all>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
-    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。定期更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")))), encoding="utf-8")
+    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。定期更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999"))), canon="https://totalyamanote.jp/manga/"), encoding="utf-8")
 
 
 def faq_page(works):

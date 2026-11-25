@@ -1109,8 +1109,8 @@ def main():
             except Exception:
                 pass
     # 2026-11-25 坂田さん「物販のふるさと納税はふるさと納税ページへ移籍」：トップ（物販）には出さない（商品は furusato/index.html ← bot/furusato.py）
-    bottom = (cards_section("ホテル・旅館（1人2万円以内・評価4.0以上）", hotels, "hotel",
-                              "料金は時期・人数・プランで変わります。空室と最新の料金はリンク先で確認してください。"))
+    # 2026-11-25 坂田さん「ホテル・旅館は一旦非表示」：トップには出さない（hotel_items / cards_section は残してある）
+    bottom = ""
     if not args.mock:
         update_articles(api, stamp)
     render_site(cfg, results, stamp, picks, kobo_section(api, cfg, today), bottom, yahoo=yh)
