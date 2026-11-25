@@ -726,11 +726,45 @@ def update_articles(api, stamp):
         orig = t
         if "ART_CSS" not in t:
             t = t.replace("</style>", "/*ART_CSS*/" + ART_CSS + "</style>", 1)
-        t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*時点のものです。", f"価格・ポイント・レビュー数は{stamp}時点のものです。", t)
+        t = re.sub(r"価格・(?:ポイント・)?レビュー数は[^。<]*?時点のものです(?:（毎朝更新）)?。", f"価格・ポイント・レビュー数は{stamp}時点のものです。", t)
         _n = datetime.now()
         t = re.sub(r"【\d{1,2}/\d{1,2}更新】", f"【{_n.month}/{_n.day}更新】", t)
         parts = re.split(r"(?=<h2[ >])", t)
         for i, blk in enumerate(parts):
+            # Yahoo!から選んだ商品（価格ブロックが「Yahoo!・レビュー」）：Yahoo!APIで取り直して、同じ形で更新（2026-11-25）
+            if blk.startswith("<h2") and "Yahoo!・レビュー" in blk and "<!--price-->" in blk:
+                try:
+                    from yahoo import Yahoo as _Y
+                    _yh = _yh_cache if "_yh_cache" in locals() else _Y(load_config(BASE))
+                    _yh_cache = _yh
+                    _ym = re.search(r"store\.shopping\.yahoo\.co\.jp%2F([^%]+)%2F([^%.]+)\.html", blk)
+                    _am = re.search(r"<!--price-->.*?alt='([^']*)'", blk, re.S)
+                    if not (_yh.ready and _ym and _am):
+                        continue
+                    _yk = f"{_ym.group(1)}/{_ym.group(2)}"
+                    _hit = None
+                    for _h in _yh.search(html.unescape(_am.group(1))[:40], results=40, sort="-review_count"):
+                        _mm = re.search(r"store\.shopping\.yahoo\.co\.jp%2F([^%]+)%2F([^%.]+)\.html", _h["url"])
+                        if _mm and f"{_mm.group(1)}/{_mm.group(2)}" == _yk:
+                            _hit = _h
+                            break
+                    if not _hit:
+                        continue
+                    _price, _pts = int(_hit["price"]), int(_hit.get("point") or 0)
+                    _rate = max(1, round(_pts * 100 / _price)) if _price else 1
+                    _rv = f"Yahoo!・レビュー{int(_hit['review_count']):,}件 ★{_hit['review_avg']:g}" if _hit.get("review_count") else "Yahoo!"
+                    _img = _hit.get("image") or ""
+                    _box = ("<!--price--><div class=price>" + (f"<img src='{esc(_img)}' alt='{esc(html.unescape(_am.group(1)))}' loading=lazy>" if _img else "")
+                            + f"<div><span class=eff>✅実質¥{_price - _pts:,}〜</span>"
+                            f"<span class=calc>価格¥{_price:,}〜 − {_pts:,}pt〜（ポイント{_rate}%（LINEヤフー連携時））</span>"
+                            f"<span class=rv>{esc(_rv)}</span></div></div><!--/price-->")
+                    blk = re.sub(r"<!--price-->.*?<!--/price-->", lambda _m: _box, blk, flags=re.S)
+                    # 買えるストアの価格も合わせる
+                    blk = re.sub(r"(<small>)¥[\d,]+〜(</small><small class=pt>)ポイント\d+%（\+[\d,]+pt）", lambda _m: f"{_m.group(1)}¥{_price:,}〜{_m.group(2)}ポイント{_rate}%（+{_pts:,}pt）", blk, count=1)
+                    parts[i] = blk
+                except Exception as _e:
+                    print("   Yahoo!商品の更新に失敗", _e, file=sys.stderr)
+                continue
             m = re.search(r"item\.rakuten\.co\.jp%2F([^%]+)%2F[^%]+%2F&(?:amp;)?m=[^&]*%2Fi%2F(\d+)", blk)
             if not m or not blk.startswith("<h2"):
                 continue
