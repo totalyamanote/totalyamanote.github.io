@@ -283,6 +283,29 @@ def render(items, stamp):
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
 
+def ztile(c, rank=None, store=""):
+    """ZOZOTOWNの商品一覧と同じ見せ方のタイル（2026-11-25 坂田さん「ZOZOの表示の仕方を参考に」）：画像・ブランド名（太字）・商品名（灰色）・価格（割引は赤）・◯%OFFの赤いラベル・ポイント・レビュー。"""
+    off = int(c.get("off") or c.get("sale") or 0)
+    orig = c.get("orig") or 0
+    price = int(c["price"])
+    pt = int(c.get("pt") or 0)
+    rk = f"<span class=zrk>{rank}</span>" if rank else ""
+    lb = f"<span class=zoff>{off}%OFF</span>" if off else ""
+    brand_ = esc((c.get("brand") or "").upper())
+    pr = f"<span class=zp{' zred' if off else ''}>¥{price:,}</span>" + (f"<s class=zorig>¥{orig:,}</s>" if orig and orig > price else "")
+    ptx = f"<span class=zpt>ポイント{max(1, round(pt * 100 / price))}%（{pt:,}pt）</span>" if pt > 0 and price else ""
+    rv = f"<span class=zrv>★{float(c['av']):.1f}<small>（{int(c['rc']):,}）</small></span>" if c.get("rc") else ""
+    return (f"<a class=zc href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank><span class=zi><img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>{lb}{rk}</span>"
+            f"<b class=zb>{brand_}</b><span class=zn>{esc(c['name'])}</span><span class=zprow>{pr}</span>{ptx}{rv}</a>")
+
+
+def render_z(items):
+    cards = "".join(ztile(it) for it in items)
+    if not cards:
+        return "<!--hubf--><!--/hubf-->"
+    return f"<!--hubf--><section id=fashion><h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2><div class=zg>{cards}</div></section><!--/hubf-->"
+
+
 def main():
     cfg = load_config(Path(os.environ.get("CONFIG_BASE") or BASE))
     if not cfg:
@@ -307,7 +330,7 @@ def main():
         _reused = False
         if items:
             _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
-    blk = render(items, datetime.now().strftime("%Y/%m/%d %H:%M"))
+    blk = render_z(items)
     # 2026-11-25 坂田さん「物販のレディースファッションはファッションページへ移籍」：商品の段は fashion/index.html に出す。トップ（物販）からは外す。
     p = SITE / "fashion" / "index.html"
     if p.exists():

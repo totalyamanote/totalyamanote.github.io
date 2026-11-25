@@ -10,7 +10,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE))
 from rakuten import RANKING_URL, SEARCH_URL, Rakuten, load_config  # noqa: E402
-from fashion import clean, kind_of, OTHER_NG, BAG_NG, SUMMER_NG, USED_NG, TYPES  # noqa: E402
+from fashion import ztile, brand, clean, kind_of, OTHER_NG, BAG_NG, SUMMER_NG, USED_NG, TYPES  # noqa: E402
 
 SITE = Path(os.environ.get("SITE_DIR") or BASE.parent).resolve()
 BASEURL = "https://totalyamanote.jp/"
@@ -54,7 +54,7 @@ def item(x, rank=None):
     pr = int(x.get("pointRate") or 1)
     p = int(x["itemPrice"])
     return {"name": nm, "sale": sale, "price": p, "pr": pr, "pt": p * pr // 100, "rc": int(x.get("reviewCount") or 0), "av": float(x.get("reviewAverage") or 0),
-            "img": img_of(x), "url": x.get("affiliateUrl") or x["itemUrl"], "shop": x.get("shopName", ""), "kind": kind_of(clean(x["itemName"])[0]), "code": x["itemCode"], "rank": rank}
+            "img": img_of(x), "brand": brand(x["itemName"]), "url": x.get("affiliateUrl") or x["itemUrl"], "shop": x.get("shopName", ""), "kind": kind_of(clean(x["itemName"])[0]), "code": x["itemCode"], "rank": rank}
 
 
 def tidy(nm):
@@ -127,9 +127,8 @@ def genre_items(api, kw, label, n, th=(30, 4.2)):
 
 
 def card(c, badge=""):
-    return (f"<a class=card href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank>{badge}<img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>"
-            f"<span class=nm>{esc(c['name'])}</span>{price_html(c)}"
-            f"<span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span><span class=go>楽天市場で見る →</span></a>")
+    rk = int(re.sub(r"\D", "", badge) or 0) if badge else None
+    return ztile(c, rk or None)
 
 
 CSS = ("<style id=fhcss>.fcs{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))!important}.fcs .card .nm{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:2.8em}.fcs .card img{aspect-ratio:3/4;object-fit:cover}"
@@ -259,7 +258,7 @@ def yahoo_store_sections(cfg, n=4, big=("ZOZOTOWN", "マルイ（丸井）", "�
                 continue
             po = h.get("point") or {}
             pt = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0) + int(po.get("lyLimitedBonusAmount") or 0)
-            items.append({"off": off_pct(price, (h.get("priceLabel") or {}).get("defaultPrice")), "name": nm[:30] + ("…" if len(nm) > 30 else ""), "price": price, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0), "img": img, "url": h["url"]})
+            items.append({"brand": ((h.get("brand") or {}).get("name") or "").strip(), "orig": (h.get("priceLabel") or {}).get("defaultPrice") or 0, "av": 0, "off": off_pct(price, (h.get("priceLabel") or {}).get("defaultPrice")), "name": nm[:30] + ("…" if len(nm) > 30 else ""), "price": price, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0), "img": img, "url": h["url"]})
         items = dedup(items, 13 if label == "ZOZOTOWN" else (8 if label in big else n))
         if items:
             top = vc + urllib.parse.quote(f"https://store.shopping.yahoo.co.jp/{sidn}/", safe="")
@@ -270,27 +269,25 @@ def yahoo_store_sections(cfg, n=4, big=("ZOZOTOWN", "マルイ（丸井）", "�
 def stores_cards_block(sections, ranked=False):
     html_ = ""
     for label, tag, top, items in sections:
-        cs = ""
-        for i, c in enumerate(items, 1):
-            badge = f"<span class=rkn>{i}</span>" if ranked else ""
-            rv = f"<span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span>" if c["rc"] else ""
-            cs += (f"<a class=card href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank>{badge}<img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>"
-                   f"<span class=nm>{esc(c['name'])}</span>{price_html(c)}" + rv + "<span class='go ygo'>Yahoo!で見る →</span></a>")
-        html_ += (f"<div class=\"cards fcs\">{cs}</div>"
-                  f"<a class=fmore href='{esc(top)}' rel='sponsored nofollow noopener' target=_blank>{esc(label)}のお店を見る ›</a>")
+        cs = "".join(ztile(dict(c, av=c.get("av", 0)), (i if ranked else None)) for i, c in enumerate(items, 1))
+        html_ += (f"<div class=zg>{cs}</div>"
+                  f"<a class=zmore href='{esc(top)}' rel='sponsored nofollow noopener' target=_blank>{esc(label)}のアイテムをもっと見る ›</a>")
     return html_
 
 
-SOFT = ("<style id=fsoft>:root{--fp:#d6336c;--fp2:#fbcfe8;--fbg:#fff6f4}body{background:var(--fbg)}"
-        "main h1{margin:0 -16px 12px!important;padding:26px 18px 22px;text-align:center;font-size:24px!important;letter-spacing:.06em;color:#831843;background:linear-gradient(135deg,#ffe4ec 0%,#fff1e6 55%,#ffe9f3 100%);border-bottom:1px solid #fbcfe8}"
-        "main h1::before{content:'🌸 ';font-size:20px}main h1::after{content:' 🌸';font-size:20px}"
-        "main h2{border-left:0!important;padding:0 0 6px!important;margin:30px 0 10px!important;color:#9d174d;font-size:19px;border-bottom:2px solid #fbcfe8;letter-spacing:.03em}"
-        "main h3{color:#9d174d}.chips2 a,.fgchips a{background:#fff!important;color:#be185d!important;border:1px solid #fbcfe8!important;border-radius:99px;padding:7px 15px;font-weight:800;box-shadow:0 2px 6px rgba(190,24,93,.08)}"
-        ".card{border-color:#fbcfe8!important;border-radius:18px!important;box-shadow:0 4px 14px rgba(190,24,93,.10)!important;background:#fff!important}.card img{border-radius:12px!important}"
-        ".card .go{background:linear-gradient(135deg,#f472b6,#d6336c)!important;border-radius:99px!important}.card .eff2{background:#ffe4ec!important;color:#9d174d!important}.card .yen{color:#be185d!important}.card .hot{background:#d6336c!important}"
-        ".rkn{background:linear-gradient(135deg,#f9a8d4,#d6336c)!important;color:#fff!important}.fmore{color:#be185d!important;border-color:#f9a8d4!important;background:#fff}"
-        ".fst{border-color:#fbcfe8!important;border-radius:14px!important;background:#fff!important}"
-        "@media (prefers-color-scheme:dark){:root{--fbg:#2a1a20}body{background:var(--fbg)}main h1{color:#fce7f3;background:linear-gradient(135deg,#4a1d33,#3b2230);border-color:#6b2a48}main h2,main h3{color:#f9a8d4;border-color:#6b2a48}.card,.fst{background:#3a2530!important;border-color:#6b2a48!important}.chips2 a,.fgchips a{background:#3a2530!important;color:#f9a8d4!important;border-color:#6b2a48!important}}</style>")
+SOFT = ("<style id=fsoft>body{background:#fff}main{color:#222}"
+        "main h1{margin:6px 0 10px!important;padding:0!important;text-align:left;font-size:26px!important;letter-spacing:0;color:#222;background:none!important;border:0!important;font-weight:800}main h1::before,main h1::after{content:none!important}"
+        "main h2{border:0!important;margin:34px 0 12px!important;padding:0!important;color:#222;font-size:20px;font-weight:800;display:flex;align-items:baseline;gap:10px}main h2 small{font-size:12px;font-weight:400;color:#888}"
+        "main h3{color:#222;font-size:16px}.chips2{border-bottom:1px solid #ddd;gap:0!important;margin:0 0 6px!important;overflow-x:auto;flex-wrap:nowrap!important;white-space:nowrap}.chips2 a{background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#555!important;padding:10px 14px!important;font-weight:700;font-size:13px;border-bottom:2px solid transparent!important}.chips2 a:first-child{color:#222!important;border-bottom-color:#222!important}"
+        ".fgchips a{background:#fff!important;color:#222!important;border:1px solid #ccc!important;border-radius:2px!important;padding:7px 14px;font-weight:700;font-size:13px;box-shadow:none}"
+        ".zg{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 12px;margin:0 0 6px}@media (max-width:700px){.zg{grid-template-columns:repeat(2,1fr);gap:20px 10px}}"
+        ".zc{display:flex;flex-direction:column;gap:3px;text-decoration:none;color:#222!important;min-width:0}.zi{position:relative;display:block;aspect-ratio:3/4;background:#f3f3f3;overflow:hidden}.zi img{width:100%;height:100%;object-fit:cover;display:block}"
+        ".zoff{position:absolute;left:0;bottom:0;background:#e60012;color:#fff;font-size:11px;font-weight:700;padding:3px 8px}.zrk{position:absolute;left:0;top:0;background:#222;color:#fff;font-size:13px;font-weight:700;min-width:24px;padding:3px 7px;text-align:center}"
+        ".zb{font-size:13px;font-weight:700;margin-top:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:.02em}.zn{font-size:12px;color:#666;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3em}"
+        ".zprow{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}.zp{font-size:16px;font-weight:700}.zp.zred{color:#e60012}.zorig{font-size:11px;color:#999}.zpt,.zrv{font-size:11px;color:#777}.zrv{color:#555}.zrv small{color:#999}"
+        ".zmore{display:block;text-align:center;border:1px solid #ccc;color:#222!important;text-decoration:none;font-size:13px;font-weight:700;padding:11px;margin:10px 0 4px}"
+        ".fst{border:1px solid #ddd!important;border-radius:2px!important}"
+        "@media (prefers-color-scheme:dark){body{background:#111}main{color:#eee}main h1,main h2,main h3{color:#eee}.zc{color:#eee!important}.zi{background:#222}.zn{color:#aaa}.chips2 a{color:#aaa!important}.chips2 a:first-child{color:#fff!important;border-bottom-color:#fff!important}.fgchips a,.zmore{background:#111!important;color:#eee!important;border-color:#444!important}}</style>")
 
 
 def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
@@ -309,17 +306,17 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
     zz = by.get("ZOZOTOWN")
     if zz and len(zz[2]) >= 5:
         # ランキング＝ZOZOTOWN（Yahoo!ショッピング）の人気順の上位5（2026-11-25 坂田さん「ランキングはZOZOにしよう」）。下のZOZOTOWNの段は6位以降
-        first += "<h2 id=ranking>🏆 人気ランキング TOP5<small style='font-weight:400;font-size:12px'>　ZOZOTOWN（Yahoo!ショッピング）</small></h2>" + stores_cards_block([("ZOZOTOWN", zz[0], zz[1], zz[2][:5])], ranked=True)
-        first += sect("zozo", "🛍 ZOZOTOWNの人気商品", "ZOZOTOWN", slice(5, 13))
+        first += "<h2 id=ranking>人気ランキング<small>ZOZOTOWN（Yahoo!ショッピング）</small></h2>" + stores_cards_block([("ZOZOTOWN", zz[0], zz[1], zz[2][:5])], ranked=True)
+        first += sect("zozo", "ZOZOTOWNの人気商品", "ZOZOTOWN", slice(5, 13))
     else:
         rk = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(rank5, 1))
         if rk:
-            first += f"<h2 id=ranking>🏆 人気ランキング TOP5</h2><div class=\"cards fcs\">{rk}</div>"
-        first += sect("zozo", "🛍 ZOZOTOWN（Yahoo!ショッピング）", "ZOZOTOWN")
+            first += f"<h2 id=ranking>人気ランキング</h2><div class=\"cards fcs\">{rk}</div>"
+        first += sect("zozo", "ZOZOTOWN（Yahoo!ショッピング）", "ZOZOTOWN")
     first += "<!--/fhub-->"
     chips = "".join(f"<a href='{g[1]}.html'>{esc(g[0])}</a>" for g in GENRES if len(gen.get(g[1]) or []) >= 4)
-    second = "<!--fhub2-->" + sect("marui", "🏬 マルイ（Yahoo!ショッピング）", "マルイ（丸井）") + sect("takashimaya", "🏬 高島屋 ファッションスクエア（Yahoo!ショッピング）", "高島屋 ファッションスクエア")
-    second += f"<h2 id=genres>🗂 ジャンル別ランキング</h2><div class=fgchips>{chips}</div>"
+    second = "<!--fhub2-->" + sect("marui", "マルイ（Yahoo!ショッピング）", "マルイ（丸井）") + sect("takashimaya", "高島屋 ファッションスクエア（Yahoo!ショッピング）", "高島屋 ファッションスクエア")
+    second += f"<h2 id=genres>ジャンル別ランキング</h2><div class=fgchips>{chips}</div>"
     for lab, slug, kw, _ in GENRES:
         its = gen.get(slug) or []
         if not its:
@@ -329,9 +326,9 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
     rest = [(l, t, tp, it) for l, t, tp, it in (ys or []) if l not in ("ZOZOTOWN", "マルイ（丸井）", "高島屋 ファッションスクエア")]
     sb = stores_block(cfg)
     if rest or sb:
-        second += "<h2 id=stores>🛒 ほかのお店</h2>" + sb
+        second += "<h2 id=stores>ほかのお店</h2>" + sb
         for l, t, tp, it in rest:
-            second += f"<h3 style='font-size:16px;margin:16px 0 2px'>{esc(l)}<small style='font-weight:400;font-size:12px'>　{esc(t)}</small></h3>" + stores_cards_block([(l, t, tp, it)])
+            second += f"<h3 style='font-size:16px;margin:16px 0 2px'>{esc(l)}<small>　{esc(t)}</small></h3>" + stores_cards_block([(l, t, tp, it)])
     return first, second + "<!--/fhub2-->"
 
 
@@ -361,7 +358,7 @@ def build_genre_page(index_html, lab, slug, its):
     nav = (f"<nav class=bc aria-label='パンくず' style='font-size:12px;color:#665d55;margin:6px 0 4px'><a href='../index.html'>トップ</a> › <a href='index.html'>レディースファッション</a> › {esc(lab)}</nav>")
     head = re.sub(r"<nav class=bc.*?</nav>", lambda m: nav, head, 1, re.S)
     body = (f"<h1 style='font-size:20px;margin:10px 0 6px'>{esc(lab)}の人気ランキング（楽天市場）</h1>"
-            f"{CSS}{SOFT}<div class=fgchips><a href='index.html'>👗 ファッショントップ</a>{chips}</div>"
+            f"{CSS}{SOFT}<div class=fgchips><a href='index.html'>ファッショントップ</a>{chips}</div>"
             f"<section><div class=\"cards fcs\">{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。商品ページで最新の価格・ポイントをご確認ください。</p></section>")
     (SITE / "fashion" / f"{slug}.html").write_text(head + body + tail, encoding="utf-8")
