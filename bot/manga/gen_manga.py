@@ -531,6 +531,13 @@ def work_page(w, works=None):
     else:
         ptitle = f"『{title}』漫画を無料で読む方法｜あらすじ・登場人物・連載期間"
         pdesc = f"『{title}』{al}の漫画を無料・おトクに読む方法。{rt}{hk + ('' if hk[-1:] in '？！?!' else '。') if hk else ''}あらすじ・登場人物・連載期間・読者の声もまとめています。"
+    # 説明文は120字以内に（長い別名の括弧と、末尾の定型句を短くする）（2026-11-25 Google点検）
+    if len(pdesc) > 120:
+        pdesc = re.sub(r"^(『[^』]*』)（[^）]*）", r"\1", pdesc, count=1)
+    if len(pdesc) > 120:
+        pdesc = pdesc.replace("続きの巻を読めるストア、あらすじ・登場人物・読者の声もまとめています。", "あらすじ・登場人物・読者の声もまとめています。")
+    if len(pdesc) > 120:
+        pdesc = pdesc[:119].rstrip("、。 ") + "。"
     p.write_text(page(ptitle, pdesc, body, 1, head=head), encoding="utf-8")
 
 
