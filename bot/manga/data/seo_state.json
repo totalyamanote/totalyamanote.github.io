@@ -2,8 +2,8 @@
  "indexnow_key": "6eb3961a0730a36a8a0c4d037d144f0e",
  "hashes": {
   "articles/cleansing-oil.html": "c7c39f5eb0a02dd354cb758bd8ec1fc7",
-  "articles/electric-blanket.html": "57373b583306b9dc8b16fdff94f2130d",
-  "articles/electric-shaver.html": "a42c130f4754ea66ce2e08cfaccd0317",
+  "articles/electric-blanket.html": "f08b6667c4f197af0dc366a8ec65db14",
+  "articles/electric-shaver.html": "5d92852ee1c34aeb0e5e432557bbfc5d",
   "articles/laundry-auto-dosing.html": "43f22995d670c4aa2a1e0f29494aff48",
   "articles/pet-sheet.html": "faa136ecdcb2ec4e8a461af50b5d33d6",
   "articles/point-up.html": "d3cc18d874c7629a6e675accc5605831",
@@ -13,8 +13,8 @@
   "articles/water-filter-cartridge.html": "fe97227e099dd544a96d6cfb3f96aa1c",
   "articles/wearable-blanket.html": "f6caa804e89a881d824d5067ddd26011",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
-  "index.html": "003d2c58a4c74a71f4c55ac444359182",
-  "manga/index.html": "7d202bab434b8819a2f62d06d97cc70f",
+  "index.html": "baf948e52c15e75c3194f7e187b64720",
+  "manga/index.html": "65bdace2f116e5c1ae79c38e5378f86a",
   "manga/theme/adapted.html": "e09ba50de1fcce309fe2fe953e62f361",
   "manga/theme/free-now.html": "054cdb85e7c9c7d70094f49f7bccb8e7",
   "manga/w/20206940.html": "3240b2ab8cce519ae3e4da346fc7bca3",
@@ -33,7 +33,7 @@
   "articles/booklive-guide.html": "668d4aa2728777d924dae90c905f3918",
   "manga/faq.html": "9b95e74a31e1c5891a587295995210a6",
   "compare-method.html": "cb32b78273514e02aa0e81ab03713f8a",
-  "manga/new-releases.html": "9d548f1e04d8acce48b305a95ffca2d8",
+  "manga/new-releases.html": "c579dafbcee843fb5b8d021d31275cab",
   "manga/store-compare.html": "df7f84fc470cdad566f31c34abbb0b38",
   "manga/theme/always-free.html": "b39932bf1773363cadd18ff401d5d2e5",
   "manga/w/ebj516901.html": "bfb020a45fbaf15eb5ce92a9de714afa",
@@ -68,7 +68,7 @@
   "articles/protein.html": "40071462051ddd9fa83700c3d0eb91f6",
   "articles/toothpaste.html": "768196ceae6595d2d1dbe89e79e57adc",
   "manga/w/ebj495291.html": "3811699181282c341b28b28e8792d050",
-  "compare/index.html": "6f37b314ccaaf6b6db7f3e8131cc1ce2",
+  "compare/index.html": "8a3a87745917b23dbb5cc83cb4ff124c",
   "articles/travel-sites-compare-2026.html": "b604a5fd1937ce3d98f9049aefa7eb4d",
   "articles/kaden-ryohanten-compare-2026.html": "7b00ec0fbc3897c71774bd4940568789",
   "articles/smartphone-makers-compare-2026.html": "95d92e1119c74cd538483017f681a66e",
@@ -215,7 +215,10 @@
   "video/w/a-0316440.html": "072254bf07f90ca60f57e48b9e023bb7",
   "video/w/d-0100802.html": "da89619b7e372374f93a125b7b74b631",
   "video/w/m-0159292.html": "9160d7f894caa6e8d95ae3f14be5b89e",
-  "video/w/m-0251822.html": "dbd5b884289bde524f53728d8e808f08"
+  "video/w/m-0251822.html": "dbd5b884289bde524f53728d8e808f08",
+  "articles/kani.html": "c1753b1191600aed6c6ac57f5fac371a",
+  "articles/osechi.html": "074aa41e281e6e17b41a4d74e92aab5d",
+  "articles/shinmai.html": "d52a7c16d3b6334b91c528a1b36adb9c"
  },
- "last_ping": "2026-11-25T18:09:02"
+ "last_ping": "2026-11-25T20:55:04"
 }

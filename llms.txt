@@ -1,6 +1,6 @@
 # やまのて
 
-> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
 
 情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
 
@@ -13,24 +13,24 @@
 - [クレンジングオイル比較｜やまのて](https://totalyamanote.jp/articles/cleansing-oil.html)
 - [食洗機用洗剤比較｜やまのて](https://totalyamanote.jp/articles/dishwasher-detergent.html)
 - [一眼レフ メーカー比較｜やまのて](https://totalyamanote.jp/articles/dslr-compare-2026.html)
-- [電気毛布比較｜やまのて](https://totalyamanote.jp/articles/electric-blanket.html)
-- [電気シェーバー比較｜やまのて](https://totalyamanote.jp/articles/electric-shaver.html)
+- [電気毛布比較](https://totalyamanote.jp/articles/electric-blanket.html)
+- [電気シェーバー比較](https://totalyamanote.jp/articles/electric-shaver.html)
 - [ふるさと納税サイト比較｜やまのて](https://totalyamanote.jp/articles/furusato-sites-2026.html)
 - [ドライヤー比較｜やまのて](https://totalyamanote.jp/articles/hair-dryer.html)
 - [ヘアオイル比較｜やまのて](https://totalyamanote.jp/articles/hair-oil.html)
 - [加湿器比較｜やまのて](https://totalyamanote.jp/articles/humidifier.html)
 - [家電量販店比較｜やまのて](https://totalyamanote.jp/articles/kaden-ryohanten-compare-2026.html)
-- [ズワイガニの売れ筋ランキング比較【2026年】楽天の人気上位3商品を100gあたりの値段・内容量・レビューで比べて選ぶ](https://totalyamanote.jp/articles/kani.html)
+- [ズワイガニ比較](https://totalyamanote.jp/articles/kani.html)
 - [自動投入の洗剤・柔軟剤のおすすめ4選｜洗濯機の自動投入で使える商品を比較【2026年】](https://totalyamanote.jp/articles/laundry-auto-dosing.html)
 - [ミラーレス一眼 メーカー比較｜やまのて](https://totalyamanote.jp/articles/mirrorless-makers-compare-2026.html)
 - [格安スマホ比較｜やまのて](https://totalyamanote.jp/articles/mobile-ymobile-linemo-uq.html)
-- [おせち2027の売れ筋ランキング比較【2026年】楽天の人気上位6商品を人数・品数・1人あたりの値段・レビューで比べて選ぶ](https://totalyamanote.jp/articles/osechi.html)
+- [おせち比較（2027年）](https://totalyamanote.jp/articles/osechi.html)
 - [アウトドアブランド比較｜やまのて](https://totalyamanote.jp/articles/outdoor-brands-2026.html)
 - [ペットシーツ比較｜やまのて](https://totalyamanote.jp/articles/pet-sheet.html)
 - [ポイント高倍率商品まとめ｜ジャンル別](https://totalyamanote.jp/articles/point-up.html)
 - [プロテイン比較｜やまのて](https://totalyamanote.jp/articles/protein.html)
 - [楽天モバイルの料金・キャンペーン｜やまのて](https://totalyamanote.jp/articles/rakuten-mobile-2026.html)
-- [新米（10kg）の売れ筋ランキング比較【2026年】楽天の人気上位6商品を1kgあたりの値段・産地・レビューで比べて選ぶ](https://totalyamanote.jp/articles/shinmai.html)
+- [新米比較](https://totalyamanote.jp/articles/shinmai.html)
 - [スマホ比較｜やまのて](https://totalyamanote.jp/articles/smartphone-makers-compare-2026.html)
 - [トイレ掃除グッズの選び方｜尿石・黒ずみ用洗剤と流せるブラシを比較](https://totalyamanote.jp/articles/toilet-cleaning.html)
 - [トイレットペーパー比較｜やまのて](https://totalyamanote.jp/articles/toilet-paper-bulk.html)
