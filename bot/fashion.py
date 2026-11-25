@@ -338,11 +338,10 @@ def main():
         t2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", lambda m: blk, t, count=1, flags=re.S)
         if t2 != t:
             p.write_text(t2, encoding="utf-8")
-    # トップ（物販）には、軽く4商品だけ（2026-11-25 坂田さん「ファッションは4商品だけ、軽く出す」）。全商品は fashion/index.html
-    lite = render(items[:4], datetime.now().strftime("%Y/%m/%d %H:%M")).replace(
-        "<h2>👗 楽天ファッション（インフルエンサー発ブランド）</h2>", "<h2>👗 レディースファッション</h2>", 1)
+    # トップ（物販）には、軽く4商品だけ（2026-11-25 坂田さん「物販のレディースファッションは完全ZOZOの表示で」）。全商品は fashion/index.html
+    lite = render_z(items[:4]).replace("<h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2>", "<h2>レディースファッション</h2>", 1)
     if lite != "<!--hubf--><!--/hubf-->":
-        lite = lite.replace("<!--/hubf-->", "<p style='text-align:center;margin:10px 0 0'><a href='fashion/index.html' style='display:inline-block;text-decoration:none;font-weight:800;font-size:15px;color:#fff;background:#be185d;border-radius:99px;padding:10px 22px'>ファッションをもっと見る ›</a></p><!--/hubf-->", 1)
+        lite = lite.replace("<!--/hubf-->", "<a class=zmore href='fashion/index.html' style='display:block;text-align:center;border:1px solid #ccc;color:#222;text-decoration:none;font-size:13px;font-weight:700;padding:11px;margin:10px 0 4px'>レディースファッションをもっと見る ›</a><!--/hubf-->")
     pi = SITE / "index.html"
     ti = pi.read_text(encoding="utf-8")
     ti2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", lambda m: lite, ti, count=1, flags=re.S)
