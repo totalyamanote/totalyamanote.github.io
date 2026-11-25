@@ -998,7 +998,7 @@ def render_site(cfg, results, stamp, picks=None, books_html="", bottom_html="", 
     page = f"""<!doctype html><html lang=ja><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <title>{esc(cfg['site_title'])}</title>
-<meta name=description content="楽天・Yahoo!ショッピングで買う前に、価格−ポイントの「実質価格」をチェック。1,980〜9,800円の人気商品・ふるさと納税・ホテルを{STEP}入れ替えて紹介。Amazonへのリンクも。">
+<meta name=description content="買う前に、遊ぶ前に、観る前に、比べて選べる。楽天・Yahoo!・Amazonの実質価格、ファッションの人気ランキング、ゲームの発売日と価格、無料マンガ、ドラマ・映画・アニメの配信情報を毎日更新。">
 <style>
 :root{{--bg:#fafaf9;--fg:#1c1917;--mut:#665d55;--line:#e7e5e4;--acc:#bf0000;--card:#fff}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#1c1917;--fg:#f5f5f4;--mut:#a8a29e;--line:#44403c;--acc:#f87171;--card:#292524}}}}
