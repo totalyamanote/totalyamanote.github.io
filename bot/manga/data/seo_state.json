@@ -15,14 +15,14 @@
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
   "index.html": "13fcab98f9be78b1acdf95b8b03812be",
   "manga/index.html": "6b1962cf8135e15f976a7f0cdb242f84",
-  "manga/theme/adapted.html": "7767186f0cb349e0d29bc8e7e583a1af",
+  "manga/theme/adapted.html": "fed8c928456d8d06d12ccee5517e2be8",
   "manga/theme/free-now.html": "a00e6c88afec0beaea159ca9053d32e4",
-  "manga/w/20206940.html": "275319415d2a364a6f411a599618f2b2",
-  "manga/w/20206948.html": "ff7019257410307c02200ff1f1b6c188",
-  "manga/w/2504807.html": "86365efa0d200b1205c781b2ef33bdec",
-  "manga/w/2509724.html": "c6c6b80d43f3244deac22cd4daebb74e",
-  "manga/w/2509732.html": "e6fb537cfa886ca99063bb3cd323f51d",
-  "manga/w/2509734.html": "67c8ced593c7897d4b540a8c380c4d8d",
+  "manga/w/20206940.html": "2a959974c49cd48845696ede744e4aa8",
+  "manga/w/20206948.html": "08bf812db10cc72fe2d3938c810eb791",
+  "manga/w/2504807.html": "e7701602d91a92a95e8d70f668fbf5e3",
+  "manga/w/2509724.html": "6ecfb27a5909deed977aaf3c1753f3cf",
+  "manga/w/2509732.html": "bc4b38ec57bf6e6eadd61874aaf90f69",
+  "manga/w/2509734.html": "905390f8304527cefcd2f38d1982477e",
   "recent.html": "9aa274f96fd4e79b176831769c905e2d",
   "sabon.html": "24532636e87273bfcf95bbdf7f0a5595",
   "sale.html": "47bae50ef73fe370c6f66782762d269c",
@@ -221,5 +221,5 @@
   "articles/shinmai.html": "c0e7210f93ca108457dc66c64b2d81bb",
   "instagram/index.html": "dcc83ff387d23a8c15ab34dc775fcade"
  },
- "last_ping": "2026-11-26T08:52:53"
+ "last_ping": "2026-11-26T08:58:08"
 }
