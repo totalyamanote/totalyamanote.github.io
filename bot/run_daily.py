@@ -518,7 +518,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             if it["item_code"] in shown or k in keys or k2 in keys or k3 in keys or is_dup(it, top + seen_all, w["name"] + " " + (w.get("keyword") or "")):
                 continue
             keys.update([k, k2, k3]); shown.add(it["item_code"]); top.append(it)
-            if len(top) == 4:   # 4件（パソコン4列・スマホ2列でちょうど並ぶ）
+            if len(top) == 6:   # 6件（パソコン・スマホとも3列で、2行ちょうど並ぶ）（2026-11-25 坂田さん「1行3列にして、不足分は補って」）
                 break
 
         if len(top) < 3:
@@ -549,11 +549,11 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
                     if k2 in ykeys or is_dup(y, ys + top + seen_all):
                         continue
                     ykeys.add(k2); ys.append(y)
-                    if len(ys) == 2:
+                    if len(ys) == 3:
                         break
             except Exception as e:
                 print(f"   ⚠ Yahoo検索に失敗（{w['name']}）: {e}", file=sys.stderr)
-        keep = max(2, 4 - len(ys))
+        keep = max(3, 6 - len(ys))
         for it in top[keep:]:
             shown.discard(it["item_code"])
         top = top[:keep]
