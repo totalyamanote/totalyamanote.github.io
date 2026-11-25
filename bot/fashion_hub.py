@@ -193,7 +193,80 @@ def stores_block(cfg):
     return f"<h2 id=stores>🛍 ほかのお店のファッション</h2><div class=fsts>{cells}</div>"
 
 
-def build_hub(rank5, gen, yh=None, cfg=None):
+YSTORES = [("マルイ（丸井）", "マルイ(丸井)Yahoo!店", "百貨店"), ("高島屋 ファッションスクエア", "タカシマヤファッションスクエア", "百貨店"), ("ZOZOTOWN", "ZOZOTOWN Yahoo!店", "ファッション通販"), ("Pierrot（ピエロ）", "Pierrot(ピエロ)Yahoo!店", "ガーリー・プチプラ")]
+
+
+def _yget(appid, vc, q):
+    q = dict(q, appid=appid, in_stock="true", condition="new", affiliate_type="vc", affiliate_id=vc)
+    req = urllib.request.Request(YAHOO_API + "?" + urllib.parse.urlencode(q), headers={"User-Agent": "yamanote/1.0"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        d = json.load(r)
+    time.sleep(1.0)
+    return d
+
+
+def yahoo_store_sections(cfg, n=4):
+    """Yahoo!ショッピングに出店している百貨店・ファッション通販（マルイ・高島屋・ZOZOTOWN・Pierrot）の人気商品。リンクはバリューコマース。"""
+    y = (cfg or {}).get("yahoo", {})
+    appid = os.environ.get("YAHOO_APP_ID") or y.get("app_id", "")
+    sid, pid = str(y.get("vc_sid", "")), str(y.get("vc_pid", ""))
+    if not (appid and sid and pid):
+        return []
+    vc = f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid={sid}&pid={pid}&vc_url="
+    out = []
+    for label, sname, tag in YSTORES:
+        try:
+            d = _yget(appid, vc, {"query": sname.split("(")[0] + " レディース", "genre_category_id": "2494", "results": 30})
+            sellers = {(h.get("seller") or {}).get("name"): (h.get("seller") or {}).get("sellerId") for h in d.get("hits", [])}
+            sidn = sellers.get(sname)
+            if not sidn:
+                continue
+            d = _yget(appid, vc, {"seller_id": sidn, "genre_category_id": "2494", "results": 50, "sort": "-score"})
+        except Exception:
+            continue
+        items = []
+        for h in d.get("hits", []):
+            if not str(h.get("url", "")).startswith("https://ck.jp.ap.valuecommerce.com/"):
+                continue
+            nm0 = h.get("name", "")
+            rv = h.get("review") or {}
+            if BAD.search(nm0) or BAG_NG.search(nm0) or SUMMER_NG.search(nm0) or OTHER_NG.search(nm0) or USED_NG.search(nm0):
+                continue
+            if int(rv.get("count") or 0) and float(rv.get("rate") or 0) < 3.8:
+                continue
+            nm, _ = clean(nm0)
+            nm = tidy(re.sub(r"\s+", " ", re.sub(r"\d+/\d+\([^)]*\)\d+:\d+[迄まで]*|メール便不可|メール便OK|送料無料|\d+\s*[%％]\s*OFF[!！]*|[!！]+", " ", nm)).strip())
+            img = ((h.get("image") or {}).get("medium") or "")
+            price = int(h.get("price") or 0)
+            if len(nm) < 9:
+                nm = tidy(re.sub(r"\s+", " ", nm0)).strip()
+            nm = re.sub(r"[ /／]+$", "", nm).strip()
+            if not img or price <= 0 or len(nm) < 4:
+                continue
+            po = h.get("point") or {}
+            pt = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0)
+            items.append({"name": nm[:30] + ("…" if len(nm) > 30 else ""), "price": price, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0), "img": img, "url": h["url"]})
+        items = dedup(items, n)
+        if items:
+            top = vc + urllib.parse.quote(f"https://store.shopping.yahoo.co.jp/{sidn}/", safe="")
+            out.append((label, tag, top, items))
+    return out
+
+
+def stores_cards_block(sections):
+    html_ = ""
+    for label, tag, top, items in sections:
+        cs = ""
+        for c in items:
+            rv = f"<span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span>" if c["rc"] else ""
+            cs += (f"<a class=card href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>"
+                   f"<span class=nm>{esc(c['name'])}</span><span class=yen>¥{c['price']:,}</span>" + (f"<span class=pts>ポイント{c['pt']:,}pt</span>" if c["pt"] > 0 else "") + rv + "<span class='go ygo'>Yahoo!で見る →</span></a>")
+        html_ += (f"<h3 style='font-size:16px;margin:16px 0 2px'>{esc(label)}<small style='font-weight:400;font-size:12px'>　{esc(tag)}</small></h3><div class=\"cards fcs\">{cs}</div>"
+                  f"<a class=fmore href='{esc(top)}' rel='sponsored nofollow noopener' target=_blank>{esc(label)}のお店を見る ›</a>")
+    return html_
+
+
+def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
     chips = "".join(f"<a href='{g[1]}.html'>{esc(g[0])}</a>" for g in GENRES if len(gen.get(g[1]) or []) >= 4)
     rk = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(rank5, 1))
     html_ = f"<!--fhub-->{CSS}"
@@ -204,6 +277,8 @@ def build_hub(rank5, gen, yh=None, cfg=None):
     sb = stores_block(cfg)
     if sb:
         html_ += sb
+    if ys:
+        html_ += "<h2 id=depart>🏬 百貨店・ファッション通販（Yahoo!ショッピング）</h2>" + stores_cards_block(ys)
     html_ += f"<h2 id=genres>👗 ジャンル別</h2><div class=fgchips>{chips}</div>"
     for lab, slug, kw, _ in GENRES:
         its = gen.get(slug) or []
@@ -259,7 +334,8 @@ def main():
     gen = {slug: genre_items(api, kw, lab2, 12) for lab, slug, kw, lab2 in GENRES}
     t = p.read_text(encoding="utf-8")
     yh = yahoo_items(cfg)
-    blk = build_hub(rank5, gen, yh, cfg)
+    ys = yahoo_store_sections(cfg)
+    blk = build_hub(rank5, gen, yh, cfg, ys)
     if "<!--fhub-->" in t:
         t = re.sub(r"<!--fhub-->.*?<!--/fhub-->", lambda m: blk, t, 1, re.S)
     p.write_text(t, encoding="utf-8")
