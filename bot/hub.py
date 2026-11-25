@@ -243,17 +243,7 @@ def apply_sale(page, now=None):
             page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)
     else:
         page = re.sub(r"<a href='articles/black-friday-2026\.html'>セール</a>", "", page, count=1)
-    # ファッションは「ポイント倍率が高い商品」の次（いろんな項目の上）
-    m = re.search(r"<!--hubf-->.*?<!--/hubf-->", page, re.S)
-    if m and d >= 0:
-        blk = m.group(0)
-        page = page.replace(blk, "", 1)
-        d = page.find("<h2 id=daily")
-        s1 = page.find("<section>", d)
-        e1 = page.find("</section>", s1) + len("</section>") if s1 >= 0 else -1
-        pos = e1 if e1 > 0 else page.find("<!--hubart-->")
-        page = page[:pos] + blk + page[pos:]
-    # 比較記事・おすすめは「いろんな項目（無洗米・日本酒など）」の下（実質最安→BF→ファッション→各項目→比較記事→マンガ）（2026-11-25 坂田さん）
+    # 比較記事・おすすめは「いろんな項目（無洗米・日本酒など）」の下（実質最安→BF→各項目→ファッション→比較記事→マンガ）（2026-11-25 坂田さん）
     ma = re.search(r"<!--hubart-->.*?<!--/hubart-->", page, re.S)
     if ma:
         art = ma.group(0)
@@ -262,6 +252,17 @@ def apply_sale(page, now=None):
             if mk in page:
                 page = page.replace(mk, art + mk, 1)
                 break
+    # ファッションは、いろんな項目の下・比較記事の上に下げる（2026-11-25 坂田さん。EC市場分析で、レディースファッションは楽天セールで3年連続順位低下のため）
+    m = re.search(r"<!--hubf-->.*?<!--/hubf-->", page, re.S)
+    if m:
+        blk = m.group(0)
+        page = page.replace(blk, "", 1)
+        for mk in ("<!--hubart-->", "<!--hubm-->", "<!--ftr-->"):
+            if mk in page:
+                page = page.replace(mk, blk + mk, 1)
+                break
+        else:
+            page = page.replace("</main>", blk + "</main>", 1)
     return page
 
 
