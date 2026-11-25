@@ -229,5 +229,47 @@
   "source": "Kindle",
   "volume_used": "別の巻（19巻）",
   "date": "2026-11-25"
+ },
+ "9784087921083": {
+  "rating": 4.7,
+  "count": 485,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
+ },
+ "9784088853123": {
+  "rating": 4.8,
+  "count": 1348,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
+ },
+ "9784088853147": {
+  "rating": 4.9,
+  "count": 1472,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
+ },
+ "9784088850955": {
+  "rating": 4.8,
+  "count": 3844,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
+ },
+ "9784065461969": {
+  "rating": 4.6,
+  "count": 2556,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
+ },
+ "9784041178775": {
+  "rating": 4.6,
+  "count": 3431,
+  "source": "Kindle",
+  "volume_used": "1巻",
+  "date": "2026-11-25"
  }
 }
