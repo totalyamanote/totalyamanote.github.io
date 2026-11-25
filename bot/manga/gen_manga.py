@@ -175,7 +175,6 @@ def page(title, desc, body, depth=0, style="", head=""):
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
             f"{hdr(up + '../')}"
-            f"<nav class=subnav aria-label='マンガのメニュー'><b>マンガ</b><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a></nav>"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
             f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は定期的に更新）　文：やまのて管理人</p>"

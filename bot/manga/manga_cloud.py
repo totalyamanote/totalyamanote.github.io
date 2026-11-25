@@ -28,7 +28,7 @@ def setup():
         shutil.copy(f, ROOT / f.name)
     for f in (REPO / "bot").glob("yahoo.py"):
         shutil.copy(f, ROOT / f.name)
-    for f in (SRC / "data").glob("*.json"):
+    for f in list((SRC / "data").glob("*.json")) + list((SRC / "data").glob("*.tpl")):   # header.tpl（全ページ共通のメニューの型）も
         shutil.copy(f, ROOT / "data" / f.name)
     cfg = json.loads((REPO / "bot" / "config.public.json").read_text(encoding="utf-8"))
     cfg["application_id"] = os.environ["RAKUTEN_APP_ID"]

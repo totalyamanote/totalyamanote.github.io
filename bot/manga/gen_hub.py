@@ -506,7 +506,9 @@ def apply_other_breadcrumbs():
             extra = f"<p style='font-size:12px;color:#665d55;margin:4px 0'>更新日：{datetime.date.fromtimestamp(f.stat().st_mtime).isoformat()}　文：やまのて管理人（<a href='about.html'>運営者情報</a>）</p>"
         blk = f"<!--obc--><nav class=bc aria-label='パンくず' style='font-size:12px;color:#665d55;margin:6px 0 4px'>{vis}</nav>{jsonld(ld)}<!--/obc-->"
         mh = re.search(r"<!--/hdr-->|</header>", t)
-        pos = mh.end() if mh else t.find("<main>") + 6
+        pos = mh.end() if mh else t.find("<main") + 6
+        if pos < 7:   # ヘッダーも<main>も見つからないページには入れない（先頭に差し込んでHTMLを壊さない）
+            continue
         t = t[:pos] + blk + t[pos:]
         if extra:
             h1e = t.find("</h1>")
