@@ -253,6 +253,15 @@ def apply_sale(page, now=None):
         e1 = page.find("</section>", s1) + len("</section>") if s1 >= 0 else -1
         pos = e1 if e1 > 0 else page.find("<!--hubart-->")
         page = page[:pos] + blk + page[pos:]
+    # 比較記事・おすすめは「いろんな項目（無洗米・日本酒など）」の下（実質最安→BF→ファッション→各項目→比較記事→マンガ）（2026-11-25 坂田さん）
+    ma = re.search(r"<!--hubart-->.*?<!--/hubart-->", page, re.S)
+    if ma:
+        art = ma.group(0)
+        page = page.replace(art, "", 1)
+        for mk in ("<!--hubm-->", "<!--ftr-->"):
+            if mk in page:
+                page = page.replace(mk, art + mk, 1)
+                break
     return page
 
 
