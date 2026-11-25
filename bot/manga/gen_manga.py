@@ -670,7 +670,7 @@ def index(works, themes):
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     chips = ("<style>.chips2{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}.chips2 a{background:var(--card,#fff);border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:5px 13px;font-weight:800;font-size:13px;text-decoration:none;color:var(--fg,#1c1917)}</style>"
              "<h1 style='font-size:20px;margin:10px 0 6px'>やまのてマンガ</h1>"
-             "<div class=chips2><a href='#free'>🆓 いま無料で読む</a><a href='new-releases.html'>🆕 新刊カレンダー</a><a href='#all'>📖 作品一覧</a><a href='theme/adapted.html'>🎬 アニメ化・ドラマ化</a><a href='theme/always-free.html'>♾️ いつでも無料</a><a href='store-compare.html'>📊 ストア比較</a><a href='faq.html'>❓ Q&amp;A</a></div>")
+             "<div class=chips2><a href='#free'>🆓 いま無料で読む</a><a href='new-releases.html'>🆕 新刊カレンダー</a><a href='#all'>📖 作品一覧</a><a href='theme/adapted.html'>🎬 アニメ化・ドラマ化</a><a href='theme/always-free.html'>♾️ いつでも無料</a></div>")
     body = f"""{chips}
 {quick_block}{newrel}
 <h2 id=all>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
