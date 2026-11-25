@@ -1,6 +1,6 @@
 # やまのて
 
-> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
 
 情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
 
@@ -133,20 +133,20 @@
 - [原作がマンガのドラマ・映画・アニメ｜U-NEXTの配信状況つき｜やまのて動画](https://totalyamanote.jp/video/theme/manga-origin.html)
 - [U-NEXTで見放題のドラマ・映画・アニメ69作品｜やまのて動画](https://totalyamanote.jp/video/theme/mihoudai.html)
 - [東京リベンジャーズをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0056138.html)
-- [凶乱令嬢ニア・リストン 病弱令嬢に転生した神殺しの武人の華麗なる無双録をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305833.html)
+- [凶乱令嬢ニア・リストンをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305833.html)
 - [追放された転生重騎士はゲーム知識で無双するをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305840.html)
 - [薬屋のひとりごと 第3期をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0316422.html)
-- [追放されたチート付与魔術師は気ままなセカンドライフを謳歌する。 ～俺は武器だけじゃなく、あらゆるものに『強化ポイント』を付与できるし、俺の意思でいつでも効果を解除できるけど、残った人たち大丈夫？～をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0316440.html)
+- [追放されたチート付与魔術師は気ままなセカンドライフを謳歌する。をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0316440.html)
 - [ブルーロックをU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/blue-lock.html)
 - [僕の心のヤバイやつをU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/boku-yaba.html)
 - [ウォーキング・デッド シーズン1をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0002474.html)
 - [時効警察をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0013046.html)
-- [ドクターX～外科医・大門未知子～をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0013230.html)
+- [ドクターXをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0013230.html)
 - [勇者ヨシヒコと魔王の城をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0013461.html)
 - [太陽の末裔 Love Under The SunをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0028118.html)
 - [結婚できない男をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0033828.html)
 - [おっさんずラブ（2018）をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0034399.html)
-- [リーガルV～元弁護士・小鳥遊翔子～をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0037634.html)
+- [リーガルVをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0037634.html)
 - [S.W.A.T. シーズン1をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0039881.html)
 - [名探偵モンク シーズン１をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0053404.html)
 - [大豆田とわ子と三人の元夫をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0056779.html)
@@ -161,8 +161,8 @@
 - [CSI：科学捜査班 シーズン1をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0095630.html)
 - [フロム -閉ざされた街-をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0100802.html)
 - [ソンジェ背負って走れをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0101144.html)
-- [財閥家の末息子～Reborn Rich～をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0103424.html)
-- [哲仁王后～俺がクイーン！？～をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0104839.html)
+- [財閥家の末息子をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0103424.html)
+- [哲仁王后をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0104839.html)
 - [南くんが恋人！？をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0124993.html)
 - [瑞草洞＜ソチョドン＞をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0209355.html)
 - [孤独のグルメ Season11をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0291622.html)
@@ -198,7 +198,7 @@
 - [劇場版ブルーロック -EPISODE 凪-をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0157267.html)
 - [劇場版ハイキュー!! ゴミ捨て場の決戦をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0159138.html)
 - [ゴジラ-1.0をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0159292.html)
-- [劇場版「進撃の巨人」完結編 THE LAST ATTACKをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0201307.html)
+- [劇場版「進撃の巨人」完結編をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0201307.html)
 - [劇場版「鬼滅の刃」無限列車編をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0205789.html)
 - [ルックバックをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0242285.html)
 - [ワン・バトル・アフター・アナザーをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0251822.html)

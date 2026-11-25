@@ -170,8 +170,9 @@ def yahoo_items(cfg, n=8):
 
 def card_y(c):
     return (f"<a class=card href='{esc(c['url'])}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(c['img'])}' alt='{esc(c['name'])}' loading=lazy>"
-            f"<span class=nm>{esc(c['name'])}</span><span class=yen>¥{c['price']:,}</span><span class=pts>ポイント{c['pt']:,}pt</span>"
-            f"<span class=eff2>実質¥{c['price'] - c['pt']:,}</span><span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span><span class='go ygo'>Yahoo!ショッピングで見る →</span></a>")
+            f"<span class=nm>{esc(c['name'])}</span><span class=yen>¥{c['price']:,}</span>"
+            + (f"<span class=pts>ポイント{c['pt']:,}pt</span><span class=eff2>実質¥{c['price'] - c['pt']:,}</span>" if c["pt"] > 0 else "")
+            + f"<span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span><span class='go ygo'>Yahoo!で見る →</span></a>")
 
 
 def stores_block(cfg):
