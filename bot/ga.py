@@ -20,7 +20,9 @@ SNIPPET = (
     "if(n){gtag('event','sns_follow_click',{network:/x\\.com/.test(n.href)?'X':/threads/.test(n.href)?'Threads':'Bluesky',page_path:location.pathname});return}"
     "var a=t.closest('a[rel~=sponsored]');if(!a)return;var h=a.href,sec=a.closest('section[id],div[id]'),"
     "s=/rakuten/.test(h)?'楽天':/amazon\\.co\\.jp/.test(h)?'Amazon':/pid=892746726/.test(h)?'ブックライブ':/valuecommerce/.test(h)?'Yahoo!':/a8mat=4BGK83\\+E39C6Q\\+4J34/.test(h)?'ゲオ':/a8\\.net/.test(h)?'A8':/linksynergy/.test(h)?'リンクシェア':'その他';"
-    "gtag('event','affiliate_click',{store:s,link_url:h.slice(0,100),page_path:location.pathname,section:sec?sec.id:'',content_group:cg,item_title:document.title.split('｜')[0].slice(0,60)})},true);</script><!--/ga4-->"
+    "var hs=document.querySelectorAll('h2,h3'),hd='',hid='';for(var i=0;i<hs.length;i++){if(hs[i].compareDocumentPosition(a)&4){hd=hs[i].textContent.trim().slice(0,40);if(hs[i].id)hid=hs[i].id}}"
+    "var nm=a.querySelector('.zn,.nm,.pn'),br=a.querySelector('.zb'),rk=a.querySelector('.zrk,.rkn,.rkb'),it=(nm?nm.textContent:'').trim().slice(0,60);"
+    "gtag('event','affiliate_click',{store:s,link_url:h.slice(0,100),page_path:location.pathname,section:sec&&sec.id?sec.id:hid,heading:hd,content_group:cg,item_title:it||document.title.split('｜')[0].slice(0,60),item_brand:br?br.textContent.trim().slice(0,40):'',rank:rk?rk.textContent.trim().slice(0,3):''})},true);</script><!--/ga4-->"
 )
 PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
