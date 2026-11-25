@@ -185,7 +185,22 @@ def page(title, desc, body, depth=0, style="", head="", canon=""):
             f"<a href='{up}../about.html'>運営者情報</a>　<a href='{up}../privacy.html'>プライバシーポリシー・免責事項</a>　<a href='https://docs.google.com/forms/d/e/1FAIpQLSeZSQMC1y2Dq1iJ3bxQ6UOsQnXbXWsm_j9PDCCto8rCpzjSrQ/viewform' rel=noopener target=_blank>お問い合わせ</a><br>© やまのて</footer></main></body></html>")
 
 
+_ENDED = None
+
+
+def ended_ids():
+    """無料期間が終わった作品の「キャンペーン用ID → 通常版ID」。終了後の無料版ページは「公開終了」になるため（2026-11-26）。"""
+    global _ENDED
+    if _ENDED is None:
+        today = datetime.date.today().isoformat()
+        ws = json.loads(DATA.read_text(encoding="utf-8"))
+        _ENDED = {str(k): str(w["real_id"]) for k, w in ws.items()
+                  if w.get("real_id") and str(w["real_id"]) != str(k) and w.get("free_until") and w["free_until"] < today}
+    return _ENDED
+
+
 def link(tid, vol="001"):
+    tid = ended_ids().get(str(tid), tid)
     return VC + urllib.parse.quote(f"https://booklive.jp/product/index/title_id/{tid}/vol_no/{vol}", safe="")
 
 
