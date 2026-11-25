@@ -54,6 +54,17 @@ jobs:
           SITE_DIR: .
         run: python bot/fashion.py
 
+      # ファッションページの「人気ランキング＋ジャンル別」（ジャンルごとのページも作る）
+      - name: Fashion genre pages
+        continue-on-error: true
+        env:
+          TZ: Asia/Tokyo
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          SITE_DIR: .
+        run: python bot/fashion_hub.py
+
       # ブラックフライデー記事の「実質価格で選ぶ：楽天のおすすめ」の商品を、更新のたびに入れ替える（ポイント倍率の高い順・最新の価格とポイント）
       - name: Black Friday article products
         env:
