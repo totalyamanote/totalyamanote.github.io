@@ -489,7 +489,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             items += [it for it in batch
                       if not any(n in it["name"] for n in ng)
                       and it["review_count"] >= max(w.get("min_reviews", 30), 30)
-                      and MIN_PRICE <= it["price"] <= MAX_PRICE and not was_shown(sh, it)
+                      and MIN_PRICE <= it["price"] <= MAX_PRICE
                       and relevant(it, w) and not OLD_NG.search(short_name(it["name"], 80)) and not ELEC_NG.search(it["name"])]   # 項目名と関係ない商品は出さない
             if len({it.get("shop") for it in items}) >= 6 or len(batch) < 30:   # 同じショップばかりだと重複除外で足りなくなるので、6ショップそろうまで見る
                 break
@@ -501,7 +501,7 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             extra = []
         seen = {it["item_code"] for it in items}
         items += [it for it in extra if it["item_code"] not in seen
-                  and MIN_PRICE <= it["price"] <= MAX_PRICE and not was_shown(sh, it)
+                  and MIN_PRICE <= it["price"] <= MAX_PRICE
                   and relevant(it, w) and not ELEC_NG.search(it["name"])
                   and not any(n in it["name"] for n in ng)
                   and it["review_count"] >= max(w.get("min_reviews", 30), 30)]
@@ -509,6 +509,8 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             # 実質価格＝価格−獲得ポイント（通常1倍=1%として計算）
             it["effective"] = round(it["price"] * (1 - it["point_rate"] / 100))
         items.sort(key=lambda x: x["effective"])
+        items_all = list(items)   # 過去に出した商品も含む全候補（6件に足りない分の補充用）
+        items = [it for it in items if not was_shown(sh, it)]
         # 重複を除く：同じ商品（色違い・出品違い）は一番安い1件だけ、ほかの項目に出た商品も除く
         top, keys = [], set()
         for it in items:
@@ -521,8 +523,19 @@ def price_watch(api, cfg, today, exclude=None, sh=None, picks_shown=None, yahoo=
             if len(top) == 6:   # 6件（パソコン・スマホとも3列で、2行ちょうど並ぶ）（2026-11-25 坂田さん「1行3列にして、不足分は補って」）
                 break
 
-        if len(top) < 3:
-            print(f"   ・{w['name']}：まだ出していない商品が{len(top)}件なので、別のカテゴリに入れ替え")
+        n_fresh = len(top)
+        if 1 <= n_fresh < 6:   # 新しい商品が6件に足りない分は、過去に出した商品で補う（2026-11-25 坂田さん「無洗米・日本酒…6個入れて」）
+            for it in items_all:
+                if len(top) >= 6:
+                    break
+                k = dedupe_key(it)
+                k2 = ("shop", it.get("shop", ""))
+                k3 = "".join(short_name(it["name"], 80).split()[:3])
+                if it["item_code"] in {t["item_code"] for t in top} or k in keys or k2 in keys or k3 in keys or is_dup(it, top + seen_all, w["name"] + " " + (w.get("keyword") or "")):
+                    continue
+                keys.update([k, k2, k3]); shown.add(it["item_code"]); top.append(it)
+        if n_fresh < 1:
+            print(f"   ・{w['name']}：まだ出していない商品が{n_fresh}件なので、別のカテゴリに入れ替え")
             for it in top:
                 shown.discard(it["item_code"])
             continue
