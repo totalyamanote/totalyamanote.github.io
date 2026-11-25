@@ -15,7 +15,7 @@ from run_daily import short_name          # noqa: E402
 
 SITE = Path(os.environ.get("SITE_DIR") or BASE.parent).resolve()
 ART = SITE / "articles" / "black-friday-2026.html"
-MIN_PRICE, MAX_PRICE, MIN_REV, MIN_AVG, N = 1980, 9800, 300, 4.3, 12
+MIN_PRICE, MAX_PRICE, MIN_REV, MIN_AVG, N = 1980, 999999999, 300, 4.3, 12   # 上限なし（2026-11-25 坂田さん）
 esc = html.escape
 
 

@@ -35,7 +35,7 @@ class Yahoo:
              "affiliate_type": "vc", "affiliate_id": vc}
         if price_from:
             q["price_from"] = price_from
-        if price_to:
+        if price_to and price_to < 99999999:   # 上限なし（999999999）は送らない
             q["price_to"] = price_to
         req = urllib.request.Request(API + "?" + urllib.parse.urlencode(q), headers={"User-Agent": "yamanote/1.0"})
         with urllib.request.urlopen(req, timeout=20) as r:

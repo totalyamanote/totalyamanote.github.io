@@ -179,7 +179,7 @@ class Rakuten:
             params["genreId"] = genre_id
         if min_price:
             params["minPrice"] = min_price
-        if max_price:
+        if max_price and max_price < 99999999:   # 上限なし（999999999）は送らない
             params["maxPrice"] = max_price
         data = self._get(SEARCH_URL, params)
         return [
