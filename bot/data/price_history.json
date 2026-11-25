@@ -3120,5 +3120,33 @@
    "min_effective": 3078,
    "min_price": 3240
   }
+ ],
+ "お歳暮ギフト": [
+  {
+   "date": "2026-11-26",
+   "min_effective": 2352,
+   "min_price": 2376
+  }
+ ],
+ "海鮮セット": [
+  {
+   "date": "2026-11-26",
+   "min_effective": 4336,
+   "min_price": 4380
+  }
+ ],
+ "すき焼き・焼肉（和牛）": [
+  {
+   "date": "2026-11-26",
+   "min_effective": 3325,
+   "min_price": 3447
+  }
+ ],
+ "年越しそば": [
+  {
+   "date": "2026-11-26",
+   "min_effective": 2673,
+   "min_price": 2700
+  }
  ]
 }
