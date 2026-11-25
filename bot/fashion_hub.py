@@ -49,11 +49,17 @@ def item(x, rank=None):
     nm = re.sub(r"\d+\s*[%％]\s*OFF[!！]*|最大\d+[%％]OFF|半額|[!！]{1,}", " ", nm)
     nm = re.sub(r"\d+/\d+\([^)]*\)\d+:\d+[迄まで]*|メール便不可|メール便OK|送料無料", " ", nm)
     nm = re.sub(r"\s+", " ", nm).strip()
-    nm = nm[:44] + ("…" if len(nm) > 44 else "")
+    nm = tidy(nm)
+    nm = nm[:30] + ("…" if len(nm) > 30 else "")
     pr = int(x.get("pointRate") or 1)
     p = int(x["itemPrice"])
     return {"name": nm, "sale": sale, "price": p, "pr": pr, "pt": p * pr // 100, "rc": int(x.get("reviewCount") or 0), "av": float(x.get("reviewAverage") or 0),
             "img": img_of(x), "url": x.get("affiliateUrl") or x["itemUrl"], "shop": x.get("shopName", ""), "kind": kind_of(clean(x["itemName"])[0]), "code": x["itemCode"], "rank": rank}
+
+
+def tidy(nm):
+    nm = re.sub(r"「[^」]*」|『[^』]*』|【[^】]*】|\([^)]*\)?|（[^）]*）|[「」『』]", " ", nm)
+    return re.sub(r"\s+", " ", nm).strip()
 
 
 def dedup(xs, n):
@@ -148,6 +154,7 @@ def yahoo_items(cfg, n=8):
                 continue
             nm, sale = clean(nm0)
             nm = re.sub(r"\s+", " ", re.sub(r"\d+/\d+\([^)]*\)\d+:\d+[迄まで]*|メール便不可|メール便OK|送料無料|\d+\s*[%％]\s*OFF[!！]*|[!！]+", " ", nm)).strip()
+            nm = tidy(nm)
             if kind_of(nm) == "その他":
                 continue
             price = int(h.get("price") or 0)
@@ -156,7 +163,7 @@ def yahoo_items(cfg, n=8):
             img = ((h.get("image") or {}).get("medium") or "")
             if not img or price <= 0:
                 continue
-            out.append({"name": nm[:44] + ("…" if len(nm) > 44 else ""), "sale": "", "price": price, "pr": max(1, round(pt * 100 / price)) if price else 1, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0),
+            out.append({"name": nm[:30] + ("…" if len(nm) > 30 else ""), "sale": "", "price": price, "pr": max(1, round(pt * 100 / price)) if price else 1, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0),
                         "img": img, "url": h["url"], "kind": kind_of(nm), "shop": (h.get("seller") or {}).get("name", ""), "code": "y:" + str(h.get("code", "")), "rank": None, "yahoo": True})
     return dedup(out, n)
 
@@ -179,7 +186,7 @@ def stores_block(cfg):
                 items.append((x["name"], x.get("tag", ""), x["url"], x.get("cls", "")))
     except Exception:
         pass
-    if len(items) < 2:
+    if not items:
         return ""
     cells = "".join(f"<a class='fst {c}' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><b>{esc(n)}</b><small>{esc(t)}</small></a>" for n, t, u, c in items)
     return f"<h2 id=stores>🛍 ほかのお店のファッション</h2><div class=fsts>{cells}</div>"
