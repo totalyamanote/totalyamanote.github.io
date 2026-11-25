@@ -278,7 +278,7 @@ def render(items, stamp):
                   + "<span class=go>楽天市場で見る →</span></a>")
     if not cards:
         return "<!--hubf--><!--/hubf-->"
-    return ("<!--hubf--><section id=fashion style='margin-top:12px'><h2>🏷 割引の大きい商品</h2>"
+    return ("<!--hubf--><section id=fashion style='margin-top:12px'><h2>👗 楽天ファッション（インフルエンサー発ブランド）</h2>"
             f"<div class=cards>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。価格・ポイントは更新時点の表示で、商品ページで最新をご確認ください。</p></section><!--/hubf-->")
 
@@ -317,7 +317,7 @@ def main():
             p.write_text(t2, encoding="utf-8")
     # トップ（物販）には、軽く4商品だけ（2026-11-25 坂田さん「ファッションは4商品だけ、軽く出す」）。全商品は fashion/index.html
     lite = render(items[:4], datetime.now().strftime("%Y/%m/%d %H:%M")).replace(
-        "<h2>🏷 割引の大きい商品</h2>", "<h2>👗 レディースファッション</h2>", 1)
+        "<h2>👗 楽天ファッション（インフルエンサー発ブランド）</h2>", "<h2>👗 レディースファッション</h2>", 1)
     if lite != "<!--hubf--><!--/hubf-->":
         lite = lite.replace("<!--/hubf-->", "<p style='text-align:center;margin:10px 0 0'><a href='fashion/index.html' style='display:inline-block;text-decoration:none;font-weight:800;font-size:15px;color:#fff;background:#be185d;border-radius:99px;padding:10px 22px'>ファッションをもっと見る ›</a></p><!--/hubf-->", 1)
     pi = SITE / "index.html"
