@@ -271,5 +271,12 @@
   "source": "Kindle",
   "volume_used": "1巻",
   "date": "2026-11-25"
+ },
+ "9784065461587": {
+  "rating": 4.8,
+  "count": 133,
+  "source": "Kindle",
+  "volume_used": "別の巻（12巻）",
+  "date": "2026-11-25"
  }
 }
