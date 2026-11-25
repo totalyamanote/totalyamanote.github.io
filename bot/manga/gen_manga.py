@@ -666,7 +666,7 @@ def index(works, themes):
     ptq = ""
     quick_block = (f"<h2>いますぐ無料で読む（期間限定・期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>"
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
-    body = f"""<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px;color:inherit'>無料で読める作品・期限つき</h1><p style='font-size:13px;color:#5f5f5f;margin:0'>マンガのあらすじ・登場人物・連載期間・読者の声・無料の期限をまとめています。</p></div>
+    body = f"""<h1 style='position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden'>無料で読める作品・期限つき</h1>
 {quick_block}{newrel}
 <h2>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
 <h2>まとめ</h2><div class=grid>{lis}</div>
