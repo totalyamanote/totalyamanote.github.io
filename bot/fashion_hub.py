@@ -218,7 +218,7 @@ def _yget(appid, vc, q):
     return d
 
 
-def yahoo_store_sections(cfg, n=4, big=("ZOZOTOWN", "マルイ（丸井）", "高島屋 ファッションスクエア")):
+def yahoo_store_sections(cfg, n=6, big=("ZOZOTOWN", "マルイ（丸井）", "高島屋 ファッションスクエア")):
     """Yahoo!ショッピングに出店している百貨店・ファッション通販（マルイ・高島屋・ZOZOTOWN・Pierrot）の人気商品。リンクはバリューコマース。"""
     y = (cfg or {}).get("yahoo", {})
     appid = os.environ.get("YAHOO_APP_ID") or y.get("app_id", "")
@@ -259,7 +259,7 @@ def yahoo_store_sections(cfg, n=4, big=("ZOZOTOWN", "マルイ（丸井）", "�
             po = h.get("point") or {}
             pt = int(po.get("amount") or 0) + int(po.get("bonusAmount") or 0) + int(po.get("lyLimitedBonusAmount") or 0)
             items.append({"brand": ((h.get("brand") or {}).get("name") or "").strip(), "orig": (h.get("priceLabel") or {}).get("defaultPrice") or 0, "av": 0, "off": off_pct(price, (h.get("priceLabel") or {}).get("defaultPrice")), "name": nm[:30] + ("…" if len(nm) > 30 else ""), "price": price, "pt": pt, "rc": int(rv.get("count") or 0), "av": float(rv.get("rate") or 0), "img": img, "url": h["url"]})
-        items = dedup(items, 13 if label == "ZOZOTOWN" else (8 if label in big else n))
+        items = dedup(items, 12 if label == "ZOZOTOWN" else (6 if label in big else n))
         if items:
             top = vc + urllib.parse.quote(f"https://store.shopping.yahoo.co.jp/{sidn}/", safe="")
             out.append((label, tag, top, items))
@@ -304,24 +304,24 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
         return f"<h2 id={hid}>{title}</h2>" + stores_cards_block([(lab, tag, top, items)])
     first = f"<!--fhub-->{CSS}{SOFT}"
     zz = by.get("ZOZOTOWN")
-    if zz and len(zz[2]) >= 5:
+    if zz and len(zz[2]) >= 6:
         # ランキング＝ZOZOTOWN（Yahoo!ショッピング）の人気順の上位5（2026-11-25 坂田さん「ランキングはZOZOにしよう」）。下のZOZOTOWNの段は6位以降
-        first += "<h2 id=ranking>人気ランキング<small>ZOZOTOWN（Yahoo!ショッピング）</small></h2>" + stores_cards_block([("ZOZOTOWN", zz[0], zz[1], zz[2][:5])], ranked=True)
-        first += sect("zozo", "ZOZOTOWNの人気商品", "ZOZOTOWN", slice(5, 13))
+        first += "<h2 id=ranking>人気ランキング<small>ZOZOTOWN（Yahoo!ショッピング）</small></h2>" + stores_cards_block([("ZOZOTOWN", zz[0], zz[1], zz[2][:6])], ranked=True)
+        first += sect("zozo", "ZOZOTOWNの人気商品", "ZOZOTOWN", slice(6, 12))
     else:
         rk = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(rank5, 1))
         if rk:
             first += f"<h2 id=ranking>人気ランキング</h2><div class=zg>{rk}</div>"
         first += sect("zozo", "ZOZOTOWN（Yahoo!ショッピング）", "ZOZOTOWN")
     first += "<!--/fhub-->"
-    chips = "".join(f"<a href='{g[1]}.html'>{esc(g[0])}</a>" for g in GENRES if len(gen.get(g[1]) or []) >= 4)
+    chips = "".join(f"<a href='{g[1]}.html'>{esc(g[0])}</a>" for g in GENRES if len(gen.get(g[1]) or []) >= 6)
     second = "<!--fhub2-->" + sect("marui", "マルイ（Yahoo!ショッピング）", "マルイ（丸井）") + sect("takashimaya", "高島屋 ファッションスクエア（Yahoo!ショッピング）", "高島屋 ファッションスクエア")
     second += f"<h2 id=genres>ジャンル別ランキング</h2><div class=fgchips>{chips}</div>"
     for lab, slug, kw, _ in GENRES:
         its = gen.get(slug) or []
         if not its:
             continue
-        second += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=zg>{''.join(card(c) for c in its[:4])}</div>"
+        second += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=zg>{''.join(card(c) for c in its[:6])}</div>"
                    f"<a class=fmore href='{slug}.html'>{esc(lab)}をもっと見る ›</a>")
     rest = [(l, t, tp, it) for l, t, tp, it in (ys or []) if l not in ("ZOZOTOWN", "マルイ（丸井）", "高島屋 ファッションスクエア")]
     sb = stores_block(cfg)
@@ -384,7 +384,7 @@ def main():
         t = re.sub(r"<!--fhub2-->.*?<!--/fhub2-->", lambda m: blk2, t, 1, re.S)
     p.write_text(t, encoding="utf-8")
     for lab, slug, kw, _ in GENRES:
-        if len(gen[slug]) >= 4:
+        if len(gen[slug]) >= 6:
             build_genre_page(t, lab, slug, gen[slug])
     print("ランキング", len(rank5), "／", {s: len(v) for s, v in gen.items()})
 

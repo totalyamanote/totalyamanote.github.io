@@ -334,6 +334,7 @@ def main():
         _reused = False
         if items:
             _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
+    items = items[:6]   # 6点（3列×2行）（2026-11-25 坂田さん「商品6点表示されるように」）
     blk = render_z(items)
     # 2026-11-25 坂田さん「物販のレディースファッションはファッションページへ移籍」：商品の段は fashion/index.html に出す。トップ（物販）からは外す。
     p = SITE / "fashion" / "index.html"
@@ -343,7 +344,7 @@ def main():
         if t2 != t:
             p.write_text(t2, encoding="utf-8")
     # トップ（物販）には、軽く4商品だけ（2026-11-25 坂田さん「物販のレディースファッションは完全ZOZOの表示で」）。全商品は fashion/index.html
-    lite = render_z(items[:3])  # 分析結果：ファッションは縮小（2026-11-25）。1行(3件)だけ.replace("<h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2>", "<h2>レディースファッション</h2>", 1)
+    lite = render_z(items[:3]).replace("<h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2>", "<h2>レディースファッション</h2>", 1)  # 分析結果：ファッションは縮小（2026-11-25）。1行(3件)だけ
     if lite != "<!--hubf--><!--/hubf-->":
         lite = lite.replace("<!--/hubf-->", "<a class=zmore href='fashion/index.html' style='display:block;text-align:center;border:1px solid #ccc;color:#222;text-decoration:none;font-size:13px;font-weight:700;padding:11px;margin:10px 0 4px'>レディースファッションをもっと見る ›</a><!--/hubf-->")
     pi = SITE / "index.html"
