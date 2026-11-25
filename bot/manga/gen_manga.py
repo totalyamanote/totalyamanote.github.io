@@ -162,13 +162,20 @@ def _unext_ng(title):
     return any(len(nz(x)) >= 4 and (t == nz(x) or (len(t) >= 5 and (t in nz(x) or nz(x) in t))) for k in ("nittere", "tbs", "fod") for x in d.get(k, []))
 
 
+def hdr(site_up):
+    """全ページ共通のメニュー（物販サイトと同じ形式）。型は data/header.tpl（gen_hub が作る。クラウドにも同じものを置く）。"""
+    try:
+        return (HERE / "data" / "header.tpl").read_text(encoding="utf-8").replace("@@UP@@", site_up)
+    except Exception:
+        return ""
+
+
 def page(title, desc, body, depth=0, style="", head=""):
     up = "../" * depth
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
-            f"<header class=top><a class=logo href='{up}index.html' aria-label='マンガトップへ'><img src='{up}../img/brand/logo_v8.png' width=40 height=40 alt=''><span><small>YAMANOTE MANGA</small>やまのてマンガ</span></a>"
-            f"<nav class=toplinks><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a><a class=vidbtn href='{up}../video/index.html'>🎬 動画</a><a class=vidbtn style='background:#0f766e' href='{up}../game/index.html'>🎮 ゲーム</a><a class=vidbtn style='background:#be185d' href='{up}../fashion/index.html'>👗 ファッション</a><span class=sep></span><a class=shopbtn href='{up}../index.html' aria-label='物販（楽天・Yahoo!・Amazonの実質最安）へ'>🛒 物販</a></nav><span class=sico style=\'display:inline-flex;gap:5px;align-items:center;margin-left:10px;flex:none\'><a href=\'https://x.com/totalyamanote\' rel=noopener target=_blank aria-label=\'Xでフォロー\' title=\'Xでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#111;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>𝕏</a><a href=\'https://www.threads.com/@totalyamanote\' rel=noopener target=_blank aria-label=\'Threadsでフォロー\' title=\'Threadsでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#000;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>@</a><a href=\'https://bsky.app/profile/totalyamanote.bsky.social\' rel=noopener target=_blank aria-label=\'Blueskyでフォロー\' title=\'Blueskyでフォロー\' style=\'display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0a66d1;color:#fff;font-size:13px;font-weight:900;text-decoration:none;line-height:1\'>🦋</a></span></header>"
-            f"{sbar(up + '../')}"
+            f"{hdr(up + '../')}"
+            f"<nav class=subnav aria-label='マンガのメニュー'><b>マンガ</b><a href='{up}index.html'>作品</a><a href='{up}theme/free-now.html'>無料</a><a href='{up}new-releases.html'>新刊</a><a href='{up}store-compare.html'>ストア比較</a><a href='{up}faq.html'>Q&amp;A</a></nav>"
             f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
             f"{body}"
             f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は定期的に更新）　文：やまのて管理人</p>"
