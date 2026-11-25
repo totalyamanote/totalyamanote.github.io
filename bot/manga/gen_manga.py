@@ -520,7 +520,7 @@ def work_page(w, works=None):
     rt = f"★{w['rating']}（{w['reviews']}件）。" if w.get("rating") else ""
     hk = re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", w.get("hook") or "").strip().rstrip("。")
     if w.get("free_ongoing"):
-        ptitle = f"『{title}』{w.get('free_label', '')}（{w.get('free_store_name', '')}）｜漫画を無料で読む方法・あらすじ"
+        ptitle = f"『{title}』{w.get('free_label', '')}" + ("" if (w.get('free_store_name', '') in w.get('free_label', '')) else f"（{w.get('free_store_name', '')}）") + "｜漫画を無料で読む方法・あらすじ"
         pdesc = f"『{title}』{al}は{w.get('free_store_name', '')}で{w.get('free_label', '')}（キャンペーン中）。{rt}{hk + ('' if hk[-1:] in '？！?!' else '。') if hk else ''}続きの巻を読めるストア、あらすじ・登場人物・読者の声もまとめています。"
     elif dl is not None:
         dd = datetime.date.fromisoformat(w["free_until"])
