@@ -233,10 +233,26 @@ def apply_sale(page, now=None):
     page = re.sub(r"<style id=hsalecss>.*?</style>", "", page, flags=re.S)
     page = re.sub(r"<div class=hsec><h2>🔥 セール特集</h2>.*?</a></div>", "", page, flags=re.S)
     ban = sale_banner(now, page=page)
+    d = page.find("<h2 id=daily")
+    first = page.find("<section>", d) if d >= 0 else -1
     if ban:
-        page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)   # 検索欄・PR・ひとことは最上段に固定、その直下にセール特集（2026-11-18 坂田さん）
+        # 並び：実質最安（見出し）→セール特集→ブラックフライデーのポイント倍率→ファッション→いろんな項目（2026-11-25 坂田さん）
+        if first >= 0:
+            page = page[:first] + ban + page[first:]
+        else:
+            page = page.replace("<h2 id=daily", ban + "<h2 id=daily", 1)
     else:
         page = re.sub(r"<a href='articles/black-friday-2026\.html'>セール</a>", "", page, count=1)
+    # ファッションは「ポイント倍率が高い商品」の次（いろんな項目の上）
+    m = re.search(r"<!--hubf-->.*?<!--/hubf-->", page, re.S)
+    if m and d >= 0:
+        blk = m.group(0)
+        page = page.replace(blk, "", 1)
+        d = page.find("<h2 id=daily")
+        s1 = page.find("<section>", d)
+        e1 = page.find("</section>", s1) + len("</section>") if s1 >= 0 else -1
+        pos = e1 if e1 > 0 else page.find("<!--hubart-->")
+        page = page[:pos] + blk + page[pos:]
     return page
 
 
