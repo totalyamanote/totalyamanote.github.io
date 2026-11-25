@@ -311,7 +311,7 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
     else:
         rk = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(rank5, 1))
         if rk:
-            first += f"<h2 id=ranking>人気ランキング</h2><div class=\"cards fcs\">{rk}</div>"
+            first += f"<h2 id=ranking>人気ランキング</h2><div class=zg>{rk}</div>"
         first += sect("zozo", "ZOZOTOWN（Yahoo!ショッピング）", "ZOZOTOWN")
     first += "<!--/fhub-->"
     chips = "".join(f"<a href='{g[1]}.html'>{esc(g[0])}</a>" for g in GENRES if len(gen.get(g[1]) or []) >= 4)
@@ -321,7 +321,7 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
         its = gen.get(slug) or []
         if not its:
             continue
-        second += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=\"cards fcs\">{''.join(card(c) for c in its[:4])}</div>"
+        second += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=zg>{''.join(card(c) for c in its[:4])}</div>"
                    f"<a class=fmore href='{slug}.html'>{esc(lab)}をもっと見る ›</a>")
     rest = [(l, t, tp, it) for l, t, tp, it in (ys or []) if l not in ("ZOZOTOWN", "マルイ（丸井）", "高島屋 ファッションスクエア")]
     sb = stores_block(cfg)
@@ -359,7 +359,7 @@ def build_genre_page(index_html, lab, slug, its):
     head = re.sub(r"<nav class=bc.*?</nav>", lambda m: nav, head, 1, re.S)
     body = (f"<h1 style='font-size:20px;margin:10px 0 6px'>{esc(lab)}の人気ランキング（楽天市場）</h1>"
             f"{CSS}{SOFT}<div class=fgchips><a href='index.html'>ファッショントップ</a>{chips}</div>"
-            f"<section><div class=\"cards fcs\">{cards}</div>"
+            f"<section><div class=zg>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。商品ページで最新の価格・ポイントをご確認ください。</p></section>")
     (SITE / "fashion" / f"{slug}.html").write_text(head + body + tail, encoding="utf-8")
 
