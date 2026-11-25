@@ -57,7 +57,7 @@ class Yahoo:
                 "item_code": "yahoo:" + str(h.get("code", "")), "name": h.get("name", ""), "price": price,
                 "point": pt, "pt_base": base, "pt_ly": ly, "effective": price - pt,
                 "free_shipping": (h.get("shipping") or {}).get("code") == 2, "url": h.get("url", ""),
-                "image": ((h.get("image") or {}).get("medium") or "").replace("/i/g/", "/i/l/"),
+                "image": ((h.get("image") or {}).get("medium") or "").replace("/i/g/", "/i/n/"),
                 "review_count": int(rv.get("count") or 0), "review_avg": float(rv.get("rate") or 0),
                 "shop": (h.get("seller") or {}).get("name", ""),
             })
