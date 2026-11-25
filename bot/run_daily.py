@@ -805,7 +805,6 @@ def yahoo_cards(yahoo, n=4):
                     f"<span class=gtag>Yahoo!ショッピング・{esc(q)}</span>{img}"
                     f"<span class=nm>{esc(short_name(y['name'], 40))}</span><span class=yen>¥{y['price']:,}</span>"
                     f"<span class=pts>{y['point']:,}pt付与（LINEヤフー連携時）</span>"
-                    f"<span class=eff2>実質¥{y['effective']:,}</span>"
                     f"<span class=rv>⭐{y['review_avg']}（{y['review_count']:,}件）</span>"
                     f"<span class='go ygo'>Yahoo!で見る →</span></a>")
             break

@@ -273,7 +273,7 @@ def render(items, stamp):
         cards += (f"<a class=card href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank>"
                   f"<span class=gtag>{esc(it['kind'])}" + (f"・ランキング{it['rank']}位" if it['rank'] < 999 else "") + f"</span>{sale}<img src='{esc(it['img'])}' alt='{esc(it['name'])}' loading=lazy>"
                   f"<span class=nm>{esc(it['name'])}</span><span class=yen>¥{it['price']:,}</span>"
-                  f"<span class=pts>ポイント{it['pr']}倍（{it['pt']:,}pt）</span><span class=eff2>実質¥{it['price'] - it['pt']:,}</span>"
+                  f"<span class=pts>ポイント{it['pr']}倍（{it['pt']:,}pt）</span>"
                   + (f"<span class=rv>⭐{it['av']}（{it['rc']:,}件）</span>" if it['rc'] else "<span class=rv>新着・レビューはこれから</span>")
                   + "<span class=go>楽天市場で見る →</span></a>")
     if not cards:

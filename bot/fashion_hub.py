@@ -74,7 +74,7 @@ def price_html(c):
     off = f"<b class=off>{c['off']}%OFF</b>" if c.get("off") else (f"<b class=off>{c['sale']}%OFF</b>" if c.get("sale") else "")
     pt = ""
     if c.get("pt", 0) > 0 and c.get("price"):
-        pt = f"<span class=pts>ポイント{max(1, round(c['pt'] * 100 / c['price']))}%（{c['pt']:,}pt）</span><span class=eff2>実質¥{c['price'] - c['pt']:,}</span>"
+        pt = f"<span class=pts>ポイント{max(1, round(c['pt'] * 100 / c['price']))}%（{c['pt']:,}pt）</span>"
     return f"<span class=yenrow><span class=yen>¥{c['price']:,}</span>{off}</span>{pt}"
 
 
