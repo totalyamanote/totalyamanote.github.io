@@ -15,7 +15,7 @@ from fashion import clean, kind_of, OTHER_NG, BAG_NG, SUMMER_NG, USED_NG, TYPES 
 SITE = Path(os.environ.get("SITE_DIR") or BASE.parent).resolve()
 BASEURL = "https://totalyamanote.jp/"
 esc = html.escape
-MAX_PRICE = 14800
+MAX_PRICE = 0   # 人気ランキングなので価格の上限なし（2026-11-25 坂田さん）
 GENRES = [("ワンピース", "onepiece", "ワンピース", "ワンピース"), ("ニット・セーター", "knit", "ニット", "ニット"), ("コート・アウター", "outer", "コート", "コート・アウター"),
           ("カーディガン", "cardigan", "カーディガン", "カーディガン"), ("スカート", "skirt", "スカート", "スカート"), ("パンツ", "pants", "パンツ", "パンツ"),
           ("ブラウス・トップス", "tops", "ブラウス", "ブラウス・トップス")]
@@ -33,7 +33,7 @@ def img_of(x):
 def ok(x, min_rev, min_avg):
     n = x["itemName"]
     p = int(x.get("itemPrice") or 0)
-    if not (0 < p <= MAX_PRICE) or BAD.search(n) or BAG_NG.search(n) or SUMMER_NG.search(n) or OTHER_NG.search(n):
+    if not (p > 0) or BAD.search(n) or BAG_NG.search(n) or SUMMER_NG.search(n) or OTHER_NG.search(n):
         return False
     if USED_NG.search(n + " " + (x.get("itemCaption") or "")):
         return False
@@ -87,7 +87,7 @@ def genre_items(api, kw, label, n, th=(30, 4.2)):
     out = []
     for pg in (1, 2, 3):
         try:
-            d = api._get(SEARCH_URL, {"keyword": kw + " レディース", "genreId": "100371", "sort": "-reviewCount", "hits": 30, "page": pg, "availability": 1, "maxPrice": MAX_PRICE, "NGKeyword": "中古 メンズ キッズ 福袋"})
+            d = api._get(SEARCH_URL, {"keyword": kw + " レディース", "genreId": "100371", "sort": "-reviewCount", "hits": 30, "page": pg, "availability": 1, "NGKeyword": "中古 メンズ キッズ 福袋"})
         except Exception:
             continue
         for x in d.get("Items", []):
@@ -111,10 +111,10 @@ def card(c, badge=""):
             f"<span class=eff2>実質¥{c['price'] - c['pt']:,}</span><span class=rv>⭐{c['av']:.1f}（{c['rc']:,}件）</span><span class=go>楽天市場で見る →</span></a>")
 
 
-CSS = ("<style id=fhcss>.fk{position:relative}.rkn{position:absolute;top:6px;left:6px;z-index:2;background:#f59e0b;color:#111;font-weight:900;font-size:16px;min-width:28px;height:28px;border-radius:99px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.3)}"
-       ".fg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}@media (max-width:700px){.fg{grid-template-columns:repeat(2,1fr)}}"
-       ".fgchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}.fgchips a{background:#be185d;color:#fff!important;border-radius:99px;padding:8px 16px;font-weight:800;font-size:14px;text-decoration:none}"
-       ".fmore{display:inline-block;text-decoration:none;font-weight:800;font-size:14px;color:#be185d;border:2px solid #be185d;border-radius:99px;padding:6px 18px;margin:0 0 8px}</style>")
+CSS = ("<style id=fhcss>.fcs{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))!important}.fcs .card .nm{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:2.8em}.fcs .card img{aspect-ratio:3/4;object-fit:cover}"
+       ".rkn{position:absolute;top:6px;left:6px;z-index:2;background:#f59e0b;color:#111;font-weight:900;font-size:16px;min-width:28px;height:28px;border-radius:99px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.3)}.fcs .rkn~.hot{top:auto;bottom:112px;left:10px}"
+       ".fgchips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}.fgchips a{background:#be185d;color:#fff!important;border-radius:99px;padding:7px 14px;font-weight:800;font-size:13px;text-decoration:none}"
+       ".fmore{display:inline-block;text-decoration:none;font-weight:800;font-size:13px;color:#be185d;border:2px solid #be185d;border-radius:99px;padding:5px 16px;margin:0 0 8px}</style>")
 
 
 def build_hub(rank5, gen):
@@ -122,14 +122,13 @@ def build_hub(rank5, gen):
     rk = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(rank5, 1))
     html_ = f"<!--fhub-->{CSS}"
     if rk:
-        html_ += (f"<h2 id=ranking>🏆 人気ランキング TOP5<small style='font-weight:400;font-size:12px'>　楽天市場の売れ筋（{datetime.now().strftime('%Y/%m/%d')}時点）</small></h2>"
-                  f"<p class=meta>楽天市場「レディースファッション」の売れ筋ランキングの上位から、レビュー20件以上・★4.0以上・{MAX_PRICE:,}円までの商品を順に載せています。</p><div class=cards><div class=fg>{rk}</div></div>")
-    html_ += f"<h2 id=genres>👗 ジャンル別<small style='font-weight:400;font-size:12px'>　レビューが多い順</small></h2><div class=fgchips>{chips}</div>"
+        html_ += f"<h2 id=ranking>🏆 人気ランキング TOP5</h2><div class=\"cards fcs\">{rk}</div>"
+    html_ += f"<h2 id=genres>👗 ジャンル別</h2><div class=fgchips>{chips}</div>"
     for lab, slug, kw, _ in GENRES:
         its = gen.get(slug) or []
         if not its:
             continue
-        html_ += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=fg>{''.join(card(c) for c in its[:4])}</div>"
+        html_ += (f"<h3 id=g-{slug} style='font-size:16px;margin:18px 0 4px'>{esc(lab)}</h3><div class=\"cards fcs\">{''.join(card(c) for c in its[:4])}</div>"
                   f"<a class=fmore href='{slug}.html'>{esc(lab)}をもっと見る ›</a>")
     return html_ + "<!--/fhub-->"
 
@@ -160,9 +159,9 @@ def build_genre_page(index_html, lab, slug, its):
     cards = "".join(card(c, f"<span class=rkn>{i}</span>") for i, c in enumerate(its, 1))
     nav = (f"<nav class=bc aria-label='パンくず' style='font-size:12px;color:#665d55;margin:6px 0 4px'><a href='../index.html'>トップ</a> › <a href='index.html'>レディースファッション</a> › {esc(lab)}</nav>")
     head = re.sub(r"<nav class=bc.*?</nav>", lambda m: nav, head, 1, re.S)
-    body = (f"<h1 style='font-size:20px;margin:10px 0 6px'>{esc(lab)}の人気ランキング（楽天市場）</h1><p class=note>楽天市場のレディースファッション「{esc(lab)}」を、レビューが多い順に。{MAX_PRICE:,}円まで・レビューが多く評価の高い商品です。{datetime.now().strftime('%Y/%m/%d')}時点。</p>"
+    body = (f"<h1 style='font-size:20px;margin:10px 0 6px'>{esc(lab)}の人気ランキング（楽天市場）</h1>"
             f"{CSS}<div class=fgchips><a href='index.html' style='background:#111'>👗 ファッショントップ</a>{chips}</div>"
-            f"<section><p class=meta>価格・ポイントは取得時点の表示です。サイズ・色で価格が変わる場合があります。</p><div class=cards><div class=fg>{cards}</div></div>"
+            f"<section><div class=\"cards fcs\">{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。商品ページで最新の価格・ポイントをご確認ください。</p></section>")
     (SITE / "fashion" / f"{slug}.html").write_text(head + body + tail, encoding="utf-8")
 
