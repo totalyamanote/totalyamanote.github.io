@@ -15,7 +15,7 @@ from pathlib import Path
 GA_ID = "G-KMYVSH7X05"
 SNIPPET = (
     "<!--ga4--><script async src=\"https://www.googletagmanager.com/gtag/js?id=" + GA_ID + "\"></script>"
-    "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());var g=/^\\/(game|fashion|video|manga|articles|compare)\\//.exec(location.pathname),cg=g?g[1]:'top';gtag('config','" + GA_ID + "',{content_group:cg});"
+    "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());var g=/^\\/(game|fashion|video|manga|articles|compare|instagram)\\//.exec(location.pathname),cg=g?g[1]:'top';gtag('config','" + GA_ID + "',{content_group:cg});"
     "document.addEventListener('click',function(e){var t=e.target.closest?e.target:null;if(!t)return;var n=t.closest('a[href*=\\\"x.com/totalyamanote\\\"],a[href*=\\\"threads.com/@totalyamanote\\\"],a[href*=\\\"bsky.app/profile/totalyamanote\\\"],a[href*=\\\"instagram.com/totalyamanote\\\"]');"
     "if(n){gtag('event','sns_follow_click',{network:/x\\.com/.test(n.href)?'X':/threads/.test(n.href)?'Threads':/instagram/.test(n.href)?'Instagram':'Bluesky',page_path:location.pathname});return}"
     "var a=t.closest('a[rel~=sponsored]');if(!a)return;var h=a.href,sec=a.closest('section[id],div[id]'),"
@@ -29,7 +29,7 @@ PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
 def apply(root="."):
     n = 0
-    files = glob.glob(os.path.join(root, "*.html")) + glob.glob(os.path.join(root, "articles", "*.html")) + glob.glob(os.path.join(root, "compare", "*.html")) + glob.glob(os.path.join(root, "video", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "manga", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "game", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "fashion", "*.html")) + glob.glob(os.path.join(root, "furusato", "*.html"))
+    files = glob.glob(os.path.join(root, "*.html")) + glob.glob(os.path.join(root, "articles", "*.html")) + glob.glob(os.path.join(root, "compare", "*.html")) + glob.glob(os.path.join(root, "video", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "manga", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "game", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "fashion", "*.html")) + glob.glob(os.path.join(root, "furusato", "*.html")) + glob.glob(os.path.join(root, "instagram", "*.html"))
     for p in files:
         if os.path.basename(p).startswith("google"):
             continue
