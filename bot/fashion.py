@@ -316,9 +316,14 @@ def main():
         t2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", lambda m: blk, t, count=1, flags=re.S)
         if t2 != t:
             p.write_text(t2, encoding="utf-8")
+    # トップ（物販）には、軽く4商品だけ（2026-11-25 坂田さん「ファッションは4商品だけ、軽く出す」）。全商品は fashion/index.html
+    lite = render(items[:4], datetime.now().strftime("%Y/%m/%d %H:%M")).replace(
+        "<h2>楽天市場のレディースファッション</h2>", "<h2>👗 レディースファッション</h2>", 1)
+    if lite != "<!--hubf--><!--/hubf-->":
+        lite = lite.replace("<!--/hubf-->", "<p style='text-align:center;margin:10px 0 0'><a href='fashion/index.html' style='display:inline-block;text-decoration:none;font-weight:800;font-size:15px;color:#fff;background:#be185d;border-radius:99px;padding:10px 22px'>ファッションをもっと見る ›</a></p><!--/hubf-->", 1)
     pi = SITE / "index.html"
     ti = pi.read_text(encoding="utf-8")
-    ti2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", "<!--hubf--><!--/hubf-->", ti, count=1, flags=re.S)
+    ti2 = re.sub(r"<!--hubf-->.*?<!--/hubf-->", lambda m: lite, ti, count=1, flags=re.S)
     if ti2 != ti:
         pi.write_text(ti2, encoding="utf-8")
     if items and not _reused:
