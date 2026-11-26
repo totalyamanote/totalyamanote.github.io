@@ -273,7 +273,7 @@ def card(e, today):
             + "<div class=nbtns>"
             # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
             + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle")
-               else f"<a class='nbtn a' href='{esc(kindle_search(e))}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をKindleで探す（この巻はまだ出ていない場合は、前の巻から読めます）'>Kindle</a>")
+               else "")   # Kindleのページがまだ無い巻はボタンを出さない（検索結果へのリンクは使わない。2026-11-26）。確認できた朝に自動で出る
             + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebookjapan</a>" if e.get("ebj")
                else (f"<a class='nbtn e' href='{esc(series_links(e)[1])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をebookjapanで探す（この巻はまだ出ていません）'>ebookjapan<small>シリーズ</small></a>" if left >= 0 else ""))
             + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo"
