@@ -903,6 +903,11 @@
    "date": "2026-11-21",
    "min_effective": 6435,
    "min_price": 6500
+  },
+  {
+   "date": "2026-11-27",
+   "min_effective": 6930,
+   "min_price": 2160
   }
  ],
  "無洗米": [
@@ -1120,6 +1125,11 @@
    "date": "2026-11-25",
    "min_effective": 4633,
    "min_price": 4680
+  },
+  {
+   "date": "2026-11-27",
+   "min_effective": 4826,
+   "min_price": 5080
   }
  ],
  "プロテイン": [
@@ -2748,6 +2758,11 @@
    "date": "2026-11-25",
    "min_effective": 5920,
    "min_price": 5980
+  },
+  {
+   "date": "2026-11-27",
+   "min_effective": 4653,
+   "min_price": 4700
   }
  ],
  "ハイボール缶": [
@@ -3147,6 +3162,13 @@
    "date": "2026-11-26",
    "min_effective": 2673,
    "min_price": 2700
+  }
+ ],
+ "みかん・りんご（果物）": [
+  {
+   "date": "2026-11-27",
+   "min_effective": 1960,
+   "min_price": 1980
   }
  ]
 }
