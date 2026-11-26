@@ -78,9 +78,12 @@ def main():
     day = datetime.now().strftime("%Y/%m/%d")
     t = ART.read_text(encoding="utf-8")
     new = render(items, day)
-    t2, n = re.subn(r"(<h2 id=s4\s*>実質価格で選ぶ[^<]*</h2>.*?)<div class=grid>.*?</div>(?=\s*<h2 id=s5)", lambda m: m.group(1) + new, t, count=1, flags=re.S)
+    # 見出しの番号（id=s4/s5…）は上の段の増減で変わるので、番号に頼らず見出しの文で探す（2026-11-26）。価格の上限はないので「（9,800円以内）」は外す
+    t2, n = re.subn(r"(<h2[^>]*>実質価格で選ぶ[^<]*</h2>(?:(?!<h2[ >]).)*?)<div class=grid>(?:(?!<h2[ >]).)*</div>(?=\s*<h2[ >])",
+                    lambda m: m.group(1).replace("（9,800円以内）", "") + new, t, count=1, flags=re.S)
     if n != 1:
         print("差し替え先が見つかりません"); return
+    t2 = t2.replace("実質価格で選ぶ：楽天のおすすめ（9,800円以内）", "実質価格で選ぶ：楽天のおすすめ")   # 目次の表記もそろえる
     if t2 != t:
         ART.write_text(t2, encoding="utf-8")
     print(f"ブラックフライデー記事の商品を入れ替え：{len(items)}点", [(i['point_rate'], i['review_count']) for i in items][:5])
