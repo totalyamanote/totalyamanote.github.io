@@ -268,7 +268,7 @@ def always_free_page():
     if not p.exists():
         return None
     d = json.loads(p.read_text(encoding="utf-8"))
-    ws = sorted(d["works"], key=lambda w: (-int(w["free"] or 0), -float(w["rating"] or 0)))
+    ws = sorted(d["works"], key=lambda w: (-int(w["free"] or 0), -float(w.get("rating") or 0)))
     ck = datetime.date.fromisoformat(d["checked"])
     cards = ""
     for w in ws:
@@ -288,7 +288,7 @@ def always_free_page():
         u = f"https://www.amazon.co.jp/dp/{w['kindle_asin']}?tag={tag}"
         pcards += (f"<div class=box style='{grad(w['isbn'])};border-top:6px solid var(--g1)'>"
                    f"<a class=boxcv href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank><img src='{esc(w['img'])}' alt='『{esc(w['series'])}』1巻の表紙' loading=lazy></a>"
-                   f"<p><b style='font-size:17px'>『{esc(w['series'])}』</b></p><p class=note><span class=stars>★{esc(w['amz_rating'])}</span>（Amazonの評価 {esc(w['amz_reviews'])}件）　{esc(w['author'])}｜{esc(w['publisher'])}</p>"
+                   f"<p><b style='font-size:17px'>『{esc(w['series'])}』</b></p><p class=note>{esc(w['author'])}｜{esc(w['publisher'])}</p>"
                    f"<p>{esc(w['summary'])}</p>"
                    f"<p><a class=btn href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>1巻をKindleで無料で試し読み</a></p></div>")
     title = f"いつでも無料で読めるマンガ｜人気作{len(pop)}作品の1巻を試し読み（Kindle）"
@@ -319,6 +319,12 @@ def load_works():
                     _w[_k] = f"{float(_w[_k]):.1f}"
             except (TypeError, ValueError):
                 pass
+        if (_w.get("rating_src") or _w.get("store")) == "kindle" or _w.get("rating_src") == "kindle":
+            # Amazon（Kindle）の星・件数・声は載せない（アソシエイト規約。2026-11-26）
+            for _k in ("rating", "reviews", "user_reviews", "rating_src"):
+                _w.pop(_k, None)
+        _w.pop("amz_rating", None)
+        _w.pop("amz_reviews", None)
     if QUEUE.exists():
         for e in json.loads(QUEUE.read_text(encoding="utf-8")):
             t = e["text"]
@@ -464,6 +470,9 @@ def work_page(w, works=None):
     faq = "<h2>よくある質問</h2>" + "".join(f"<div class=box><p style='margin:0'><b>Q. {q}</b></p><p style='margin:6px 0 0'>A. {a}</p></div>" for q, a in qa)
     revh = ""
     rv = w.get("user_reviews") or {}
+    _ak = (w.get("buy") or {}).get("kindle")
+    if not w.get("rating") and _ak:
+        revh = (f"<h2>読者の評価と声</h2><div class=box><p style='margin:0'><a class=btn style='background:#ff9900;color:#111' href='{esc(_ak)}' rel='sponsored nofollow noopener' target=_blank>Amazonでレビューを見る ›</a></p></div>")
     if w.get("rating"):   # 動画サイトと同じ見せ方：星を大きく＋出どころ1行＋声は1行（2026-11-25 坂田さん「動画サイトの構成に合わせて見やすく」）
         _src = {"kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
         _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
@@ -571,9 +580,9 @@ def theme_pages(works):
                 p = OUT / "theme" / "free-now.html"
                 p.parent.mkdir(parents=True, exist_ok=True)
                 allw = sorted(works.values(), key=lambda w: w.get("rating") or "0", reverse=True)[:6]
-                lst = "".join(f"<li><a href='../w/{w['title_id']}.html'>『{esc(w['title'])}』</a>（★{esc(w.get('rating', '—'))}）</li>" for w in allw)
+                lst = "".join(f"<li><a href='../w/{w['title_id']}.html'>『{esc(w['title'])}』</a>{('（★' + esc(w['rating']) + '）') if w.get('rating') else ''}</li>" for w in allw)
                 body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いま無料で読めるマンガ</h1><p>いま1巻無料のキャンペーン中の作品は、ありません。新しい無料の作品が見つかり次第、毎朝このページに追加します。</p></div>"
-                        f"<h2>評価の高い作品（あらすじ・登場人物）</h2><ul>{lst}</ul><p class=note>{today.strftime('%Y/%m/%d')}時点。<a href='../new-releases.html'>新刊カレンダー</a>・<a href='../store-compare.html'>ストア比較（初回クーポン）</a>もどうぞ。</p>")
+                        f"<h2>作品紹介（あらすじ・登場人物）</h2><ul>{lst}</ul><p class=note>{today.strftime('%Y/%m/%d')}時点。<a href='../new-releases.html'>新刊カレンダー</a>・<a href='../store-compare.html'>ストア比較（初回クーポン）</a>もどうぞ。</p>")
                 p.write_text(page("いま無料で読めるマンガ｜1巻無料の作品が出たらここに追加", "いま1巻無料のキャンペーン中のマンガは、ありません。新しい無料の作品は毎朝追加します。", body, 1, canon="https://totalyamanote.jp/manga/theme/free-now.html"), encoding="utf-8")
                 made.append((slug, "いま無料で読めるマンガ"))
             continue
@@ -683,7 +692,7 @@ def index(works, themes):
             u = f"https://www.amazon.co.jp/dp/{w['kindle_asin']}?tag={_tag}"
             ptq += (f"<div class=qcard><a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qimg><img src='{esc(w['img'])}' alt='『{esc(w['series'])}』1巻の表紙' loading=lazy width=120 height=170></a>"
                     f"<a href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank class=qt>『{esc(w['series'])}』</a>"
-                    f"<span class=qd>1巻を試し読み<b>★{esc(w['amz_rating'])}</b></span>"
+                    f"<span class=qd>1巻を試し読み</span>"
                     f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
     # 2026-11-14 坂田さん：「いますぐ無料で読む」は期間限定（期限が分かるもの）だけ。鬼滅などの試し読みは入れない
     ptq = ""

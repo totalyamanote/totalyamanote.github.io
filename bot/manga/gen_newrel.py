@@ -237,7 +237,7 @@ def _kr():
 def rating_of(e):
     """新刊の星評価（2026-11-24 坂田さん「Kindle優先・なければKobo・発売前は同じシリーズの別の巻のKindle」）：①data/newrel_ratings.json（Kindleの商品ページの評価。その巻、発売前なら直近の既刊）②楽天ブックスのその巻のレビューが3件以上ならそれ ②なければ同じ作品の評価（マンガサイトの作品データ・掲載ストアの表示） ③なければ出さない"""
     kr = _kr().get(e.get("isbn", ""))
-    if kr and kr.get("rating") and kr.get("count"):
+    if kr and kr.get("rating") and kr.get("count") and "Kindle" not in str(kr.get("source", "Kindle")) and "Amazon" not in str(kr.get("source", "")):   # Amazonの星は載せない（2026-11-26）
         return f"{float(kr['rating']):.1f}", int(kr["count"]), kr.get("source", "Kindle")
     try:
         if e.get("rb_rating") and int(e.get("rb_reviews") or 0) >= 3:
@@ -247,7 +247,7 @@ def rating_of(e):
     t = re.sub(r"[\s　]", "", e["title"])
     for w in sorted(_works(), key=lambda w: -len(w.get("title", ""))):
         wt = re.sub(r"[\s　]", "", w.get("title", ""))
-        if wt and w.get("rating") and w.get("reviews") and t.startswith(wt):
+        if wt and w.get("rating") and w.get("reviews") and t.startswith(wt) and "kindle" not in (w.get("rating_src"), w.get("store") if not w.get("rating_src") else ""):
             sn = {"kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("store"), "電子書籍ストア")
             try:
                 return f"{float(w['rating']):.1f}", w["reviews"], sn + "・シリーズ"
