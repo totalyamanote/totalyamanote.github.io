@@ -373,7 +373,7 @@ def work_page(w, works=None):
     if w.get("volumes"):
         rows.append(("巻数", esc(w["volumes"])))
     if w.get("rating"):
-        _sn = {"kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("rating_src") or w.get("store"), "電子書籍ストア")   # 評価の出どころ（掲載しているストアの商品ページの表示。ブックライブの名前は出さない方針）
+        _sn = {"sum": "楽天・Yahoo!の合計（紙の1巻）", "kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("rating_src") or w.get("store"), "電子書籍ストア")   # 評価の出どころ（掲載しているストアの商品ページの表示。ブックライブの名前は出さない方針）
         rows.append((f"ストアの評価<br><small>{_sn}の表示</small>", f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）"))
     if w.get("fact"):
         rows.append(("メディア化・受賞", esc(w["fact"])))
@@ -471,7 +471,7 @@ def work_page(w, works=None):
     revh = ""
     rv = w.get("user_reviews") or {}
     if w.get("rating"):   # 動画サイトと同じ見せ方：星を大きく＋出どころ1行＋声は1行（2026-11-25 坂田さん「動画サイトの構成に合わせて見やすく」）
-        _src = {"kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
+        _src = {"sum": "楽天・Yahoo!の合計（紙の1巻）", "kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
         _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
         _hs = "／".join(h for h, _b, _x in (rv.get("top") or [])[:3])
         _tg = "".join(f"<span class=badge>＃{esc(t)}</span>" for t in rv.get("tags", [])[:5])
