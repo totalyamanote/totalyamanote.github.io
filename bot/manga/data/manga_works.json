@@ -2144,5 +2144,131 @@
   "reviews": "511",
   "rating_src": "sum",
   "added": "2026-11-26"
+ },
+ "kB098337D7X": {
+  "title_id": "kB098337D7X",
+  "title": "アオのハコ",
+  "store": "kindle",
+  "aliases": [],
+  "author": "三浦糀",
+  "magazine": "集英社（週刊少年ジャンプ）",
+  "period": "2021年〜2026年（連載終了）",
+  "volumes": "既刊27巻（28巻は2026年12月4日発売）",
+  "fact": "テレビアニメ化（2024年10月〜、第2期は2026年10月〜）された、週刊少年ジャンプ連載の青春ラブストーリー",
+  "hook": "朝の体育館で始まる、先輩への片思い🏸 1巻が無料",
+  "synopsis": "スポーツ強豪校のバドミントン部に所属する猪股大喜は、女子バスケ部の先輩・鹿野千夏に恋をしています。朝、体育館でひたむきに自主練する姿に心惹かれていた大喜でしたが、思いもよらない事実が分かります。部活と恋の両方を描く青春ラブストーリーです。",
+  "characters": [
+   [
+    "猪股大喜",
+    "男子バドミントン部。千夏先輩に片思いしている主人公",
+    "1"
+   ],
+   [
+    "鹿野千夏",
+    "女子バスケ部の1学年上の先輩。次期エース",
+    "4"
+   ],
+   [
+    "蝶野雛",
+    "新体操部。大喜の幼なじみ",
+    "3"
+   ],
+   [
+    "笠原匡",
+    "大喜の幼なじみで、一番の理解者",
+    ""
+   ]
+  ],
+  "tags": [
+   "青春",
+   "ラブコメ",
+   "部活",
+   "スポーツ",
+   "アニメ化"
+  ],
+  "free_ongoing": true,
+  "free_until": "2026-12-03",
+  "free_label": "1巻まるごと無料（Kindle）",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B098337D7X?tag=shogo450e-22",
+  "free_note": "Kindleの商品ページで「期間限定無料 2026/12/3 23:59まで」の表示（11/26確認）。楽天Koboの【期間限定無料】1巻も12/3まで。採用理由：アニメ化・5巻以上・まるごと1巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・5巻以上・まるごと1巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8433/2000009998433.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0106/2000010170106.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2487/2000010622487.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7464/2000010817464.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7431/2000011117431.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0221/2000011360221.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1659/2000011741659.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9642/2000012089642.jpg"
+  },
+  "buy": {
+   "vol": 2,
+   "kindle": "https://www.amazon.co.jp/dp/B09DK34CTR?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F865bae45e1fe3e49b8af78695cb91776%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162721001.html"
+  },
+  "added": "2026-11-27"
+ },
+ "kB00DMU8KE8": {
+  "title_id": "kB00DMU8KE8",
+  "title": "神様はじめました",
+  "store": "kindle",
+  "aliases": [],
+  "author": "鈴木ジュリエッタ",
+  "magazine": "白泉社（花とゆめ）",
+  "period": "2008年〜2016年（完結）",
+  "volumes": "全25巻（完結）",
+  "fact": "テレビアニメ化（2012年・2015年の2期）された、花とゆめの人気ラブコメ。累計520万部（2016年時点）",
+  "hook": "家をなくした女子高生が、神社の神様に⛩️ 1〜5巻が無料",
+  "synopsis": "父親が家出し、住む家もなくした女子高生・桃園奈々生の前に怪しい男が現れ、「家を譲る」と告げます。言われた場所にあったのは廃神社。男の正体は土地神のミカゲで、奈々生は神社を譲られるかわりに神様の仕事を任されることに。神使の巴衛とぶつかり合いながらの毎日が始まります。",
+  "characters": [
+   [
+    "桃園奈々生",
+    "神様の仕事を任された、明るい女子高生",
+    "4"
+   ],
+   [
+    "巴衛",
+    "土地神に仕える神使。もとは野狐で、つっけんどん",
+    "1"
+   ],
+   [
+    "ミカゲ",
+    "奈々生に「家」を譲った土地神",
+    ""
+   ]
+  ],
+  "tags": [
+   "少女マンガ",
+   "ラブコメ",
+   "和風ファンタジー",
+   "アニメ化"
+  ],
+  "free_ongoing": true,
+  "free_until": "2026-12-03",
+  "free_label": "1〜5巻無料（Kindle）",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B00DMU8KE8?tag=shogo450e-22",
+  "free_note": "Kindleの1〜5巻の商品ページで「期間限定無料 2026/12/3 23:59まで」の表示、6巻は対象外（11/26確認）。楽天Koboの【期間限定無料版】1〜5巻も12/3まで。採用理由：アニメ化・累計520万部・全25巻・まるごと5巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・累計520万部・全25巻・まるごと5巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7267/2000000197267.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1891/2000000221891.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2487/2000000232487.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4303/2000000234303.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1170/2000000241170.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8470/2000000198470.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2610/2000000172610.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4225/2000000254225.jpg"
+  },
+  "buy": {
+   "vol": 6,
+   "kindle": "https://www.amazon.co.jp/dp/B00DMU8MBO?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F447f26cb63413411958b1a87790829da%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060072086.html"
+  },
+  "added": "2026-11-27"
  }
 }

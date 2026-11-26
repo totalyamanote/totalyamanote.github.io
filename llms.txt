@@ -1,6 +1,6 @@
 # やまのて
 
-> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
 
 情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
 
@@ -93,11 +93,11 @@
 - [Instagramで紹介した商品｜ファッション・年末の食品・ゲーム・マンガ・動画｜やまのて](https://totalyamanote.jp/instagram/index.html)
 - [マンガを無料で読むには？期限・全巻無料・安全な読み方のよくある質問](https://totalyamanote.jp/manga/faq.html)
 - [無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ](https://totalyamanote.jp/manga/index.html)
-- [マンガ新刊の発売日カレンダー｜今週・来月の注目新刊（11月26日更新）](https://totalyamanote.jp/manga/new-releases.html)
+- [マンガ新刊の発売日カレンダー｜今週・来月の注目新刊（11月27日更新）](https://totalyamanote.jp/manga/new-releases.html)
 - [電子書籍の初回クーポン・ポイント還元を比較【2026年11月】マンガアプリ7社](https://totalyamanote.jp/manga/store-compare.html)
-- [アニメ化・ドラマ化されたマンガ20作品｜原作を無料で読める期限・あらすじ](https://totalyamanote.jp/manga/theme/adapted.html)
+- [アニメ化・ドラマ化されたマンガ22作品｜原作を無料で読める期限・あらすじ](https://totalyamanote.jp/manga/theme/adapted.html)
 - [いつでも無料で読めるマンガ｜人気作11作品の1巻を試し読み（Kindle）](https://totalyamanote.jp/manga/theme/always-free.html)
-- [いま無料で読めるマンガ22作品【11/26更新】1巻無料の期限つき](https://totalyamanote.jp/manga/theme/free-now.html)
+- [いま無料で読めるマンガ24作品【11/27更新】1巻無料の期限つき](https://totalyamanote.jp/manga/theme/free-now.html)
 - [『SPY×FAMILY』漫画を無料で読む方法｜あらすじ・登場人物・連載期間](https://totalyamanote.jp/manga/w/20206940.html)
 - [『SAKAMOTO DAYS』漫画を無料で読む方法｜あらすじ・登場人物・連載期間](https://totalyamanote.jp/manga/w/20206948.html)
 - [『波うららかに、めおと日和』漫画を無料で読む方法｜あらすじ・登場人物・連載期間](https://totalyamanote.jp/manga/w/2504807.html)
@@ -114,9 +114,11 @@
 - [『スキップとローファー』1〜2冊無料（ebookjapan）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/ebj518550.html)
 - [『ホタルの嫁入り』1〜4巻無料（ebookjapan）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/ebj769663.html)
 - [『ヒカルの碁』1・2巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB00AA6MPWU.html)
+- [『神様はじめました』1〜5巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB00DMU8KE8.html)
 - [『大奥』1〜2巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB00MQOMZGA.html)
 - [『不浄を拭うひと』1巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB0819V93V9.html)
 - [『転生した受付嬢のギルド日誌』1巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB08HLGFJB3.html)
+- [『アオのハコ』1巻まるごと無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB098337D7X.html)
 - [『クラス転移に巻き込まれたコンビニ店員のおっさん』1巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB09TS9FHX1.html)
 - [『没落令嬢、貧乏騎士のメイドになります』1巻無料（Kindle）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB09YYKLTW7.html)
 - [『春の嵐とモンスター』1〜4巻無料（ebookjapan）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kB0BKSR5555.html)
