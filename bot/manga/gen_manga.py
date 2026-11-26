@@ -470,9 +470,6 @@ def work_page(w, works=None):
     faq = "<h2>よくある質問</h2>" + "".join(f"<div class=box><p style='margin:0'><b>Q. {q}</b></p><p style='margin:6px 0 0'>A. {a}</p></div>" for q, a in qa)
     revh = ""
     rv = w.get("user_reviews") or {}
-    _ak = (w.get("buy") or {}).get("kindle")
-    if not w.get("rating") and _ak:
-        revh = (f"<h2>読者の評価と声</h2><div class=box><p style='margin:0'><a class=btn style='background:#ff9900;color:#111' href='{esc(_ak)}' rel='sponsored nofollow noopener' target=_blank>Amazonでレビューを見る ›</a></p></div>")
     if w.get("rating"):   # 動画サイトと同じ見せ方：星を大きく＋出どころ1行＋声は1行（2026-11-25 坂田さん「動画サイトの構成に合わせて見やすく」）
         _src = {"kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
         _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
