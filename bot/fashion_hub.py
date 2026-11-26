@@ -192,7 +192,7 @@ def stores_block(cfg):
     """ほかのお店（提携済みのファッション・百貨店）へのボタン。リンクは bot/data/fashion_stores.json（管理画面で取得したアフィリエイトURL）。Amazonは売れ筋ページへ。"""
     items = []
     tag = (cfg or {}).get("amazon_tag", "")
-    amz = "https://www.amazon.co.jp/gp/bestsellers/apparel/" + (f"?tag={tag}" if tag else "")
+    amz = "https://www.amazon.co.jp/gp/bestsellers/fashion/" + (f"?tag={tag}" if tag else "")
     items.append(("Amazonファッション", "売れ筋ランキングを見る", amz, "amz"))
     try:
         for x in json.loads((BASE / "data" / "fashion_stores.json").read_text(encoding="utf-8")):
