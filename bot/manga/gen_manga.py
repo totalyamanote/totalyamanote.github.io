@@ -497,7 +497,7 @@ def work_page(w, works=None):
         others = [_ws[(_i + k) % len(_ws)] for k in range(1, min(5, len(_ws)))]
         rel = "<h2>ほかの作品</h2><div class=grid>" + "".join(
             f"<a class=card style='{grad(x['title_id'])}' href='{x['title_id']}.html'><div class=thumb>"
-            + "".join(f"<img src='{esc(cover(x, v, 'M'))}' alt='『{esc(x['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in ("001", "002", "003", "004"))
+            + "".join(f"<img src='{esc(cover(x, v, 'M'))}' alt='『{esc(x['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in thumb_vols(x) if cover(x, v, "M"))   # 表紙がある巻だけ（空の画像を出さない）
             + f"</div><div class=in><b>『{esc(x['title'])}』</b><br>" + (f"<span class=stars>★{esc(x['rating'])}</span><span class=note>（{esc(x.get('reviews', ''))}件）</span><br>" if x.get("rating") and x.get("reviews") else (f"<span class=stars>★{esc(x['rating'])}</span><br>" if x.get("rating") else "")) + f"<span class=note>{esc(x.get('author',''))}</span><br>"
             + (f"<span class=free>無料</span> <span class=left>あと{left_days(x)}日</span>" if left_days(x) is not None else "") + "</div></a>" for x in others) + "</div>"
     cv = cover(w)
@@ -508,9 +508,11 @@ def work_page(w, works=None):
         vols = (f"<h2>表紙ギャラリー</h2><div class=vols>" + "".join(f"<a href='#buy'><img src='{esc(w['covers'][str(k)])}' alt='{k}巻の表紙' loading=lazy>{k}巻</a>" for k in ks)
                 + "</div><p class=note>表紙は楽天ブックスの書籍情報より。</p>")
     if w.get("real_id"):
-        vols = "<h2>表紙ギャラリー（1〜8巻）</h2><div class=vols>" + "".join(
+        _nv = [int(n) for n in re.findall(r"(\d+)巻", str(w.get("volumes") or ""))]   # 出ていない巻の表紙は出さない
+        _last = min(8, max(_nv)) if _nv else 8
+        vols = f"<h2>表紙ギャラリー（1〜{_last}巻）</h2><div class=vols>" + "".join(
             f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w[chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100)]}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\"><img src='{esc(cover(w, v, 'M'))}' alt='{int(v)}巻の表紙' loading=lazy onerror=\"this.parentNode.style.display='none'\">{int(v)}巻</a>"
-            for v in ("001", "002", "003", "004", "005", "006", "007", "008")) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
+            for v in [f"{i:03d}" for i in range(1, _last + 1)]) + "</div><p class=note>表紙を押すと、その巻のページが開きます。</p>"
     body = f"""<div class=hero style='{grad(tid)}'><div class=wrap>{cvh}<div><span class=kicker>マンガ情報</span><h1>『{esc(title)}』</h1><p>{free_badge}</p></div></div></div>
 <div>{tags}</div>
 {buybox}
@@ -708,7 +710,7 @@ def index(works, themes):
 <h2 id=all>作品一覧（{listed}作品・新しく追加した順）</h2>{fold_cards(cards)}{('<details><summary>無料の期間が終わった作品（作品ページは残っています）</summary><ul>' + ''.join(f"<li><a href='w/{w['title_id']}.html'>『{esc(w['title'])}』</a></li>" for w in ended) + '</ul></details>') if ended else ''}
 <h2>まとめ</h2><div class=grid>{lis}</div>
 <p class=note>{today.strftime('%Y/%m/%d')}更新。</p>"""
-    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。定期更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999"))), canon="https://totalyamanote.jp/manga/"), encoding="utf-8")
+    (OUT / "index.html").write_text(page("無料で読めるマンガ・期限つき｜あらすじ・登場人物・読者の声｜やまのてマンガ", (lambda fw: (f"いま1巻無料のマンガ{len(fw)}作品（" + "・".join(f"『{w['title']}』" for w in fw[:3]) + "など）と期限、" if fw else "マンガのあらすじ・登場人物・読者の声、") + "まもなく発売の新刊、電子書籍ストア比較。定期更新。")([w for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")) if left_days(w) is not None]), body, 0, head=list_ld("やまのてマンガ", "https://totalyamanote.jp/manga/index.html", sorted(works.values(), key=lambda w: (w.get("free_until") or "9999"))), canon="https://totalyamanote.jp/manga/index.html"), encoding="utf-8")
 
 
 def faq_page(works):
