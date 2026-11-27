@@ -1,0 +1,182 @@
+{
+ "アークテリクス": {
+  "f": "arcteryx.png",
+  "w": 40,
+  "h": 40
+ },
+ "ChatGPT": {
+  "f": "chatgpt.png",
+  "w": 40,
+  "h": 40
+ },
+ "Claude": {
+  "f": "claude.png",
+  "w": 40,
+  "h": 40
+ },
+ "Gemini": {
+  "f": "gemini.png",
+  "w": 40,
+  "h": 40
+ },
+ "Copilot": {
+  "f": "copilot.png",
+  "w": 24,
+  "h": 24
+ },
+ "Perplexity": {
+  "f": "perplexity.png",
+  "w": 40,
+  "h": 40
+ },
+ "Genspark": {
+  "f": "genspark.png",
+  "w": 40,
+  "h": 40
+ },
+ "au PAY": {
+  "f": "aupay.png",
+  "w": 40,
+  "h": 40
+ },
+ "Qoo10": {
+  "f": "qoo10.png",
+  "w": 80,
+  "h": 22
+ },
+ "ビック": {
+  "f": "biccamera.png",
+  "w": 80,
+  "h": 14
+ },
+ "ヨドバシ": {
+  "f": "yodobashi.png",
+  "w": 80,
+  "h": 11
+ },
+ "ZOZO": {
+  "f": "zozo.png",
+  "w": 40,
+  "h": 40
+ },
+ "チョイス": {
+  "f": "choice.png",
+  "w": 40,
+  "h": 40
+ },
+ "さとふる": {
+  "f": "satofull.png",
+  "w": 80,
+  "h": 24
+ },
+ "ふるなび": {
+  "f": "furunavi.png",
+  "w": 40,
+  "h": 40
+ },
+ "ANA": {
+  "f": "ana.png",
+  "w": 40,
+  "h": 40
+ },
+ "JAL": {
+  "f": "jal.png",
+  "w": 40,
+  "h": 40
+ },
+ "ヨドバシカメラ": {
+  "f": "yodobashi.png",
+  "w": 80,
+  "h": 11
+ },
+ "ビックカメラ": {
+  "f": "biccamera.png",
+  "w": 80,
+  "h": 14
+ },
+ "ヤマダ電機": {
+  "f": "yamada.png",
+  "w": 24,
+  "h": 24
+ },
+ "ケーズデンキ": {
+  "f": "ksdenki.png",
+  "w": 80,
+  "h": 20
+ },
+ "エディオン": {
+  "f": "edion.png",
+  "w": 40,
+  "h": 40
+ },
+ "コジマ": {
+  "f": "kojima.png",
+  "w": 80,
+  "h": 21
+ },
+ "ワイモバイル": {
+  "f": "ymobile.png",
+  "w": 40,
+  "h": 40
+ },
+ "LINEMO": {
+  "f": "linemo.png",
+  "w": 80,
+  "h": 22
+ },
+ "UQmobile": {
+  "f": "uqmobile.png",
+  "w": 40,
+  "h": 40
+ },
+ "ahamo": {
+  "f": "ahamo.png",
+  "w": 40,
+  "h": 40
+ },
+ "povo2.0": {
+  "f": "povo.png",
+  "w": 40,
+  "h": 40
+ },
+ "IIJmio": {
+  "f": "iijmio.png",
+  "w": 59,
+  "h": 20
+ },
+ "mineo": {
+  "f": "mineo.png",
+  "w": 40,
+  "h": 40
+ },
+ "Booking": {
+  "f": "booking.png",
+  "w": 40,
+  "h": 40
+ },
+ "Agoda": {
+  "f": "agoda.png",
+  "w": 77,
+  "h": 40
+ },
+ "Expedia": {
+  "f": "expedia.png",
+  "w": 28,
+  "h": 28
+ },
+ "Trip.com": {
+  "f": "tripcom.png",
+  "w": 32,
+  "h": 32
+ },
+ "Skyscanner": {
+  "f": "skyscanner.png",
+  "w": 32,
+  "h": 32
+ },
+ "じゃらん": {
+  "f": "jalan.png",
+  "w": 80,
+  "h": 37
+ }
+}
