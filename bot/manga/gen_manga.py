@@ -306,7 +306,7 @@ def always_free_page():
     return ("always-free", "いつでも無料で読めるマンガ")
 
 
-RV_CSS = ("<style>.rvs{font-size:34px;line-height:1.2;margin:2px 0}.rvs .stars{color:#f59e0b;letter-spacing:2px;font-size:28px}.rvs b{display:inline;margin-left:8px;color:inherit}.rvs .mx{font-size:16px;opacity:.7;margin-left:4px}"
+RV_CSS = ("<style>.rvs{display:flex;align-items:baseline;flex-wrap:wrap;font-size:34px;line-height:1.2;margin:2px 0}.rvs .stars{color:#f59e0b;letter-spacing:2px;font-size:28px}.rvs b{display:inline;margin-left:8px;color:inherit}.rvs .mx{font-size:16px;opacity:.7;margin-left:4px}"
           ".rvsrc{font-size:13px;opacity:.75;margin:0 0 12px}.rvt{display:inline-block;border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:3px 12px;font-size:13px;margin:0 6px 6px 0}"
           ".rvh3{font-size:15px;margin:14px 0 4px}.rvc{margin:8px 0;padding:10px 14px;border-radius:10px;background:rgba(127,127,127,.08)}.rvc b{display:block;font-size:15px}.rvc p{margin:4px 0;font-size:15px;line-height:1.8}"
           ".rvn2{font-size:12px;opacity:.7}.rvn{font-size:11px;opacity:.7;margin:10px 0 0;line-height:1.6}</style>")
@@ -482,7 +482,7 @@ def work_page(w, works=None):
             _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
             _day = w.get("rating_date") or today.strftime('%Y-%m-%d')
             star = (f"<div class=rvs><span class=stars aria-hidden=true>{'★' * _k}{'☆' * (5 - _k)}</span> <b>{_n:.1f}</b><span class=mx>/ 5</span></div>"
-                    f"<div class=rvsrc>{esc(_src)}・{esc(w.get('reviews', ''))}件・{esc(_day)}時点</div>")
+                    f"<div class=rvsrc>{esc(_src)}・{esc(w.get('reviews', ''))}件・<span style='white-space:nowrap'>{esc(_day)}時点</span></div>")
         _tg = "".join(f"<span class=rvt>{esc(x)}</span>" for x in rv.get("tags", [])[:5])
         _top = ""
         if top:
