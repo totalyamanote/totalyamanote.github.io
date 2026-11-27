@@ -34,7 +34,7 @@
   "manga/faq.html": "3a232ee5cbb7d809a6434cca282405b7",
   "compare-method.html": "9b97a563b0303e8c8b6cc7ce612d9ee5",
   "manga/new-releases.html": "d37f94f0681552baa4374496f745d8a5",
-  "manga/store-compare.html": "ae38eaa931e839cfbb40c58eb72bef4b",
+  "manga/store-compare.html": "ec7b2870d1807ee0c2fe62d8d0eb7ba0",
   "manga/theme/always-free.html": "b333456e0a330581e840d17ffb000ebe",
   "manga/w/ebj516901.html": "8aa624589f5d47ac8811c94d2a0a1940",
   "articles/dishwasher-detergent.html": "b62e31890edd10b2393a524a13158f09",
@@ -46,7 +46,7 @@
   "articles/rakuten-mobile-2026.html": "e9d7ac1913ff9c70f0252f261c2cd671",
   "manga/w/kB0F3G6YCWB.html": "530e7c4b2b83376c1c1ddcd853774fbf",
   "articles/ai-agent-compare-2026.html": "32dbb97333472291636c5635c400eaf8",
-  "articles/black-friday-ec-compare-2026.html": "02ecd724725392908911fc306d2a3ad6",
+  "articles/black-friday-ec-compare-2026.html": "5c71c015b05c6a37a7ae688d230886a5",
   "articles/furusato-sites-2026.html": "c811b29e9018962dca7b130d977ea82b",
   "articles/outdoor-brands-2026.html": "480c9eebd710395588123c94ede6e091",
   "manga/w/kB0C9BSDSWZ.html": "26f45f9f9d9d0faf92cebaf78780099d",
@@ -69,7 +69,7 @@
   "articles/toothpaste.html": "4d301393c1ecb7d8aa87f4d73b404529",
   "manga/w/ebj495291.html": "16c8cb0a82b78340ef677a5e0b3a3515",
   "compare/index.html": "3d06c17970462d5523d2bb3f839dbcaf",
-  "articles/travel-sites-compare-2026.html": "ef514da0051e6e33f37cc985dab78e15",
+  "articles/travel-sites-compare-2026.html": "ab6e912f2b27b8f6844728d55cde78ea",
   "articles/kaden-ryohanten-compare-2026.html": "0eab067a91c8da332040495ecce3737f",
   "articles/smartphone-makers-compare-2026.html": "5b0bf6f6c21eb3afb3174a9615955024",
   "articles/watch-makers-compare-2026.html": "4547dde239e0c4540f44cfce70775710",
@@ -219,7 +219,7 @@
   "articles/kani.html": "ae1babc77cdbe9d4493b32d6c8b62e36",
   "articles/osechi.html": "4a04923efce079ef6c395678bef34708",
   "articles/shinmai.html": "a58e37e2677a015470377e7ecfa35ede",
-  "instagram/index.html": "b73cc9db76a8a8189ebcf0a2b439e007",
+  "instagram/index.html": "66b585d36e586a02cfedfe4c2a0e6d96",
   "manga/w/kB00MQOMZGA.html": "f0a2b3d3a770ce89de2fecf0ae859b06",
   "manga/w/kB00DMU8KE8.html": "4fa0256bf984275b883aa856ca469e5f",
   "manga/w/kB098337D7X.html": "ede08969e207996efbbad400523a25bb",
@@ -241,5 +241,5 @@
   "manga/w/kB01EJ7AK40.html": "7df83ea128c2cdad2c32cc0914db32fd",
   "manga/w/kobod798a108acfd35e7abea5f8665176298.html": "d38216a42b84fc17de0e928aad696247"
  },
- "last_ping": "2026-11-28T00:20:11"
+ "last_ping": "2026-11-28T00:40:30"
 }
