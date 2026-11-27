@@ -39,6 +39,8 @@ def logo(s, size=40):
 
 
 def src(u):
+    if u and "www.amazon.co.jp/" in u and "tag=" not in u:   # Amazonへのリンクは出典でも目印を付ける（2026-11-28）
+        return f"<a class=src href='{esc(u)}{'&amp;' if '?' in u else '?'}tag=ymnote-store-22' rel='sponsored nofollow noopener' target=_blank>出典</a>"
     return f"<a class=src href='{esc(u)}' rel=noopener target=_blank>出典</a>" if u else ""
 
 
