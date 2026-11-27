@@ -221,6 +221,9 @@ def add_kobo(api, items):
             if _norm(x.get("title", "")) == want and "afl" in x.get("affiliateUrl", ""):
                 d = pdate(x.get("salesDate"))
                 e["kobo"], e["kobo_price"], e["kobo_date"] = x["affiliateUrl"], int(x.get("itemPrice") or 0), d.isoformat() if d else ""
+                kimg = x.get("largeImageUrl") or ""
+                if not has_cover(e) and kimg and ".gif" not in kimg:   # 紙の表紙がまだ無い巻は、同じ巻の電子版の表紙を使う（2026-11-27）
+                    e["img"] = kimg.replace("?_ex=200x200", "?_ex=240x240")
                 break
 
 
@@ -353,9 +356,9 @@ def build():
     items = fetch(api, today)
     series = [re.sub(r"[\s　]", "", s) for s in (json.loads(POP.read_text(encoding="utf-8")).get("series", []) if POP.exists() else [])]
     items = [e for e in items if is_popular(e, series)]
+    add_kobo(api, items)   # 電子版のページ。紙の表紙がまだ無い巻は、ここで電子版の表紙が入る
     covered = [e for e in items if has_cover(e)]   # ストアのボタンと星は、表紙つきで出す作品だけ調べる
     add_stores(covered)
-    add_kobo(api, covered)
     add_series_ratings(api, covered)
     if len(items) < 6:
         print("新刊が少ないので更新しない", len(items))
