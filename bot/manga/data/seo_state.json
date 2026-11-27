@@ -14,7 +14,7 @@
   "articles/wearable-blanket.html": "5d24de0f9c9b2c8ab5722caf21b68a39",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
   "index.html": "5db8add0ca36c882d769cfbe4ed6dc85",
-  "manga/index.html": "27e054e370db32aa4e70b54060a78115",
+  "manga/index.html": "f7a796a154d951ca301bfaf7b8610b34",
   "manga/theme/adapted.html": "c069797a30574f7bd2880f6fc1e26965",
   "manga/theme/free-now.html": "c1cb5a234fb3aa7b0eff0b14303a3a5a",
   "manga/w/20206940.html": "c31f4786507eed312fb24cdb703dcdd1",
@@ -33,7 +33,7 @@
   "articles/booklive-guide.html": "2ae66378551fc353b8735562c0b435e6",
   "manga/faq.html": "3a232ee5cbb7d809a6434cca282405b7",
   "compare-method.html": "9b97a563b0303e8c8b6cc7ce612d9ee5",
-  "manga/new-releases.html": "d37f94f0681552baa4374496f745d8a5",
+  "manga/new-releases.html": "c9c0bf224cb5ce4b1827114f48f1cc76",
   "manga/store-compare.html": "ec7b2870d1807ee0c2fe62d8d0eb7ba0",
   "manga/theme/always-free.html": "b333456e0a330581e840d17ffb000ebe",
   "manga/w/ebj516901.html": "8aa624589f5d47ac8811c94d2a0a1940",
@@ -69,8 +69,8 @@
   "articles/toothpaste.html": "4d301393c1ecb7d8aa87f4d73b404529",
   "manga/w/ebj495291.html": "16c8cb0a82b78340ef677a5e0b3a3515",
   "compare/index.html": "3d06c17970462d5523d2bb3f839dbcaf",
-  "articles/travel-sites-compare-2026.html": "ab6e912f2b27b8f6844728d55cde78ea",
-  "articles/kaden-ryohanten-compare-2026.html": "0eab067a91c8da332040495ecce3737f",
+  "articles/travel-sites-compare-2026.html": "e0182f9eee1eb71b634159cdc84e7653",
+  "articles/kaden-ryohanten-compare-2026.html": "0a89aeaffc286a3ebd3b14f268f35c2f",
   "articles/smartphone-makers-compare-2026.html": "5b0bf6f6c21eb3afb3174a9615955024",
   "articles/watch-makers-compare-2026.html": "4547dde239e0c4540f44cfce70775710",
   "articles/dslr-compare-2026.html": "90a819f028858d5e3814d5e9d1a1f9f3",
@@ -241,5 +241,5 @@
   "manga/w/kB01EJ7AK40.html": "7df83ea128c2cdad2c32cc0914db32fd",
   "manga/w/kobod798a108acfd35e7abea5f8665176298.html": "d38216a42b84fc17de0e928aad696247"
  },
- "last_ping": "2026-11-28T00:40:30"
+ "last_ping": "2026-11-28T00:49:27"
 }
