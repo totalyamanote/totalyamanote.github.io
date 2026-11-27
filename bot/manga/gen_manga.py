@@ -441,8 +441,11 @@ def work_page(w, works=None):
     if w.get("characters"):
         cs = []
         _chs = list(w["characters"])
-        if sum(1 for c in _chs if len(c) > 3 and c[3]) >= 1:   # 画像のあるキャラが1人でもいれば、画像のあるキャラだけ載せる（マンガサイトはキャラ画像だけ・俳優写真は載せない。2026-11-24 坂田さん）
-            _chs = [c for c in _chs if len(c) > 3 and c[3]]
+        # 画像＝公式のキャラ画像か、そのキャラが描かれた巻の表紙。画像のある人物が2人以上いれば、画像のない人物は載せない（2026-11-27 坂田さん）。
+        # 公式のキャラ画像が1人だけのときは、これまでどおりその人物だけ（2026-11-24 坂田さん）
+        _pic = [c for c in _chs if (len(c) > 3 and c[3]) or (len(c) > 2 and c[2] and (w.get("real_id") or cover(w, c[2])))]
+        if len(_pic) >= 2 or any(len(c) > 3 and c[3] for c in _chs):
+            _chs = _pic
         for c in _chs:
             n, r, v, cimg, ccr = (list(c) + ["", "", "", "", ""])[:5]
             im = (f"<a href=\"{esc(VC + urllib.parse.quote(f'https://booklive.jp/product/index/title_id/{w.get(chr(114)+chr(101)+chr(97)+chr(108)+chr(95)+chr(105)+chr(100))}/vol_no/{v}', safe=''))}\" rel=\"nofollow sponsored\">"
