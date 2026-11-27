@@ -106,15 +106,29 @@ def day_label(d):
     return f"{d.month}/{d.day}（{WD[d.weekday()]}）"
 
 
+def grid(items, today):
+    return f"<div class=ngrid>{''.join(card(e, today) for e in items)}</div>"
+
+
+def fold(summary, body, opened=False):
+    """押すと開く欄（2026-11-27 坂田さん「いきなりたくさん追加はサイトが縦長になるから慎重に」）。"""
+    return f"<details class=nfold{' open' if opened else ''}><summary>{summary}</summary>{body}</details>"
+
+
+def few_then_more(items, today, n, label):
+    """売れている順に n 冊だけ見せて（並びは発売日順）、残りは押すと開く。"""
+    ranked = sorted(items, key=lambda e: e["rank"])
+    first = sorted(ranked[:n], key=lambda e: (e["date"], e["rank"]))
+    rest = sorted(ranked[n:], key=lambda e: (e["date"], e["rank"]))
+    return grid(first, today) + (fold(f"{label}の残り{len(rest)}冊を見る", grid(rest, today)) if rest else "")
+
+
 def by_day(items, today):
-    """発売日ごとの見出しをつけたカードの並び。上に日付へ飛ぶボタン。"""
+    """発売日ごとに、押すと開く欄を並べる。"""
     days = {}
     for e in sorted(items, key=lambda e: (e["date"], e["rank"])):
         days.setdefault(e["date"], []).append(e)
-    jump = "".join(f"<a href='#d{k[5:7]}{k[8:]}'>{day_label(datetime.date.fromisoformat(k))}</a>" for k in days)
-    body = "".join(f"<h3 class=nday id=d{k[5:7]}{k[8:]}>{day_label(datetime.date.fromisoformat(k))}発売<small>{len(v)}冊</small></h3>"
-                   f"<div class=ngrid>{''.join(card(e, today) for e in v)}</div>" for k, v in days.items())
-    return f"<div class=njump>{jump}</div>{body}"
+    return "".join(fold(f"{day_label(datetime.date.fromisoformat(k))}発売<small>{len(v)}冊</small>", grid(v, today)) for k, v in days.items())
 
 
 def text_list(items):
@@ -334,11 +348,10 @@ def card(e, today):
             + "</div></div>")
 
 
-CSS = (".njump{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}.njump a{font-size:12px;font-weight:800;border:1px solid var(--line);border-radius:99px;padding:5px 10px;text-decoration:none;color:inherit!important;background:var(--card,#fff)}"
-       ".nday{font-size:15px;margin:14px 0 6px;scroll-margin-top:70px}.nday small{margin-left:8px;font-weight:400;font-size:12px;color:var(--mut)}"
+CSS = (".nfold{margin:6px 0}.nfold>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card,#fff)}"
+       ".nfold>summary::-webkit-details-marker{display:none}.nfold>summary::after{content:'＋';margin-left:auto;font-size:18px}.nfold[open]>summary::after{content:'－'}.nfold>summary small{font-weight:400;font-size:12px;color:var(--mut)}.nfold>.ngrid{margin:10px 0 14px}"
        ".ntext{list-style:none;margin:8px 0 22px;padding:0}.ntext li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:0 8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}"
        ".ntext li b{grid-row:span 2;font-size:12px}.ntext li a{font-weight:700;color:inherit!important;overflow-wrap:anywhere}.ntext li span{font-size:11px;color:var(--mut)}"
-       ".npast summary{cursor:pointer;font-weight:900;padding:10px 0}"
        ".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 22px}"
        ".ncard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}"
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
@@ -379,11 +392,10 @@ def build():
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
             f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）を、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
-            + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{by_day(wk, today)}" if wk else "")
-            + (f"<h2>これから発売（予約受付中・{len(later)}冊）</h2>{by_day(later, today)}" if later else "")
-            + (f"<h2>表紙がまだ出ていない発売予定（{len(nocover)}冊）</h2>{text_list(nocover)}" if nocover else "")
-            + (f"<h2>最近発売した新刊（14日以内・{len(past)}冊）</h2><div class=ngrid>{''.join(card(e, today) for e in sorted(past, key=lambda e: e['rank'])[:12])}</div>"
-               + (f"<details class=npast><summary>残りの{len(past) - 12}冊も見る</summary><div class=ngrid>{''.join(card(e, today) for e in sorted(past, key=lambda e: e['rank'])[12:])}</div></details>" if len(past) > 12 else "") if past else "")
+            + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, 8, '今週発売')}" if wk else "")
+            + (f"<h2>これから発売（予約受付中・{len(later)}冊）</h2><p class=note>日付を押すと、その日の新刊が開きます。</p>{by_day(later, today)}" if later else "")
+            + (fold(f"表紙がまだ出ていない発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
+            + (f"<h2>最近発売した新刊（14日以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊')}" if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
