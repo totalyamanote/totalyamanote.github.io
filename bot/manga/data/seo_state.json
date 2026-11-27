@@ -14,7 +14,7 @@
   "articles/wearable-blanket.html": "5a7b4d3ec5bb5d56b62ea99d4267644c",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
   "index.html": "5db8add0ca36c882d769cfbe4ed6dc85",
-  "manga/index.html": "52814c62324f400ee896a9c2dc564623",
+  "manga/index.html": "6ff1e98391b192e9d7dfc75a8b301fbb",
   "manga/theme/adapted.html": "6983124caeecf06a803cbd11fb092788",
   "manga/theme/free-now.html": "b3b5425385f518cfbe7e5ac8a83b1401",
   "manga/w/20206940.html": "dc7f5ab0c9b26c0016d5a02a7536c6f9",
@@ -33,7 +33,7 @@
   "articles/booklive-guide.html": "906365f41d6567c214756c66e2649664",
   "manga/faq.html": "35878292b98d4f7d8ea98c884f0b6b69",
   "compare-method.html": "9b97a563b0303e8c8b6cc7ce612d9ee5",
-  "manga/new-releases.html": "655198cc3713a5179dc4ad7c5645691c",
+  "manga/new-releases.html": "2a0eb709657efdbd68b1c21eab04ffbf",
   "manga/store-compare.html": "65ee8c5246a2de6c981a60bd790d0ac8",
   "manga/theme/always-free.html": "48be73b3d2cefc00af73b3ac6d22a549",
   "manga/w/ebj516901.html": "a61edc57198f6bc126dcecb7a1a292e5",
@@ -239,5 +239,5 @@
   "video/w/m-0261891.html": "8ab83d4cc0cfaf21109d8195c590e821",
   "video/w/d-0306235.html": "95e2469b610d2f8de2bfafafe4f6d8c2"
  },
- "last_ping": "2026-11-27T23:25:14"
+ "last_ping": "2026-11-27T23:30:10"
 }
