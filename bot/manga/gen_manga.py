@@ -706,19 +706,19 @@ def index(works, themes):
                     f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
     # 2026-11-14 坂田さん：「いますぐ無料で読む」は期間限定（期限が分かるもの）だけ。鬼滅などの試し読みは入れない
     ptq = ""
-    # 2週間以内に期限が来る作品を最優先（2026-11-27 坂田さん「二週間以内 最優先でピック」）。
-    # 最初に見せるのは、その中で読者の評価件数が多い8作品（並びは期限が近い順）。残りと2週間より先の作品は、押すと開く。
+    # 期限が近い作品を必ず上に（2026-11-27 坂田さん「期限近いのは、優先して上位にうつしな」「二週間以内 最優先でピック」）。
+    # 並びは期限が近い順（同じ日は読者の評価件数が多い順）。最初の8作品を開いて見せ、残りと2週間より先の作品は押すと開く。
     import gen_newrel as _nr
+    quicks.sort(key=lambda x: (x[0], -x[1]))
     _soon = [x for x in quicks if x[0] <= FREE_DAYS] or quicks
     _later = [x for x in quicks if x not in _soon]
-    _pick = sorted(_soon, key=lambda x: -x[1])[:8]
     _row = lambda xs: "<div class=qrow>" + "".join(x[2] for x in xs) + "</div>"
-    _rest = [x for x in _soon if x not in _pick]
-    quick = ((_row([x for x in _soon if x in _pick])
+    _rest = _soon[8:]
+    quick = ((_row(_soon[:8])
               + (_nr.fold(f"2週間以内に終わる残り{len(_rest)}作品を見る", _row(_rest)) if _rest else "")
               + (_nr.fold(f"2週間より先まで無料の作品<small>{len(_later)}作品</small>", _row(_later)) if _later else "")) if quicks else "")
     QCSS = "<style>" + _nr.CSS + ".nfold>.qrow{margin:10px 0 14px}</style>" + QCSS
-    quick_block = (f"<h2 id=free>いますぐ無料で読む（2週間以内に終わる作品を優先）</h2>{QCSS}{quick}"
+    quick_block = (f"<h2 id=free>いますぐ無料で読む（期限が近い順・2週間以内を優先）</h2>{QCSS}{quick}"
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     chips = ("<style>.chips2{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}.chips2 a{background:var(--card,#fff);border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:5px 13px;font-weight:800;font-size:13px;text-decoration:none;color:var(--fg,#1c1917)}</style>"
              "<h1 style='font-size:20px;margin:10px 0 6px'>やまのてマンガ</h1>"
