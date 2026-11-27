@@ -176,7 +176,7 @@ def page(title, desc, body, depth=0, style="", head="", canon=""):
     return (f"<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             f"<title>{esc(title)}</title><meta name=description content=\"{esc(desc)}\">{head}<style>{CSS}</style></head><body><main style='{style}'>"
             f"{hdr(up + '../')}"
-            f"<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>"
+            f"<p class=pr>PR｜このサイトはアフィリエイト広告（楽天アフィリエイト・バリューコマース・Amazonアソシエイト）を利用しています。</p>"
             f"{body}"
             f"<p class=note style='font-size:12px'>更新日：{datetime.date.today().isoformat()}（無料の期限・新刊・評価は定期的に更新）　文：やまのて管理人</p>"
             f"<p class=note><a href='{up}index.html'>マンガトップ</a>　<a href='{up}theme/free-now.html'>いま無料で読めるマンガ</a>　<a href='{up}theme/adapted.html'>アニメ化・ドラマ化されたマンガ</a>　<a href='{up}theme/always-free.html'>いつでも無料で読めるマンガ</a>　<a href='{up}new-releases.html'>新刊カレンダー</a>　<a href='{up}store-compare.html'>電子書籍ストア比較</a>　<a href='{up}faq.html'>よくある質問</a>　<a href='{up}../index.html'>やまのて（価格・ポイントまとめ）</a></p>"

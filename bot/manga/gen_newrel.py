@@ -4,6 +4,9 @@
 事実（発売日・価格・出版社）だけを載せる。発売日は楽天ブックスの表示どおり（「頃」は予定）。
 """
 import datetime
+import urllib.request
+import hashlib
+import collections
 import html
 import json
 import re
@@ -24,7 +27,7 @@ KPEND = HERE / "data" / "kindle_pending.json"  # まだ確認していないISBN
 esc = html.escape
 NG = re.compile(r"ムック|原画集|イラストブック|画集|ファンブック|カレンダー|地球の歩き方|ポスト|ステッカー|グッズ|デリヘル|風俗|R-?18|成人向け")
 # 成人向けに近い本・ボーイズラブ/ティーンズラブの専用レーベル・マンガではない本は載せない（2026-11-27 件数を増やすときに追加）
-NG_ADULT = re.compile(r"BE×BOY|Charaコミックス|Pink\s*cherie|リンクスコレクション|CL-DX|抱かれ|エロ|夜伽|108P|オティン|このマンガがすごい")
+NG_ADULT = re.compile(r"BE×BOY|Charaコミックス|Pink\s*cherie|リンクスコレクション|CL-DX|抱かれ|エロ|夜伽|108P|オティン|このマンガがすごい|ご主人様とゆく異世界サバイバル|ただの門番、実は")
 # 2026-11-27 坂田さん「量が少ないよ」：上位50位・5巻以上・30日先まで → 上位600位・3巻以上・45日先まで に広げた。
 # 人気作だけ（2026-11-15 坂田さん「新刊も人気作のみに」）：①知名度（楽天の漫画売れ筋で上位 TOP_RANK 以内、
 # または data/popular_series.json に入っているアニメ化・ドラマ化・映画化などの作品）かつ ②5巻以上
@@ -215,8 +218,29 @@ def _norm(t):
     return re.sub(r"[\s　()（）・:：!！?？~〜\-‐―]", "", t).lower()
 
 
+# 表紙が出る前の巻に楽天Koboが入れている仮の画像（出版レーベルのロゴだけ）。表紙として使わない（2026-11-27）
+PLACEHOLDER_MD5 = {"a0bb796fc6291a92a329dc103186cc2f"}   # JUMP COMICS DIGITAL（240px）
+
+
+def _img_hash(url):
+    try:
+        return hashlib.md5(urllib.request.urlopen(url, timeout=20).read()).hexdigest()
+    except Exception:
+        return ""
+
+
+def real_covers(found):
+    """found=[(作品, 画像URL)]。仮の画像と、別の本なのに中身が同じ画像、取れなかった画像は表紙にしない。"""
+    hs = [(e, u, _img_hash(u)) for e, u in found]
+    count = collections.Counter(h for _, _, h in hs if h)
+    for e, u, h in hs:
+        if h and h not in PLACEHOLDER_MD5 and count[h] == 1:
+            e["img"] = u
+
+
 def add_kobo(api, items):
     """電子書籍版（楽天Kobo）の同じ巻を探す。タイトルを正規化して一致したものだけ。"""
+    found = []
     for e in items:
         want = _norm(e["title"])
         try:
@@ -230,8 +254,9 @@ def add_kobo(api, items):
                 e["kobo"], e["kobo_price"], e["kobo_date"] = x["affiliateUrl"], int(x.get("itemPrice") or 0), d.isoformat() if d else ""
                 kimg = x.get("largeImageUrl") or ""
                 if not has_cover(e) and kimg and ".gif" not in kimg:   # 紙の表紙がまだ無い巻は、同じ巻の電子版の表紙を使う（2026-11-27）
-                    e["img"] = kimg.replace("?_ex=200x200", "?_ex=240x240")
+                    found.append((e, kimg.replace("?_ex=200x200", "?_ex=240x240")))
                 break
+    real_covers(found)
 
 
 GEN_AFL = "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc="  # 楽天の汎用アフィリエイトリンク（pc= に楽天のURLを渡す）
@@ -390,7 +415,7 @@ def build():
             f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）のうち、発売日の前後1週間のものを発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
             + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, WEEK_SHOW, '今週発売')}" if wk else "")
-            + (fold(f"表紙がまだ出ていない今週の発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
+            + (fold(f"表紙がまだ出ていない今週の発売予定<small>{len(nocover)}冊</small>", text_list(nocover), True) if nocover else "")
             + (f"<h2>最近発売した新刊（1週間以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊', newest=True)}" if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
