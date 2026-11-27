@@ -23,6 +23,11 @@ CTH_CSS = ("<style id=cmpimg>.cmp .cth{display:block;width:72px;height:72px;obje
            ".cmp:has(td>.cth+b) th,.cmp:has(td>.cth+b) td{padding-left:7px;padding-right:7px}}</style>")
 
 
+# 元の写真が小さい商品は、同じ商品の大きい公式写真に差し替える（目で見て確かめたものだけ）
+BIGGER = (("kanidokoro/cabinet/428/428_r_26thum_1125_3.jpg", "kanidokoro/cabinet/428/26_428_mv.jpg"),
+          ("i/n/irodorinosato_702(?![_0-9a-z-])", "i/n/irodorinosato_702_1"))
+
+
 def sharp_src(tag):
     """写真の小さい指定を大きくする。楽天は600（記事の中の写真は800）、Yahoo!は大きい版。"""
     want = 800 if re.search(r"class=['\"]?(?:pki|cth)\b", tag) is None else 400
@@ -30,7 +35,11 @@ def sharp_src(tag):
         return "_ex=%dx%d" % (want, want) if max(int(m.group(1)), int(m.group(2))) < want else m.group(0)
     if "thumbnail.image.rakuten.co.jp" in tag:
         tag = re.sub(r"_ex=(\d+)x(\d+)", up, tag)
-    return re.sub(r"(item-shopping\.c\.yimg\.jp/i)/[cgj]/", r"\1/n/", tag)
+    tag = re.sub(r"(item-shopping\.c\.yimg\.jp/i)/[cgj]/", r"\1/n/", tag)
+    tag = re.sub(r"(res\.booklive\.jp/\d+/\d+/thumbnail)/(?:S|M)\.jpg", r"\1/2L.jpg", tag)
+    for old, new in BIGGER:
+        tag = re.sub(old, new, tag)
+    return tag
 
 
 def plain(s):
