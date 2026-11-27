@@ -663,13 +663,13 @@ def index(works, themes):
         _nd = json.loads(_nr.DATA.read_text(encoding="utf-8"))
         _today = datetime.date.today()
         _week = (_today + datetime.timedelta(days=7)).isoformat()
-        _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= (_today + datetime.timedelta(days=21)).isoformat() and e["img"] and ".gif" not in e["img"]],
-                     key=lambda e: (e["date"] > _week, e["rank"]))[:8]   # 1週間以内を先に、その中は売れている順で8冊（トップは長くしない）
+        _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= _week and e["img"] and ".gif" not in e["img"]],
+                     key=lambda e: e["rank"])[:8]   # 1週間以内の新刊から、売れている順で8冊（トップは長くしない）
         _up.sort(key=lambda e: (e["date"], e["rank"]))
         if _up:
-            newrel = (("<h2>今週発売の新刊（1週間以内）</h2>" if _up[-1]["date"] <= _week else "<h2>まもなく発売の新刊（1週間以内を優先）</h2>") + "<style>" + _nr.CSS + "</style>"
+            newrel = ("<h2>今週発売の新刊（1週間以内）</h2><style>" + _nr.CSS + "</style>"
                       "<div class=ngrid>" + "".join(_nr.card(e, _today) for e in _up) + "</div>"
-                      "<p class=note>📅 1か月先までの新刊は「<a href='new-releases.html'>マンガ新刊の発売日カレンダー</a>」。</p>")
+                      "<p class=note>📅 この1週間の新刊をまとめて見るなら「<a href='new-releases.html'>マンガ新刊の発売日カレンダー</a>」。</p>")
     except Exception as _e:
         print("トップの新刊欄なし", _e)
     for w in sorted(works.values(), key=lambda w: (w.get("free_until") or "9999")):

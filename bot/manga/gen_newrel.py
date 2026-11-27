@@ -1,6 +1,6 @@
 """マンガ新刊カレンダー（定期更新・他より早く）：site/manga/new-releases.html
 
-元データ：楽天ブックス書籍検索API（漫画ジャンル 001001・売れている順）。発売日が「今日から30日後まで（予約受付中）」と「この14日に発売」の作品だけ。
+元データ：楽天ブックス書籍検索API（漫画ジャンル 001001・売れている順）。発売日が「今日から1週間先まで」と「この1週間に発売」の作品だけ。
 事実（発売日・価格・出版社）だけを載せる。発売日は楽天ブックスの表示どおり（「頃」は予定）。
 """
 import datetime
@@ -31,7 +31,8 @@ NG_ADULT = re.compile(r"BE×BOY|Charaコミックス|Pink\s*cherie|リンクス�
 POP = HERE / "data" / "popular_series.json"
 TOP_RANK = 600
 MIN_VOL = 3
-AHEAD = 45
+AHEAD = 7        # 2026-11-27 坂田さん「それ以降は、載せない」：1週間より先は載せない
+BEHIND = 7       # 発売済みも1週間前まで
 WEEK_SHOW = 20   # 1週間以内の新刊は優先して開いたまま出す（2026-11-27 坂田さん）。多い週だけ残りをたたむ
 
 
@@ -55,7 +56,7 @@ def pdate(s):
 
 
 def fetch(api, today):
-    """発売の14日前〜45日先のコミックを集める。①売れている順（上位 TOP_RANK まで）②発売日の新しい順（話題作の予約を拾う）。"""
+    """発売の1週間前〜1週間先のコミックを集める。①売れている順（上位 TOP_RANK まで）②発売日の新しい順（話題作の予約を拾う）。"""
     seen, out = set(), []
     for sort, pages in (("sales", TOP_RANK // 30), ("-releaseDate", 40)):
         errs = 0
@@ -77,7 +78,7 @@ def fetch(api, today):
                 dt = pdate(x.get("salesDate"))
                 if dt:
                     dates.append(dt)
-                if not dt or not (-14 <= (dt - today).days <= AHEAD):
+                if not dt or not (-BEHIND <= (dt - today).days <= AHEAD):
                     continue
                 if NG.search(x["title"] + x.get("seriesName", "")) or NG_ADULT.search(x["title"] + x.get("seriesName", "")) or "afl" not in x.get("affiliateUrl", ""):
                     continue
@@ -90,7 +91,7 @@ def fetch(api, today):
                             "img": (x.get("largeImageUrl") or "").replace("?_ex=200x200", "?_ex=240x240"), "url": x["affiliateUrl"],
                             "rank": rank if sort == "sales" else 9999, "isbn": x.get("isbn", ""),
                             "rb_rating": x.get("reviewAverage") or "", "rb_reviews": int(x.get("reviewCount") or 0)})
-            if sort == "-releaseDate" and dates and max(dates) < today - datetime.timedelta(days=14):
+            if sort == "-releaseDate" and dates and max(dates) < today - datetime.timedelta(days=BEHIND):
                 break
     return out
 
@@ -122,14 +123,6 @@ def few_then_more(items, today, n, label):
     first = sorted(ranked[:n], key=lambda e: (e["date"], e["rank"]))
     rest = sorted(ranked[n:], key=lambda e: (e["date"], e["rank"]))
     return grid(first, today) + (fold(f"{label}の残り{len(rest)}冊を見る", grid(rest, today)) if rest else "")
-
-
-def by_day(items, today):
-    """発売日ごとに、押すと開く欄を並べる。"""
-    days = {}
-    for e in sorted(items, key=lambda e: (e["date"], e["rank"])):
-        days.setdefault(e["date"], []).append(e)
-    return "".join(fold(f"{day_label(datetime.date.fromisoformat(k))}発売<small>{len(v)}冊</small>", grid(v, today)) for k, v in days.items())
 
 
 def text_list(items):
@@ -349,6 +342,11 @@ def card(e, today):
             + "</div></div>")
 
 
+# 検索結果などから本を指定して開いたとき、閉じた欄の中でも見えるようにする
+OPEN_JS = ("<script>(function(){function o(){var e=location.hash&&document.getElementById(location.hash.slice(1));if(!e)return;"
+           "for(var p=e.closest('details');p;p=p.parentElement.closest('details'))p.open=true;e.scrollIntoView()}"
+           "addEventListener('hashchange',o);o()})()</script>")
+
 CSS = (".nfold{margin:6px 0}.nfold>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card,#fff)}"
        ".nfold>summary::-webkit-details-marker{display:none}.nfold>summary::after{content:'＋';margin-left:auto;font-size:18px}.nfold[open]>summary::after{content:'－'}.nfold>summary small{font-weight:400;font-size:12px;color:var(--mut)}.nfold>.ngrid{margin:10px 0 14px}"
        ".ntext{list-style:none;margin:8px 0 22px;padding:0}.ntext li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:0 8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}"
@@ -383,20 +381,18 @@ def build():
     nocover = [e for e in soon if not has_cover(e)]
     soon_c = [e for e in soon if has_cover(e)]
     past = [e for e in past if has_cover(e)]
-    wk = [e for e in soon_c if e["date"] <= (today + datetime.timedelta(days=7)).isoformat()]
-    later = [e for e in soon_c if e not in wk]
-    title = f"マンガ新刊の発売日カレンダー｜今週・来月の注目新刊（{today.month}月{today.day}日更新）"
-    top = sorted([e for e in soon_c if e["date"] <= (today + datetime.timedelta(days=21)).isoformat()], key=lambda e: e["rank"])[:3] or soon_c[:3]
+    wk = soon_c
+    title = f"マンガ新刊の発売日カレンダー｜今週発売の新刊（{today.month}月{today.day}日更新）"
+    top = sorted(soon_c or past, key=lambda e: e["rank"])[:3]
     _clean = lambda t: re.sub(r"【.*?】|\[.*?\]", "", t).strip()
     tops = "・".join(_clean(e["title"]) + f"（{int(e['date'][5:7])}/{int(e['date'][8:])}）" for e in top)
-    desc = f"{tops}など、人気マンガ（売れ筋と話題作・3巻以上）の新刊{len(soon)}冊の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。定期更新。"
+    desc = f"{tops}など、今週発売の人気マンガの新刊{len(soon)}冊（売れ筋と話題作・3巻以上）を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。定期更新。"
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
-            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）を、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
+            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）のうち、発売日の前後1週間のものを発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
             + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, WEEK_SHOW, '今週発売')}" if wk else "")
-            + (f"<h2>これから発売（予約受付中・{len(later)}冊）</h2><p class=note>日付を押すと、その日の新刊が開きます。</p>{by_day(later, today)}" if later else "")
-            + (fold(f"表紙がまだ出ていない発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
-            + (f"<h2>最近発売した新刊（14日以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊')}" if past else "")
+            + (fold(f"表紙がまだ出ていない今週の発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
+            + (f"<h2>最近発売した新刊（1週間以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊')}" if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
@@ -405,10 +401,11 @@ def build():
               {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": e["title"], "author": {"@type": "Person", "name": e["author"]},
                                                            "publisher": {"@type": "Organization", "name": e["publisher"]}, "datePublished": e["date"], "isbn": e["isbn"]}}
               for i, e in enumerate(soon + past, 1)]}}
+    body += OPEN_JS
     head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"
     OUT.write_text(gm.page(title, desc, body, 0, head=head, canon='https://totalyamanote.jp/manga/new-releases.html').replace("<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
                                                                     "<p class=pr>PR｜このページはアフィリエイト広告（楽天アフィリエイト・バリューコマース・Amazonアソシエイト）を利用しています。</p>"), encoding="utf-8")
-    print(f"新刊 {len(items)} 冊（今週{len(wk)}・予約{len(later)}・表紙待ち{len(nocover)}・発売済み{len(past)}）")
+    print(f"新刊 {len(items)} 冊（今週{len(wk)}・表紙待ち{len(nocover)}・発売済み{len(past)}）")
     return True
 
 
