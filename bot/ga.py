@@ -25,6 +25,11 @@ SNIPPET = (
     "var nm=a.querySelector('.zn,.nm,.pn'),br=a.querySelector('.zb'),rk=a.querySelector('.zrk,.rkn,.rkb'),it=(nm?nm.textContent:'').trim().slice(0,60);"
     "gtag('event','affiliate_click',{store:s,link_url:h.slice(0,100),page_path:location.pathname,section:sec&&sec.id?sec.id:hid,heading:hd,content_group:cg,item_title:it||document.title.split('｜')[0].slice(0,60),item_brand:br?br.textContent.trim().slice(0,40):'',rank:rk?rk.textContent.trim().slice(0,3):''})},true);</script><!--/ga4-->"
 )
+# 上のメニュー：スマホで「メニュー」の文字が縦につぶれないように（2026-11-27）
+HDRFIX = ("<style id=hdrfix>header.hbar .hdrop{flex:none}header.hbar .hdrop>summary{white-space:nowrap}header.hbar .hsecbtn{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}"
+          "@media (max-width:420px){header.hbar{gap:5px;flex-wrap:nowrap}header.hbar .hlogo{font-size:16px;gap:5px}header.hbar .hlogo img{width:32px;height:32px}"
+          "header.hbar .hsecbtn{margin-left:0;padding:5px 6px}header.hbar .hdrop>summary{padding:8px 9px;gap:4px}}</style>")
+FIXPAT = re.compile(r"<style id=hdrfix>.*?</style>", re.S)
 PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
 
@@ -46,7 +51,7 @@ def apply(root="."):
         t = Path(p).read_text(encoding="utf-8")
         if "</head>" not in t:
             continue
-        t2 = og.swap(root, p, PAT.sub("", t).replace("</head>", SNIPPET + "</head>", 1))
+        t2 = og.swap(root, p, FIXPAT.sub("", PAT.sub("", t)).replace("</head>", HDRFIX + SNIPPET + "</head>", 1))
         if t2 != t:
             Path(p).write_text(t2, encoding="utf-8")
             n += 1

@@ -74,7 +74,7 @@ h1{font-size:23px;line-height:1.4} h2{font-size:19px;margin:1.9em 0 .6em;padding
 .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .card .top{height:64px;background:linear-gradient(135deg,var(--g1),var(--g2))}
 .card .in{padding:10px 14px 14px}.card b{font-size:16px}
-.hero .wrap{display:flex;gap:18px;align-items:flex-end}.hero .cv{flex:0 0 auto}
+.hero .wrap{display:flex;gap:18px;align-items:flex-end}.hero .wrap>div{min-width:0}.hero .wrap h1{overflow-wrap:anywhere}.hero .cv{flex:0 0 auto}
 .hero .cv img{width:132px;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.35);display:block}
 .vols{display:flex;gap:10px;overflow-x:auto;padding:4px 0}.vols a{flex:0 0 auto;text-align:center;font-size:12px;text-decoration:none}
 .vols img{width:96px;border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.2);display:block;margin-bottom:4px}
