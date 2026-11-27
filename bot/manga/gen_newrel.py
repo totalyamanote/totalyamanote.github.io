@@ -131,7 +131,7 @@ def text_list(items):
     """表紙がまだ出ていない予定：日付・作品名・出版社の一覧（楽天ブックスの商品ページへ）。"""
     rows = "".join(f"<li><b>{day_label(datetime.date.fromisoformat(e['date']))}{'頃' if e['approx'] else ''}</b>"
                    f"<a href='{esc(e['url'])}' rel='sponsored nofollow noopener' target=_blank>{esc(_clean_title(e['title']))}</a>"
-                   f"<span>{esc(e['publisher'])}</span></li>" for e in sorted(items, key=lambda e: (e["date"], e["rank"])))
+                   f"<span>{esc(e['publisher'])}</span><div class=ntb>{buttons(e)}</div></li>" for e in sorted(items, key=lambda e: (e["date"], e["rank"])))
     return f"<ul class=ntext>{rows}</ul>"
 
 
@@ -214,8 +214,8 @@ def add_stores(items):
 def _norm(t):
     import unicodedata
     t = unicodedata.normalize("NFKC", t)
-    t = re.sub(r"【.*?】|\[.*?\]|モノクロ版|電子版|特装版|限定版", "", t)
-    return re.sub(r"[\s　()（）・:：!！?？~〜\-‐―]", "", t).lower()
+    t = re.sub(r"【.*?】|\[.*?\]|\(コミック\)|単行本版|モノクロ版|電子版|特装版|限定版", "", t)
+    return re.sub(r"[\s　()（）・:：!！?？~〜\-‐―巻第]", "", t).lower()
 
 
 # 表紙が出る前の巻に楽天Koboが入れている仮の画像（出版レーベルのロゴだけ）。表紙として使わない（2026-11-27）
@@ -238,18 +238,31 @@ def real_covers(found):
             e["img"] = u
 
 
+def _same_volume(x, want, e):
+    """楽天Koboの商品が同じ巻か。分冊版・単話・合本と、紙の半額に届かない安いもの（話売り）は除く。"""
+    name = x.get("title", "")
+    if re.search(r"分冊|単話|合本|話売り", name) or "afl" not in x.get("affiliateUrl", "") or _norm(name) != want:
+        return False
+    price, paper = int(x.get("itemPrice") or 0), int(e.get("price") or 0)
+    return not (price and paper and price < paper * 0.5)
+
+
 def add_kobo(api, items):
     """電子書籍版（楽天Kobo）の同じ巻を探す。タイトルを正規化して一致したものだけ。"""
     found = []
     for e in items:
         want = _norm(e["title"])
-        try:
-            r = api._get(KOBO_URL, {"keyword": re.sub(r"[（）()]", " ", e["title"])[:60], "hits": 10, "koboGenreId": "101904"}).get("Items", [])
-        except Exception:
-            r = []
-        for x in r:
+        rows = []
+        for kw in (re.sub(r"[（）()]", " ", e["title"])[:60], f"{series_kw(e['title'])} {vol_no(e['title'])}", series_kw(e["title"])):
+            try:
+                rows = api._get(KOBO_URL, {"keyword": kw, "hits": 30, "koboGenreId": "101904", "sort": "-releaseDate"}).get("Items", [])
+            except Exception:
+                rows = []
+            if any(_same_volume(x.get("Item", x), want, e) for x in rows):
+                break
+        for x in rows:
             x = x.get("Item", x)
-            if _norm(x.get("title", "")) == want and "afl" in x.get("affiliateUrl", ""):
+            if _same_volume(x, want, e):
                 d = pdate(x.get("salesDate"))
                 e["kobo"], e["kobo_price"], e["kobo_date"] = x["affiliateUrl"], int(x.get("itemPrice") or 0), d.isoformat() if d else ""
                 kimg = x.get("largeImageUrl") or ""
@@ -340,6 +353,20 @@ def rating_of(e):
     return None
 
 
+def buttons(e):
+    """Kindle → ebookjapan → 楽天Kobo の順（2026-11-14）。全部の本に3つ出す（2026-11-28 坂田さん「ボタンないのは、つける」）。
+    同じ巻のページを確認できたストアはそのページへ。まだ無いストアは「シリーズ」と表示して、シリーズ名の検索ページへ。"""
+    kobo_s, ebj_s = series_links(e)
+    day = (f"<small>{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}配信</small>" if e.get("kobo") and e.get("kobo_date") and e["kobo_date"] != e["date"] else "")
+    out = ""
+    for cls, name, direct, series, extra in (("a", "Kindle", e.get("kindle"), kindle_search(e), ""), ("e", "ebookjapan", e.get("ebj"), ebj_s, ""),
+                                             ("k", "楽天Kobo", e.get("kobo"), kobo_s, day)):
+        label = f"{esc(e['title'])}を{name}で見る" if direct else f"{esc(series_kw(e['title']))}を{name}で探す（シリーズ）"
+        out += (f"<a class='nbtn {cls}' href='{esc(direct or series)}' rel='sponsored nofollow noopener' target=_blank aria-label='{label}'>"
+                f"{name}{extra if direct else '<small>シリーズ</small>'}</a>")
+    return out
+
+
 def card(e, today):
     d = datetime.date.fromisoformat(e["date"])
     left = (d - today).days
@@ -354,14 +381,7 @@ def card(e, today):
             # 値段の表示はKindleを優先（2026-11-14 坂田さん指定）。Kindleの値段が分からないときだけ楽天Kobo
             + (f"<span class=np>¥{e['kindle_price']:,}（Kindle）</span>" if e.get('kindle_price') and e.get('kindle')
                else (f"<span class=np>¥{e['kobo_price']:,}（楽天Kobo）</span>" if e.get('kobo_price') else (f"<span class=np>¥{e['price']:,}（紙の本・税込）</span>" if e.get('price') else "")))
-            + "<div class=nbtns>"
-            # ボタンの順番：Kindle → ebookjapan → 楽天Kobo（2026-11-14 坂田さん指定）。「電子」の表記は付けない
-            + (f"<a class='nbtn a' href='{esc(e['kindle'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をKindleで見る'>Kindle</a>" if e.get("kindle")
-               else "")   # Kindleのページがまだ無い巻はボタンを出さない（検索結果へのリンクは使わない。2026-11-26）。確認できた朝に自動で出る
-            + (f"<a class='nbtn e' href='{esc(e['ebj'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}をebookjapanで見る'>ebookjapan</a>" if e.get("ebj")
-               else (f"<a class='nbtn e' href='{esc(series_links(e)[1])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}をebookjapanで探す（この巻はまだ出ていません）'>ebookjapan<small>シリーズ</small></a>" if left >= 0 else ""))
-            + ((f"<a class='nbtn k' href='{esc(e['kobo'])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(e['title'])}を楽天Koboで見る'>楽天Kobo"
-                + (f"<small>{int(e['kobo_date'][5:7])}/{int(e['kobo_date'][8:])}配信</small>" if e.get('kobo_date') and e['kobo_date'] != e['date'] else "") + "</a>") if e.get("kobo") else (f"<a class='nbtn k' href='{esc(series_links(e)[0])}' rel='sponsored nofollow noopener' target=_blank aria-label='{esc(series_kw(e['title']))}を楽天Koboで探す（この巻はまだ出ていません）'>楽天Kobo<small>シリーズ</small></a>" if left >= 0 else ""))
+            + "<div class=nbtns>" + buttons(e)
             + ("" if e.get("kobo") or e.get("kindle") or e.get("ebj") else "<span class=nwait>この巻の電子版は配信準備中。「シリーズ」から前の巻を読めます</span>")
             + "</div></div>")
 
@@ -374,7 +394,8 @@ OPEN_JS = ("<script>(function(){function o(){var e=location.hash&&document.getEl
 CSS = (".nfold{margin:6px 0}.nfold>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card,#fff)}"
        ".nfold>summary::-webkit-details-marker{display:none}.nfold>summary::after{content:'＋';margin-left:auto;font-size:18px}.nfold[open]>summary::after{content:'－'}.nfold>summary small{font-weight:400;font-size:12px;color:var(--mut)}.nfold>.ngrid{margin:10px 0 14px}"
        ".ntext{list-style:none;margin:8px 0 22px;padding:0}.ntext li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:0 8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}"
-       ".ntext li b{grid-row:span 2;font-size:12px}.ntext li a{font-weight:700;color:inherit!important;overflow-wrap:anywhere}.ntext li span{font-size:11px;color:var(--mut)}"
+       ".ntb{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px}.ntb .nbtn{font-size:12px;justify-content:center}.ntb .nbtn small{font-size:10px}"
+       ".ntext li b{grid-row:span 2;font-size:12px}.ntext li>a{font-weight:700;color:inherit!important;overflow-wrap:anywhere}.ntext li span{font-size:11px;color:var(--mut)}"
        ".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 22px}"
        ".ncard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}"
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
@@ -394,7 +415,7 @@ def build():
     items = [e for e in items if is_popular(e, series)]
     add_kobo(api, items)   # 電子版のページ。紙の表紙がまだ無い巻は、ここで電子版の表紙が入る
     covered = [e for e in items if has_cover(e)]   # ストアのボタンと星は、表紙つきで出す作品だけ調べる
-    add_stores(covered)
+    add_stores(items)   # 表紙待ちの本にもボタンを付ける
     add_series_ratings(api, covered)
     if len(items) < 6:
         print("新刊が少ないので更新しない", len(items))
@@ -417,7 +438,7 @@ def build():
             + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, WEEK_SHOW, '今週発売')}" if wk else "")
             + (fold(f"表紙がまだ出ていない今週の発売予定<small>{len(nocover)}冊</small>", text_list(nocover), True) if nocover else "")
             + (f"<h2>最近発売した新刊（1週間以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊', newest=True)}" if past else "")
-            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
+            + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンは電子書籍のページにつながります。「シリーズ」の表示がないボタンは、同じ巻の電子書籍版であることを確認しています。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがまだ見つからないストアで、シリーズ名の検索ページ（前の巻も読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
           "isPartOf": {"@type": "WebSite", "name": "やまのてマンガ", "url": "https://totalyamanote.jp/manga/"},
