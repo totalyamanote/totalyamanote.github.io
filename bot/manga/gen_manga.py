@@ -662,11 +662,12 @@ def index(works, themes):
         import gen_newrel as _nr
         _nd = json.loads(_nr.DATA.read_text(encoding="utf-8"))
         _today = datetime.date.today()
+        _week = (_today + datetime.timedelta(days=7)).isoformat()
         _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= (_today + datetime.timedelta(days=21)).isoformat() and e["img"] and ".gif" not in e["img"]],
-                     key=lambda e: e["rank"])[:8]   # 売れている順に8冊を選んで、発売日順に並べる（トップは長くしない）
+                     key=lambda e: (e["date"] > _week, e["rank"]))[:8]   # 1週間以内を先に、その中は売れている順で8冊（トップは長くしない）
         _up.sort(key=lambda e: (e["date"], e["rank"]))
         if _up:
-            newrel = ("<h2>まもなく発売の新刊（売れている作品から）</h2><style>" + _nr.CSS + "</style>"
+            newrel = (("<h2>今週発売の新刊（1週間以内）</h2>" if _up[-1]["date"] <= _week else "<h2>まもなく発売の新刊（1週間以内を優先）</h2>") + "<style>" + _nr.CSS + "</style>"
                       "<div class=ngrid>" + "".join(_nr.card(e, _today) for e in _up) + "</div>"
                       "<p class=note>📅 1か月先までの新刊は「<a href='new-releases.html'>マンガ新刊の発売日カレンダー</a>」。</p>")
     except Exception as _e:

@@ -32,6 +32,7 @@ POP = HERE / "data" / "popular_series.json"
 TOP_RANK = 600
 MIN_VOL = 3
 AHEAD = 45
+WEEK_SHOW = 20   # 1週間以内の新刊は優先して開いたまま出す（2026-11-27 坂田さん）。多い週だけ残りをたたむ
 
 
 def vol_no(title):
@@ -392,7 +393,7 @@ def build():
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
             f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）を、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
-            + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, 8, '今週発売')}" if wk else "")
+            + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, WEEK_SHOW, '今週発売')}" if wk else "")
             + (f"<h2>これから発売（予約受付中・{len(later)}冊）</h2><p class=note>日付を押すと、その日の新刊が開きます。</p>{by_day(later, today)}" if later else "")
             + (fold(f"表紙がまだ出ていない発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
             + (f"<h2>最近発売した新刊（14日以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊')}" if past else "")
