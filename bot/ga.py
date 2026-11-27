@@ -14,8 +14,13 @@ import sys
 from pathlib import Path
 
 GA_ID = "G-KMYVSH7X05"
+# 自分たちの確認は数に入れない（2026-11-27 坂田さん）：
+#   端末ごとに一度 https://totalyamanote.jp/?noga=1 を開くと、その端末では数えない（戻すときは ?noga=0）。
+#   点検でページを枠の中に読み込んだとき（iframe）と、自動操作のブラウザも数えない。
+NOGA = ("<script>try{var q=location.search;if(/[?&]noga=1/.test(q))localStorage.setItem('noga','1');if(/[?&]noga=0/.test(q))localStorage.removeItem('noga');"
+        "if(localStorage.getItem('noga')==='1'||window.self!==window.top||navigator.webdriver)window['ga-disable-" + GA_ID + "']=true}catch(e){}</script>")
 SNIPPET = (
-    "<!--ga4--><script async src=\"https://www.googletagmanager.com/gtag/js?id=" + GA_ID + "\"></script>"
+    "<!--ga4-->" + NOGA + "<script async src=\"https://www.googletagmanager.com/gtag/js?id=" + GA_ID + "\"></script>"
     "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());var g=/^\\/(game|fashion|video|manga|articles|compare|instagram)\\//.exec(location.pathname),cg=g?g[1]:'top';gtag('config','" + GA_ID + "',{content_group:cg});"
     "document.addEventListener('click',function(e){var t=e.target.closest?e.target:null;if(!t)return;var n=t.closest('a[href*=\\\"x.com/totalyamanote\\\"],a[href*=\\\"threads.com/@totalyamanote\\\"],a[href*=\\\"bsky.app/profile/totalyamanote\\\"],a[href*=\\\"instagram.com/totalyamanote\\\"]');"
     "if(n){gtag('event','sns_follow_click',{network:/x\\.com/.test(n.href)?'X':/threads/.test(n.href)?'Threads':/instagram/.test(n.href)?'Instagram':'Bluesky',page_path:location.pathname});return}"
