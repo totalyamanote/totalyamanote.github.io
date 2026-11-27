@@ -667,8 +667,7 @@ def index(works, themes):
         _today = datetime.date.today()
         _week = (_today + datetime.timedelta(days=7)).isoformat()
         _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= _week and e["img"] and ".gif" not in e["img"]],
-                     key=lambda e: e["rank"])[:8]   # 1週間以内の新刊から、売れている順で8冊（トップは長くしない）
-        _up.sort(key=lambda e: (e["date"], e["rank"]))
+                     key=lambda e: (e["date"], e["rank"]))[:8]   # 日付の近い順に8冊（同じ日は売れている順）。トップは長くしない
         if _up:
             newrel = ("<h2>今週発売の新刊（1週間以内）</h2><style>" + _nr.CSS + "</style>"
                       "<div class=ngrid>" + "".join(_nr.card(e, _today) for e in _up) + "</div>"

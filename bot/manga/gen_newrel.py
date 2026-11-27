@@ -117,12 +117,11 @@ def fold(summary, body, opened=False):
     return f"<details class=nfold{' open' if opened else ''}><summary>{summary}</summary>{body}</details>"
 
 
-def few_then_more(items, today, n, label):
-    """売れている順に n 冊だけ見せて（並びは発売日順）、残りは押すと開く。"""
-    ranked = sorted(items, key=lambda e: e["rank"])
-    first = sorted(ranked[:n], key=lambda e: (e["date"], e["rank"]))
-    rest = sorted(ranked[n:], key=lambda e: (e["date"], e["rank"]))
-    return grid(first, today) + (fold(f"{label}の残り{len(rest)}冊を見る", grid(rest, today)) if rest else "")
+def few_then_more(items, today, n, label, newest=False):
+    """日付を優先して並べる（2026-11-27 坂田さん「日付優先」）。同じ日は売れている順。n 冊を見せて残りは押すと開く。"""
+    s = sorted(items, key=lambda e: e["rank"])
+    s = sorted(s, key=lambda e: e["date"], reverse=newest)
+    return grid(s[:n], today) + (fold(f"{label}の残り{len(s) - n}冊を見る", grid(s[n:], today)) if len(s) > n else "")
 
 
 def text_list(items):
@@ -392,7 +391,7 @@ def build():
             f"<style>{CSS}</style>"
             + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{few_then_more(wk, today, WEEK_SHOW, '今週発売')}" if wk else "")
             + (fold(f"表紙がまだ出ていない今週の発売予定<small>{len(nocover)}冊</small>", text_list(nocover)) if nocover else "")
-            + (f"<h2>最近発売した新刊（1週間以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊')}" if past else "")
+            + (f"<h2>最近発売した新刊（1週間以内・{len(past)}冊）</h2>{few_then_more(past, today, 6, '最近発売した新刊', newest=True)}" if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
