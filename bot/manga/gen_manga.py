@@ -21,10 +21,6 @@ HERE = Path(__file__).resolve().parent
 import re as _re
 
 
-def _helpful(n):
-    return f"<span class=note>参考になった {n}人</span>" if n else ""
-
-
 def public_note(t):
     """ページに出す注意書きから、社内メモ（採用理由・「〜さん指示」・評価の出どころの内部メモ）を除く（2026-11-25 坂田さん「こういう指示は載せないのが普通でしょう」）"""
     t = _re.sub(r"(評価は[^。]*の値。)?採用理由：.*$", "", t or "")
@@ -298,7 +294,7 @@ def always_free_page():
              f"続きが気になったら、そのまま購入できます（{ck.month}/{ck.day}確認）。")
     body = (f"<div class=hero><span class=kicker>まとめ</span><h1>いつでも無料で読めるマンガ</h1><p>{esc(intro)}</p></div>"
             + (f"<h2>人気作の1巻を、いつでも無料で試し読み（Kindle）</h2><p class=note>Kindleの作品ページの「無料サンプルを読む」から、冒頭をいつでも無料で読めます（読める範囲は作品ごとに違います）。"
-               f"評価はAmazonのレビュー（{ck.month}/{ck.day}時点）。</p>{pcards}" if pcards else "")
+               f"</p>{pcards}" if pcards else "")
             + f"<p class=note>期限つきで無料の作品は「<a href='free-now.html'>いま無料で読めるマンガ（期限が近い順）</a>」にまとめています。</p>"
             f"<p class=note>紹介文は、公式の作品紹介をもとに当サイトで要約しています。</p>")
     out = OUT / "theme" / "always-free.html"
@@ -308,6 +304,12 @@ def always_free_page():
               {"@type": "ListItem", "position": i, "item": {"@type": "Book", "name": w["title"], "author": w["author"]}} for i, w in enumerate(ws, 1)]}}
     out.write_text(page(title, intro, body, 1, head="<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>", canon="https://totalyamanote.jp/manga/theme/always-free.html"), encoding="utf-8")
     return ("always-free", "いつでも無料で読めるマンガ")
+
+
+RV_CSS = ("<style>.rvs{font-size:34px;line-height:1.2;margin:2px 0}.rvs .stars{color:#f59e0b;letter-spacing:2px;font-size:28px}.rvs b{display:inline;margin-left:8px;color:inherit}.rvs .mx{font-size:16px;opacity:.7;margin-left:4px}"
+          ".rvsrc{font-size:13px;opacity:.75;margin:0 0 12px}.rvt{display:inline-block;border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:3px 12px;font-size:13px;margin:0 6px 6px 0}"
+          ".rvh3{font-size:15px;margin:14px 0 4px}.rvc{margin:8px 0;padding:10px 14px;border-radius:10px;background:rgba(127,127,127,.08)}.rvc b{display:block;font-size:15px}.rvc p{margin:4px 0;font-size:15px;line-height:1.8}"
+          ".rvn2{font-size:12px;opacity:.7}.rvn{font-size:11px;opacity:.7;margin:10px 0 0;line-height:1.6}</style>")
 
 
 def load_works():
@@ -321,8 +323,10 @@ def load_works():
                 pass
         if (_w.get("rating_src") or _w.get("store")) == "kindle" or _w.get("rating_src") == "kindle":
             # Amazon（Kindle）の星・件数・声は載せない（アソシエイト規約。2026-11-26）
-            for _k in ("rating", "reviews", "user_reviews", "rating_src"):
+            for _k in ("rating", "reviews", "rating_src"):
                 _w.pop(_k, None)
+            if (_w.get("user_reviews") or {}).get("source") not in ("ブックライブ", "コミックシーモア"):
+                _w.pop("user_reviews", None)
         _w.pop("amz_rating", None)
         _w.pop("amz_reviews", None)
     if QUEUE.exists():
@@ -372,9 +376,6 @@ def work_page(w, works=None):
         rows.append(("連載期間", esc(w["period"])))
     if w.get("volumes"):
         rows.append(("巻数", esc(w["volumes"])))
-    if w.get("rating"):
-        _sn = {"sum": "楽天・Yahoo!の合計（紙の1巻）", "kindle": "Kindle（Amazon）", "ebookjapan": "ebookjapan", "kobo": "楽天Kobo"}.get(w.get("rating_src") or w.get("store"), "電子書籍ストア")   # 評価の出どころ（掲載しているストアの商品ページの表示。ブックライブの名前は出さない方針）
-        rows.append((f"ストアの評価<br><small>{_sn}の表示</small>", f"<span class=stars>★{esc(w['rating'])}</span>（{esc(w['reviews'])}件）"))
     if w.get("fact"):
         rows.append(("メディア化・受賞", esc(w["fact"])))
     dl = left_days(w)
@@ -473,21 +474,22 @@ def work_page(w, works=None):
     faq = "<h2>よくある質問</h2>" + "".join(f"<div class=box><p style='margin:0'><b>Q. {q}</b></p><p style='margin:6px 0 0'>A. {a}</p></div>" for q, a in qa)
     revh = ""
     rv = w.get("user_reviews") or {}
-    if w.get("rating"):   # 動画サイトと同じ見せ方：星を大きく＋出どころ1行＋声は1行（2026-11-25 坂田さん「動画サイトの構成に合わせて見やすく」）
-        _src = {"sum": "楽天・Yahoo!の合計（紙の1巻）", "kindle": "Amazon Kindle（1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
-        _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
-        _hs = "／".join(h for h, _b, _x in (rv.get("top") or [])[:3])
-        _tg = "".join(f"<span class=badge>＃{esc(t)}</span>" for t in rv.get("tags", [])[:5])
-        revh = ("<style>.rvs0{font-size:34px;line-height:1.2;margin:2px 0 2px}.rvs0 .st{color:#f59e0b;letter-spacing:2px;font-size:28px}.rvs0 b{margin-left:8px}.rvs0 .mx{font-size:16px;opacity:.7;margin-left:4px}"
-                ".rvsrc0{font-size:13px;opacity:.7;margin:0 0 10px}.rv1{margin:8px 0 0;font-size:16px;line-height:1.7;font-weight:700}</style>"
-                f"<h2>読者の評価と声</h2><div class=box><div class=rvs0><span class=st aria-hidden=true>{'★' * _k}{'☆' * (5 - _k)}</span><b>{_n:.1f}</b><span class=mx>/ 5</span></div>"
-                f"<div class=rvsrc0>{esc(_src)}・{esc(w.get('reviews',''))}件・{today.strftime('%Y-%m-%d')}時点</div>"
-                + (f"<div>{_tg}</div>" if _tg else "") 
-                + "</div>")
-        _today_s = today.strftime('%Y-%m-%d')
-        _cards = "".join(f"<div class=rv><b>「{esc(h)}」</b><p>{esc(b)}</p>{_helpful(n)}</div>" for h, b, n in (rv.get("top") or []))
-        if _cards:   # トップコメント（参考になった数が多い順・ネタバレなし）（2026-11-25 坂田さん「トップコメント載せよう」）
-            revh += (f"<h3 style='font-size:15px;margin:14px 0 4px'>トップコメント</h3><div class=rvs>{_cards}</div>")
+    top = (rv.get("top") or [])[:3]
+    if w.get("rating") or top:   # 動画サイトと同じ形：大きい星・出どころと件数・タグ・トップコメント3件（2026-11-27 坂田さん「動画サイトを参考に」）
+        star = ""
+        if w.get("rating"):
+            _src = {"sum": "楽天・Yahoo!の合計（紙の1巻）", "kobo": "楽天Kobo", "ebookjapan": "ebookjapan", "booklive": "ブックライブ（1巻）", "cmoa": "コミックシーモア"}.get(w.get("rating_src") or "", w.get("rating_src") or "ストア")
+            _n = float(w["rating"]); _k = max(0, min(5, round(_n)))
+            _day = w.get("rating_date") or today.strftime('%Y-%m-%d')
+            star = (f"<div class=rvs><span class=stars aria-hidden=true>{'★' * _k}{'☆' * (5 - _k)}</span> <b>{_n:.1f}</b><span class=mx>/ 5</span></div>"
+                    f"<div class=rvsrc>{esc(_src)}・{esc(w.get('reviews', ''))}件・{esc(_day)}時点</div>")
+        _tg = "".join(f"<span class=rvt>{esc(x)}</span>" for x in rv.get("tags", [])[:5])
+        _top = ""
+        if top:
+            _cards = "".join(f"<div class=rvc><b>「{esc(h)}」</b><p>{esc(x)}</p>" + (f"<span class=rvn2>参考になった {int(n):,}</span>" if n else "") + "</div>" for h, x, n in top)
+            _top = (f"<h3 class=rvh3>トップコメント</h3><div class=rvcs>{_cards}</div>"
+                    f"<p class=rvn>声は{esc(rv.get('source', '電子書籍ストア'))}に投稿されたレビューを、当サイトで要約したものです（{esc(rv.get('checked', ''))}時点）。</p>")
+        revh = RV_CSS + f"<h2>読者の評価と声</h2><div class=box>{star}{_tg}{_top}</div>"
     rel = ""
     if works:
         # 全作品が同じ数だけ「ほかの作品」からリンクされるよう、次の4作品を順番に（先頭4作品だけに集中させない）

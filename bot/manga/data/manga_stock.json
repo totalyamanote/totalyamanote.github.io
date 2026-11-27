@@ -59,7 +59,39 @@
    "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fec5d58ab5527375ca11a617d6a4e478d%2F",
    "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160745476.html"
   },
-  "release_on": "2026-11-28"
+  "release_on": "2026-11-28",
+  "rating": "4.5",
+  "reviews": "31",
+  "rating_src": "sum",
+  "rating_date": "2026-11-27",
+  "user_reviews": {
+   "tags": [
+    "きゅんきゅん",
+    "青春",
+    "かわいい",
+    "応援したくなる"
+   ],
+   "top": [
+    [
+     "青春を思い出す名作",
+     "紛れもない名作で、青春のつらさと喜びを思い出させてくれる作品だと思う。登場人物の性格にも共感でき、これからの展開にも期待する超おすすめの一冊という声。",
+     1
+    ],
+    [
+     "応援したくなる主人公",
+     "かわいくてきゅんきゅんして、胸が熱くなる、とても大好きな作品。主人公のうかちゃんを「がんばれ」と応援しながら読んでいるという声。",
+     0
+    ],
+    [
+     "この二人だから面白い",
+     "地味な女の子が派手な男の子に恋する設定はありきたりに見えても、この二人だから面白い。ほかの登場人物もキラキラしてかわいく、ずっと好きだという声。",
+     0
+    ]
+   ],
+   "source": "ブックライブ",
+   "url": "https://booklive.jp/review/list/title_id/380928/vol_no/001",
+   "checked": "2026-11-27"
+  }
  },
  {
   "title_id": "kobod798a108acfd35e7abea5f8665176298",
@@ -128,7 +160,40 @@
    "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fa57f547f78d5336ca6d681d674a7f6e2%2F",
    "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060199683.html"
   },
-  "release_on": "2026-11-28"
+  "release_on": "2026-11-28",
+  "user_reviews": {
+   "tags": [
+    "面白い",
+    "男気",
+    "心が温かくなる",
+    "笑える",
+    "キュンキュン"
+   ],
+   "top": [
+    [
+     "男気に惚れる主人公",
+     "少女漫画では珍しい男気あふれる主人公で、猛男には惚れてしまうほど。砂川の姉の一途さも応援したくなり、キャラも展開も全部面白いという声。",
+     4
+    ],
+    [
+     "いい男は外見じゃない",
+     "無料版を読んでから大人買い。美形ぞろいに見えがちな少女漫画のなかで、いい男の条件は外見ではないと実感させてくれる作品だという声。",
+     2
+    ],
+    [
+     "心が明るくなる友情と恋",
+     "前向きで心のきれいな登場人物たちの友情と恋愛に、心が明るくなった。砂川の姉もいい働きをしていて、諦めないでいてほしいという声。",
+     2
+    ]
+   ],
+   "source": "ブックライブ",
+   "url": "https://booklive.jp/product/index/title_id/200389/vol_no/001",
+   "checked": "2026-11-27"
+  },
+  "rating": "4.7",
+  "reviews": "188",
+  "rating_src": "booklive",
+  "rating_date": "2026-11-27"
  },
  {
   "title_id": "kobod64fc9d99be330ff89d98c01b0dac9f1",
@@ -205,6 +270,35 @@
   "release_on": "2026-11-29",
   "rating": "4.4",
   "reviews": "150",
-  "rating_src": "sum"
+  "rating_src": "sum",
+  "rating_date": "2026-11-27",
+  "user_reviews": {
+   "tags": [
+    "きゅんきゅん",
+    "青春",
+    "絵がきれい",
+    "何度読んでも飽きない"
+   ],
+   "top": [
+    [
+     "表情で魅せる少女漫画",
+     "一番好きな漫画。話の良さはもちろん表情が最高で、微妙な表情も絵だけできちんと見せてくれる。読んだ瞬間から作品の世界に引き込まれるという声。",
+     4
+    ],
+    [
+     "自然なキュンに心震える",
+     "すれ違いや相手のちょっとした言動にキュンとする流れがとても自然で、心が震えた。絵もとてもきれいで、純粋でいい子の双葉が好きだという声。",
+     2
+    ],
+    [
+     "読むたび元気になる",
+     "成長や葛藤、悩み、恋愛など、さまざまな心の動きが爽やかにかっこよく、テンポよく描かれていて、何度読んでも元気をもらえる一押しの話だという声。",
+     1
+    ]
+   ],
+   "source": "ブックライブ",
+   "url": "https://booklive.jp/review/list/title_id/193481/vol_no/001",
+   "checked": "2026-11-27"
+  }
  }
 ]
