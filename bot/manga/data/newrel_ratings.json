@@ -103,5 +103,110 @@
   "source": "Kindle",
   "volume_used": "この巻",
   "date": "2026-11-26"
+ },
+ "9784845871612": {
+  "rating": 4.9,
+  "count": 25,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784088433219": {
+  "rating": 5.0,
+  "count": 10,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784088433189": {
+  "rating": 5.0,
+  "count": 7,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784088852348": {
+  "rating": 4.7,
+  "count": 1462,
+  "source": "Kindle",
+  "volume_used": "別の巻（115巻）",
+  "date": "2026-11-27"
+ },
+ "9784088852928": {
+  "rating": 4.7,
+  "count": 961,
+  "source": "Kindle",
+  "volume_used": "別の巻（37巻）",
+  "date": "2026-11-27"
+ },
+ "9784088853765": {
+  "rating": 4.8,
+  "count": 285,
+  "source": "Kindle",
+  "volume_used": "別の巻（27巻）",
+  "date": "2026-11-27"
+ },
+ "9784065457153": {
+  "rating": 4.7,
+  "count": 168,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784065457092": {
+  "rating": 4.8,
+  "count": 50,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784253020770": {
+  "rating": 4.6,
+  "count": 18,
+  "source": "Kindle",
+  "volume_used": "この巻",
+  "date": "2026-11-27"
+ },
+ "9784253021173": {
+  "rating": 4.8,
+  "count": 174,
+  "source": "Kindle",
+  "volume_used": "別の巻（102巻）",
+  "date": "2026-11-27"
+ },
+ "9784065461587": {
+  "rating": 4.8,
+  "count": 133,
+  "source": "Kindle",
+  "volume_used": "別の巻（12巻）",
+  "date": "2026-11-27"
+ },
+ "9784091582546": {
+  "rating": 4.7,
+  "count": 1040,
+  "source": "Kindle",
+  "volume_used": "別の巻（22巻）",
+  "date": "2026-11-27"
+ },
+ "9784065461822": {
+  "rating": 4.9,
+  "count": 499,
+  "source": "Kindle",
+  "volume_used": "別の巻（24巻）",
+  "date": "2026-11-27"
+ },
+ "9784065457184": {
+  "rating": 4.9,
+  "count": 79,
+  "source": "Kindle",
+  "volume_used": "別の巻（27巻）",
+  "date": "2026-11-27"
+ },
+ "9784065460627": {
+  "rating": 4.8,
+  "count": 314,
+  "source": "Kindle",
+  "volume_used": "別の巻（14巻）",
+  "date": "2026-11-27"
  }
 }
