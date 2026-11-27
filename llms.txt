@@ -1,6 +1,6 @@
 # やまのて
 
-> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
 
 情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
 
@@ -132,14 +132,19 @@
 - [『キングダム』1巻まるごと無料（楽天Kobo）｜漫画を無料で読む方法・あらすじ](https://totalyamanote.jp/manga/w/kobodcf484ebabcb385ca9f45621f968b76b.html)
 - [プライバシーポリシー・免責事項｜やまのて](https://totalyamanote.jp/privacy.html)
 - [ブラックフライデー予定（楽天・Yahoo!・Amazon）と買う前のチェックリスト](https://totalyamanote.jp/sale.html)
-- [アニメ14作品をU-NEXTで見る｜原作マンガのあるアニメの配信状況｜やまのて動画](https://totalyamanote.jp/video/anime.html)
+- [アニメ24作品をU-NEXTで見る｜新作と原作マンガのあるアニメの配信状況｜やまのて動画](https://totalyamanote.jp/video/anime.html)
 - [U-NEXTで配信中のドラマ27作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/drama.html)
 - [U-NEXTのよくある質問｜見放題とポイント作品の違い・料金・無料トライアル｜やまのて動画](https://totalyamanote.jp/video/faq.html)
 - [やまのて動画｜ドラマ・映画・アニメをU-NEXTで見る 配信状況・あらすじを作品ごとに紹介](https://totalyamanote.jp/video/index.html)
-- [U-NEXTで配信中の映画33作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/movie.html)
+- [U-NEXTで配信中の映画37作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/movie.html)
 - [原作がマンガのドラマ・映画・アニメ｜U-NEXTの配信状況つき｜やまのて動画](https://totalyamanote.jp/video/theme/manga-origin.html)
-- [U-NEXTで見放題のドラマ・映画・アニメ69作品｜やまのて動画](https://totalyamanote.jp/video/theme/mihoudai.html)
+- [U-NEXTで見放題のドラマ・映画・アニメ73作品｜やまのて動画](https://totalyamanote.jp/video/theme/mihoudai.html)
 - [東京リベンジャーズをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0056138.html)
+- [違国日記をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0251558.html)
+- [【推しの子】第3期をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0251565.html)
+- [Re:ゼロから始める異世界生活 4th seasonをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0284840.html)
+- [天幕のジャードゥーガルをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305796.html)
+- [ふつつかな悪女ではございますがをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305826.html)
 - [凶乱令嬢ニア・リストンをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305833.html)
 - [追放された転生重騎士はゲーム知識で無双するをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0305840.html)
 - [薬屋のひとりごと 第3期をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0316422.html)
@@ -207,9 +212,13 @@
 - [ゴジラ-1.0をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0159292.html)
 - [劇場版「進撃の巨人」完結編をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0201307.html)
 - [劇場版「鬼滅の刃」無限列車編をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0205789.html)
+- [仮面ライダーガヴ お菓子の家の侵略者をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0239684.html)
 - [ルックバックをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0242285.html)
 - [ワン・バトル・アフター・アナザーをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0251822.html)
+- [おいしい給食 炎の修学旅行をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0271103.html)
+- [映画キミとアイドルプリキュア♪をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0296274.html)
 - [ミッドナイトスワンをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0311025.html)
+- [劇場版『ゾンビランドサガ ゆめぎんがパラダイス』をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0311962.html)
 - [『最終楽章 響け！ユーフォニアム』前編をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/m-0315530.html)
 - [SAKAMOTO DAYSをU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/sakamoto-days.html)
 - [シャングリラ・フロンティアをU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/shangri-la-frontier.html)
