@@ -23,7 +23,7 @@ concurrency:
 jobs:
   manga:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30   # 新刊を約200冊に増やしたぶん、調べる時間がかかる（2026-11-27）
     steps:
       - uses: actions/checkout@v4
         with:

@@ -23,11 +23,15 @@ EBJ = HERE / "data" / "ebookjapan_items.json"  # ISBN → ebookjapan ヤフー�
 KPEND = HERE / "data" / "kindle_pending.json"  # まだ確認していないISBN-10（毎朝Chromeで確認する）
 esc = html.escape
 NG = re.compile(r"ムック|原画集|イラストブック|画集|ファンブック|カレンダー|地球の歩き方|ポスト|ステッカー|グッズ|デリヘル|風俗|R-?18|成人向け")
+# 成人向けに近い本・ボーイズラブ/ティーンズラブの専用レーベル・マンガではない本は載せない（2026-11-27 件数を増やすときに追加）
+NG_ADULT = re.compile(r"BE×BOY|Charaコミックス|Pink\s*cherie|リンクスコレクション|CL-DX|抱かれ|エロ|夜伽|108P|オティン|このマンガがすごい")
+# 2026-11-27 坂田さん「量が少ないよ」：上位50位・5巻以上・30日先まで → 上位600位・3巻以上・45日先まで に広げた。
 # 人気作だけ（2026-11-15 坂田さん「新刊も人気作のみに」）：①知名度（楽天の漫画売れ筋で上位 TOP_RANK 以内、
 # または data/popular_series.json に入っているアニメ化・ドラマ化・映画化などの作品）かつ ②5巻以上
 POP = HERE / "data" / "popular_series.json"
-TOP_RANK = 50
-MIN_VOL = 5
+TOP_RANK = 600
+MIN_VOL = 3
+AHEAD = 45
 
 
 def vol_no(title):
@@ -50,30 +54,75 @@ def pdate(s):
 
 
 def fetch(api, today):
+    """発売の14日前〜45日先のコミックを集める。①売れている順（上位 TOP_RANK まで）②発売日の新しい順（話題作の予約を拾う）。"""
     seen, out = set(), []
-    for pg in range(1, 6):
-        try:
-            d = api._get(URL, {"booksGenreId": "001001", "sort": "sales", "hits": 30, "page": pg, "outOfStockFlag": 1})
-        except Exception as e:
-            print("取得失敗", pg, e)
-            break
-        for rank, x in enumerate(d.get("Items", []), (pg - 1) * 30 + 1):
-            x = x.get("Item", x)
-            dt = pdate(x.get("salesDate"))
-            if not dt or not (-14 <= (dt - today).days <= 30):
+    for sort, pages in (("sales", TOP_RANK // 30), ("-releaseDate", 40)):
+        errs = 0
+        for pg in range(1, pages + 1):
+            try:
+                d = api._get(URL, {"booksGenreId": "001001", "sort": sort, "hits": 30, "page": pg, "outOfStockFlag": 1})
+            except Exception as e:
+                print("取得失敗", sort, pg, e)
+                errs += 1
+                if errs >= 4:
+                    break
                 continue
-            if NG.search(x["title"] + x.get("seriesName", "")) or "afl" not in x.get("affiliateUrl", ""):
-                continue
-            base = re.sub(r"[【\[].*?[】\]]|特装版.*$|限定版.*$|小冊子付き|特典.*$", "", x["title"]).strip()
-            if base in seen:
-                continue
-            seen.add(base)
-            out.append({"date": dt.isoformat(), "approx": "頃" in x.get("salesDate", ""), "title": x["title"], "author": x.get("author", ""),
-                        "publisher": x.get("publisherName", ""), "label": x.get("seriesName", ""), "price": int(x.get("itemPrice") or 0),
-                        "img": (x.get("largeImageUrl") or "").replace("?_ex=200x200", "?_ex=240x240"), "url": x["affiliateUrl"], "rank": rank,
-                        "isbn": x.get("isbn", ""),
-                        "rb_rating": x.get("reviewAverage") or "", "rb_reviews": int(x.get("reviewCount") or 0)})
+            rows = d.get("Items", [])
+            if not rows:
+                break
+            dates = []
+            for rank, x in enumerate(rows, (pg - 1) * 30 + 1):
+                x = x.get("Item", x)
+                dt = pdate(x.get("salesDate"))
+                if dt:
+                    dates.append(dt)
+                if not dt or not (-14 <= (dt - today).days <= AHEAD):
+                    continue
+                if NG.search(x["title"] + x.get("seriesName", "")) or NG_ADULT.search(x["title"] + x.get("seriesName", "")) or "afl" not in x.get("affiliateUrl", ""):
+                    continue
+                base = re.sub(r"[【\[].*?[】\]]|特装版.*$|限定版.*$|小冊子付き|特典.*$", "", x["title"]).strip()
+                if base in seen:
+                    continue
+                seen.add(base)
+                out.append({"date": dt.isoformat(), "approx": "頃" in x.get("salesDate", ""), "title": x["title"], "author": x.get("author", ""),
+                            "publisher": x.get("publisherName", ""), "label": x.get("seriesName", ""), "price": int(x.get("itemPrice") or 0),
+                            "img": (x.get("largeImageUrl") or "").replace("?_ex=200x200", "?_ex=240x240"), "url": x["affiliateUrl"],
+                            "rank": rank if sort == "sales" else 9999, "isbn": x.get("isbn", ""),
+                            "rb_rating": x.get("reviewAverage") or "", "rb_reviews": int(x.get("reviewCount") or 0)})
+            if sort == "-releaseDate" and dates and max(dates) < today - datetime.timedelta(days=14):
+                break
     return out
+
+
+def has_cover(e):
+    return bool(e.get("img")) and ".gif" not in e["img"]
+
+
+def _clean_title(t):
+    return re.sub(r"【.*?】|\[.*?\]", "", t).strip()
+
+
+def day_label(d):
+    return f"{d.month}/{d.day}（{WD[d.weekday()]}）"
+
+
+def by_day(items, today):
+    """発売日ごとの見出しをつけたカードの並び。上に日付へ飛ぶボタン。"""
+    days = {}
+    for e in sorted(items, key=lambda e: (e["date"], e["rank"])):
+        days.setdefault(e["date"], []).append(e)
+    jump = "".join(f"<a href='#d{k[5:7]}{k[8:]}'>{day_label(datetime.date.fromisoformat(k))}</a>" for k in days)
+    body = "".join(f"<h3 class=nday id=d{k[5:7]}{k[8:]}>{day_label(datetime.date.fromisoformat(k))}発売<small>{len(v)}冊</small></h3>"
+                   f"<div class=ngrid>{''.join(card(e, today) for e in v)}</div>" for k, v in days.items())
+    return f"<div class=njump>{jump}</div>{body}"
+
+
+def text_list(items):
+    """表紙がまだ出ていない予定：日付・作品名・出版社の一覧（楽天ブックスの商品ページへ）。"""
+    rows = "".join(f"<li><b>{day_label(datetime.date.fromisoformat(e['date']))}{'頃' if e['approx'] else ''}</b>"
+                   f"<a href='{esc(e['url'])}' rel='sponsored nofollow noopener' target=_blank>{esc(_clean_title(e['title']))}</a>"
+                   f"<span>{esc(e['publisher'])}</span></li>" for e in sorted(items, key=lambda e: (e["date"], e["rank"])))
+    return f"<ul class=ntext>{rows}</ul>"
 
 
 def _base(title):
@@ -282,7 +331,12 @@ def card(e, today):
             + "</div></div>")
 
 
-CSS = (".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 22px}"
+CSS = (".njump{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}.njump a{font-size:12px;font-weight:800;border:1px solid var(--line);border-radius:99px;padding:5px 10px;text-decoration:none;color:inherit!important;background:var(--card,#fff)}"
+       ".nday{font-size:15px;margin:14px 0 6px;scroll-margin-top:70px}.nday small{margin-left:8px;font-weight:400;font-size:12px;color:var(--mut)}"
+       ".ntext{list-style:none;margin:8px 0 22px;padding:0}.ntext li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:0 8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}"
+       ".ntext li b{grid-row:span 2;font-size:12px}.ntext li a{font-weight:700;color:inherit!important;overflow-wrap:anywhere}.ntext li span{font-size:11px;color:var(--mut)}"
+       ".npast summary{cursor:pointer;font-weight:900;padding:10px 0}"
+       ".ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 22px}"
        ".ncard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}"
        ".nimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:contain;background:#f5f5f4;border-radius:8px;display:block}"
        ".ndate{font-size:12px;font-weight:800}.nd{color:#bf0000;margin-left:4px}.nd2{color:var(--mut);font-weight:400;margin-left:4px}"
@@ -299,27 +353,34 @@ def build():
     items = fetch(api, today)
     series = [re.sub(r"[\s　]", "", s) for s in (json.loads(POP.read_text(encoding="utf-8")).get("series", []) if POP.exists() else [])]
     items = [e for e in items if is_popular(e, series)]
-    add_stores(items)
-    add_kobo(api, items)
-    add_series_ratings(api, items)
+    covered = [e for e in items if has_cover(e)]   # ストアのボタンと星は、表紙つきで出す作品だけ調べる
+    add_stores(covered)
+    add_kobo(api, covered)
+    add_series_ratings(api, covered)
     if len(items) < 6:
         print("新刊が少ないので更新しない", len(items))
         return False
     DATA.write_text(json.dumps({"date": today.isoformat(), "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
     soon = sorted([e for e in items if e["date"] >= today.isoformat()], key=lambda e: (e["date"], ".gif" in e["img"], e["rank"]))
     past = sorted([e for e in items if e["date"] < today.isoformat()], key=lambda e: (e["date"], -e["rank"]), reverse=True)
-    wk = [e for e in soon if e["date"] <= (today + datetime.timedelta(days=7)).isoformat()]
+    nocover = [e for e in soon if not has_cover(e)]
+    soon_c = [e for e in soon if has_cover(e)]
+    past = [e for e in past if has_cover(e)]
+    wk = [e for e in soon_c if e["date"] <= (today + datetime.timedelta(days=7)).isoformat()]
+    later = [e for e in soon_c if e not in wk]
     title = f"マンガ新刊の発売日カレンダー｜今週・来月の注目新刊（{today.month}月{today.day}日更新）"
-    top = [e for e in soon if ".gif" not in e["img"]][:3]
+    top = sorted([e for e in soon_c if e["date"] <= (today + datetime.timedelta(days=21)).isoformat()], key=lambda e: e["rank"])[:3] or soon_c[:3]
     _clean = lambda t: re.sub(r"【.*?】|\[.*?\]", "", t).strip()
     tops = "・".join(_clean(e["title"]) + f"（{int(e['date'][5:7])}/{int(e['date'][8:])}）" for e in top)
-    desc = f"{tops}など、人気マンガ（アニメ化などの話題作・5巻以上）の新刊{len(soon)}作品の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。定期更新。"
+    desc = f"{tops}など、人気マンガ（売れ筋と話題作・3巻以上）の新刊{len(soon)}冊の発売日を一覧に。楽天Kobo・Kindleの電子書籍版へのリンクつき。定期更新。"
     body = (f"<div style='margin:10px 0 14px'><h1 style='font-size:18px;font-weight:700;margin:0 0 4px'>マンガ新刊の発売日カレンダー</h1>"
-            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>アニメ化・ドラマ化などの話題作や、楽天ブックスの売れ筋上位の人気マンガ（5巻以上）の新刊だけを、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
+            f"<p style='font-size:13px;color:#5f5f5f;margin:0'>楽天ブックスの売れ筋（上位600位まで）と、アニメ化・ドラマ化などの話題作の新刊（3巻以上）を、発売日順に並べています（{today.strftime('%Y/%m/%d')}時点・定期更新）。</p></div>"
             f"<style>{CSS}</style>"
-            + (f"<h2>今週発売（7日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in wk)}</div>" if wk else "")
-            + f"<h2>これから発売（予約受付中）</h2><div class=ngrid>{''.join(card(e, today) for e in soon if e not in wk)}</div>"
-            + (f"<h2>最近発売した新刊（14日以内）</h2><div class=ngrid>{''.join(card(e, today) for e in past)}</div>" if past else "")
+            + (f"<h2>今週発売（7日以内・{len(wk)}冊）</h2>{by_day(wk, today)}" if wk else "")
+            + (f"<h2>これから発売（予約受付中・{len(later)}冊）</h2>{by_day(later, today)}" if later else "")
+            + (f"<h2>表紙がまだ出ていない発売予定（{len(nocover)}冊）</h2>{text_list(nocover)}" if nocover else "")
+            + (f"<h2>最近発売した新刊（14日以内・{len(past)}冊）</h2><div class=ngrid>{''.join(card(e, today) for e in sorted(past, key=lambda e: e['rank'])[:12])}</div>"
+               + (f"<details class=npast><summary>残りの{len(past) - 12}冊も見る</summary><div class=ngrid>{''.join(card(e, today) for e in sorted(past, key=lambda e: e['rank'])[12:])}</div></details>" if len(past) > 12 else "") if past else "")
             + "<p class=note>発売日は楽天ブックスの表示のとおりです。ボタンはすべて電子書籍版のページにつながります（楽天Kobo・Kindle・ebookjapanとも、同じ巻の電子書籍版であることを確認）。電子版の配信日が紙と違う場合は、ボタンに配信日を出しています。「シリーズ」と書いたボタンは、この巻のページがストアにまだ無いため、シリーズ名での検索ページ（前の巻から読めます）につながります。「頃」は予定で、変わることがあります。予約・購入の前に、商品ページで確認してください。"
               "1巻を無料で試し読みできる作品は「<a href='theme/free-now.html'>いま無料で読めるマンガ</a>」にまとめています。</p>")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": title, "url": "https://totalyamanote.jp/manga/new-releases.html",
@@ -331,7 +392,7 @@ def build():
     head = "<script type=application/ld+json>" + json.dumps(ld, ensure_ascii=False) + "</script>"
     OUT.write_text(gm.page(title, desc, body, 0, head=head, canon='https://totalyamanote.jp/manga/new-releases.html').replace("<p class=pr>PR｜このサイトはアフィリエイト広告（バリューコマース）を利用しています。</p>",
                                                                     "<p class=pr>PR｜このページはアフィリエイト広告（楽天アフィリエイト・バリューコマース・Amazonアソシエイト）を利用しています。</p>"), encoding="utf-8")
-    print(f"新刊 {len(items)} 作品（今週{len(wk)}・予約{len(soon)}・発売済み{len(past)}）")
+    print(f"新刊 {len(items)} 冊（今週{len(wk)}・予約{len(later)}・表紙待ち{len(nocover)}・発売済み{len(past)}）")
     return True
 
 

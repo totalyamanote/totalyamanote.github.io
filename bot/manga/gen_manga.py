@@ -662,8 +662,9 @@ def index(works, themes):
         import gen_newrel as _nr
         _nd = json.loads(_nr.DATA.read_text(encoding="utf-8"))
         _today = datetime.date.today()
-        _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= (_today + datetime.timedelta(days=21)).isoformat() and ".gif" not in e["img"]],
-                     key=lambda e: (e["date"], e["rank"]))[:10]
+        _up = sorted([e for e in _nd["items"] if _today.isoformat() <= e["date"] <= (_today + datetime.timedelta(days=21)).isoformat() and e["img"] and ".gif" not in e["img"]],
+                     key=lambda e: e["rank"])[:12]   # 売れている順に12冊を選んで、発売日順に並べる
+        _up.sort(key=lambda e: (e["date"], e["rank"]))
         if _up:
             newrel = ("<h2>まもなく発売の新刊（売れている作品から）</h2><style>" + _nr.CSS + "</style>"
                       "<div class=ngrid>" + "".join(_nr.card(e, _today) for e in _up) + "</div>"
