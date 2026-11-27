@@ -1,6 +1,6 @@
 # やまのて
 
-> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を毎朝比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
+> 楽天市場・Yahoo!ショッピング・Amazonの「価格−ポイント＝実質価格」を比較するサイトと、マンガ情報サイト「やまのてマンガ」（無料で読める期限・新刊の発売日・電子書籍ストア比較）。運営：やまのて管理人（個人運営）。
 
 情報の出どころ：各ストアの公開データ（楽天ウェブサービス・Yahoo!ショッピングAPI・楽天ブックス）と各社の公式ページ。確認日を各ページに記載。使っていない商品の体験談は書かない。
 
@@ -133,12 +133,12 @@
 - [プライバシーポリシー・免責事項｜やまのて](https://totalyamanote.jp/privacy.html)
 - [ブラックフライデー予定（楽天・Yahoo!・Amazon）と買う前のチェックリスト](https://totalyamanote.jp/sale.html)
 - [アニメ25作品をU-NEXTで見る｜新作と原作マンガのあるアニメの配信状況｜やまのて動画](https://totalyamanote.jp/video/anime.html)
-- [U-NEXTで配信中のドラマ27作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/drama.html)
+- [U-NEXTで配信中のドラマ28作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/drama.html)
 - [U-NEXTのよくある質問｜見放題とポイント作品の違い・料金・無料トライアル｜やまのて動画](https://totalyamanote.jp/video/faq.html)
 - [やまのて動画｜ドラマ・映画・アニメをU-NEXTで見る 配信状況・あらすじを作品ごとに紹介](https://totalyamanote.jp/video/index.html)
 - [U-NEXTで配信中の映画38作品｜見放題かポイント作品かを紹介｜やまのて動画](https://totalyamanote.jp/video/movie.html)
 - [原作がマンガのドラマ・映画・アニメ｜U-NEXTの配信状況つき｜やまのて動画](https://totalyamanote.jp/video/theme/manga-origin.html)
-- [U-NEXTで見放題のドラマ・映画・アニメ74作品｜やまのて動画](https://totalyamanote.jp/video/theme/mihoudai.html)
+- [U-NEXTで見放題のドラマ・映画・アニメ75作品｜やまのて動画](https://totalyamanote.jp/video/theme/mihoudai.html)
 - [東京リベンジャーズをU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0056138.html)
 - [違国日記をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0251558.html)
 - [【推しの子】第3期をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/a-0251565.html)
@@ -179,6 +179,7 @@
 - [南くんが恋人！？をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0124993.html)
 - [瑞草洞＜ソチョドン＞をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0209355.html)
 - [孤独のグルメ Season11をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0291622.html)
+- [折腰をU-NEXTで見る｜配信状況・あらすじ｜やまのて動画](https://totalyamanote.jp/video/w/d-0306235.html)
 - [ハイキュー!!をU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/haikyu.html)
 - [ヒカルの碁をU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/hikaru-no-go.html)
 - [ホタルの嫁入りをU-NEXTで見る｜配信状況・話数・原作マンガ｜やまのて動画](https://totalyamanote.jp/video/w/hotaru-no-yomeiri.html)
