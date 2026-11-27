@@ -908,6 +908,11 @@
    "date": "2026-11-27",
    "min_effective": 6930,
    "min_price": 2160
+  },
+  {
+   "date": "2026-11-28",
+   "min_effective": 2437,
+   "min_price": 2160
   }
  ],
  "無洗米": [
@@ -1490,6 +1495,11 @@
    "date": "2026-11-25",
    "min_effective": 5132,
    "min_price": 5184
+  },
+  {
+   "date": "2026-11-28",
+   "min_effective": 3315,
+   "min_price": 3348
   }
  ],
  "緑茶ティーバッグ": [
@@ -3169,6 +3179,20 @@
    "date": "2026-11-27",
    "min_effective": 1960,
    "min_price": 1980
+  }
+ ],
+ "おせち": [
+  {
+   "date": "2026-11-28",
+   "min_effective": 8712,
+   "min_price": 8800
+  }
+ ],
+ "米（新米）": [
+  {
+   "date": "2026-11-28",
+   "min_effective": 2490,
+   "min_price": 2621
   }
  ]
 }
