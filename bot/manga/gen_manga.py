@@ -110,6 +110,9 @@ def left_label(dl):
     return "本日終了" if dl == 0 else f"あと{dl}日"
 
 
+FREE_DAYS = 14   # 「いますぐ無料で読む」で最優先にする残り日数
+
+
 def left_days(w):
     fu=w.get("free_until")
     if not fu:
@@ -655,7 +658,7 @@ def index(works, themes):
         rt = f"<span class=stars>★{esc(w['rating'])}</span><span class=note>（{esc(w.get('reviews', ''))}件）</span><br>" if w.get("rating") and w.get("reviews") else (f"<span class=stars>★{esc(w['rating'])}</span><br>" if w.get("rating") else "")
         cards += (f"<a class=card style='{grad(w['title_id'])}' href='w/{w['title_id']}.html'><div class=thumb>" + "".join(f"<img src='{esc(cover(w, v, 'M'))}' alt='『{esc(w['title'])}』{int(v)}巻の表紙' loading=lazy onerror=\"this.style.display='none'\">" for v in thumb_vols(w)) + "</div>"
                   f"<div class=in><b>『{esc(w['title'])}』</b><br>{rt}<span class=note>{esc(w.get('author',''))}</span><br>{fb}</div></a>")
-    quick = ""
+    quicks = []   # (残り日数, 評価の件数, カード)
     # 新刊（今週・来週発売）：gen_newrel が作った data/new_releases.json から
     newrel = ""
     try:
@@ -680,11 +683,12 @@ def index(works, themes):
             continue  # 同じ作品が複数のストアで無料なら、期限の長いほうを残す
         dd = datetime.date.fromisoformat(w["free_until"]) if dl is not None else None
         img = cover(w, size="M")
-        quick += (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
+        _card = (f"<div class=qcard><a href='w/{w['title_id']}.html' class=qimg>" + (f"<img src='{esc(img)}' alt='『{esc(w['title'])}』1巻の表紙' loading=lazy width=120 height=170>" if img else "") + "</a>"
                   f"<a href='w/{w['title_id']}.html' class=qt>『{esc(w['title'])}』</a>"
                   + (f"<span class=qd><b style='color:#b45309'>★{esc(w['rating'])}</b>（{esc(w.get('reviews', ''))}件）</span>" if w.get('rating') and w.get('reviews') else '')
                   + (f"<span class=qd>{esc(w.get('free_label', '1巻無料'))} {dd.month}/{dd.day}まで<b>{left_label(dl)}</b></span>" if dd else f"<span class=qd>{esc(w.get('free_label', '無料'))}<b>{esc(w.get('free_store_name', ''))}</b></span>")
                   + (f"<a class=qbtn href='w/{w['title_id']}.html#read' aria-label='『{esc(w['title'])}』を無料で読む'>無料で読む ›</a></div>" if w.get("store") in ("ebookjapan", "kindle", "kobo") else f"<a class=qbtn href=\"{esc(link(w['title_id']))}\" rel=\"nofollow sponsored\" aria-label=\"『{esc(w['title'])}』1巻を無料で読む\">無料で読む ›</a></div>"))
+        quicks.append((dl, int(re.sub(r"\D", "", str(w.get("reviews") or "")) or 0), _card))
     QCSS = '<style>.qrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:10px 0 18px}.qcard{display:flex;flex-direction:column;gap:4px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;padding:8px}.qimg img{width:100%;height:auto;aspect-ratio:12/17;object-fit:cover;border-radius:8px;display:block;box-shadow:0 2px 6px rgba(0,0,0,.12)}.qt{font-weight:800;font-size:13px;line-height:1.35;text-decoration:none;color:inherit}.qd{font-size:12px;color:var(--mut)}.qd b{display:inline-block;margin-left:4px;color:#bf0000}.qbtn{margin-top:auto;text-align:center;background:#c2410c;color:#fff!important;font-weight:800;font-size:13px;border-radius:99px;padding:7px 0;text-decoration:none}</style>'
     # 人気作の1巻（Kindleの無料試し読み）も混ぜる（2026-11-14 坂田さん「ブルーロックみたいなの」）
     ptq = ""
@@ -702,7 +706,19 @@ def index(works, themes):
                     f"<a class=qbtn style='background:#ff9900;color:#111!important' href='{esc(u)}' rel='sponsored nofollow noopener' target=_blank aria-label='『{esc(w['series'])}』1巻をKindleで試し読み'>Kindleで読む ›</a></div>")
     # 2026-11-14 坂田さん：「いますぐ無料で読む」は期間限定（期限が分かるもの）だけ。鬼滅などの試し読みは入れない
     ptq = ""
-    quick_block = (f"<h2 id=free>いますぐ無料で読む（期間限定・期限が近い順）</h2>{QCSS}<div class=qrow>{quick}</div>"
+    # 2週間以内に期限が来る作品を最優先（2026-11-27 坂田さん「二週間以内 最優先でピック」）。
+    # 最初に見せるのは、その中で読者の評価件数が多い8作品（並びは期限が近い順）。残りと2週間より先の作品は、押すと開く。
+    import gen_newrel as _nr
+    _soon = [x for x in quicks if x[0] <= FREE_DAYS] or quicks
+    _later = [x for x in quicks if x not in _soon]
+    _pick = sorted(_soon, key=lambda x: -x[1])[:8]
+    _row = lambda xs: "<div class=qrow>" + "".join(x[2] for x in xs) + "</div>"
+    _rest = [x for x in _soon if x not in _pick]
+    quick = ((_row([x for x in _soon if x in _pick])
+              + (_nr.fold(f"2週間以内に終わる残り{len(_rest)}作品を見る", _row(_rest)) if _rest else "")
+              + (_nr.fold(f"2週間より先まで無料の作品<small>{len(_later)}作品</small>", _row(_later)) if _later else "")) if quicks else "")
+    QCSS = "<style>" + _nr.CSS + ".nfold>.qrow{margin:10px 0 14px}</style>" + QCSS
+    quick_block = (f"<h2 id=free>いますぐ無料で読む（2週間以内に終わる作品を優先）</h2>{QCSS}{quick}"
                    f"<p class=note>人気作の1巻をいつでも試し読みできる作品は「<a href='theme/always-free.html'>いつでも無料で読めるマンガ</a>」にまとめています。</p>" if quick else "<p class=note>いま1巻無料のキャンペーン中の作品はありません。新しい無料の作品は毎朝追加します（下は作品一覧です）。</p>")
     chips = ("<style>.chips2{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}.chips2 a{background:var(--card,#fff);border:1px solid var(--line,#e7e5e4);border-radius:99px;padding:5px 13px;font-weight:800;font-size:13px;text-decoration:none;color:var(--fg,#1c1917)}</style>"
              "<h1 style='font-size:20px;margin:10px 0 6px'>やまのてマンガ</h1>"
