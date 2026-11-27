@@ -7,6 +7,7 @@
 使い方：python bot/ga.py [サイトのフォルダ（省略時はリポジトリ直下）]
 """
 import glob
+import importlib.util
 import os
 import re
 import sys
@@ -27,8 +28,17 @@ SNIPPET = (
 PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
 
+def _ogcard():
+    """リンク画像の差し替え（bot/ogcard.py）。"""
+    spec = importlib.util.spec_from_file_location("ogcard", Path(__file__).resolve().parent / "ogcard.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
 def apply(root="."):
     n = 0
+    og = _ogcard()
     files = glob.glob(os.path.join(root, "*.html")) + glob.glob(os.path.join(root, "articles", "*.html")) + glob.glob(os.path.join(root, "compare", "*.html")) + glob.glob(os.path.join(root, "video", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "manga", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "game", "**", "*.html"), recursive=True) + glob.glob(os.path.join(root, "fashion", "*.html")) + glob.glob(os.path.join(root, "furusato", "*.html")) + glob.glob(os.path.join(root, "instagram", "*.html"))
     for p in files:
         if os.path.basename(p).startswith("google"):
@@ -36,7 +46,7 @@ def apply(root="."):
         t = Path(p).read_text(encoding="utf-8")
         if "</head>" not in t:
             continue
-        t2 = PAT.sub("", t).replace("</head>", SNIPPET + "</head>", 1)
+        t2 = og.swap(root, p, PAT.sub("", t).replace("</head>", SNIPPET + "</head>", 1))
         if t2 != t:
             Path(p).write_text(t2, encoding="utf-8")
             n += 1
