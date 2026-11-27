@@ -1,95 +1,77 @@
 {
- "date": "2026-11-24",
+ "date": "2026-11-28",
  "items": [
+  {
+   "asin": "B0HCZSC21F",
+   "name": "THE ANSWER シーズナルケア EXトリートメント 220g",
+   "image": "https://m.media-amazon.com/images/I/61gWGKJM-AL.jpg",
+   "why": "ビューティー売れ筋1位"
+  },
   {
    "asin": "B0B9G4QR1M",
    "name": "ザバス ホエイプロテイン100 リッチショコラ味 1kg",
    "image": "https://m.media-amazon.com/images/I/81ez83BNLcL.jpg",
-   "why": "ホエイプロテイン ベストセラー2位"
+   "why": "プロテイン 人気順で上位"
   },
   {
    "asin": "B08YKGM5XZ",
    "name": "KATE リップモンスター 04 パンプキンワイン",
    "image": "https://m.media-amazon.com/images/I/51guf1SnDHL.jpg",
-   "why": "ビューティー売れ筋22位"
-  },
-  {
-   "asin": "B08TV9VDR7",
-   "name": "い・ろ・は・す 2L PET ラベルレス ×8本",
-   "image": "https://m.media-amazon.com/images/I/614b6h2S6NL.jpg",
-   "why": "食品・飲料 ベストセラー1位"
+   "why": "ビューティー売れ筋29位"
   },
   {
    "asin": "B0C6X64277",
    "name": "REYS レイズ ホエイプロテイン 1kg カフェオレ風味",
    "image": "https://m.media-amazon.com/images/I/71L89PGVtpL.jpg",
-   "why": "ホエイプロテイン ベストセラー1位"
+   "why": "プロテイン 人気順で上位"
   },
   {
-   "asin": "B083X5R6VR",
-   "name": "VTCOSMETICS フェイスマスク CICAデイリースージングマスク",
-   "image": "https://m.media-amazon.com/images/I/71yfSHaERxL.jpg",
-   "why": "ビューティー売れ筋7位"
+   "asin": "B0H33WT263",
+   "name": "ワイドハイターEXパワー 大容量",
+   "image": "https://m.media-amazon.com/images/I/81I1Z8lEA6L.jpg",
+   "why": "ドラッグストア ベストセラー2位"
   },
   {
-   "asin": "B07Z4S81ZQ",
-   "name": "ウィルキンソン タンサン ラベルレスボトル 500ml×24本",
-   "image": "https://m.media-amazon.com/images/I/71MMOCYBQxL.jpg",
+   "asin": "B0GSZ5MFK6",
+   "name": "アテニア クレンズオイル スムースブラック 175mL",
+   "image": "https://m.media-amazon.com/images/I/41cPbjV87EL.jpg",
+   "why": "ビューティー ブラックフライデー厳選目玉商品"
+  },
+  {
+   "asin": "B09G9YRX1P",
+   "name": "サントリー天然水 ラベルレス 2L×9本 南アルプス",
+   "image": "https://m.media-amazon.com/images/I/91Z5tPhB3-L.jpg",
+   "why": "食品・飲料 ベストセラー4位"
+  },
+  {
+   "asin": "B0H1GPTTM6",
+   "name": "VALX ハイブリッドプロテイン 1kg チョコレート風味",
+   "image": "https://m.media-amazon.com/images/I/61FMOOvA9KL.jpg",
+   "why": "プロテイン 人気順で上位"
+  },
+  {
+   "asin": "B06X17VVNQ",
+   "name": "オルビス エッセンスイン ヘアミルク 無香料",
+   "image": "https://m.media-amazon.com/images/I/611K8qd+sjL.jpg",
+   "why": "ビューティー売れ筋4位"
+  },
+  {
+   "asin": "B0GYRM1TJJ",
+   "name": "アタック抗菌EX つめかえ用 2000g",
+   "image": "https://m.media-amazon.com/images/I/8138MyX0YGL.jpg",
+   "why": "ドラッグストア ベストセラー5位"
+  },
+  {
+   "asin": "B07NFGJTQZ",
+   "name": "AGF ブレンディ スティック カフェオレ 100本",
+   "image": "https://m.media-amazon.com/images/I/619cD9bQohL.jpg",
+   "why": "食品・飲料 ベストセラー9位"
+  },
+  {
+   "asin": "B004Y9IZDC",
+   "name": "コカ・コーラ ゼロ 500ml×24本",
+   "image": "https://m.media-amazon.com/images/I/517MSGwOFFL.jpg",
    "why": "食品・飲料 ベストセラー6位"
-  },
-  {
-   "asin": "B0DGFTDTJD",
-   "name": "ザバス ソイプロテイン100 ココア味 920g",
-   "image": "https://m.media-amazon.com/images/I/81hrnUGobpL.jpg",
-   "why": "ソイプロテイン ベストセラー1位"
-  },
-  {
-   "asin": "B09TVWQ2R8",
-   "name": "やかんの麦茶 from 爽健美茶",
-   "image": "https://m.media-amazon.com/images/I/71K1Aw497wL.jpg",
-   "why": "食品・飲料 ベストセラー7位"
-  },
-  {
-   "asin": "B081DZMLYL",
-   "name": "ザバス ミルクプロテイン 脂肪ゼロ ココア風味 200ml×24本",
-   "image": "https://m.media-amazon.com/images/I/71L0iEnrBtL.jpg",
-   "why": "スポーツ飲料 ベストセラー5位"
-  },
-  {
-   "asin": "B004WBF8EG",
-   "name": "Loretta ハードゼリー 300g スタイリング剤",
-   "image": "https://m.media-amazon.com/images/I/61bpiIZHFhL.jpg",
-   "why": "ビューティー売れ筋16位"
-  },
-  {
-   "asin": "B0CG5JNV2N",
-   "name": "キュキュット 食器用洗剤 オレンジの香り",
-   "image": "https://m.media-amazon.com/images/I/71kebzY4WcL.jpg",
-   "why": "ドラッグストア ベストセラー7位"
-  },
-  {
-   "asin": "B01JKV7AIE",
-   "name": "ニュートロジーナ ノルウェーフォーミュラ ボディエマルジョン 250ml",
-   "image": "https://m.media-amazon.com/images/I/61AKRo+rl9L.jpg",
-   "why": "ビューティー売れ筋5位"
-  },
-  {
-   "asin": "B00516RULK",
-   "name": "ネイチャーメイド スーパーマルチビタミン＆ミネラル",
-   "image": "https://m.media-amazon.com/images/I/61mM6z-iW0L.jpg",
-   "why": "ドラッグストア ベストセラー8位"
-  },
-  {
-   "asin": "B07CZKGD7X",
-   "name": "ReKERA リケラ エマルジョン 200mL",
-   "image": "https://m.media-amazon.com/images/I/51YPRn3iR+L.jpg",
-   "why": "ビューティー売れ筋9位"
-  },
-  {
-   "asin": "B0915NGD2J",
-   "name": "IROKA フレアフレグランス 柔軟剤",
-   "image": "https://m.media-amazon.com/images/I/71GvgDXbTWL.jpg",
-   "why": "ドラッグストア ベストセラー9位"
   }
  ]
 }
