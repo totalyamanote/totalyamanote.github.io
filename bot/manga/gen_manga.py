@@ -134,6 +134,9 @@ def _buy_btns(w):
     out = ""
     if b.get("kindle"):
         out += f"<a class='bb a' href='{esc(b['kindle'])}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>{bv}巻</small></a>"
+    elif bv:   # その巻のKindleページが未確認のときもボタンは出す（シリーズ名の検索。2026-11-28「ボタンないのは、つける」）
+        import gen_newrel
+        out += f"<a class='bb a' href='{esc(gen_newrel.kindle_search(w))}' rel='sponsored nofollow noopener' target=_blank>Kindle<small>シリーズ</small></a>"
     if b.get("ebj"):
         out += f"<a class='bb e' href='{esc(b['ebj'])}' rel='sponsored nofollow noopener' target=_blank>ebookjapan<small>{bv}巻</small></a>"
     if b.get("kobo"):
