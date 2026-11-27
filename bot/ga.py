@@ -30,6 +30,7 @@ HDRFIX = ("<style id=hdrfix>header.hbar .hdrop{flex:none}header.hbar .hdrop>summ
           "@media (max-width:420px){header.hbar{gap:5px;flex-wrap:nowrap}header.hbar .hlogo{font-size:16px;gap:5px}header.hbar .hlogo img{width:32px;height:32px}"
           "header.hbar .hsecbtn{margin-left:0;padding:5px 6px}header.hbar .hdrop>summary{padding:8px 9px;gap:4px}}</style>")
 FIXPAT = re.compile(r"<style id=hdrfix>.*?</style>", re.S)
+LOGOALT = re.compile(r"(img/brand/logo_v\d+\.png'[^>]*?)alt=''")   # ロゴ画像の説明文（検索と読み上げ向け）
 PAT = re.compile(r"<!--ga4-->.*?<!--/ga4-->", re.S)
 
 
@@ -51,7 +52,7 @@ def apply(root="."):
         t = Path(p).read_text(encoding="utf-8")
         if "</head>" not in t:
             continue
-        t2 = og.swap(root, p, FIXPAT.sub("", PAT.sub("", t)).replace("</head>", HDRFIX + SNIPPET + "</head>", 1))
+        t2 = og.swap(root, p, FIXPAT.sub("", PAT.sub("", LOGOALT.sub(r"\1alt='やまのて'", t))).replace("</head>", HDRFIX + SNIPPET + "</head>", 1))
         if t2 != t:
             Path(p).write_text(t2, encoding="utf-8")
             n += 1
