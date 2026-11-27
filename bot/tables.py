@@ -241,6 +241,9 @@ def apply(t):
         return other_table(t, heads, tag, rows) or tb
 
     new = TABLE.sub(one, t)
+    # 形を直し終えた表でも、写真もロゴも無い名前には、あとから足せるようになったロゴを入れる
+    new = re.sub(r"<div class=bm><span class=bn>(.*?)</span></div>",
+                 lambda m: "<div class=bm>%s<span class=bn>%s</span></div>" % (media(t, heads, text(m.group(1))), m.group(1)), new)
     new = re.sub(r"<style id=cmpimg>.*?</style>", "", new, flags=re.S)
     if re.search(r"class='cmp cmp(x|card|fit)", new):
         mark = "<!--ga4-->" if "<!--ga4-->" in new else "</head>"   # 何度実行しても同じ並びになる位置
