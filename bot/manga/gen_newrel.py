@@ -278,7 +278,8 @@ VC_Y = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=8927
 
 def series_kw(title):
     """巻数・特装版などを除いたシリーズ名（ストアの検索用）。"""
-    t = re.sub(r"【.*?】|\[.*?\]|特装版.*$|限定版.*$|小冊子付き.*$|[（(]\s*\d+\s*[）)]|[\s　]+\d+\s*$", "", title).strip()
+    t = re.sub(r"【.*?】|\[.*?\]|特装版.*$|限定版.*$|小冊子付き.*$|[（(]\s*\d+\s*[）)]|[\s　]+\d+\s*$|\d+\s*巻\s*$", "", title).strip()
+    t = re.sub(r"愛蔵版|新装版|完全版|文庫版", "", t).strip()   # 版の名前を入れると検索が0件になる（2026-11-28 全ボタン点検）
     t = re.split(r"[〜～]", t)[0].strip(" 　")
     return t or title
 
