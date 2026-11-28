@@ -290,6 +290,12 @@ SOFT = ("<style id=fsoft>body{background:#fff}main{color:#222}"
         "@media (prefers-color-scheme:dark){body{background:#111}main{color:#eee}main h1,main h2,main h3{color:#eee}.chips2 a{color:#aaa!important}.chips2 a:first-child{color:#fff!important;border-bottom-color:#fff!important}.fgchips a,.zmore{background:#111!important;color:#eee!important;border-color:#444!important}}</style>")
 
 
+def stamp_html():
+    """価格を取った日時（ページに見える形で出す。2026-11-28 坂田さん「日付も最新に・毎日変更しといて」）。"""
+    return (f"<p class=fstamp style='font-size:12px;color:#665d55;margin:0 0 8px'>価格・ポイント・レビューは{datetime.now().strftime('%Y/%m/%d %H:%M')}時点のものです。"
+            "最新はお店のページでご確認ください。</p>")
+
+
 def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
     """並び（2026-11-25 坂田さん）：人気ランキング → ZOZOTOWN（Yahoo!）→［楽天ファッション（インフルエンサー発）＝fashion.pyの段］→ マルイ（Yahoo!）→ ジャンル別・ほかのお店。
     前半を <!--fhub-->、後半を <!--fhub2--> に出す。"""
@@ -302,7 +308,7 @@ def build_hub(rank5, gen, yh=None, cfg=None, ys=None):
         if sl is not None:
             items = items[sl]
         return f"<h2 id={hid}>{title}</h2>" + stores_cards_block([(lab, tag, top, items)])
-    first = f"<!--fhub-->{CSS}{SOFT}"
+    first = f"<!--fhub-->{CSS}{SOFT}{stamp_html()}"
     zz = by.get("ZOZOTOWN")
     if zz and len(zz[2]) >= 6:
         # ランキング＝ZOZOTOWN（Yahoo!ショッピング）の人気順の上位5（2026-11-25 坂田さん「ランキングはZOZOにしよう」）。下のZOZOTOWNの段は6位以降
@@ -358,7 +364,7 @@ def build_genre_page(index_html, lab, slug, its):
     nav = (f"<nav class=bc aria-label='パンくず' style='font-size:12px;color:#665d55;margin:6px 0 4px'><a href='../index.html'>トップ</a> › <a href='index.html'>レディースファッション</a> › {esc(lab)}</nav>")
     head = re.sub(r"<nav class=bc.*?</nav>", lambda m: nav, head, 1, re.S)
     body = (f"<h1 style='font-size:20px;margin:10px 0 6px'>{esc(lab)}の人気ランキング（楽天市場）</h1>"
-            f"{CSS}{SOFT}<div class=fgchips><a href='index.html'>ファッショントップ</a>{chips}</div>"
+            f"{CSS}{SOFT}<div class=fgchips><a href='index.html'>ファッショントップ</a>{chips}</div>{stamp_html()}"
             f"<section><div class=zg>{cards}</div>"
             "<p class=meta style='font-size:12px'>PR｜楽天市場へのリンクはアフィリエイト広告です。商品ページで最新の価格・ポイントをご確認ください。</p></section>")
     (SITE / "fashion" / f"{slug}.html").write_text(head + body + tail, encoding="utf-8")

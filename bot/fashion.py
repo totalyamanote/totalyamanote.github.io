@@ -303,11 +303,32 @@ def ztile(c, rank=None, store=""):
             f"<b class=zb>{brand_}</b><span class=zn>{esc(_nm)}</span><span class=zprow>{pr}</span>{ptx}{rv}</a>")
 
 
-def render_z(items):
+def render_z(items, note=""):
     cards = "".join(ztile(it) for it in items)
     if not cards:
         return "<!--hubf--><!--/hubf-->"
-    return f"<!--hubf--><section id=fashion><h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2><div class=zg>{cards}</div></section><!--/hubf-->"
+    return f"<!--hubf--><section id=fashion><h2>楽天ファッション<small>インフルエンサー発ブランド</small></h2>{note}<div class=zg>{cards}</div></section><!--/hubf-->"
+
+
+def reprice(api, items, now):
+    """同じ商品を見せ続ける間も、価格・ポイント・レビューは毎回取り直す（2026-11-28 坂田さん「日付も最新に・毎日変更しといて」）。
+    取り直せた商品だけに今回の日時（at）を付ける。価格が変わったら、前の割引表示は外す。"""
+    for c in items:
+        try:
+            d = api.item_detail(c["code"])
+        except Exception as e:
+            print("取り直し失敗", c["code"], str(e)[:60]); continue
+        if not d or d["price"] <= 0:
+            continue
+        pr = d["point_rate"]
+        try:
+            if d["point_end"] and datetime.strptime(d["point_end"][:16], "%Y-%m-%d %H:%M") < datetime.now():
+                pr = 1
+        except ValueError:
+            pass
+        if d["price"] != c["price"]:
+            c.update(off=0, sale="", orig=0)
+        c.update(price=d["price"], pr=pr, pt=d["price"] * pr // 100, rc=d["review_count"], av=d["review_avg"], at=now)
 
 
 def main():
@@ -326,16 +347,23 @@ def main():
         _c = json.loads(_cf.read_text(encoding="utf-8")) if _cf.exists() else {}
     except Exception:
         _c = {}
+    _now = datetime.now().strftime("%Y/%m/%d %H:%M")
     if _c.get("key") == _key and _c.get("items"):
         items = _c["items"]
         _reused = True
+        reprice(api, items[:6], _now)
     else:
         items = pick(api)
         _reused = False
-        if items:
-            _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
+        for c in items:
+            c["at"] = _now
+    if items:
+        _cf.write_text(json.dumps({"key": _key, "items": items}, ensure_ascii=False, default=str), encoding="utf-8")
     items = items[:6]   # 6点（3列×2行）（2026-11-25 坂田さん「商品6点表示されるように」）
-    blk = render_z(items)
+    # 日付は、見せている商品のうち一番古い取得日時（取り直せなかった商品に今日の日付を付けない）
+    _ats = [c.get("at") for c in items]
+    note = (f"<p style='font-size:12px;color:#665d55;margin:0 0 8px'>価格・ポイントは{min(_ats)}時点のものです。</p>" if items and all(_ats) else "")
+    blk = render_z(items, note)
     # 2026-11-25 坂田さん「物販のレディースファッションはファッションページへ移籍」：商品の段は fashion/index.html に出す。トップ（物販）からは外す。
     p = SITE / "fashion" / "index.html"
     if p.exists():
