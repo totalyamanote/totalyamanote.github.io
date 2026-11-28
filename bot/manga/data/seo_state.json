@@ -11,10 +11,10 @@
   "articles/toilet-paper-bulk.html": "e8ede3a871f2402c26172676dac5b9a2",
   "articles/washer-stand.html": "ce032cdce477b4e612660f434c1cf301",
   "articles/water-filter-cartridge.html": "58fb1a629939dae182b614bc5d41f8cc",
-  "articles/wearable-blanket.html": "c2c501587c50abf42033e35f20e0ad14",
+  "articles/wearable-blanket.html": "be0ff2bc76c16225a7ad89ccb5dd2353",
   "booklive-free.html": "7b2d4587c65c806c3e8c532337d7a8c0",
-  "index.html": "a871e76b61f4ca79bd81ddffb95f2622",
-  "manga/index.html": "1b31d2992b0a0071b7f6ec004994ac56",
+  "index.html": "246d1a266444594f39ddd59c2a1b6d2d",
+  "manga/index.html": "3616b1f0577d99b479b1929766846523",
   "manga/theme/adapted.html": "14893b1b0d798c2377219c6f1e831788",
   "manga/theme/free-now.html": "e6b3428f1f2f0a5e8ed02367b8abddf7",
   "manga/w/20206940.html": "319a96bf32d440c581a7856bc4d20b2e",
@@ -33,7 +33,7 @@
   "articles/booklive-guide.html": "5c63cdeda14fc58e094b9b9ea4c8df46",
   "manga/faq.html": "886e652df975901b34ee5623ecb22d6a",
   "compare-method.html": "9b97a563b0303e8c8b6cc7ce612d9ee5",
-  "manga/new-releases.html": "c390963450671512957d1bf3d6851865",
+  "manga/new-releases.html": "cd0def73e31acf202b5e030e55778d95",
   "manga/store-compare.html": "e3eb50866c75904e9cbb269a629e7b1b",
   "manga/theme/always-free.html": "ac64ff3fe928a7e7c9aa1c671be15326",
   "manga/w/ebj516901.html": "738c35532ffcbd0adabd7f9276febb21",
@@ -48,7 +48,7 @@
   "articles/ai-agent-compare-2026.html": "387acf8fdfe441f94fd4c196eb251159",
   "articles/black-friday-ec-compare-2026.html": "87b6828fea158fdc47fc549b25c71001",
   "articles/furusato-sites-2026.html": "56e0b12cf4b5746c7b60e945b391ab59",
-  "articles/outdoor-brands-2026.html": "0a94249210b5cf3e605a9675c99a1855",
+  "articles/outdoor-brands-2026.html": "89ee57017057059a82dc7db9039b0390",
   "manga/w/kB0C9BSDSWZ.html": "6bd1a32fb2c4a66906bb7a2cdbd9a906",
   "manga/w/kB0C13NM1ZK.html": "c99a172575be425cc9f8bea0edad2039",
   "manga/w/ebj132460.html": "d52f91564f1f799953d20c809adc1ef0",
@@ -68,7 +68,7 @@
   "articles/protein.html": "365243618ee647d94bf3c845e2947958",
   "articles/toothpaste.html": "c44037a43c8fc163f93817a0ee0ae12a",
   "manga/w/ebj495291.html": "9dba63ce92d0c52caa21c2387e7efc30",
-  "compare/index.html": "17f39c370590bab1b15f1a92e19bf4f5",
+  "compare/index.html": "fa9382182c78823312b0a3b413d1cb6d",
   "articles/travel-sites-compare-2026.html": "3b94de58f63f20b9814355000a6be52a",
   "articles/kaden-ryohanten-compare-2026.html": "f3acfd510879c050f01f3630582b9fa8",
   "articles/smartphone-makers-compare-2026.html": "5b0bf6f6c21eb3afb3174a9615955024",
@@ -240,7 +240,8 @@
   "video/w/d-0306235.html": "021a35db1a6b875ca293b6968c7366c7",
   "manga/w/kB01EJ7AK40.html": "82965f6bb64031d81da675f2f8de22a1",
   "manga/w/kobod798a108acfd35e7abea5f8665176298.html": "3996c7556719580dcc6170336aaccd5f",
-  "video/w/a-0282788.html": "815ed4f95d96765d1cb85179d4ae4f00"
+  "video/w/a-0282788.html": "815ed4f95d96765d1cb85179d4ae4f00",
+  "articles/basketball-shoes.html": "8e6e196b7952edfb437a3e7f2e9f61f1"
  },
- "last_ping": "2026-11-28T12:35:46"
+ "last_ping": "2026-11-28T19:58:31"
 }
