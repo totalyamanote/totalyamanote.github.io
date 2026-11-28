@@ -736,5 +736,582 @@
   },
   "free_ongoing": true,
   "rating_date": "2026-11-27"
+ },
+ {
+  "title_id": "kB009KYC3B6",
+  "title": "ちはやふる",
+  "store": "kindle",
+  "aliases": [],
+  "author": "末次由紀",
+  "magazine": "講談社（BE・LOVE）",
+  "period": "2007年〜2022年（連載終了）",
+  "volumes": "全50巻",
+  "fact": "テレビアニメ化・実写映画化（2016年・2018年、広瀬すずさん主演）。第35回講談社漫画賞少女部門受賞。マンガ大賞2009受賞",
+  "hook": "札を払う一瞬に、青春のすべてをかける🌸 1〜3巻が無料",
+  "synopsis": "小学6年生の千早は、福井から来た転校生・新が百人一首の競技かるたで札を払う姿に衝撃を受けます。かるたに夢中になった千早は、同級生の太一とともに腕を磨き、高校でかるた部の仲間と大会に挑みます。まっすぐな思いが交差する青春ストーリーです。",
+  "characters": [
+   [
+    "綾瀬千早",
+    "競技かるたに出会い、才能を見いだされる主人公",
+    "001",
+    "",
+    ""
+   ],
+   [
+    "真島太一",
+    "千早の同級生。一緒にかるたに打ち込む",
+    "006",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "少女マンガ",
+   "青春",
+   "部活",
+   "競技かるた",
+   "アニメ化"
+  ],
+  "free_until": "2026-12-10",
+  "free_label": "1〜3巻無料（Kindle）",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B009KYC3B6?tag=shogo450e-22",
+  "free_note": "Kindleの1〜3巻の商品ページで「期間限定無料 2026/12/10 23:59まで」の表示。楽天Koboの【期間限定 無料お試し版】1〜3巻も12/10 22:59まで（11/28確認）。採用理由：アニメ化・実写映画化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・実写映画化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7873/2000000187873.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3851/2000000233851.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8343/2000000128343.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9600/2000000189600.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1898/2000000211898.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2143/2000000052143.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7721/2000000207721.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7052/2000000197052.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kindle": "https://www.amazon.co.jp/dp/B009KYC3G6?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F54362fb53d484732bb717eaa026c5205%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060056391.html"
+  },
+  "release_on": "2026-12-02",
+  "user_reviews": {
+   "tags": [
+    "胸が熱くなる",
+    "青春っていい",
+    "熱い展開",
+    "読みやすい",
+    "続きが気になる"
+   ],
+   "top": [
+    [
+     "かるたの熱い青春",
+     "競技かるたに高校生たちがかける青春、友情、恋が描かれていて、とても面白かったという声。",
+     2
+    ],
+    [
+     "打ち込む楽しさが伝わる",
+     "かるたの面白さはもちろん、一生懸命になること自体が楽しいと、千早や仲間たちから教わったという声。",
+     0
+    ],
+    [
+     "食わず嫌いを後悔",
+     "競技かるたで面白い勝負は描けないだろうと決めつけて読まずにいたことを、読んでから悔やんだという声。",
+     0
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/121517/A000053392/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.5",
+  "reviews": "498",
+  "rating_src": "sum",
+  "rating_date": "2026-11-28"
+ },
+ {
+  "title_id": "kobo4a560544874c3b76a93501794927b50b",
+  "title": "ブルーピリオド",
+  "store": "kobo",
+  "aliases": [],
+  "author": "山口つばさ",
+  "magazine": "講談社（月刊アフタヌーン）",
+  "period": "2017年〜（連載中）",
+  "volumes": "既刊19巻",
+  "fact": "マンガ大賞2020大賞。テレビアニメ化（2021年）・実写映画化（2024年、眞栄田郷敦さん主演）。累計700万部突破",
+  "hook": "一枚の絵が、要領のいい高校生の毎日を変えた🎨 1〜2巻が無料",
+  "synopsis": "成績優秀で世渡り上手な高校生・矢口八虎は、充実した毎日を送りながら、どこか空しさを感じていました。ある日、一枚の絵に心を奪われたことをきっかけに美術の世界へ飛び込み、美大を目指します。絵の知識もたっぷりの、熱い美大受験マンガです。",
+  "characters": [
+   [
+    "矢口八虎",
+    "絵に出会い、美大を目指す高校生",
+    "001",
+    "",
+    ""
+   ],
+   [
+    "鮎川龍二",
+    "八虎の同級生で美術部員。通称ユカちゃん",
+    "002",
+    "",
+    ""
+   ],
+   [
+    "高橋世田介",
+    "八虎が美術予備校で出会う、才能ある受験生",
+    "003",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "青年マンガ",
+   "美術",
+   "青春",
+   "受験",
+   "アニメ化"
+  ],
+  "free_until": "2026-12-10",
+  "free_label": "1〜2巻無料（楽天Kobo）",
+  "free_store_name": "楽天Kobo",
+  "free_url": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F4a560544874c3b76a93501794927b50b%2F",
+  "free_note": "楽天Koboの【期間限定 無料お試し版】1・2巻の商品ページで「2026/12/10 22:59まで」の表示。Kindleの1・2巻は11/29まで（11/28確認）。採用理由：アニメ化・実写映画化・累計700万部・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと2巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・実写映画化・累計700万部・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと2巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4362/2000005784362.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8385/2000006148385.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4279/2000006684279.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0678/2000007160678.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0957/2000007460957.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7013/2000007897013.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7697/2000008287697.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5454/2000008895454.jpg"
+  },
+  "buy": {
+   "vol": 3,
+   "kindle": "https://www.amazon.co.jp/dp/B07GBVWWG7?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F138e42a442ca32a9a0fc65efa849570d%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160914878.html"
+  },
+  "release_on": "2026-12-03",
+  "user_reviews": {
+   "tags": [
+    "絵が素敵",
+    "名言が多い",
+    "読みやすい",
+    "心理描写が良い",
+    "熱い言葉"
+   ],
+   "top": [
+    [
+     "人間ドラマとして面白い",
+     "美大のことが分かり絵画が身近になるだけでなく、とても人間ドラマとして読ませる作品だという声。",
+     13
+    ],
+    [
+     "芸術と無縁でも面白い",
+     "芸術に縁がなく偏見もあったという読者が、面白かったと振り返る声。",
+     45
+    ],
+    [
+     "時代をつかんで感動させる",
+     "今の空気をとらえて、感動につなげるのがうまい作品だという声。",
+     21
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/432383/A001811871/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.6",
+  "reviews": "128",
+  "rating_src": "sum",
+  "rating_date": "2026-11-28"
+ },
+ {
+  "title_id": "kobod2d106c449fe35d599f87a186bceeb50",
+  "title": "テセウスの船",
+  "store": "kobo",
+  "aliases": [],
+  "author": "東元俊哉",
+  "magazine": "講談社（モーニング）",
+  "period": "2017年〜2019年（連載終了）",
+  "volumes": "全10巻",
+  "fact": "テレビドラマ化（2020年、TBS日曜劇場・竹内涼真さん主演）",
+  "hook": "死刑囚の父は本当に犯人なのか。息子は事件の年へ⏳ 1〜3巻が無料",
+  "synopsis": "1989年、北海道の音臼村の小学校で起きた毒殺事件。村の警察官だった佐野文吾が逮捕されました。28年後、息子の田村心は無罪を訴え続ける父に冤罪の可能性を感じて調べ始め、事件現場で濃い霧に包まれて1989年へ。過去で真実に向き合うクライムサスペンスです。",
+  "characters": [
+   [
+    "田村心",
+    "父の冤罪の可能性を感じ、事件を調べる青年",
+    "002",
+    "",
+    ""
+   ],
+   [
+    "佐野文吾",
+    "心の父。事件当時は村の警察官",
+    "001",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "青年マンガ",
+   "ミステリー",
+   "サスペンス",
+   "タイムスリップ",
+   "ドラマ化"
+  ],
+  "free_until": "2026-12-10",
+  "free_label": "1〜3巻無料（楽天Kobo）",
+  "free_store_name": "楽天Kobo",
+  "free_url": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fd2d106c449fe35d599f87a186bceeb50%2F",
+  "free_note": "楽天Koboの【期間限定 無料お試し版】1〜3巻の商品ページで「2026/12/10 22:59まで」の表示。Kindleの1〜3巻は12/1まで（11/28確認）。採用理由：ドラマ化・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：ドラマ化・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5857/2000005525857.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9809/2000005769809.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/2456/2000006162456.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3657/2000006513657.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1273/2000006771273.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5958/2000007015958.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4212/2000007234212.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7150/2000007467150.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kindle": "https://www.amazon.co.jp/dp/B07DPJNR15?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F31b4907b4dbd3929a949f51d3c5d74b4%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160880344.html"
+  },
+  "release_on": "2026-12-03",
+  "user_reviews": {
+   "tags": [
+    "ハラハラ",
+    "どんでん返しが面白い",
+    "ストーリーがうまい",
+    "続きが気になる",
+    "スピード感がある"
+   ],
+   "top": [
+    [
+     "話がよく練られている",
+     "試し読みから続きが気になって購入し、よく練られた展開に6巻まで一気に読んだという声。",
+     9
+    ],
+    [
+     "1巻から先が気になる",
+     "無料の機会に気軽に読んだら、1巻から続きが気になって買い足したという声。",
+     3
+    ],
+    [
+     "視点が新鮮",
+     "事件の加害者とされた人の家族の視点が新鮮で、先の読めない展開にずっと引き込まれたという声。",
+     0
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/420698/A001779720/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.2",
+  "reviews": "188",
+  "rating_src": "ebookjapan（1巻）",
+  "rating_date": "2026-11-28"
+ },
+ {
+  "title_id": "kB08PP58FQR",
+  "title": "うるわしの宵の月",
+  "store": "kindle",
+  "aliases": [],
+  "author": "やまもり三香",
+  "magazine": "講談社（デザート）",
+  "period": "2020年〜（連載中）",
+  "volumes": "既刊11巻",
+  "fact": "テレビアニメ化（2026年）・実写映画化（2026年10月公開、道枝駿佑さん主演）。累計750万部突破（世界累計）",
+  "hook": "「王子」と呼ばれる女の子が、もう一人の「王子」に出会う🌙 1〜2巻が無料",
+  "synopsis": "整った顔立ちとスマートなふるまいで「王子」と呼ばれる高校生の滝口宵。そう憧れられることに複雑な思いを抱くなか、同じく「王子」と呼ばれる一つ上の市村先輩に出会います。最初の印象はよくなかった二人の、不器用なラブストーリーです。",
+  "characters": [
+   [
+    "滝口宵",
+    "周りから「王子」と呼ばれる女の子",
+    "006",
+    "",
+    ""
+   ],
+   [
+    "市村琥珀",
+    "同じく「王子」と呼ばれる一つ上の先輩",
+    "001",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "少女マンガ",
+   "恋愛",
+   "学園",
+   "先輩後輩",
+   "アニメ化"
+  ],
+  "free_until": "2026-12-10",
+  "free_label": "1〜2巻無料（Kindle）",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B08PP58FQR?tag=shogo450e-22",
+  "free_note": "Kindleの1・2巻の商品ページで「期間限定無料 2026/12/10 23:59まで」の表示、3巻は表示なし。楽天Koboの【期間限定 無料お試し版】1・2巻も12/10 22:59まで（11/28確認）。採用理由：アニメ化・実写映画化・累計750万部・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと2巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・実写映画化・累計750万部・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと2巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3221/2000009193221.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7241/2000009697241.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5521/2000010535521.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/3048/2000011123048.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7072/2000012127072.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8538/2000012898538.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9684/2000013779684.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0197/2000015630197.jpg"
+  },
+  "buy": {
+   "vol": 3,
+   "kindle": "https://www.amazon.co.jp/dp/B09KTWLWM8?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F31bdb3cf67683fabbfb54213a6d3d205%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00162752395.html"
+  },
+  "release_on": "2026-12-04",
+  "user_reviews": {
+   "tags": [
+    "絵が綺麗",
+    "ドキドキ",
+    "読みやすい",
+    "素敵なストーリー",
+    "魅力的なヒロイン"
+   ],
+   "top": [
+    [
+     "久しぶりにキュンとした",
+     "うまく言葉にできないほど、久しぶりに強くときめいたという大人の読者の声。",
+     6
+    ],
+    [
+     "絵も題材も好き",
+     "作者の作品だからと買って大当たり。描かれる男性がかっこよく、今回は物語の題材から好きだという声。",
+     0
+    ],
+    [
+     "宵がかわいい",
+     "宵がかわいすぎて、同じクラスにいたら毎日見とれてしまいそうだという声。",
+     0
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/616345/A002487681/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.6",
+  "reviews": "62",
+  "rating_src": "sum",
+  "rating_date": "2026-11-28"
+ },
+ {
+  "title_id": "kobodafac7cd0ee93b2dbb9cb2323d9443dd",
+  "title": "のだめカンタービレ",
+  "store": "kobo",
+  "aliases": [
+   "のだめ"
+  ],
+  "author": "二ノ宮知子",
+  "magazine": "講談社（Kiss）",
+  "period": "2001年〜2010年（連載終了）",
+  "volumes": "全25巻（本編23巻と番外編）",
+  "fact": "テレビドラマ化（2006年、上野樹里さん・玉木宏さん出演）・テレビアニメ化・映画化。第28回講談社漫画賞少女部門受賞",
+  "hook": "変わり者のピアノと、エリートの指揮棒が出会う🎼 1〜3巻が無料",
+  "synopsis": "気ままに、歌うようにピアノを弾く不思議な音大生・野田恵、通称のだめ。完璧主義の千秋は、そんなのだめと出会って振り回されながら、指揮者への道を歩み始めます。笑いと本気の音楽がつまったクラシック音楽コメディです。",
+  "characters": [
+   [
+    "野田恵",
+    "通称のだめ。自由奔放なピアノの音大生",
+    "001",
+    "",
+    ""
+   ],
+   [
+    "千秋真一",
+    "指揮者への道を歩み出す、完璧主義の音大生",
+    "024",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "少女マンガ",
+   "音楽",
+   "ラブコメ",
+   "クラシック",
+   "ドラマ化"
+  ],
+  "free_until": "2026-12-10",
+  "free_label": "1〜3巻無料（楽天Kobo）",
+  "free_store_name": "楽天Kobo",
+  "free_url": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Fdafac7cd0ee93b2dbb9cb2323d9443dd%2F",
+  "free_note": "楽天Koboの【期間限定 無料お試し版】1〜3巻の商品ページで「2026/12/10 22:59まで」の表示。Kindleの1〜3巻は期間限定無料の表示なし（11/28確認）。採用理由：ドラマ化・アニメ化・映画化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "note": "採用理由：ドラマ化・アニメ化・映画化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと3巻無料・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7553/2000000167553.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/8952/2000000188952.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/4154/2000000184154.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5340/2000000185340.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7762/2000000237762.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0313/2000000150313.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/7600/2000000237600.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0091/2000000250091.jpg",
+   "24": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/5898/2000000205898.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kindle": "https://www.amazon.co.jp/dp/B009KWU94Q?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2F7a654d8d052a4f8babcc3cd723278c4b%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00060027253.html"
+  },
+  "release_on": "2026-12-04",
+  "user_reviews": {
+   "tags": [
+    "笑える",
+    "個性的なキャラ",
+    "音楽を楽しむ",
+    "笑いと感動",
+    "読みやすい"
+   ],
+   "top": [
+    [
+     "次がすぐ読みたくなる",
+     "1巻を読んで驚き、続きがほしくなって12巻までまとめて買って一気に読んだという声。",
+     2
+    ],
+    [
+     "理屈抜きに面白い",
+     "強烈なギャグがあり、音楽ものの青春でもあって、どんどん先が読みたくなるという声。",
+     0
+    ],
+    [
+     "クラシックを聴きたくなる",
+     "音大を舞台にした物語がとても安定して面白く、クラシック音楽を聴きたくなるという声。",
+     0
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/111756/A000027250/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.6",
+  "reviews": "22",
+  "rating_src": "sum",
+  "rating_date": "2026-11-28"
+ },
+ {
+  "title_id": "kB00WVRC6JI",
+  "title": "地縛少年 花子くん",
+  "store": "kindle",
+  "aliases": [
+   "花子くん"
+  ],
+  "author": "あいだいろ",
+  "magazine": "スクウェア・エニックス（月刊Gファンタジー）",
+  "period": "2014年〜（連載中）",
+  "volumes": "既刊26巻（ほかに0巻）",
+  "fact": "テレビアニメ化。2025年に第2期を放送",
+  "hook": "旧校舎のトイレにいたのは、花子「くん」でした🚽 1巻が無料（2・3巻は12/10まで）",
+  "synopsis": "かもめ学園の旧校舎3階、女子トイレの3番目には、呼び出した人の願いを叶える「花子さん」がいるという噂があります。自分の願いのために怪談に身をゆだねた八尋寧々が出会ったのは、男の子の花子くんでした。学園の七不思議をめぐる怪異コメディです。",
+  "characters": [
+   [
+    "花子くん",
+    "旧校舎の女子トイレにいると噂される、学園七不思議の怪異",
+    "001",
+    "",
+    ""
+   ],
+   [
+    "八尋寧々",
+    "花子くんの助手を務める、オカルト好きの少女",
+    "002",
+    "",
+    ""
+   ],
+   [
+    "源光",
+    "花子くんを監視する、祓い屋の中学3年生",
+    "004",
+    "",
+    ""
+   ]
+  ],
+  "tags": [
+   "少女マンガ",
+   "怪異",
+   "学園",
+   "コメディ",
+   "アニメ化"
+  ],
+  "free_until": "2026-12-24",
+  "free_label": "1巻無料（Kindle）",
+  "free_store_name": "Kindle",
+  "free_url": "https://www.amazon.co.jp/dp/B00WVRC6JI?tag=shogo450e-22",
+  "free_note": "Kindleの商品ページで1巻は「期間限定無料 2026/12/24 23:59まで」、2・3巻は12/10 23:59まで。楽天Koboの無料お試し版も1巻は12/24、2・3巻は12/10まで（11/28確認）。採用理由：アニメ化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと1巻以上無料（12/10までは3巻）・公開日から期限まで5日以上。",
+  "note": "採用理由：アニメ化・Amazonレビュー500件以上★4.3以上・5巻以上・まるごと1巻以上無料（12/10までは3巻）・公開日から期限まで5日以上。",
+  "covers": {
+   "1": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1537/2000006731537.jpg",
+   "2": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9651/2000006729651.jpg",
+   "3": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9820/2000006729820.jpg",
+   "4": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/0706/2000006730706.jpg",
+   "5": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9351/2000006729351.jpg",
+   "6": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1156/2000006731156.jpg",
+   "7": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/1068/2000006731068.jpg",
+   "8": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakutenkobo-ebooks/cabinet/9939/2000006729939.jpg"
+  },
+  "buy": {
+   "vol": 4,
+   "kindle": "https://www.amazon.co.jp/dp/B01LAEBS5U?tag=shogo450e-22",
+   "kobo": "https://hb.afl.rakuten.co.jp/hgc/57dc701b.77fbee9f.57dc701c.c4aa7bb8/?pc=https%3A%2F%2Fbooks.rakuten.co.jp%2Frk%2Ffcad8b717b833e19a258458d2761188c%2F",
+   "ebj": "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784510&pid=892726197&vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Febookjapan%2Fb00160679915.html"
+  },
+  "release_on": "2026-12-05",
+  "user_reviews": {
+   "tags": [
+    "絵が可愛い",
+    "バランスが面白い",
+    "展開が早い",
+    "読みやすい",
+    "コミカル"
+   ],
+   "top": [
+    [
+     "もっと早く読めばよかった",
+     "1巻の表紙が前から気になりつつ見送っていたことを、読んでから大いに悔やんだという声。",
+     9
+    ],
+    [
+     "コメディと感動のバランス",
+     "初めはコメディが多めで、恋愛の要素や心を動かす話もあり、飽きずに読めるという声。怪異や妖怪が好きな人にすすめたいとのこと。",
+     5
+    ],
+    [
+     "ワクワクする怪異譚",
+     "学校の七不思議から始まる、少し不思議でドキドキする物語で、寧々が騒動に巻き込まれていく流れにワクワクするという声。",
+     0
+    ]
+   ],
+   "source": "ebookjapan",
+   "url": "https://ebookjapan.yahoo.co.jp/books/312586/A007207559/",
+   "checked": "2026-11-28"
+  },
+  "free_ongoing": true,
+  "rating": "4.7",
+  "reviews": "45",
+  "rating_src": "sum",
+  "rating_date": "2026-11-28"
  }
 ]
