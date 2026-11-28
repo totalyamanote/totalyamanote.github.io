@@ -58,7 +58,7 @@ def render(items, day):
     cards = ""
     for it in items:
         pt = it["price"] * it["point_rate"] // 100
-        nm = short_name(it["name"], 40)
+        nm = short_name(re.sub(r"≪[^≫]*≫|《[^》]*》", " ", it["name"]), 40)   # 宣伝の≪…≫は記号だけ残るので、先に丸ごと外す
         badge = f"<span class=badge>ポイント{it['point_rate']}倍</span>" if it["point_rate"] >= 2 else ""
         cards += (f"<a class=item href='{esc(it['url'])}' rel='sponsored nofollow noopener' target=_blank style='text-decoration:none'>"
                   f"<img src='{esc(it['image'])}' alt='{esc(nm)}' loading=lazy><div class=in>{badge}<b>{esc(nm)}</b>"
