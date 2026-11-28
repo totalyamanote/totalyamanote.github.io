@@ -1,0 +1,18 @@
+[
+ {"key": "kyrie",
+  "rakuten": {"code": "lustyle-arc:10001007", "shop": "LUSTYLE"},
+  "yahoo": {"code": "lustyle_112621102-2", "shop": "LUSTYLE", "queries": ["ANTA KAI 3 KAI Mentality", "アンタ カイ3 ANTA KAI 3"]}},
+ {"key": "kobe",
+  "rakuten": {"code": "skit:10079687", "shop": "スニーカーショップ SKIT"}},
+ {"key": "kd",
+  "rakuten": {"code": "supersportsxebio:21332562", "shop": "スーパースポーツゼビオ"},
+  "yahoo": {"code": "supersportsxebio_10933600801", "shop": "スーパースポーツゼビオ", "queries": ["IO8109-600", "KD19 Halloween"]}},
+ {"key": "book",
+  "rakuten": {"code": "kumasupo:10028919", "shop": "クマガヤスポーツ"},
+  "yahoo": {"code": "metaballer_fz7014-500", "shop": "メタボーラー", "queries": ["FZ7014-500", "ナイキ BOOK 2 EP バスケットシューズ"]}},
+ {"key": "lebron",
+  "rakuten": {"code": "washinsp:10011943", "shop": "和信スポーツ"},
+  "yahoo": {"code": "washinsp_iq9845-100", "shop": "和信スポーツ", "queries": ["IQ9845-100", "ナイキ レブロン ウィットネス 10"]}},
+ {"key": "lebron24",
+  "rakuten": {"code": "shoesnuts:10046122", "shop": "シューズナッツ"}}
+]
